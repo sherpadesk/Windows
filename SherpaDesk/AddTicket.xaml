@@ -43,6 +43,11 @@
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -74,6 +79,30 @@
             </ComboBox>
             <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
 
+            <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="Let the system choose." />
+                <ComboBoxItem Content="Administrator, Organization" />
+                <ComboBoxItem Content="Queue, New Tickets" />
+            </ComboBox>
+            <HyperlinkButton Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+            <TextBlock HorizontalAlignment="right" Grid.Row="5" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="" />
+                <ComboBoxItem Content="Administrator, Organization" />
+            </ComboBox>
+            <HyperlinkButton Content="Me" Grid.Row="5" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+            <TextBlock HorizontalAlignment="right" Grid.Row="7" TextWrapping="Wrap" Text="Status" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="Open" />
+                <ComboBoxItem Content="On Hold" />
+                <ComboBoxItem Content="Closed" />
+            </ComboBox>
+
+            <TextBlock HorizontalAlignment="right" Grid.Row="8" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <Button x:Name="filepickButton" Content="Select Files" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="24" Height="50" Width="500" Click="filepickButton_Click"/>
 
         </Grid>
         <VisualStateManager.VisualStateGroups>
