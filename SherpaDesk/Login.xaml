@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Image Height="219" Grid.Row="0" VerticalAlignment="Top" Width="705" Source="Assets/Logo.png" />
+            <Image Height="219" Grid.Row="0" VerticalAlignment="Top" Width="705" Source="Assets/StoreLogo.png" />
             <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" FontSize="36" Width="619"/>
             <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="619"/>
             <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="625" Height="66" Click="SignIn" FontSize="36" Background="#FF57AE57" />

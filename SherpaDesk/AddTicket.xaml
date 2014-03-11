@@ -36,7 +36,46 @@
             <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Add Ticket" FontWeight="Normal"/>
         </Grid>
+        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="" />
+                <ComboBoxItem Content="Make Me the User" Foreground="#FF0B0078"/>
+                <ComboBoxItem Content="Add New User.." Foreground="#FF00A10A"/>
+            </ComboBox>
+            <HyperlinkButton Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
 
+            <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="" />
+                <ComboBoxItem Content="Micajah" />
+                <ComboBoxItem Content="Add New Account.." Foreground="#FF00A10A"/>
+            </ComboBox>            
+            <CheckBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
+
+            <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+            <ComboBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="" />
+                <ComboBoxItem Content="General Question" />
+                <ComboBoxItem Content="Technology Support" />
+            </ComboBox>
+            <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+
+        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

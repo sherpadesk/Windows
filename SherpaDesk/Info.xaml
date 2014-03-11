@@ -23,19 +23,33 @@
     -->
     <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174">
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- Back button and page title -->
-        <Grid>
+        
+        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>            
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Info" FontWeight="Normal"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="New Messages:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton Content="0" Grid.Row="0" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White"/>
+            <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Open Tickets:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton Content="0" Grid.Row="1" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White"/>
+            <TextBlock HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Open as End User:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton Content="0" Grid.Row="2" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White"/>
+            <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="On Hold:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton Content="0" Grid.Row="3" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White"/>
+            <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Follow-Up Dates:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton Content="0" Grid.Row="4" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White"/>
         </Grid>
-
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

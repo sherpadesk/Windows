@@ -16,7 +16,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Image HorizontalAlignment="Left" Height="152" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Width="512" Source="Assets/Logo.png" />
+        <Image HorizontalAlignment="Left" Height="152" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Width="512" Source="Assets/StoreLogo.png" />
         <Button x:Name="AddTimeButton" Content="Add Time" Grid.Column="1" Margin="0,0,10,0" Grid.Row="0" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="245" FontSize="48" Click="AddTimeClick" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal"/>
         <Button x:Name="AddTicketButton" Content="Add Ticket" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="270" FontSize="48" Click="AddTicketClick" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal"/>
         <Frame x:Name="MainFrame" Content="Frame" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" />
