@@ -1,20 +1,14 @@
-﻿<common:LayoutAwarePage
+﻿<common:LayoutAwarePage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:SherpaDesk" xmlns:common="using:SherpaDesk.Common" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="using:WinRTXamlToolkit.Controls"
     x:Name="pageRoot"
     x:Class="SherpaDesk.AddTicket"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SherpaDesk"
-    xmlns:common="using:SherpaDesk.Common"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
-    <Page.Resources>
+    <common:LayoutAwarePage.Resources>
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
-    </Page.Resources>
+    </common:LayoutAwarePage.Resources>
 
     <!--
         This grid acts as a root panel for the page that defines two rows:
@@ -27,84 +21,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Add Ticket" FontWeight="Normal"/>
-        </Grid>
-        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="" />
-                <ComboBoxItem Content="Make Me the User" Foreground="#FF0B0078"/>
-                <ComboBoxItem Content="Add New User.." Foreground="#FF00A10A"/>
-            </ComboBox>
-            <HyperlinkButton Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="" />
-                <ComboBoxItem Content="Micajah" />
-                <ComboBoxItem Content="Add New Account.." Foreground="#FF00A10A"/>
-            </ComboBox>            
-            <CheckBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="" />
-                <ComboBoxItem Content="General Question" />
-                <ComboBoxItem Content="Technology Support" />
-            </ComboBox>
-            <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="Let the system choose." />
-                <ComboBoxItem Content="Administrator, Organization" />
-                <ComboBoxItem Content="Queue, New Tickets" />
-            </ComboBox>
-            <HyperlinkButton Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="5" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="" />
-                <ComboBoxItem Content="Administrator, Organization" />
-            </ComboBox>
-            <HyperlinkButton Content="Me" Grid.Row="5" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="7" TextWrapping="Wrap" Text="Status" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="Open" />
-                <ComboBoxItem Content="On Hold" />
-                <ComboBoxItem Content="Closed" />
-            </ComboBox>
-
-            <TextBlock HorizontalAlignment="right" Grid.Row="8" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <Button x:Name="filepickButton" Content="Select Files" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="24" Height="50" Width="500" Click="filepickButton_Click"/>
-
-        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -134,5 +50,99 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Add Ticket" FontWeight="Normal"/>
+        </Grid>
+        <ScrollViewer HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
+
+            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="" />
+                    <ComboBoxItem Content="Make Me the User" Foreground="#FF0B0078"/>
+                    <ComboBoxItem Content="Add New User.." Foreground="#FF00A10A"/>
+                </ComboBox>
+                <HyperlinkButton Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="" />
+                    <ComboBoxItem Content="Micajah" />
+                    <ComboBoxItem Content="Add New Account.." Foreground="#FF00A10A"/>
+                </ComboBox>
+                <CheckBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="" />
+                    <ComboBoxItem Content="General Question" />
+                    <ComboBoxItem Content="Technology Support" />
+                </ComboBox>
+                <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="Let the system choose." />
+                    <ComboBoxItem Content="Administrator, Organization" />
+                    <ComboBoxItem Content="Queue, New Tickets" />
+                </ComboBox>
+                <HyperlinkButton Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="5" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="5" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="" />
+                    <ComboBoxItem Content="Administrator, Organization" />
+                </ComboBox>
+                <HyperlinkButton Content="Me" Grid.Row="5" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="7" TextWrapping="Wrap" Text="Status" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="1" Grid.Row="7" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                    <ComboBoxItem Content="Open" />
+                    <ComboBoxItem Content="On Hold" />
+                    <ComboBoxItem Content="Closed" />
+                </ComboBox>
+
+                <TextBlock HorizontalAlignment="right" Grid.Row="8" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <Button x:Name="filepickButton" Content="Select Files" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="24" Height="50" Width="500" Click="filepickButton_Click"/>
+
+                <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="50" Grid.Row="0" Grid.Column="4" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="24" Width="400" />
+                <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" WatermarkText="Details..." Height="300" Grid.Row="1" Grid.RowSpan="5" TextWrapping="Wrap" Grid.Column="4" Text="" VerticalAlignment="Top" FontSize="24" Width="400" />
+                <Button Content="Save &amp; View Ticket" Grid.Column="4" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"/>
+                <TextBlock Text="or"  Grid.Column="4" HorizontalAlignment="Left" Grid.Row="7" FontSize="20" Margin="164,11,0,31" />
+                <HyperlinkButton Content="Save &amp; New" Grid.Row="6" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
+                <TextBlock Text="or"  Grid.Column="4" HorizontalAlignment="Left" Grid.Row="8" FontSize="20" Margin="164,11,0,31" />
+                <HyperlinkButton Content="Save &amp; Repeat" Grid.Row="7" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
+                <TextBlock Text="or"  Grid.Column="4" HorizontalAlignment="Left" Grid.Row="9" FontSize="20" Margin="164,11,0,31" />
+                <HyperlinkButton Content="Cancel" Grid.Row="8" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
+            </Grid>
+        </ScrollViewer>
     </Grid>
+
 </common:LayoutAwarePage>

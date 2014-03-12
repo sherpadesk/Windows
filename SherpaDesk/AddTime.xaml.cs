@@ -37,6 +37,25 @@ namespace SherpaDesk
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+           
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy - dddd");
+            StartTime.Text = EndTime.Text = DateTime.Now.ToString("hh:mm");
+
+            if (DateTime.Now.Hour < 12)
+            {
+                EndTimeAMPM.SelectedIndex = 0;
+                AMPM.SelectedIndex = 0;
+            }
+            else
+            {
+                EndTimeAMPM.SelectedIndex = 1;
+                AMPM.SelectedIndex = 1;
+            }
+            base.OnNavigatedTo(e);
         }
 
         /// <summary>
