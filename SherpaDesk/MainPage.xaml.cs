@@ -34,6 +34,7 @@ namespace SherpaDesk
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.MainFrame.Navigate(typeof(Info));
+            base.OnNavigatedTo(e);
         }
 
         private void AddTimeClick(object sender, RoutedEventArgs e)

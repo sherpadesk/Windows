@@ -19,9 +19,9 @@ namespace SherpaDesk
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class Info : SherpaDesk.Common.LayoutAwarePage
+    public sealed partial class OpenAsEndUser : SherpaDesk.Common.LayoutAwarePage
     {
-        public Info()
+        public OpenAsEndUser()
         {
             this.InitializeComponent();
         }
@@ -37,6 +37,12 @@ namespace SherpaDesk
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+           
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
         }
 
         /// <summary>
@@ -47,31 +53,6 @@ namespace SherpaDesk
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-        }
-
-        private void NewMessagesLink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(NewMessages));
-        }
-
-        private void OpenTicketsLink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(OpenTickets));
-        }
-
-        private void OpenAsEndUserLink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(OpenAsEndUser));
-        }
-
-        private void OnHoldLink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(OnHold));
-        }
-
-        private void FollowUpDatesLink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FollowUpDates));
         }
     }
 }

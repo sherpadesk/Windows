@@ -116,6 +116,21 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OpenTickets.xaml.cs">
+      <DependentUpon>OpenTickets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FollowUpDates.xaml.cs">
+      <DependentUpon>FollowUpDates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OnHold.xaml.cs">
+      <DependentUpon>OnHold.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OpenAsEndUser.xaml.cs">
+      <DependentUpon>OpenAsEndUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewMessages.xaml.cs">
+      <DependentUpon>NewMessages.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Info.xaml.cs">
       <DependentUpon>Info.xaml</DependentUpon>
     </Compile>
@@ -156,6 +171,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OpenTickets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FollowUpDates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OnHold.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OpenAsEndUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NewMessages.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
