@@ -107,6 +107,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\Connector.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
@@ -116,6 +117,12 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\ObjectBase.cs" />
+    <Compile Include="Models\Request\LoginRequest.cs" />
+    <Compile Include="Models\Request\Request.cs" />
+    <Compile Include="Models\Response\LoginResponse.cs" />
+    <Compile Include="Models\Response\Response.cs" />
     <Compile Include="OpenTickets.xaml.cs">
       <DependentUpon>OpenTickets.xaml</DependentUpon>
     </Compile>
@@ -212,6 +219,7 @@
       <HintPath>..\packages\WinRTXamlToolkit.1.5.4.3\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using SherpaDesk.Client;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -35,9 +28,42 @@ namespace SherpaDesk
         {
         }
 
-        private void SignIn(object sender, RoutedEventArgs e)
+        private async void SignIn(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            using (var connector = new Connector())
+            {
+                var result = await connector.Operation<LoginRequest, LoginResponse>(
+                    "login",
+                    new LoginRequest
+                    {
+                        Username = UserNameTextbox.Text,
+                        Password = PasswordTextBox.Password
+                    });
+
+                if (result.Status == eResponseStatus.Success)
+                {
+                    if (!string.IsNullOrEmpty(result.Data.ApiToken))
+                    {
+                        this.Frame.Navigate(typeof(MainPage));
+                    }
+                    else
+                    {
+                        //TODO: show : "Invalid API Token" error; 
+                    }
+                }
+                else if (result.Status == eResponseStatus.Invalid)
+                {
+                    //TODO: show validation warnings on display form result.Messages
+                }
+                else if(result.Status == eResponseStatus.Fail)
+                {
+                    //TODO: show the sherpadesk.com error message on display form result.Message
+                }
+                else
+                {
+                    //TODO: show internal error on display form result.Message
+                }
+            }
         }
     }
 }
