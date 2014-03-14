@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace SherpaDesk.Client
+namespace SherpaDesk.Common
 {
     public class Connector : IDisposable
     {

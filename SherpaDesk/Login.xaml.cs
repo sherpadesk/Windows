@@ -1,4 +1,4 @@
-﻿using SherpaDesk.Client;
+﻿using SherpaDesk.Common;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using Windows.UI.Xaml;
