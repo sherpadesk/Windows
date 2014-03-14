@@ -95,7 +95,7 @@ namespace SherpaDesk.Client
             }
             catch (Exception ex)
             {
-                return result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString());
+                return result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString(), request.ToString());
             }
             return result;
         }
