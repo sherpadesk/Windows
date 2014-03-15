@@ -1,6 +1,7 @@
 ﻿using SherpaDesk.Common;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -26,6 +27,7 @@ namespace SherpaDesk
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
         }
 
         private async void SignIn(object sender, RoutedEventArgs e)
@@ -48,20 +50,14 @@ namespace SherpaDesk
                     }
                     else
                     {
-                        //TODO: show : "Invalid API Token" error; 
+                        MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
+                        dialog.ShowAsync();
                     }
-                }
-                else if (result.Status == eResponseStatus.Invalid)
-                {
-                    //TODO: show validation warnings on display form result.Messages
-                }
-                else if(result.Status == eResponseStatus.Fail)
-                {
-                    //TODO: show the sherpadesk.com error message on display form result.Message
                 }
                 else
                 {
-                    //TODO: show internal error on display form result.Message
+                    MessageDialog dialog = new MessageDialog(result.Message, "Error");
+                    dialog.ShowAsync();
                 }
             }
         }

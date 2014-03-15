@@ -1,9 +1,13 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,6 +49,18 @@ namespace SherpaDesk
         private void AddTicketClick(object sender, RoutedEventArgs e)
         {
             this.MainFrame.Navigate(typeof(AddTicket));
+        }
+
+        private async void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog dialog = new MessageDialog("Are you sure?");
+            dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
+            dialog.Commands.Add(new UICommand { Label = "Cancel", Id = "cancel" });
+            var confirmResult = await dialog.ShowAsync();
+            if (confirmResult.Id.ToString() == "ok")
+            {
+                this.Frame.Navigate(typeof(Login));
+            }
         }
     }
 }

@@ -36,19 +36,20 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="New Messages:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="NewMessagesLink" Content="0" Grid.Row="0" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" Click="NewMessagesLink_Click"/>
-            <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Open Tickets:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OpenTicketsLink" Content="0" Grid.Row="1" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" Click="OpenTicketsLink_Click"/>
-            <TextBlock HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Open as End User:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OpenAsEndUserLink" Content="0" Grid.Row="2" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" Click="OpenAsEndUserLink_Click"/>
-            <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="On Hold:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OnHoldLink" Content="0" Grid.Row="3" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" Click="OnHoldLink_Click"/>
-            <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Follow-Up Dates:" Margin="10,8,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="FollowUpDatesLink" Content="0" Grid.Row="4" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="White" Click="FollowUpDatesLink_Click"/>
+            <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="New Messages" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton x:Name="NewMessagesLink" Content="0" Grid.Row="0" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="NewMessagesLink_Click"/>
+            <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="Open Tickets" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton x:Name="OpenTicketsLink" Content="0" Grid.Row="1" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OpenTicketsLink_Click"/>
+            <TextBlock HorizontalAlignment="left" Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="Open as End User" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton x:Name="OpenAsEndUserLink" Content="0" Grid.Row="2" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OpenAsEndUserLink_Click"/>
+            <TextBlock HorizontalAlignment="left" Grid.Row="3" Grid.Column="2" TextWrapping="Wrap" Text="On Hold" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton x:Name="OnHoldLink" Content="0" Grid.Row="3" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OnHoldLink_Click"/>
+            <TextBlock HorizontalAlignment="left" Grid.Row="4" Grid.Column="2" TextWrapping="Wrap" Text="Follow-Up Dates" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
+            <HyperlinkButton x:Name="FollowUpDatesLink" Content="0" Grid.Row="4" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="FollowUpDatesLink_Click"/>
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
