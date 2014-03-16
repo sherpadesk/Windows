@@ -1,4 +1,5 @@
-﻿using SherpaDesk.Common;
+﻿using System;
+using SherpaDesk.Common;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using Windows.UI.Popups;
@@ -32,6 +33,7 @@ namespace SherpaDesk
 
         private async void SignIn(object sender, RoutedEventArgs e)
         {
+            IUICommand errorDialog = null;
             using (var connector = new Connector())
             {
                 var result = await connector.Operation<LoginRequest, LoginResponse>(
@@ -46,18 +48,21 @@ namespace SherpaDesk
                 {
                     if (!string.IsNullOrEmpty(result.Data.ApiToken))
                     {
+                        AppSettings.Current.ApiToken = result.Data.ApiToken;
+                        AppSettings.Current.Username = UserNameTextbox.Text;
                         this.Frame.Navigate(typeof(MainPage));
                     }
                     else
                     {
                         MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
-                        dialog.ShowAsync();
+                        errorDialog = await dialog.ShowAsync();
                     }
                 }
                 else
                 {
+                    //TODO: make possibility to send the result.Messages into Error Dialog for future feature
                     MessageDialog dialog = new MessageDialog(result.Message, "Error");
-                    dialog.ShowAsync();
+                    errorDialog = await dialog.ShowAsync();
                 }
             }
         }

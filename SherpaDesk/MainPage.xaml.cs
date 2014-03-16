@@ -59,6 +59,7 @@ namespace SherpaDesk
             var confirmResult = await dialog.ShowAsync();
             if (confirmResult.Id.ToString() == "ok")
             {
+                AppSettings.Current.Clear();
                 this.Frame.Navigate(typeof(Login));
             }
         }
