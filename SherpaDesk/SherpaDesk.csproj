@@ -118,12 +118,14 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Common\Extensions.cs" />
     <Compile Include="Models\ObjectBase.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
     <Compile Include="Models\Request\Request.cs" />
     <Compile Include="Models\Response\LoginResponse.cs" />
+    <Compile Include="Models\Response\OrganizationResponse.cs" />
     <Compile Include="Models\Response\Response.cs" />
+    <Compile Include="Models\Response\TicketCountsResponse.cs" />
     <Compile Include="OpenTickets.xaml.cs">
       <DependentUpon>OpenTickets.xaml</DependentUpon>
     </Compile>

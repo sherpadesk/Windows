@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SherpaDesk.Common;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
@@ -33,36 +34,48 @@ namespace SherpaDesk
 
         private async void SignIn(object sender, RoutedEventArgs e)
         {
-            IUICommand errorDialog = null;
             using (var connector = new Connector())
             {
-                var result = await connector.Operation<LoginRequest, LoginResponse>(
-                    "login",
-                    new LoginRequest
-                    {
-                        Username = UserNameTextbox.Text,
-                        Password = PasswordTextBox.Password
-                    });
+                AppSettings.Current.Clear();
+                var resultLogin = await connector.Operation<LoginRequest, LoginResponse>(
+                        "login",
+                        new LoginRequest
+                        {
+                            Username = UserNameTextbox.Text,
+                            Password = PasswordTextBox.Password
+                        });
 
-                if (result.Status == eResponseStatus.Success)
+                if (resultLogin.Status == eResponseStatus.Success)
                 {
-                    if (!string.IsNullOrEmpty(result.Data.ApiToken))
+                    if (!string.IsNullOrEmpty(resultLogin.Data.ApiToken))
                     {
-                        AppSettings.Current.ApiToken = result.Data.ApiToken;
+                        AppSettings.Current.ApiToken = resultLogin.Data.ApiToken;
                         AppSettings.Current.Username = UserNameTextbox.Text;
-                        this.Frame.Navigate(typeof(MainPage));
+
+                        var resultOrg = await connector.Operation<OrganizationResponse[]>(
+                                "organizations");
+
+                        if (resultOrg.Status == eResponseStatus.Success)
+                        {
+                            var org = resultOrg.Data.DefaultIfEmpty(new OrganizationResponse()).First();
+                            AppSettings.Current.OrganizationKey = org.Key;
+                            AppSettings.Current.InstanceKey = org.Instances.DefaultIfEmpty(new InstanceResponse()).First().Key;
+                            this.Frame.Navigate(typeof(MainPage));
+                        }
+                        else
+                        {
+                            this.HandleError(resultOrg);
+                        }
                     }
                     else
                     {
                         MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
-                        errorDialog = await dialog.ShowAsync();
+                        await dialog.ShowAsync();
                     }
                 }
                 else
                 {
-                    //TODO: make possibility to send the result.Messages into Error Dialog for future feature
-                    MessageDialog dialog = new MessageDialog(result.Message, "Error");
-                    errorDialog = await dialog.ShowAsync();
+                    this.HandleError(resultLogin);
                 }
             }
         }

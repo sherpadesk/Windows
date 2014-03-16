@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +28,25 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
+        public async void Refresh()
+        {
+            using (var connector = new Connector())
+            {
+                var result = await connector.Operation<TicketCountsResponse>(
+                    "tickets/counts");
+                if (result.Status == eResponseStatus.Success)
+                {
+                    NewMessagesLink.Content = result.Data.NewMessages;
+                    OpenTicketsLink.Content = result.Data.AllOpen;
+                    OpenAsEndUserLink.Content = result.Data.OpenAsUser;
+                    OnHoldLink.Content = result.Data.OnHold;
+                    FollowUpDatesLink.Content = result.Data.Reminder;
+                }
+                else
+                    this.pageRoot.HandleError(result);
+            }
+        }
+
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -37,6 +58,7 @@ namespace SherpaDesk
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            this.Refresh();
         }
 
         /// <summary>

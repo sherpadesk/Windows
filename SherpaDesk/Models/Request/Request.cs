@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Request
 {
     public abstract class Request : ObjectBase
     {
-        public static Request Empty = new Request<EmptyRequest>(new EmptyRequest());
-
         public abstract IList<ValidationResult> Validate();
     }
 
@@ -33,7 +32,7 @@ namespace SherpaDesk.Models.Request
         }
     }
 
-
+    [DataContract]
     internal sealed class EmptyRequest
     {
     }

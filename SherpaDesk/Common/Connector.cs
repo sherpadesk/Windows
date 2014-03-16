@@ -21,8 +21,13 @@ namespace SherpaDesk.Common
         protected const string ERROR_INVALID_RESPONSE = "Invalid response from sherpadesk.com";
         protected const string ERROR_INTERNAL = "internal error";
         protected const string JSON_MEDIA_TYPE = "application/json";
+        protected const string AUTHORIZATION = "Authorization";
+        protected const string BASIC = "Basic ";
+        protected const string AUTH_FORMAT = "{0}-{1}:{2}";
+        protected const string AUTH_FORMAT_ORG = "x:{0}";
 
         private HttpClient _httpClient;
+        private string _authenticationString;
 
         public Connector()
         {
@@ -30,6 +35,15 @@ namespace SherpaDesk.Common
             _httpClient.BaseAddress = new Uri(API_URL);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_MEDIA_TYPE));
+        }
+
+        public async Task<Response<TResponse>> Operation<TResponse>(
+                string command)
+            where TResponse : class
+        {
+            return await this.Operation<EmptyRequest, TResponse>(
+                command,
+                new EmptyRequest());
         }
 
         public async Task<Response<TResponse>> Operation<TRequest, TResponse>(
@@ -65,6 +79,8 @@ namespace SherpaDesk.Common
                     }
                 }
 
+                Authentication();
+
                 HttpResponseMessage response;
 
                 if (requestContent.Length > 3)
@@ -79,13 +95,11 @@ namespace SherpaDesk.Common
 
                 if (response.IsSuccessStatusCode)
                 {
+                    var jsonResponseSerializer = new DataContractJsonSerializer(typeof(TResponse));
                     using (var responseStream = await response.Content.ReadAsStreamAsync())
                     {
-                        var jsonResponseSerializer = new DataContractJsonSerializer(typeof(TResponse));
-
-                        result.Data = jsonResponseSerializer.ReadObject(responseStream) as TResponse;
-                        if (result.Data == null)
-                            return result.Fail(ERROR_INVALID_RESPONSE, (new StreamReader(responseStream)).ReadToEnd());
+                        responseStream.Position = 0;
+                        result.Data = (TResponse)jsonResponseSerializer.ReadObject(responseStream);
                     }
                 }
                 else
@@ -105,6 +119,44 @@ namespace SherpaDesk.Common
         {
             if (_httpClient != null)
                 _httpClient.Dispose();
+        }
+
+        private void Authentication()
+        {
+            if (_httpClient.DefaultRequestHeaders.Contains(AUTHORIZATION))
+            {
+                _httpClient.DefaultRequestHeaders.Remove(AUTHORIZATION);
+            }
+
+            if (!string.IsNullOrEmpty(_authenticationString))
+            {
+                _httpClient.DefaultRequestHeaders.Add(AUTHORIZATION, _authenticationString);
+            }
+            else
+            {
+                var token = AppSettings.Current.ApiToken;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    var orgKey = AppSettings.Current.OrganizationKey;
+                    var instKey = AppSettings.Current.InstanceKey;
+                    if (!string.IsNullOrEmpty(orgKey) && !string.IsNullOrEmpty(instKey))
+                    {
+                        _authenticationString = 
+                            Convert.ToBase64String(
+                                Encoding.UTF8.GetBytes(
+                                    string.Format(AUTH_FORMAT, orgKey, instKey, token)));
+
+                        _httpClient.DefaultRequestHeaders.Add(AUTHORIZATION,
+                            BASIC + _authenticationString);
+                    }
+                    else
+                    {
+                        _httpClient.DefaultRequestHeaders.Add(AUTHORIZATION,
+                            BASIC + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Format(AUTH_FORMAT_ORG, token))));
+                    }
+                }
+            }
+
         }
     }
 }
