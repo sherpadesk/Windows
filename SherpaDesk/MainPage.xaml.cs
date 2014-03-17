@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -38,6 +39,8 @@ namespace SherpaDesk
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.MainFrame.Navigate(typeof(Info));
+            this.LoginNameButton.Content = "LastName, FirstName";
+            this.Avatar.Source = new BitmapImage(new Uri(string.Format("https://www.gravatar.com/avatar/{0}?s=40", SherpaDesk.Common.Extensions.GetMD5(AppSettings.Current.Username)), UriKind.Absolute));
             base.OnNavigatedTo(e);
         }
 
@@ -62,6 +65,11 @@ namespace SherpaDesk
                 AppSettings.Current.Clear();
                 this.Frame.Navigate(typeof(Login));
             }
+        }
+
+        private void LoginNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(UpdateProfile));            
         }
     }
 }

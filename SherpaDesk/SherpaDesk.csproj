@@ -119,6 +119,9 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="UpdateProfile.xaml.cs">
+      <DependentUpon>UpdateProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObjectBase.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
     <Compile Include="Models\Request\Request.cs" />
@@ -165,6 +168,7 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\WideLogo.png" />
     <Content Include="Common\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpdateProfile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

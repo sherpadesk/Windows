@@ -48,7 +48,7 @@ namespace SherpaDesk
                 if (resultLogin.Status == eResponseStatus.Success)
                 {
                     if (!string.IsNullOrEmpty(resultLogin.Data.ApiToken))
-                    {
+                    {                        
                         AppSettings.Current.ApiToken = resultLogin.Data.ApiToken;
                         AppSettings.Current.Username = UserNameTextbox.Text;
 

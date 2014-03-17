@@ -3,6 +3,9 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Response;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
+using Windows.Security.Cryptography.Core;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 
 namespace SherpaDesk.Common
 {
@@ -40,6 +43,32 @@ namespace SherpaDesk.Common
                 response.Messages.Add(msg);
 
             return response;
+        }
+
+        public static string GetMD5(string str)
+        {
+            string dataHash = string.Empty;
+            string hashType = "MD5";
+            try
+            {
+                HashAlgorithmProvider Algorithm = HashAlgorithmProvider.OpenAlgorithm(hashType);
+                IBuffer vector = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+                IBuffer digest = Algorithm.HashData(vector);
+                if (digest.Length != Algorithm.HashLength)
+                {
+                    throw new System.InvalidOperationException(
+                      "HashAlgorithmProvider failed to generate a hash of proper length!");
+                }
+                else
+                {
+                    dataHash = CryptographicBuffer.EncodeToHexString(digest);//Encoding it to a Hex String 
+                    return dataHash;
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         public static async void HandleError(this Page page, Response response)

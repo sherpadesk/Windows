@@ -21,7 +21,15 @@
         <Button x:Name="AddTicketButton" Content="Add Ticket" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="270" FontSize="48" Click="AddTicketClick" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal"/>
         <Frame x:Name="MainFrame" Content="Frame" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" />
         <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="right" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White"/>
-
-        <Button x:Name="LogOutButton" Content="Log Out" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Click="LogOutButton_Click" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Margin="154,88,0,0"/>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="right" Margin="0,101,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="LogOutButton" Content="Log Out" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Click="LogOutButton_Click" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Margin="0,0,0,0"/>
+            <Button x:Name="LoginNameButton" Grid.Column="1" Content="LastName, FirstName" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Click="LoginNameButton_Click"/>
+            <Image x:Name="Avatar" Source="https://www.gravatar.com/avatar/93097425c5522cfc4372c53896a962b2?s=40" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Top"/>
+        </Grid>
     </Grid>
 </Page>
