@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -68,6 +69,27 @@ namespace SherpaDesk
             {
                 filepickButton.Content = "Select Files";
             }
+        }
+
+        private void EndUserMeLink_Click(object sender, RoutedEventArgs e)
+        {
+            EndUserCombo.SelectedItem = EndUserMe;
+        }
+
+        private void TechnicianMeLink_Click(object sender, RoutedEventArgs e)
+        {
+            TechnicianCombo.SelectedItem = TechnicianMe;
+        }
+
+        private void AlternateTechMeLink_Click(object sender, RoutedEventArgs e)
+        {
+            AlternateTechnicianCombo.SelectedItem = AlternateTechMe;
+        }
+
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = "Last, First";
+            AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Username;
         }
     }
 }
