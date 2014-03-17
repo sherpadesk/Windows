@@ -25,7 +25,8 @@ namespace SherpaDesk.Models.Request
             if (!Validator.TryValidateObject(
                     this.Data,
                     new ValidationContext(this.Data),
-                    results))
+                    results,
+                    true))
                 return results;
             else
                 return new List<ValidationResult>();

@@ -37,46 +37,76 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 AppSettings.Current.Clear();
+
+                // authentication
                 var resultLogin = await connector.Operation<LoginRequest, LoginResponse>(
                         "login",
                         new LoginRequest
                         {
-                            Username = UserNameTextbox.Text,
+                            Email = UserNameTextbox.Text,
                             Password = PasswordTextBox.Password
                         });
 
-                if (resultLogin.Status == eResponseStatus.Success)
-                {
-                    if (!string.IsNullOrEmpty(resultLogin.Data.ApiToken))
-                    {                        
-                        AppSettings.Current.ApiToken = resultLogin.Data.ApiToken;
-                        AppSettings.Current.Username = UserNameTextbox.Text;
-
-                        var resultOrg = await connector.Operation<OrganizationResponse[]>(
-                                "organizations");
-
-                        if (resultOrg.Status == eResponseStatus.Success)
-                        {
-                            var org = resultOrg.Data.DefaultIfEmpty(new OrganizationResponse()).First();
-                            AppSettings.Current.OrganizationKey = org.Key;
-                            AppSettings.Current.InstanceKey = org.Instances.DefaultIfEmpty(new InstanceResponse()).First().Key;
-                            this.Frame.Navigate(typeof(MainPage));
-                        }
-                        else
-                        {
-                            this.HandleError(resultOrg);
-                        }
-                    }
-                    else
-                    {
-                        MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
-                        await dialog.ShowAsync();
-                    }
-                }
-                else
+                if (resultLogin.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultLogin);
+                    return;
                 }
+                if (string.IsNullOrEmpty(resultLogin.Result.ApiToken))
+                {
+                    MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
+                    await dialog.ShowAsync();
+                    return;
+                }
+
+                AppSettings.Current.ApiToken = resultLogin.Result.ApiToken;
+                AppSettings.Current.Email = UserNameTextbox.Text;
+
+                // load organization and instance info
+                var resultOrg = await connector.Operation<OrganizationResponse[]>(
+                        "organizations");
+                
+                if (resultOrg.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultOrg);
+                    return;
+                }
+
+                var org = resultOrg.Result.DefaultIfEmpty(new OrganizationResponse()).First();
+                AppSettings.Current.OrganizationKey = org.Key;
+                AppSettings.Current.OrganizationName = org.Name;
+
+                var instance = org.Instances.DefaultIfEmpty(new InstanceResponse()).First();
+                
+                AppSettings.Current.InstanceKey = instance.Key;
+                AppSettings.Current.InstanceName = instance.Name;
+
+                //load user info
+                var resultUser = await connector.Operation<SearchUserRequest, UserResponse[]>(
+                    "users",
+                    new SearchUserRequest { Email = UserNameTextbox.Text });
+
+                if (resultUser.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultUser);
+                    return;
+                }
+                if (resultUser.Result == null || resultUser.Result.Length == 0)
+                {
+                    MessageDialog dialog = new MessageDialog("Cannot found useer", "Error");
+                    await dialog.ShowAsync();
+                    return;
+                }
+                var user = resultUser.Result.First();
+
+                AppSettings.Current.UserId = user.Id;
+                AppSettings.Current.FirstName = user.FirstName;
+                AppSettings.Current.LastName = user.LastName;
+                AppSettings.Current.Role = user.Role;
+
+                // redirect to main page
+                this.Frame.Navigate(typeof(MainPage));
+
             }
         }
     }

@@ -36,7 +36,7 @@ namespace SherpaDesk.Models.Response
         where T : class
     {
         [Details]
-        public T Data { get; set; }
+        public T Result { get; set; }
     }
 
 

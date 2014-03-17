@@ -119,6 +119,8 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Models\Request\SearchUserRequest.cs" />
+    <Compile Include="Models\Response\UserResponse.cs" />
     <Compile Include="UpdateProfile.xaml.cs">
       <DependentUpon>UpdateProfile.xaml</DependentUpon>
     </Compile>

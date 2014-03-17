@@ -36,11 +36,11 @@ namespace SherpaDesk
                     "tickets/counts");
                 if (result.Status == eResponseStatus.Success)
                 {
-                    NewMessagesLink.Content = result.Data.NewMessages;
-                    OpenTicketsLink.Content = result.Data.AllOpen;
-                    OpenAsEndUserLink.Content = result.Data.OpenAsUser;
-                    OnHoldLink.Content = result.Data.OnHold;
-                    FollowUpDatesLink.Content = result.Data.Reminder;
+                    NewMessagesLink.Content = result.Result.NewMessages;
+                    OpenTicketsLink.Content = result.Result.AllOpen;
+                    OpenAsEndUserLink.Content = result.Result.OpenAsUser;
+                    OnHoldLink.Content = result.Result.OnHold;
+                    FollowUpDatesLink.Content = result.Result.Reminder;
                 }
                 else
                     this.pageRoot.HandleError(result);

@@ -20,8 +20,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Image Height="219" Grid.Row="0" VerticalAlignment="Top" Width="705" Source="Assets/StoreLogo.png" />
-            <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="artem-itsolution@yandex.ru" VerticalAlignment="Top" FontSize="36" Width="619"/>
-            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="619" Password="ppyeg" />
+            <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="alexey.gavrilov@gmail.com" VerticalAlignment="Top" FontSize="36" Width="619"/>
+            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="619" Password="8734" />
             <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="625" Height="66" Click="SignIn" FontSize="36" Background="#FF57AE57" />
         </Grid>
         <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="659,190,0,0" VerticalAlignment="Top" Foreground="White"/>

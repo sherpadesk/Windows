@@ -26,6 +26,8 @@ namespace SherpaDesk
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private const string FULL_NAME_FORMAT = "{1}, {0}";
+        private const string AVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/{0}?s=40";
         public MainPage()
         {
             this.InitializeComponent();
@@ -39,8 +41,11 @@ namespace SherpaDesk
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.MainFrame.Navigate(typeof(Info));
-            this.LoginNameButton.Content = "LastName, FirstName";
-            this.Avatar.Source = new BitmapImage(new Uri(string.Format("https://www.gravatar.com/avatar/{0}?s=40", SherpaDesk.Common.Extensions.GetMD5(AppSettings.Current.Username)), UriKind.Absolute));
+            this.LoginNameButton.Content = string.Format(FULL_NAME_FORMAT, AppSettings.Current.FirstName, AppSettings.Current.LastName);
+            this.Avatar.Source = new BitmapImage(
+                new Uri(string.Format(AVATAR_URL_FORMAT, 
+                    SherpaDesk.Common.Extensions.GetMD5(AppSettings.Current.Email)), 
+                    UriKind.Absolute));
             base.OnNavigatedTo(e);
         }
 

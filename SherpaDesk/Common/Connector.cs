@@ -99,7 +99,7 @@ namespace SherpaDesk.Common
                     using (var responseStream = await response.Content.ReadAsStreamAsync())
                     {
                         responseStream.Position = 0;
-                        result.Data = (TResponse)jsonResponseSerializer.ReadObject(responseStream);
+                        result.Result = (TResponse)jsonResponseSerializer.ReadObject(responseStream);
                     }
                 }
                 else

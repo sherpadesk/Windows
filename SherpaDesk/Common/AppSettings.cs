@@ -23,10 +23,145 @@ namespace SherpaDesk.Common
         
         private const string KEY = "appSettings";
         private const string API_TOKEN_SETTING = "ApiTokenSettings";
-        private const string USERNAME_SETTING = "UsernameSettings";
+        private const string USER_ID_SETTING = "UserIdSettings";
+        private const string EMAIL_SETTING = "EmailSettings";
+        private const string FIRST_NAME_SETTING = "FirstNameSettings";
+        private const string LAST_NAME_SETTING = "LastNameSettings";
+        private const string ROLE_SETTING = "RoleSettings";
         private const string ORGANIZATION_KEY_SETTING = "OrganizationKeySettings";
+        private const string ORGANIZATION_NAME_SETTING = "OrganizationNameSettings";
         private const string INSTANCE_KEY_SETTING = "InstanceKeySettings";
+        private const string INSTANCE_NAME_SETTING = "InstanceNameSettings";
 
+        public string ApiToken
+        {
+            get
+            {
+                return GetValueOrDefault<string>(API_TOKEN_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(API_TOKEN_SETTING, value);
+                Save();
+            }
+        }
+
+        public int UserId
+        {
+            get
+            {
+                return GetValueOrDefault<int>(USER_ID_SETTING, 0);
+            }
+            set
+            {
+                AddOrUpdateValue(USER_ID_SETTING, value);
+                Save();
+            }
+        }
+
+        public string FirstName
+        {
+            get
+            {
+                return GetValueOrDefault<string>(FIRST_NAME_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(FIRST_NAME_SETTING, value);
+                Save();
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return GetValueOrDefault<string>(LAST_NAME_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(LAST_NAME_SETTING, value);
+                Save();
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return GetValueOrDefault<string>(EMAIL_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(EMAIL_SETTING, value);
+                Save();
+            }
+        }
+
+        public string Role
+        {
+            get
+            {
+                return GetValueOrDefault<string>(ROLE_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(ROLE_SETTING, value);
+                Save();
+            }
+        }
+
+        public string OrganizationKey
+        {
+            get
+            {
+                return GetValueOrDefault<string>(ORGANIZATION_KEY_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(ORGANIZATION_KEY_SETTING, value);
+                Save();
+            }
+        }
+
+        public string OrganizationName
+        {
+            get
+            {
+                return GetValueOrDefault<string>(ORGANIZATION_NAME_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(ORGANIZATION_NAME_SETTING, value);
+                Save();
+            }
+        }
+
+        public string InstanceKey
+        {
+            get
+            {
+                return GetValueOrDefault<string>(INSTANCE_KEY_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(INSTANCE_KEY_SETTING, value);
+                Save();
+            }
+        }
+
+        public string InstanceName
+        {
+            get
+            {
+                return GetValueOrDefault<string>(INSTANCE_NAME_SETTING, string.Empty);
+            }
+            set
+            {
+                AddOrUpdateValue(INSTANCE_NAME_SETTING, value);
+                Save();
+            }
+        }
 
         // Our isolated storage settings
         //IsolatedStorageSettings isolatedStore;
@@ -36,7 +171,7 @@ namespace SherpaDesk.Common
         {
             try
             {
-                localSettings = ApplicationData.Current.LocalSettings;
+                localSettings = ApplicationData.Current.LocalSettings; //RoamingSettings;
                 // Get the settings for this application.
                 //isolatedStore = IsolatedStorageSettings.ApplicationSettings;
 
@@ -80,7 +215,6 @@ namespace SherpaDesk.Common
             return valueChanged;
         }
 
-
         /// <summary>
         /// Get the current value of the setting, or if it is not found, set the 
         /// setting to the default setting.
@@ -107,7 +241,6 @@ namespace SherpaDesk.Common
             return value;
         }
 
-
         /// <summary>
         /// Save the settings.
         /// </summary>
@@ -120,61 +253,6 @@ namespace SherpaDesk.Common
         public void Clear()
         {
             localSettings.Values.Clear();
-        }
-
-        /// <summary>
-        /// Property to get and set a ApiToken Setting Key.
-        /// </summary>
-        public string ApiToken
-        {
-            get
-            {
-                return GetValueOrDefault<string>(API_TOKEN_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(API_TOKEN_SETTING, value);
-                Save();
-            }
-        }
-
-        public string Username
-        {
-            get
-            {
-                return GetValueOrDefault<string>(USERNAME_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(USERNAME_SETTING, value);
-                Save();
-            }
-        }
-
-        public string OrganizationKey
-        {
-            get
-            {
-                return GetValueOrDefault<string>(ORGANIZATION_KEY_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(ORGANIZATION_KEY_SETTING, value);
-                Save();
-            }
-        }
-
-        public string InstanceKey
-        {
-            get
-            {
-                return GetValueOrDefault<string>(INSTANCE_KEY_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(INSTANCE_KEY_SETTING, value);
-                Save();
-            }
         }
 
     }
