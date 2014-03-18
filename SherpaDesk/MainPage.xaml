@@ -27,8 +27,17 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="LogOutButton" Content="Log Out" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Click="LogOutButton_Click" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Margin="0,0,0,0"/>
-            <Button x:Name="LoginNameButton" Grid.Column="1" Content="LastName, FirstName" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Click="LoginNameButton_Click"/>
+            <Button x:Name="LogOutButton" Content="Log Out" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Click="LogOutButton_Click" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Margin="0,0,0,0">
+            </Button>
+
+            <Button x:Name="LoginNameButton" Grid.Column="1" Content="LastName, FirstName" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal" Click="LoginNameButton_Click">
+                <!--<Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="My Profile" />
+                        <MenuFlyoutItem Text="Log Out" />
+                    </MenuFlyout>
+                </Button.Flyout>-->                
+            </Button>
             <Image x:Name="Avatar" Source="https://www.gravatar.com/avatar/93097425c5522cfc4372c53896a962b2?s=40" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Grid>

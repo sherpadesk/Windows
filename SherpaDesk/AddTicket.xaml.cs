@@ -88,8 +88,28 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = "Last, First";
-            AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Username;
+            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName);
+            AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Email;
+
+            AssignToComboBox.Items.Add(new ComboBoxItem { Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName) });
+        }
+
+        private void CreateNewAccountPopup_Loaded(object sender, RoutedEventArgs e)
+        {           
+            CreateNewAccountPopup.HorizontalOffset = (Window.Current.Bounds.Width - PopupGrid.ActualWidth) / 2;
+        }
+
+        private void AccountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = e.AddedItems.First();
+            if (selected != null)
+            {
+                if (((ComboBoxItem)selected).Tag != null && ((ComboBoxItem)selected).Tag.ToString() == "AddNewAccount")
+                {
+                    CreateNewAccountPopup.IsOpen = true;
+                    MainForm.IsEnabled = false;
+                }
+            }
         }
     }
 }

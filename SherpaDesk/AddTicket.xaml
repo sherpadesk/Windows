@@ -60,7 +60,7 @@
             <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Add Ticket" FontWeight="Normal"/>
         </Grid>
-        <ScrollViewer HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
+        <ScrollViewer x:Name="MainForm"  HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
 
             <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
                 <Grid.RowDefinitions>
@@ -93,10 +93,10 @@
                 <HyperlinkButton x:Name="EndUserMeLink" Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
                 <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBox x:Name="AccountComboBox" Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AccountComboBox_SelectionChanged">
                     <ComboBoxItem IsSelected="True" />
                     <ComboBoxItem Content="Micajah" />
-                    <ComboBoxItem Content="Add New Account.." Foreground="#FF00A10A"/>
+                    <ComboBoxItem Content="Add New Account.." Tag="AddNewAccount" Foreground="#FF00A10A"/>
                 </ComboBox>
                 <CheckBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
 
@@ -144,6 +144,43 @@
                 <HyperlinkButton Content="Cancel" Grid.Row="8" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
             </Grid>
         </ScrollViewer>
+        <Popup x:Name="CreateNewAccountPopup" Loaded="CreateNewAccountPopup_Loaded">
+            <Grid x:Name="PopupGrid" Height="500" Width="500" Background="#FFDFDEF0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Width="500" Background="#FF717EFF">
+                    <TextBlock Text="Add New Account" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,0" FontSize="20" />
+                </StackPanel>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Name*" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="0" Padding="0,15,10,0" FontSize="20" Foreground="Black" />
+                    <TextBox Grid.Column="1" Grid.Row="0" Margin="0,10,0,0" Height="30" TextWrapping="NoWrap" Width="300" />
+
+                    <TextBlock Text="Assigned To*" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1" Padding="0,15,10,0" FontSize="20" Foreground="Black" />
+                    <ComboBox x:Name="AssignToComboBox" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" FontSize="24" HorizontalAlignment="Left" Width="300" VerticalAlignment="Top">
+                    </ComboBox>
+
+                    <TextBlock Text="Email Suffixes" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="2" Padding="0,15,10,0" FontSize="20" Foreground="Black" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Margin="0,10,0,0" TextWrapping="NoWrap" Width="300" />
+                </Grid>
+            </Grid>
+        </Popup>
     </Grid>
 
 </common:LayoutAwarePage>

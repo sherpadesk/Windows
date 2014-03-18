@@ -46,6 +46,7 @@ namespace SherpaDesk
                 new Uri(string.Format(AVATAR_URL_FORMAT, 
                     SherpaDesk.Common.Extensions.GetMD5(AppSettings.Current.Email)), 
                     UriKind.Absolute));
+
             base.OnNavigatedTo(e);
         }
 
