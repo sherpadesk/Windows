@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,18 +44,8 @@ namespace SherpaDesk
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy - dddd");
-            StartTime.Text = EndTime.Text = DateTime.Now.ToString("hh:mm");
-
-            if (DateTime.Now.Hour < 12)
-            {
-                EndTimeAMPM.SelectedIndex = 0;
-                AMPM.SelectedIndex = 0;
-            }
-            else
-            {
-                EndTimeAMPM.SelectedIndex = 1;
-                AMPM.SelectedIndex = 1;
-            }
+            StartTime.Time = EndTime.Time = DateTime.Now.TimeOfDay;
+            TechnicianMe.Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName);
             base.OnNavigatedTo(e);
         }
 

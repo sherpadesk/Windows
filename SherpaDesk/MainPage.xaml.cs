@@ -60,7 +60,12 @@ namespace SherpaDesk
             this.MainFrame.Navigate(typeof(AddTicket));
         }
 
-        private async void LogOutButton_Click(object sender, RoutedEventArgs e)
+        private void MyProfileMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(UpdateProfile)); 
+        }
+
+        private async void LogOutMenu_Click(object sender, RoutedEventArgs e)
         {
             MessageDialog dialog = new MessageDialog("Are you sure?");
             dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
@@ -71,11 +76,6 @@ namespace SherpaDesk
                 AppSettings.Current.Clear();
                 this.Frame.Navigate(typeof(Login));
             }
-        }
-
-        private void LoginNameButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(UpdateProfile));            
         }
     }
 }
