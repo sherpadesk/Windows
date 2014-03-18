@@ -88,10 +88,10 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName);
+            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
             AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Email;
 
-            AssignToComboBox.Items.Add(new ComboBoxItem { Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName) });
+            AssignToComboBox.Items.Add(new ComboBoxItem { Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName) });
         }
 
         private void CreateNewAccountPopup_Loaded(object sender, RoutedEventArgs e)

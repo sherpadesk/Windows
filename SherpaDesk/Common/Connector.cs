@@ -130,7 +130,7 @@ namespace SherpaDesk.Common
 
             if (!string.IsNullOrEmpty(_authenticationString))
             {
-                _httpClient.DefaultRequestHeaders.Add(AUTHORIZATION, _authenticationString);
+                _httpClient.DefaultRequestHeaders.Add(AUTHORIZATION, BASIC + _authenticationString);
             }
             else
             {

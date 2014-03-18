@@ -115,6 +115,7 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\Helper.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
@@ -122,7 +123,13 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Extensions.cs" />
-    <Compile Include="Models\Request\SearchUserRequest.cs" />
+    <Compile Include="Models\Request\AccountSearchRequest.cs" />
+    <Compile Include="Models\Request\SearchRequest.cs" />
+    <Compile Include="Models\Request\UserSearchRequest.cs" />
+    <Compile Include="Models\Request\TaskTypeRequest.cs" />
+    <Compile Include="Models\Response\AccountResponse.cs" />
+    <Compile Include="Models\Response\TicketCountsSimpleResponse.cs" />
+    <Compile Include="Models\Response\NameResponse.cs" />
     <Compile Include="Models\Response\UserResponse.cs" />
     <Compile Include="UpdateProfile.xaml.cs">
       <DependentUpon>UpdateProfile.xaml</DependentUpon>

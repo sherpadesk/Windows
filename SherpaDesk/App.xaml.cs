@@ -74,9 +74,15 @@ namespace SherpaDesk
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(Login), args.Arguments))
+                if (!string.IsNullOrEmpty(AppSettings.Current.ApiToken) &&
+                    !string.IsNullOrEmpty(AppSettings.Current.OrganizationKey) &&
+                    !string.IsNullOrEmpty(AppSettings.Current.InstanceKey))
                 {
-                    throw new Exception("Failed to create initial page");
+                    rootFrame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    rootFrame.Navigate(typeof(Login), args.Arguments);
                 }
             }
             // Ensure the current window is active

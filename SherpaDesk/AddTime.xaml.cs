@@ -1,4 +1,6 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +24,14 @@ namespace SherpaDesk
     /// </summary>
     public sealed partial class AddTime : SherpaDesk.Common.LayoutAwarePage
     {
+        private const string TASKTYPE_COMBOBOXITEM_NAME = "TaskTypeItem_";
+        private const string TECHNICIAN_COMBOBOXITEM_NAME = "TechnicianItem_";
+        private const string ACCOUNT_COMBOBOXITEM_NAME = "AccountItem_";
+        private const string ADD_NEW_TASK_TYPE = "Add New Task Type...";
+        private const string ADD_NEW_ACCOUNT = "Add New Account...";
+        private const string TECHNICIAN_ME = "Technician Me";
+        private const string CLICKABLE_COLOR = "FF00A10A";
+        private const int INITIAL_ID = 0;
         public AddTime()
         {
             this.InitializeComponent();
@@ -38,14 +48,97 @@ namespace SherpaDesk
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-           
+
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             DateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy - dddd");
             StartTime.Time = EndTime.Time = DateTime.Now.TimeOfDay;
-            TechnicianMe.Content = string.Format("{0}, {1}", AppSettings.Current.LastName, AppSettings.Current.FirstName);
+            using (var connector = new Connector())
+            {
+                // types
+                var resultTaskType = await connector.Operation<TaskTypeRequest, NameResponse[]>(
+                    "task_types",
+                    new TaskTypeRequest());
+
+                if (resultTaskType.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+                TaskTypeList.Items.Clear();
+                foreach (var taskType in resultTaskType.Result)
+                {
+                    TaskTypeList.Items.Add(new ComboBoxItem
+                    {
+                        Name = TASKTYPE_COMBOBOXITEM_NAME + taskType.Id.ToString(),
+                        Content = taskType.Name
+                    });
+                }
+                TaskTypeList.Items.Add(new ComboBoxItem
+                {
+                    Name = TASKTYPE_COMBOBOXITEM_NAME + INITIAL_ID.ToString(),
+                    Content = ADD_NEW_TASK_TYPE,
+                    Foreground = new SolidColorBrush(Helper.HexStringToColor(CLICKABLE_COLOR))
+                });
+
+                // technician
+                var resultUsers = await connector.Operation<UserSearchRequest, UserResponse[]>(
+                    "users",
+                    new UserSearchRequest());
+
+                if (resultUsers.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+                TechnicianList.Items.Clear();
+                TechnicianList.Items.Add(new ComboBoxItem
+                {
+                    Name = TECHNICIAN_COMBOBOXITEM_NAME + AppSettings.Current.UserId,
+                    Content = TECHNICIAN_ME
+                });
+                foreach (var user in resultUsers.Result)
+                {
+                    if (user.Id != AppSettings.Current.UserId)
+                    {
+                        TechnicianList.Items.Add(new ComboBoxItem
+                        {
+                            Name = TECHNICIAN_COMBOBOXITEM_NAME + user.Id.ToString(),
+                            Content = Helper.FullName(user.FirstName, user.LastName)
+                        });
+                    }
+                }
+
+                // accounts
+                var resultAccounts = await connector.Operation<AccountSearchRequest, AccountResponse[]>(
+                    "accounts",
+                    new AccountSearchRequest());
+                
+                if (resultAccounts.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+
+                AccountList.Items.Clear();
+                foreach (var account in resultAccounts.Result)
+                {
+                    AccountList.Items.Add(new ComboBoxItem
+                    {
+                        Name = ACCOUNT_COMBOBOXITEM_NAME + account.Id.ToString(),
+                        Content = account.Name
+                    });
+                }
+                AccountList.Items.Add(new ComboBoxItem
+                {
+                    Name = ACCOUNT_COMBOBOXITEM_NAME + INITIAL_ID.ToString(),
+                    Content = ADD_NEW_ACCOUNT,
+                    Foreground = new SolidColorBrush(Helper.HexStringToColor(CLICKABLE_COLOR))
+                });
+
+            }
             base.OnNavigatedTo(e);
         }
 

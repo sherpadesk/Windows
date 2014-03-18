@@ -82,9 +82,9 @@ namespace SherpaDesk
                 AppSettings.Current.InstanceName = instance.Name;
 
                 //load user info
-                var resultUser = await connector.Operation<SearchUserRequest, UserResponse[]>(
+                var resultUser = await connector.Operation<UserSearchRequest, UserResponse[]>(
                     "users",
-                    new SearchUserRequest { Email = UserNameTextbox.Text });
+                    new UserSearchRequest { Email = UserNameTextbox.Text });
 
                 if (resultUser.Status != eResponseStatus.Success)
                 {
