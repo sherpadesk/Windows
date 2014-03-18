@@ -90,7 +90,7 @@ namespace SherpaDesk
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTaskType);
+                    this.HandleError(resultUsers);
                     return;
                 }
                 TechnicianList.Items.Clear();
@@ -118,7 +118,7 @@ namespace SherpaDesk
                 
                 if (resultAccounts.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTaskType);
+                    this.HandleError(resultAccounts);
                     return;
                 }
 
