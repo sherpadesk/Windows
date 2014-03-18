@@ -6,9 +6,9 @@ namespace SherpaDesk.Models.Request
     [DataContract]
     public sealed class LoginRequest : ObjectBase
     {
-        private const string ERROR_EMPTY_USERNAME = "Username is required field.";
-        private const string ERROR_INVALID_EMAIL = "Username should has a email format.";
-        private const string ERROR_EMPTY_PASSWORD = "Password is required field.";
+        private const string ERROR_EMPTY_USERNAME = "Username is required field.#UserNameTextbox";
+        private const string ERROR_INVALID_EMAIL = "Username should has a email format.#UserNameTextbox";
+        private const string ERROR_EMPTY_PASSWORD = "Password is required field.#PasswordTextBox";
 
         [Required(ErrorMessage = ERROR_EMPTY_USERNAME)]
         [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = ERROR_INVALID_EMAIL)]

@@ -1,16 +1,21 @@
-﻿using System;
-using SherpaDesk.Models;
-using SherpaDesk.Models.Response;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Controls;
-using Windows.Security.Cryptography.Core;
+﻿using SherpaDesk.Models.Response;
+using System;
+using System.Collections.Generic;
 using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace SherpaDesk.Common
 {
     public static class Extensions
     {
+        private const string TOOL_TIP_NAME = "ToolTip";
+
         public static TResponse Invalid<TResponse>(this TResponse response, params string[] messages)
             where TResponse : SherpaDesk.Models.Response.Response
         {
@@ -76,8 +81,51 @@ namespace SherpaDesk.Common
             MessageDialog dialog = new MessageDialog(response.Message, "Error");
             if (response.Status == eResponseStatus.Invalid)
             {
-                //TODO: show the validation messages on page
-                // apply page
+                string messageWithoutControl = string.Empty;
+                IDictionary<string, string> controls = new Dictionary<string, string>();
+                foreach (var message in response.Messages)
+                {
+                    string[] keyPair = message.Split('#');
+                    if (keyPair.Length == 2)
+                    {
+                        if (controls.ContainsKey(keyPair[1]))
+                        {
+                            controls[keyPair[1]] += Environment.NewLine + keyPair[0];
+                        }
+                        else
+                        {
+                            controls.Add(keyPair[1], keyPair[0]);
+                        }
+                    }
+                    else
+                    {
+                        messageWithoutControl += message + Environment.NewLine;
+                    }
+                }
+                foreach (var kv in controls)
+                {
+                    Control control = page.FindName(kv.Key) as Control;
+                    if (control != null)
+                    {
+                        ToolTip toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
+                        if (toolTip == null)
+                        {
+                            toolTip = new ToolTip();
+                            toolTip.Foreground = new SolidColorBrush(Colors.Red);
+                            toolTip.Content = kv.Value;
+                            ToolTipService.SetToolTip(control, toolTip);
+                        }
+                        else
+                        {
+                            toolTip.Content = kv.Value;
+                        }
+                        toolTip.IsOpen = true;
+                        control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                        {
+                            toolTip.IsOpen = false;
+                        });
+                    }
+                }
             }
             else if (response.Status == eResponseStatus.Fail)
             {
