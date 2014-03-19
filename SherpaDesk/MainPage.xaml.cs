@@ -19,32 +19,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private const string AVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/{0}?s=40";
         public MainPage()
         {
             this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(Info));
-            this.LoginNameButton.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
-            this.Avatar.Source = new BitmapImage(
-                new Uri(string.Format(AVATAR_URL_FORMAT, 
-                    Helper.GetMD5(AppSettings.Current.Email)), 
-                    UriKind.Absolute));
-
-            base.OnNavigatedTo(e);
         }
 
         private void AddTimeClick(object sender, RoutedEventArgs e)
@@ -73,6 +53,16 @@ namespace SherpaDesk
                 AppSettings.Current.Clear();
                 this.Frame.Navigate(typeof(Login));
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(Info));
+            this.LoginNameButton.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
+            this.Avatar.Source = new BitmapImage(
+                new Uri(string.Format(AVATAR_URL_FORMAT,
+                    Helper.GetMD5(AppSettings.Current.Email)),
+                    UriKind.Absolute));
         }
     }
 }

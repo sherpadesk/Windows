@@ -15,13 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
-
 namespace SherpaDesk
 {
-    /// <summary>
-    /// A basic page that provides characteristics common to most applications.
-    /// </summary>
     public sealed partial class AddTime : SherpaDesk.Common.LayoutAwarePage
     {
         private const string TASKTYPE_COMBOBOXITEM_NAME = "TaskTypeItem_";
@@ -37,21 +32,7 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
-        /// </summary>
-        /// <param name="navigationParameter">The parameter value passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-        /// </param>
-        /// <param name="pageState">A dictionary of state preserved by this page during an earlier
-        /// session.  This will be null the first time a page is visited.</param>
-        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-        {
-
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             DateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy - dddd");
             StartTime.Time = EndTime.Time = DateTime.Now.TimeOfDay;
@@ -96,7 +77,7 @@ namespace SherpaDesk
                 TechnicianList.Items.Clear();
                 TechnicianList.Items.Add(new ComboBoxItem
                 {
-                    Name = TECHNICIAN_COMBOBOXITEM_NAME + AppSettings.Current.UserId,
+                    Name = TECHNICIAN_COMBOBOXITEM_NAME + AppSettings.Current.UserId, // Please use .Tag property for UserId
                     Content = TECHNICIAN_ME
                 });
                 foreach (var user in resultUsers.Result)
@@ -115,7 +96,7 @@ namespace SherpaDesk
                 var resultAccounts = await connector.Operation<AccountSearchRequest, AccountResponse[]>(
                     "accounts",
                     new AccountSearchRequest());
-                
+
                 if (resultAccounts.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultAccounts);
@@ -127,7 +108,7 @@ namespace SherpaDesk
                 {
                     AccountList.Items.Add(new ComboBoxItem
                     {
-                        Name = ACCOUNT_COMBOBOXITEM_NAME + account.Id.ToString(),
+                        Name = ACCOUNT_COMBOBOXITEM_NAME + account.Id.ToString(), // Please use .Tag property for account.Id
                         Content = account.Name
                     });
                 }
@@ -137,19 +118,7 @@ namespace SherpaDesk
                     Content = ADD_NEW_ACCOUNT,
                     Foreground = new SolidColorBrush(Helper.HexStringToColor(CLICKABLE_COLOR))
                 });
-
             }
-            base.OnNavigatedTo(e);
-        }
-
-        /// <summary>
-        /// Preserves state associated with this page in case the application is suspended or the
-        /// page is discarded from the navigation cache.  Values must conform to the serialization
-        /// requirements of <see cref="SuspensionManager.SessionState"/>.
-        /// </summary>
-        /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-        protected override void SaveState(Dictionary<String, Object> pageState)
-        {
         }
     }
 }

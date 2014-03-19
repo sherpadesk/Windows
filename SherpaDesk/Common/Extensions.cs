@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -82,8 +83,16 @@ namespace SherpaDesk.Common
                         if (toolTip == null)
                         {
                             toolTip = new ToolTip();
-                            toolTip.Foreground = new SolidColorBrush(Colors.Red);
+                            toolTip.Foreground = new SolidColorBrush(Colors.Black);
+                            toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
+                            toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
                             toolTip.Content = kv.Value;
+                            toolTip.FontSize = 20;
+                            toolTip.HorizontalContentAlignment = HorizontalAlignment.Right;
+                            toolTip.Height -= 5;
+                            toolTip.Width = control.Width;
+                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
+                            toolTip.VerticalOffset = -control.Height;
                             ToolTipService.SetToolTip(control, toolTip);
                         }
                         else
@@ -94,6 +103,8 @@ namespace SherpaDesk.Common
                         control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
                         {
                             toolTip.IsOpen = false;
+                            toolTip.Content = string.Empty;
+                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
                         });
                     }
                 }
