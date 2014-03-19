@@ -34,7 +34,7 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            DateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy - dddd");
+            DateField.Date = DateTime.Now;
             StartTime.Time = EndTime.Time = DateTime.Now.TimeOfDay;
             using (var connector = new Connector())
             {

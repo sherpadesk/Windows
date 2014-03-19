@@ -38,30 +38,61 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal"/>
         </Grid>
         <ScrollViewer HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
-
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF1B3467">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <CheckBox HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tkt#" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="End User" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="3" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tech Name" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="4" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Account" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="5" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Class" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="6" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Time" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="7" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Days Old | Status" VerticalAlignment="Center"/>
-            </Grid>
+            <ListView x:Name="itemListView">
+                <GridViewHeaderItem>
+                    <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF1B3467">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tkt#" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="End User" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="3" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tech Name" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="4" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Account" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="5" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Class" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="6" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Time" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="7" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Days Old | Status" VerticalAlignment="Center"/>
+                    </Grid>
+                </GridViewHeaderItem>
+                <ListViewItem Content="232"/>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF1B3467">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tkt#" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="End User" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="3" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Tech Name" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="4" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Account" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="5" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Class" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="6" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Time" VerticalAlignment="Center"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="40,0,40,0" Grid.Column="7" Grid.Row="0" TextWrapping="Wrap" FontSize="30" Text="Days Old | Status" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollViewer>
         <VisualStateManager.VisualStateGroups>
 
