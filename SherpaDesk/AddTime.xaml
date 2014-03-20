@@ -70,7 +70,7 @@
 
                 <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="2" Margin="0,25,0,0" TextWrapping="Wrap" Text="Account" VerticalAlignment="Top" FontSize="30"/>
                 <ComboBox Name="AccountList" Grid.Column="2" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                    <ComboBoxItem Content="Add New Account..." Foreground="#FF00A10A"/>
+                    <ComboBoxItem Content="Add New Account..." Foreground="#FF00A10A" />
                 </ComboBox>
 
                 <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="4" Margin="0,25,0,0" TextWrapping="Wrap" Text="Task Type" VerticalAlignment="Top" FontSize="30"/>
@@ -78,8 +78,8 @@
                 </ComboBox>
 
                 <TextBlock HorizontalAlignment="left" Grid.Row="3" Grid.Column="0" Margin="10,25,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" FontSize="30"/>
-                <TextBox AcceptsReturn="True" Margin="10,0,0,0" Grid.RowSpan="3" HorizontalAlignment="Center" Height="300" Grid.Row="4" TextWrapping="Wrap" Grid.Column="0" Text="" VerticalAlignment="Top" FontSize="24" Width="500" />
-                <CheckBox Content="Billable" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" FontSize="20" IsChecked="True"/>
+                <TextBox Name="NoteTextBox" AcceptsReturn="True" Margin="10,0,0,0" Grid.RowSpan="3" HorizontalAlignment="Center" Height="300" Grid.Row="4" TextWrapping="Wrap" Grid.Column="0" Text="" VerticalAlignment="Top" FontSize="24" Width="500" />
+                <CheckBox Name="BillableBox" Content="Billable" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" FontSize="20" IsChecked="True"/>
 
                 <Grid Style="{StaticResource LayoutRootStyle}" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="4" Background="#FF6B3B28">
                     <Grid.RowDefinitions>
@@ -101,16 +101,16 @@
 
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" Margin="0,25,0,0" TextWrapping="Wrap" Text="Start" VerticalAlignment="Top" FontSize="30"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" Margin="70,30,0,0" TextWrapping="Wrap" Text="hh:mm" VerticalAlignment="Top" FontSize="20"/>
-                    <TimePicker x:Name="StartTime" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
+                    <TimePicker x:Name="StartTimePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
 
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="5" Margin="0,25,0,0" TextWrapping="Wrap" Text="Stop" VerticalAlignment="Top" FontSize="30"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="5" Margin="70,30,0,0" TextWrapping="Wrap" Text="hh:mm" VerticalAlignment="Top" FontSize="20"/>
                     
-                    <TimePicker x:Name="EndTime" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
+                    <TimePicker x:Name="EndTimePicker" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="9" Margin="0,25,0,0" TextWrapping="Wrap" Text="Hours" VerticalAlignment="Top" FontSize="30"/>
-                    <TextBox Margin="0,0,0,0" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Center" Height="48" Grid.Row="1" TextWrapping="Wrap" Grid.Column="9" VerticalAlignment="Top" FontSize="30" Width="130" />
+                    <TextBox x:Name="HoursTextBox" Margin="0,0,0,0" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Center" Height="48" Grid.Row="1" TextWrapping="Wrap" Grid.Column="9" VerticalAlignment="Top" FontSize="30" Width="130" />
                 </Grid>
-                <Button Content="Save My Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Top" Height="70" Grid.RowSpan="2" Width="500" FontSize="36" Background="#FF2F9129"/>
+                <Button Content="Save My Time" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Top" Height="70" Grid.RowSpan="2" Width="500" FontSize="36" Background="#FF2F9129" Click="Button_Click"/>
             </Grid>
         </ScrollViewer>
         <VisualStateManager.VisualStateGroups>

@@ -19,9 +19,6 @@ namespace SherpaDesk
 {
     public sealed partial class AddTime : SherpaDesk.Common.LayoutAwarePage
     {
-        private const string TASKTYPE_COMBOBOXITEM_NAME = "TaskTypeItem_";
-        private const string TECHNICIAN_COMBOBOXITEM_NAME = "TechnicianItem_";
-        private const string ACCOUNT_COMBOBOXITEM_NAME = "AccountItem_";
         private const string ADD_NEW_TASK_TYPE = "Add New Task Type...";
         private const string ADD_NEW_ACCOUNT = "Add New Account...";
         private const string TECHNICIAN_ME = "Technician Me";
@@ -35,7 +32,7 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             DateField.Date = DateTime.Now;
-            StartTime.Time = EndTime.Time = DateTime.Now.TimeOfDay;
+            StartTimePicker.Time = EndTimePicker.Time = DateTime.Now.TimeOfDay;
             using (var connector = new Connector())
             {
                 // types
@@ -53,13 +50,13 @@ namespace SherpaDesk
                 {
                     TaskTypeList.Items.Add(new ComboBoxItem
                     {
-                        Name = TASKTYPE_COMBOBOXITEM_NAME + taskType.Id.ToString(),
+                        Tag = taskType.Id,
                         Content = taskType.Name
                     });
                 }
                 TaskTypeList.Items.Add(new ComboBoxItem
                 {
-                    Name = TASKTYPE_COMBOBOXITEM_NAME + INITIAL_ID.ToString(),
+                    Tag = INITIAL_ID,
                     Content = ADD_NEW_TASK_TYPE,
                     Foreground = new SolidColorBrush(Helper.HexStringToColor(CLICKABLE_COLOR))
                 });
@@ -77,7 +74,7 @@ namespace SherpaDesk
                 TechnicianList.Items.Clear();
                 TechnicianList.Items.Add(new ComboBoxItem
                 {
-                    Name = TECHNICIAN_COMBOBOXITEM_NAME + AppSettings.Current.UserId, // Please use .Tag property for UserId
+                    Tag = AppSettings.Current.UserId,
                     Content = TECHNICIAN_ME
                 });
                 foreach (var user in resultUsers.Result)
@@ -86,7 +83,7 @@ namespace SherpaDesk
                     {
                         TechnicianList.Items.Add(new ComboBoxItem
                         {
-                            Name = TECHNICIAN_COMBOBOXITEM_NAME + user.Id.ToString(),
+                            Tag = user.Id,
                             Content = Helper.FullName(user.FirstName, user.LastName)
                         });
                     }
@@ -108,16 +105,56 @@ namespace SherpaDesk
                 {
                     AccountList.Items.Add(new ComboBoxItem
                     {
-                        Name = ACCOUNT_COMBOBOXITEM_NAME + account.Id.ToString(), // Please use .Tag property for account.Id
+                        Tag = account.Id,
                         Content = account.Name
                     });
                 }
                 AccountList.Items.Add(new ComboBoxItem
                 {
-                    Name = ACCOUNT_COMBOBOXITEM_NAME + INITIAL_ID.ToString(),
+                    Tag = INITIAL_ID,
                     Content = ADD_NEW_ACCOUNT,
                     Foreground = new SolidColorBrush(Helper.HexStringToColor(CLICKABLE_COLOR))
                 });
+            }
+        }
+
+        private int GetSelectedValue(ComboBox comboBox)
+        {
+            if (comboBox.SelectedIndex > -1)
+            {
+                return (int)((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex]).Tag;
+            }
+            else
+                return 0;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (var connector = new Connector())
+            {
+                var hours = decimal.Zero;
+                decimal.TryParse(HoursTextBox.Text, out hours);
+                var result = await connector.Action<AddTimeRequest>(
+                    "time",
+                    new AddTimeRequest
+                    {
+                        AccountId = this.GetSelectedValue(AccountList),
+                        TaskTypeId = this.GetSelectedValue(TaskTypeList),
+                        TechnicianId = this.GetSelectedValue(TechnicianList),
+                        Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
+                        Hours = hours,
+                        Note = NoteTextBox.Text
+                    });
+
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                }
+                else
+                {
+                    // redirect to main page
+                    ((Frame)this.Parent).Navigate(typeof(Info));
+                }
             }
         }
     }

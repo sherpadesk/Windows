@@ -37,11 +37,22 @@ namespace SherpaDesk.Common
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_MEDIA_TYPE));
         }
 
-        public async Task<Response<TResponse>> Operation<TResponse>(
+        public async Task<Response<EmptyResponse>> Action<TRequest>(
+                string command,
+                TRequest model)
+            where TRequest : class
+        {
+            return await this.Operation<TRequest, EmptyResponse>(
+                command,
+                model);
+        }
+
+
+        public Task<Response<TResponse>> Operation<TResponse>(
                 string command)
             where TResponse : class
         {
-            return await this.Operation<EmptyRequest, TResponse>(
+            return this.Operation<EmptyRequest, TResponse>(
                 command,
                 new EmptyRequest());
         }
@@ -141,7 +152,7 @@ namespace SherpaDesk.Common
                     var instKey = AppSettings.Current.InstanceKey;
                     if (!string.IsNullOrEmpty(orgKey) && !string.IsNullOrEmpty(instKey))
                     {
-                        _authenticationString = 
+                        _authenticationString =
                             Convert.ToBase64String(
                                 Encoding.UTF8.GetBytes(
                                     string.Format(AUTH_FORMAT, orgKey, instKey, token)));

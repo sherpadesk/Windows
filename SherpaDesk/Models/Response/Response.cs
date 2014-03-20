@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Response
 {
@@ -39,6 +40,7 @@ namespace SherpaDesk.Models.Response
         public T Result { get; set; }
     }
 
-
+    [DataContract]
+    public sealed class EmptyResponse { }
 
 }

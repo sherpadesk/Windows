@@ -116,6 +116,7 @@
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\IntRequired.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
@@ -124,6 +125,8 @@
     </Compile>
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Models\Request\AccountSearchRequest.cs" />
+    <Compile Include="Models\Request\AddTicketRequest.cs" />
+    <Compile Include="Models\Request\AddTimeRequest.cs" />
     <Compile Include="Models\Request\SearchRequest.cs" />
     <Compile Include="Models\Request\UserSearchRequest.cs" />
     <Compile Include="Models\Request\TaskTypeRequest.cs" />

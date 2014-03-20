@@ -34,7 +34,5 @@ namespace SherpaDesk.Models.Request
     }
 
     [DataContract]
-    internal sealed class EmptyRequest
-    {
-    }
+    internal sealed class EmptyRequest { }
 }
