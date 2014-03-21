@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public sealed class LoginRequest : ObjectBase
+    public sealed class LoginRequest : PostRequest
     {
         private const string ERROR_EMPTY_USERNAME = "Username is required field.#UserNameTextbox";
         private const string ERROR_INVALID_EMAIL = "Username should has a email format.#UserNameTextbox";

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public abstract class SearchRequest : ObjectBase
+    public abstract class SearchRequest : GetRequest
     {
         [DataMember(Name = "query"), Details]
         public string Query { get; set; }

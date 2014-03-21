@@ -1,8 +1,9 @@
-﻿using System;
-using System.Linq;
-using SherpaDesk.Common;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using System;
+using System.Linq;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

@@ -1,20 +1,12 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -63,9 +55,7 @@ namespace SherpaDesk
                 });
 
                 // technician
-                var resultUsers = await connector.Operation<UserSearchRequest, UserResponse[]>(
-                    "users",
-                    new UserSearchRequest());
+                var resultUsers = await connector.Operation<UserResponse[]>("users");
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -91,9 +81,7 @@ namespace SherpaDesk
                 }
 
                 // accounts
-                var resultAccounts = await connector.Operation<AccountSearchRequest, AccountResponse[]>(
-                    "accounts",
-                    new AccountSearchRequest());
+                var resultAccounts = await connector.Operation<AccountResponse[]>("accounts");
 
                 if (resultAccounts.Status != eResponseStatus.Success)
                 {
@@ -149,7 +137,7 @@ namespace SherpaDesk
                         TechnicianId = this.GetSelectedValue(TechnicianList),
                         Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                         Hours = hours,
-                        Note = NoteTextBox.Text                       
+                        Note = NoteTextBox.Text
                     });
 
                 if (result.Status != eResponseStatus.Success)
@@ -158,9 +146,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    Refresh();
-                    MessageDialog dialog = new MessageDialog("Time Saved Successfully");
-                    await dialog.ShowAsync();
+                    ((Frame)this.Parent).Navigate(typeof(Timesheet));
                 }
             }
         }

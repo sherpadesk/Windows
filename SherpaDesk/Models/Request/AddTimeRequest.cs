@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public class AddTimeRequest : ObjectBase
+    public class AddTimeRequest : PostRequest
     {
         private const string ERROR_EMPTY_TECHNICIAN_ID = "Please select a Technician.#TechnicianList";
         private const string ERROR_EMPTY_ACCOUNT_ID = "Please select a Account.#AccountList";

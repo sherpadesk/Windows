@@ -3,7 +3,7 @@
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public class AddTicketRequest : ObjectBase
+    public class AddTicketRequest : PostRequest
     {
         [DataMember(Name = "status"), Details]
         public string Status { get; set; }

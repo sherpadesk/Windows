@@ -116,6 +116,7 @@
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\Interfaces\IRequestType.cs" />
     <Compile Include="Common\IntRequired.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
@@ -124,6 +125,11 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Models\Enum\eRequestType.cs" />
+    <Compile Include="Models\Enum\eResponseStatus.cs" />
+    <Compile Include="Models\Enum\eTimeType.cs" />
+    <Compile Include="Models\Request\TimeSearchRequest.cs" />
+    <Compile Include="Models\Response\TimeResponse.cs" />
     <Compile Include="Timesheet.xaml.cs">
       <DependentUpon>Timesheet.xaml</DependentUpon>
     </Compile>

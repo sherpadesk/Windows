@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public class TaskTypeRequest : ObjectBase
+    public class TaskTypeRequest : PostRequest
     {
         [DataMember(Name = "key"), Details]
         public string Key { get; set; }

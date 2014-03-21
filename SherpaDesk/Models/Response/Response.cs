@@ -4,14 +4,6 @@ using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Response
 {
-    public enum eResponseStatus
-    {
-        Success,
-        Invalid,
-        Fail,
-        Error
-    }
-
     public abstract class Response : ObjectBase
     {
         protected Response()

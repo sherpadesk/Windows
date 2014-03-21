@@ -40,7 +40,7 @@ namespace SherpaDesk.Common
         public async Task<Response<EmptyResponse>> Action<TRequest>(
                 string command,
                 TRequest model)
-            where TRequest : class
+            where TRequest : IRequestType
         {
             return await this.Operation<TRequest, EmptyResponse>(
                 command,
@@ -60,7 +60,7 @@ namespace SherpaDesk.Common
         public async Task<Response<TResponse>> Operation<TRequest, TResponse>(
                 string command,
                 TRequest model)
-            where TRequest : class
+            where TRequest : IRequestType
             where TResponse : class
         {
             var request = new Request<TRequest>(model);
@@ -75,33 +75,33 @@ namespace SherpaDesk.Common
                 if (validationResults.Count > 0)
                     return result.Invalid(validationResults.Select(x => x.ErrorMessage).ToArray());
 
-                var jsonRequestSerializer = new DataContractJsonSerializer(typeof(TRequest));
-
-                string requestContent;
-                using (var stream = new MemoryStream())
-                {
-                    jsonRequestSerializer.WriteObject(stream, model);
-
-                    stream.Position = 0;
-
-                    using (var reader = new StreamReader(stream))
-                    {
-                        requestContent = reader.ReadToEnd();
-                    }
-                }
-
                 Authentication();
 
                 HttpResponseMessage response;
 
-                if (requestContent.Length > 3)
+                if (request.Data.Type == eRequestType.POST)
                 {
-                    response = await _httpClient.PostAsync(command,
+                    var jsonRequestSerializer = new DataContractJsonSerializer(typeof(TRequest));
+
+                    string requestContent;
+                    using (var stream = new MemoryStream())
+                    {
+                        jsonRequestSerializer.WriteObject(stream, model);
+
+                        stream.Position = 0;
+
+                        using (var reader = new StreamReader(stream))
+                        {
+                            requestContent = reader.ReadToEnd();
+                        }
+                    }
+
+                    response = await _httpClient.PostAsync(command, 
                         new StringContent(requestContent, Encoding.UTF8, JSON_MEDIA_TYPE));
                 }
                 else
                 {
-                    response = await _httpClient.GetAsync(command);
+                    response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
                 }
 
                 if (response.IsSuccessStatusCode)

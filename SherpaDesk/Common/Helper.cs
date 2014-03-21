@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -86,5 +88,66 @@ namespace SherpaDesk.Common
             return string.Format("{1}, {0}", firstName, lastName).Trim(',');
         }
 
+
+        public static string GetUrlParams<TRequest>(TRequest request) where TRequest : IRequestType
+        {
+            string result = string.Empty;
+
+            if (!request.IsEmpty)
+            {
+                var type = typeof(TRequest);
+                foreach (var prop in type.GetRuntimeProperties())
+                {
+                    var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
+                    if (dataMember != null)
+                    {
+                        object val = prop.GetValue(request);
+                        if (!IsDefault(val, prop.PropertyType))
+                        {
+                            result += string.Format("{0}={1}&", dataMember.Name, val);
+                        }
+                    }
+                }
+                foreach (var field in type.GetRuntimeFields())
+                {
+                    var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
+                    if (dataMember != null)
+                    {
+                        object val = field.GetValue(request);
+                        if (!IsDefault(val, field.FieldType))
+                        {
+                            result += string.Format("{0}={1}&", dataMember.Name, val);
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(result))
+                    result = "?" + result.TrimEnd('&');
+            }
+            return result;
+        }
+
+        public static bool IsDefault(object objectValue, Type objectType)
+        {
+            if (objectValue == null) return true;
+
+            var type = objectType.GetTypeInfo();
+
+            if (!type.IsValueType) return false;
+
+            if (type.ContainsGenericParameters) return false;
+
+            if (type.IsPrimitive || !type.IsNotPublic)
+            {
+                try
+                {
+                    return Activator.CreateInstance(objectType).Equals(objectValue);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else return false;
+        }
     }
 }

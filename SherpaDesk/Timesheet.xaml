@@ -50,6 +50,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </ScrollViewer>
+        <GridView x:Name="TimesheetGridView" Grid.Row="1" Margin="20"/>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

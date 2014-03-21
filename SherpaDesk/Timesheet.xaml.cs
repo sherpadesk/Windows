@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -21,8 +15,29 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            using (var connector = new Connector())
+            {
+                var result = await connector.Operation<TimeSearchRequest, TimeResponse[]>(
+                    "time",
+                    new TimeSearchRequest
+                    {
+                        TechnicianId = AppSettings.Current.UserId
+                    });
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                }
+                foreach (var time in result.Result)
+                {
+                    TimesheetGridView.Items.Add(
+                        new GridViewItem
+                        {
+                            Content = string.Format("{0}: {1} hours{2}{3}", time.Date.ToString("D"), time.Hours.ToString("F"), Environment.NewLine, time.Note)
+                        });
+                }
+            }
         }
     }
 }
