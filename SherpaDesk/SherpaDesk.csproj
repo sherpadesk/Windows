@@ -124,6 +124,12 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Timesheet.xaml.cs">
+      <DependentUpon>Timesheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EndOfDay.xaml.cs">
+      <DependentUpon>EndOfDay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Request\AccountSearchRequest.cs" />
     <Compile Include="Models\Request\AddTicketRequest.cs" />
     <Compile Include="Models\Request\AddTimeRequest.cs" />
@@ -200,6 +206,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Timesheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EndOfDay.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

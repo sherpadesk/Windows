@@ -64,5 +64,20 @@ namespace SherpaDesk
                     Helper.GetMD5(AppSettings.Current.Email)),
                     UriKind.Absolute));
         }
+
+        private void EndOfDayMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(EndOfDay));
+        }
+
+        private void TimesheetMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(Timesheet));
+        }
+
+        private void LogoButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainFrame.Navigate(typeof(Info));
+        }
     }
 }

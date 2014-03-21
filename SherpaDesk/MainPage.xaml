@@ -16,13 +16,15 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
+        <Button x:Name="LogoButton" BorderBrush="#FF004174" Click="LogoButton_Click">
         <Image HorizontalAlignment="Left" Height="152" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Width="512" Source="Assets/StoreLogo.png" />
+        </Button>
         <Button x:Name="AddTimeButton" Content="Add Time" Grid.Column="1" Margin="0,0,10,0" Grid.Row="0" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="245" FontSize="48" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal">
             <Button.Flyout>
                 <MenuFlyout Placement="Bottom">
                     <MenuFlyoutItem x:Name="AddTimeMenu" Text="Add Time" FontSize="30" Click="AddTimeClick" />
-                    <MenuFlyoutItem x:Name="EndOfDayMenu" Text="End Of Day" FontSize="30" />
-                    <MenuFlyoutItem x:Name="TimesheetMenu" Text="Timesheet" FontSize="30" />
+                    <MenuFlyoutItem x:Name="EndOfDayMenu" Text="End Of Day" FontSize="30" Click="EndOfDayMenu_Click" />
+                    <MenuFlyoutItem x:Name="TimesheetMenu" Text="Timesheet" FontSize="30" Click="TimesheetMenu_Click" />
                 </MenuFlyout>
             </Button.Flyout>
         </Button>
