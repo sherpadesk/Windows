@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,7 +30,7 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void Refresh()
         {
             DateField.Date = DateTime.Now;
             StartTimePicker.Time = EndTimePicker.Time = DateTime.Now.TimeOfDay;
@@ -118,6 +119,11 @@ namespace SherpaDesk
             }
         }
 
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
         private int GetSelectedValue(ComboBox comboBox)
         {
             if (comboBox.SelectedIndex > -1)
@@ -143,7 +149,7 @@ namespace SherpaDesk
                         TechnicianId = this.GetSelectedValue(TechnicianList),
                         Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                         Hours = hours,
-                        Note = NoteTextBox.Text
+                        Note = NoteTextBox.Text                       
                     });
 
                 if (result.Status != eResponseStatus.Success)
@@ -152,8 +158,9 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    // redirect to main page
-                    ((Frame)this.Parent).Navigate(typeof(Info));
+                    Refresh();
+                    MessageDialog dialog = new MessageDialog("Time Saved Successfully");
+                    await dialog.ShowAsync();
                 }
             }
         }
