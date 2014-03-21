@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,7 +34,9 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-
+            LoginTextBox.Text = AppSettings.Current.Email;
+            FirstNameTextBox.Text = AppSettings.Current.FirstName;
+            LastNameTextBox.Text = AppSettings.Current.LastName;
         }
     }
 }

@@ -32,14 +32,20 @@ namespace SherpaDesk
             openPicker.FileTypeFilter.Add(".jpg");
             openPicker.FileTypeFilter.Add(".jpeg");
             openPicker.FileTypeFilter.Add(".png");
-            StorageFile file = await openPicker.PickSingleFileAsync();
-            if (file != null)
+            var files = await openPicker.PickMultipleFilesAsync();
+            if (files != null && files.Count > 0)
             {
-                filepickButton.Content = "Picked photo: " + file.Name;
+                SelectedFilesList.Text = "Picked photos: ";
+                List<string> fileNames = new List<string>();
+                foreach (var file in files)
+                {
+                    fileNames.Add(file.Name);
+                }
+                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
             }
             else
             {
-                filepickButton.Content = "Select Files";
+                SelectedFilesList.Text = string.Empty;
             }
         }
 
@@ -62,7 +68,6 @@ namespace SherpaDesk
         {
             AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
             AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Email;
-
             AssignToComboBox.Items.Add(new ComboBoxItem { Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName) });
         }
 
@@ -82,6 +87,11 @@ namespace SherpaDesk
                     MainForm.IsEnabled = false;
                 }
             }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

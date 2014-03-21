@@ -56,12 +56,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Add Ticket" FontWeight="Normal"/>
         </Grid>
         <ScrollViewer x:Name="MainForm"  HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
-
             <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
@@ -131,7 +131,7 @@
                 </ComboBox>
 
                 <TextBlock HorizontalAlignment="right" Grid.Row="8" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <Button x:Name="filepickButton" Content="Select Files" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="24" Height="50" Width="500" Click="filepickButton_Click"/>
+                <Button x:Name="filepickButton" Content="Select Files" Grid.Column="1" Height="auto" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="24" Width="500" Click="filepickButton_Click"/>
 
                 <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="50" Grid.Row="0" Grid.Column="4" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="24" Width="400" />
                 <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" WatermarkText="Details..." Height="300" Grid.Row="1" Grid.RowSpan="5" TextWrapping="Wrap" Grid.Column="4" Text="" VerticalAlignment="Top" FontSize="24" Width="400" />
@@ -141,7 +141,10 @@
                 <TextBlock Text="or"  Grid.Column="4" HorizontalAlignment="Left" Grid.Row="8" FontSize="20" Margin="164,11,0,31" />
                 <HyperlinkButton Content="Save &amp; Repeat" Grid.Row="7" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
                 <TextBlock Text="or"  Grid.Column="4" HorizontalAlignment="Left" Grid.Row="9" FontSize="20" Margin="164,11,0,31" />
-                <HyperlinkButton Content="Cancel" Grid.Row="8" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
+                <HyperlinkButton Content="Cancel" Click="GoHome" Grid.Row="8" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="184,56,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="50" FontWeight="Normal" Grid.RowSpan="2"/>
+                <ScrollViewer HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="9" Height="auto" VerticalAlignment="Top" Width="auto">
+                    <TextBlock x:Name="SelectedFilesList" Width="500" HorizontalAlignment="Left" Height="auto" Margin="0,0,0,0" Grid.Row="9" TextWrapping="WrapWholeWords" FontSize="20" VerticalAlignment="Top"/>
+                </ScrollViewer>
             </Grid>
         </ScrollViewer>
         <Popup x:Name="CreateNewAccountPopup" Loaded="CreateNewAccountPopup_Loaded">

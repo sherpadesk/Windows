@@ -23,7 +23,7 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }
