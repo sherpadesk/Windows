@@ -29,7 +29,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 // types
-                var resultTaskType = await connector.Operation<TaskTypeRequest, NameResponse[]>(
+                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
                     "task_types",
                     new TaskTypeRequest());
 
@@ -55,7 +55,7 @@ namespace SherpaDesk
                 });
 
                 // technician
-                var resultUsers = await connector.Operation<UserResponse[]>("users");
+                var resultUsers = await connector.Func<UserResponse[]>("users");
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -81,7 +81,7 @@ namespace SherpaDesk
                 }
 
                 // accounts
-                var resultAccounts = await connector.Operation<AccountResponse[]>("accounts");
+                var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
 
                 if (resultAccounts.Status != eResponseStatus.Success)
                 {

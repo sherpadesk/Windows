@@ -129,7 +129,9 @@
     <Compile Include="Models\Enum\eRequestType.cs" />
     <Compile Include="Models\Enum\eResponseStatus.cs" />
     <Compile Include="Models\Enum\eTimeType.cs" />
+    <Compile Include="Models\Request\TicketSearchRequest.cs" />
     <Compile Include="Models\Request\TimeSearchRequest.cs" />
+    <Compile Include="Models\Response\TicketResponse.cs" />
     <Compile Include="Models\Response\TimeResponse.cs" />
     <Compile Include="Timesheet.xaml.cs">
       <DependentUpon>Timesheet.xaml</DependentUpon>

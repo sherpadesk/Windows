@@ -1,4 +1,8 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,9 +25,23 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            using (var connector = new Connector())
+            {
+                var result = await connector.Func<TicketSearchRequest, TicketResponse[]>(
+                    "tickets",
+                    new TicketSearchRequest
+                    {
+                        UserId = AppSettings.Current.UserId
+                    });
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                    return;
+                }
+                itemListView.ItemsSource = result.Result.ToList();
+            }
         }
     }
 }

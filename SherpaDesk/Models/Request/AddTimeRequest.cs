@@ -13,7 +13,6 @@ namespace SherpaDesk.Models.Request
         private const string ERROR_EMPTY_HOURS = "Hours should be positive number.#HoursTextBox";
         private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.#HoursTextBox";
         
-        
         [DataMember(Name = "ticket_key"), Details]
         public string TicketKey { get; set; }
 

@@ -42,22 +42,22 @@ namespace SherpaDesk.Common
                 TRequest model)
             where TRequest : IRequestType
         {
-            return await this.Operation<TRequest, EmptyResponse>(
+            return await this.Func<TRequest, EmptyResponse>(
                 command,
                 model);
         }
 
 
-        public Task<Response<TResponse>> Operation<TResponse>(
+        public Task<Response<TResponse>> Func<TResponse>(
                 string command)
             where TResponse : class
         {
-            return this.Operation<EmptyRequest, TResponse>(
+            return this.Func<EmptyRequest, TResponse>(
                 command,
                 new EmptyRequest());
         }
 
-        public async Task<Response<TResponse>> Operation<TRequest, TResponse>(
+        public async Task<Response<TResponse>> Func<TRequest, TResponse>(
                 string command,
                 TRequest model)
             where TRequest : IRequestType

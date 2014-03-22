@@ -75,7 +75,6 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "fb_default_project_id"), Details]
         public int FB_DefaultProjectId { get; set; }
 
-
         [OnDeserialized]
         void OnDeserialized(StreamingContext context)
         {

@@ -19,7 +19,7 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var result = await connector.Operation<TimeSearchRequest, TimeResponse[]>(
+                var result = await connector.Func<TimeSearchRequest, TimeResponse[]>(
                     "time",
                     new TimeSearchRequest
                     {

@@ -40,7 +40,7 @@ namespace SherpaDesk
                 AppSettings.Current.Clear();
 
                 // authentication
-                var resultLogin = await connector.Operation<LoginRequest, LoginResponse>(
+                var resultLogin = await connector.Func<LoginRequest, LoginResponse>(
                         "login",
                         new LoginRequest
                         {
@@ -64,7 +64,7 @@ namespace SherpaDesk
                 AppSettings.Current.Email = UserNameTextbox.Text;
 
                 // load organization and instance info
-                var resultOrg = await connector.Operation<OrganizationResponse[]>(
+                var resultOrg = await connector.Func<OrganizationResponse[]>(
                         "organizations");
                 
                 if (resultOrg.Status != eResponseStatus.Success)
@@ -83,7 +83,7 @@ namespace SherpaDesk
                 AppSettings.Current.InstanceName = instance.Name;
 
                 //load user info
-                var resultUser = await connector.Operation<UserSearchRequest, UserResponse[]>(
+                var resultUser = await connector.Func<UserSearchRequest, UserResponse[]>(
                     "users",
                     new UserSearchRequest { Email = UserNameTextbox.Text });
 

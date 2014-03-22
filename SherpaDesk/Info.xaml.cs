@@ -16,7 +16,7 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var result = await connector.Operation<TicketCountsResponse>(
+                var result = await connector.Func<TicketCountsResponse>(
                     "tickets/counts");
                 if (result.Status == eResponseStatus.Success)
                 {
