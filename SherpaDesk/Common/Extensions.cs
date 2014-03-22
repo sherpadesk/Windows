@@ -100,6 +100,12 @@ namespace SherpaDesk.Common
                             toolTip.Content = kv.Value;
                         }
                         toolTip.IsOpen = true;
+                        control.Unloaded += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                        {
+                            toolTip.IsOpen = false;
+                            toolTip.Content = string.Empty;
+                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
+                        });
                         control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
                         {
                             toolTip.IsOpen = false;

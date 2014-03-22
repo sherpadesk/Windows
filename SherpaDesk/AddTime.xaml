@@ -58,6 +58,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock HorizontalAlignment="left" Grid.Row="0" Margin="10,0,0,0" TextWrapping="Wrap" Text="Log My Time" VerticalAlignment="Top" FontSize="40"/>
@@ -101,12 +102,12 @@
 
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" Margin="0,25,0,0" TextWrapping="Wrap" Text="Start" VerticalAlignment="Top" FontSize="30"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" Margin="70,30,0,0" TextWrapping="Wrap" Text="hh:mm" VerticalAlignment="Top" FontSize="20"/>
-                    <TimePicker x:Name="StartTimePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
+                    <TimePicker x:Name="StartTimePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36" TimeChanged="StartTimePicker_TimeChanged"/>
 
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="5" Margin="0,25,0,0" TextWrapping="Wrap" Text="Stop" VerticalAlignment="Top" FontSize="30"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="5" Margin="70,30,0,0" TextWrapping="Wrap" Text="hh:mm" VerticalAlignment="Top" FontSize="20"/>
                     
-                    <TimePicker x:Name="EndTimePicker" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36"/>
+                    <TimePicker x:Name="EndTimePicker" Grid.Column="5" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" ClockIdentifier="12HourClock" FontSize="36" TimeChanged="EndTimePicker_TimeChanged"/>
                     <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="9" Margin="0,25,0,0" TextWrapping="Wrap" Text="Hours" VerticalAlignment="Top" FontSize="30"/>
                     <TextBox x:Name="HoursTextBox" Margin="0,0,0,0" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Center" Height="48" Grid.Row="1" TextWrapping="Wrap" Grid.Column="9" VerticalAlignment="Top" FontSize="30" Width="130" />
                 </Grid>

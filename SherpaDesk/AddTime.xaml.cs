@@ -150,5 +150,21 @@ namespace SherpaDesk
                 }
             }
         }
+
+        private void CalculateHours()
+        {
+            var time = EndTimePicker.Time - StartTimePicker.Time;
+            HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24+time.TotalHours);
+        }
+
+        private void StartTimePicker_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        {
+            CalculateHours();
+        }
+  
+        private void EndTimePicker_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        {
+            CalculateHours();
+        }
     }
 }
