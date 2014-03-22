@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="3e76fc8a-a847-4db2-b8f1-2ea8e0ee390e" Publisher="CN=Hex" Version="1.1.0.4" />
+  <Identity Name="3e76fc8a-a847-4db2-b8f1-2ea8e0ee390e" Publisher="CN=Hex" Version="1.1.0.5" />
   <Properties>
     <DisplayName>SherpaDesk</DisplayName>
     <PublisherDisplayName>Hex</PublisherDisplayName>
