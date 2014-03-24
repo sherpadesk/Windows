@@ -22,9 +22,9 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="240"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -34,11 +34,18 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>                
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Update Profile" FontWeight="Normal"/>
+            <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}" VerticalAlignment="Bottom" Margin="30,0,30,25" />
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" VerticalAlignment="Bottom" Margin="0,0,0,30" Text="Update Profile" FontWeight="Normal"/>
         </Grid>
-        <ScrollViewer HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="1"
+						  VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+						  VerticalScrollBarVisibility="Disabled"
+						  VerticalScrollMode="Disabled"
+						  HorizontalScrollMode="Enabled"
+						  HorizontalScrollBarVisibility="Auto"
+						  BringIntoViewOnFocusChange="False">
+            <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
@@ -48,20 +55,16 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>                    
+                    <RowDefinition Height="2000"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Login/Email*" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
@@ -79,39 +82,32 @@
                 <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="Phone" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
                 <TextBox x:Name="PhoneTextBox" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
 
-                
+
                 <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap" Text="Mobile Phone" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
                 <TextBox x:Name="MobilePhoneTextBox" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
 
-                <TextBlock HorizontalAlignment="left" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" Text="Password" Margin="10,20,10,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="right" Grid.Column="4" Grid.Row="0" TextWrapping="Wrap" Text="New Password" Margin="0,4,10,0" VerticalAlignment="Center" FontSize="36"/>
+                <PasswordBox Grid.Column="5" Grid.Row="0" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Center"/>
 
-                <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap" Text="New Password" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="36"/>
-                <PasswordBox Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock HorizontalAlignment="right" Grid.Column="4" Grid.Row="1" TextWrapping="Wrap" Text="Confirm Password" Margin="0,4,10,0" VerticalAlignment="Center" FontSize="36"/>
+                <PasswordBox Grid.Column="5" Grid.Row="1" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Center"/>
 
-                <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="8" TextWrapping="Wrap" Text="Confirm Password" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="36"/>
-                <PasswordBox Grid.Column="2" Grid.Row="8" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Center"/>
-
-                <TextBlock HorizontalAlignment="left" Grid.Column="1" Grid.Row="9" TextWrapping="Wrap" Text="Date and Time" Margin="10,20,10,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold"/>
-
-                <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="10" TextWrapping="Wrap" Text="Time Zone" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox Grid.Column="2" Grid.Row="10" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <TextBlock HorizontalAlignment="right" Grid.Column="4" Grid.Row="3" TextWrapping="Wrap" Text="Time Zone" Margin="0,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="5" Grid.Row="3" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
                     <ComboBoxItem Content="(UTC-05:00) Eastern Time (US &amp; Canada)" IsSelected="True"  />
                 </ComboBox>
-                <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="11" TextWrapping="Wrap" Text="Time Format" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <TextBlock HorizontalAlignment="right" Grid.Column="4" Grid.Row="4" TextWrapping="Wrap" Text="Time Format" Margin="0,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="5" Grid.Row="4" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
                     <ComboBoxItem Content="AM/PM" IsSelected="True"  />
                     <ComboBoxItem Content="24HR" />
                 </ComboBox>
-                <TextBlock HorizontalAlignment="right" Grid.Column="1" Grid.Row="12" TextWrapping="Wrap" Text="Date Format" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox Grid.Column="2" Grid.Row="12" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <TextBlock HorizontalAlignment="right" Grid.Column="4" Grid.Row="5" TextWrapping="Wrap" Text="Date Format" Margin="0,4,10,0" VerticalAlignment="Top" FontSize="36"/>
+                <ComboBox Grid.Column="5" Grid.Row="5" HorizontalAlignment="Left" FontSize="28" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
                     <ComboBoxItem Content="MM/dd/yyyy" IsSelected="True"  />
                     <ComboBoxItem Content="dd/MM/yyyy" />
                 </ComboBox>
-                
-                <Button x:Name="SaveCloseButton" Content="Save &amp; Close" Grid.Column="1" FontSize="30" HorizontalAlignment="Stretch" Grid.Row="14" VerticalAlignment="Top" Margin="0,0,39,0" Click="SaveCloseButton_Click"/>
-                <TextBlock Text="or" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="14" FontSize="30" Margin="280,15,0,0" Grid.ColumnSpan="2" />
-                <HyperlinkButton x:Name="CancelButton" Content="Cancel" Grid.Row="14" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="320,5,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" FontSize="30" Foreground="White" Height="50" FontWeight="Normal" Click="CancelButton_Click" />
 
+                <Button x:Name="SaveCloseButton" Content="Save" Grid.Column="2" FontSize="30" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Top" Margin="0,0,0,0" Tapped="SaveCloseButton_Tapped" />
             </Grid>
         </ScrollViewer>
         <VisualStateManager.VisualStateGroups>

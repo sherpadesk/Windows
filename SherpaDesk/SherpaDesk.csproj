@@ -191,6 +191,34 @@
     </AppxManifest>
     <None Include="packages.config" />
     <None Include="SherpaDesk_TemporaryKey.pfx" />
+    <None Include="Telerik\Core\Telerik.Core.pri" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid.pri" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\Generic.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\Generic.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\Generic.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Input.pri" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\Generic.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\Generic.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives.pri" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\Generic.xbf" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xbf" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xbf" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
@@ -200,6 +228,14 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\WideLogo.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Content Include="Telerik\Core\Telerik.Core.dll" />
+    <Content Include="Telerik\Core\Telerik.Core.XML" />
+    <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.dll" />
+    <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.XML" />
+    <Content Include="Telerik\Input\Telerik.UI.Xaml.Input.dll" />
+    <Content Include="Telerik\Input\Telerik.UI.Xaml.Input.XML" />
+    <Content Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives.dll" />
+    <Content Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives.XML" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -215,6 +251,102 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Input\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Grid\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Input\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Input\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -264,6 +396,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Telerik.Core, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Telerik\Core\Telerik.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Grid, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Telerik\Grid\Telerik.UI.Xaml.Grid.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Input, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Telerik\Input\Telerik.UI.Xaml.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Primitives, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Telerik\Primitives\Telerik.UI.Xaml.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="WinRTXamlToolkit">
       <HintPath>..\packages\WinRTXamlToolkit.1.5.4.3\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
     </Reference>

@@ -27,16 +27,6 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        private void AddTimeClick(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(AddTime));
-        }
-
-        private void AddTicketClick(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(AddTicket));
-        }
-
         private void MyProfileMenu_Click(object sender, RoutedEventArgs e)
         {
             this.MainFrame.Navigate(typeof(UpdateProfile)); 
@@ -63,21 +53,6 @@ namespace SherpaDesk
                 new Uri(string.Format(AVATAR_URL_FORMAT,
                     Helper.GetMD5(AppSettings.Current.Email)),
                     UriKind.Absolute));
-        }
-
-        private void EndOfDayMenu_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(EndOfDay));
-        }
-
-        private void TimesheetMenu_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(Timesheet));
-        }
-
-        private void LogoButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainFrame.Navigate(typeof(Info));
         }
     }
 }

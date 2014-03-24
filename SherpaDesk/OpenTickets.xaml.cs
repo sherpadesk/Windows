@@ -40,7 +40,7 @@ namespace SherpaDesk
                     this.HandleError(result);
                     return;
                 }
-                itemListView.ItemsSource = result.Result.ToList();
+//                itemListView.ItemsSource = result.Result.ToList();
             }
         }
     }

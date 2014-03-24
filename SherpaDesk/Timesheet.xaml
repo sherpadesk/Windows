@@ -22,9 +22,9 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="240"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -32,24 +32,20 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoHome" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}" Text="Timesheet" FontWeight="Normal"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Timesheet" FontWeight="Normal"/>
         </Grid>
-        <ScrollViewer HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="1" Height="auto" VerticalAlignment="Top" Width="auto">
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF1B3467">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </ScrollViewer>
+        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
         <GridView x:Name="TimesheetGridView" Grid.Row="1" Margin="20"/>
         <VisualStateManager.VisualStateGroups>
 

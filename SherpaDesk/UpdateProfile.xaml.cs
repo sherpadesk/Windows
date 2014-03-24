@@ -22,21 +22,16 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Info));   
-        }
-
-        private void SaveCloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Info));  
-        }
-
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             LoginTextBox.Text = AppSettings.Current.Email;
             FirstNameTextBox.Text = AppSettings.Current.FirstName;
             LastNameTextBox.Text = AppSettings.Current.LastName;
+        }
+
+        private void SaveCloseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Info));  
         }
     }
 }

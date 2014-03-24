@@ -24,7 +24,7 @@ namespace SherpaDesk
 
         private async void Refresh()
         {
-            DateField.Date = DateTime.Now;
+            DateField.Value = DateTime.Now;
             StartTimePicker.Time = EndTimePicker.Time = DateTime.Now.TimeOfDay;
             using (var connector = new Connector())
             {

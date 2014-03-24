@@ -68,28 +68,14 @@ namespace SherpaDesk
         {
             AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
             AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Email;
-            AssignToComboBox.Items.Add(new ComboBoxItem { Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName) });
-        }
-
-        private void CreateNewAccountPopup_Loaded(object sender, RoutedEventArgs e)
-        {           
-            CreateNewAccountPopup.HorizontalOffset = (Window.Current.Bounds.Width - PopupGrid.ActualWidth) / 2;
         }
 
         private void AccountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selected = e.AddedItems.First();
-            if (selected != null)
-            {
-                if (((ComboBoxItem)selected).Tag != null && ((ComboBoxItem)selected).Tag.ToString() == "AddNewAccount")
-                {
-                    CreateNewAccountPopup.IsOpen = true;
-                    MainForm.IsEnabled = false;
-                }
-            }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }

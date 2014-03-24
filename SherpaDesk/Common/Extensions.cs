@@ -74,46 +74,46 @@ namespace SherpaDesk.Common
                         messageWithoutControl += message + Environment.NewLine;
                     }
                 }
-                foreach (var kv in controls)
-                {
-                    Control control = page.FindName(kv.Key) as Control;
-                    if (control != null)
-                    {
-                        ToolTip toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
-                        if (toolTip == null)
-                        {
-                            toolTip = new ToolTip();
-                            toolTip.Foreground = new SolidColorBrush(Colors.Black);
-                            toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
-                            toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
-                            toolTip.Content = kv.Value;
-                            toolTip.FontSize = 20;
-                            toolTip.HorizontalContentAlignment = HorizontalAlignment.Right;
-                            toolTip.Height -= 5;
-                            toolTip.Width = control.Width;
-                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
-                            toolTip.VerticalOffset = -control.Height;
-                            ToolTipService.SetToolTip(control, toolTip);
-                        }
-                        else
-                        {
-                            toolTip.Content = kv.Value;
-                        }
-                        toolTip.IsOpen = true;
-                        control.Unloaded += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
-                        {
-                            toolTip.IsOpen = false;
-                            toolTip.Content = string.Empty;
-                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
-                        });
-                        control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
-                        {
-                            toolTip.IsOpen = false;
-                            toolTip.Content = string.Empty;
-                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
-                        });
-                    }
-                }
+                //foreach (var kv in controls)
+                //{
+                //    Control control = page.FindName(kv.Key) as Control;
+                //    if (control != null)
+                //    {
+                //        ToolTip toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
+                //        if (toolTip == null)
+                //        {
+                //            toolTip = new ToolTip();
+                //            toolTip.Foreground = new SolidColorBrush(Colors.Black);
+                //            toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
+                //            toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
+                //            toolTip.Content = kv.Value;
+                //            toolTip.FontSize = 20;
+                //            toolTip.HorizontalContentAlignment = HorizontalAlignment.Right;
+                //            toolTip.Height -= 5;
+                //            toolTip.Width = control.Width;
+                //            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
+                //            toolTip.VerticalOffset = -control.Height;
+                //            ToolTipService.SetToolTip(control, toolTip);
+                //        }
+                //        else
+                //        {
+                //            toolTip.Content = kv.Value;
+                //        }
+                //        toolTip.IsOpen = true;
+                //        control.Unloaded += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                //        {
+                //            toolTip.IsOpen = false;
+                //            toolTip.Content = string.Empty;
+                //            toolTip.Background = new SolidColorBrush(Colors.Transparent);
+                //        });
+                //        control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                //        {
+                //            toolTip.IsOpen = false;
+                //            toolTip.Content = string.Empty;
+                //            toolTip.Background = new SolidColorBrush(Colors.Transparent);
+                //        });
+                //    }
+                //}
                 if (!string.IsNullOrEmpty(messageWithoutControl))
                 {
                     dialog.Title = "Invalid input data";

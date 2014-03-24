@@ -8,11 +8,10 @@
     xmlns:common="using:SherpaDesk.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Primitives" 
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
     <Page.Resources>
-
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
     </Page.Resources>
 
@@ -21,64 +20,150 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="#FF004174">
+    <ScrollViewer x:Name="scrollViewer"
+						  VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+						  VerticalScrollBarVisibility="Disabled"
+						  VerticalScrollMode="Disabled"
+						  HorizontalScrollMode="Enabled"
+						  HorizontalScrollBarVisibility="Auto"
+						  BringIntoViewOnFocusChange="False">
+        <Grid Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="1000"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock HorizontalAlignment="left" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" Text="New Messages" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="NewMessagesLink" Content="0" Grid.Row="0" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="NewMessagesLink_Click"/>
-            <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="Open Tickets" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OpenTicketsLink" Content="0" Grid.Row="1" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OpenTicketsLink_Click"/>
-            <TextBlock HorizontalAlignment="left" Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="Open as End User" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OpenAsEndUserLink" Content="0" Grid.Row="2" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OpenAsEndUserLink_Click"/>
-            <TextBlock HorizontalAlignment="left" Grid.Row="3" Grid.Column="2" TextWrapping="Wrap" Text="On Hold" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="OnHoldLink" Content="0" Grid.Row="3" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="OnHoldLink_Click"/>
-            <TextBlock HorizontalAlignment="left" Grid.Row="4" Grid.Column="2" TextWrapping="Wrap" Text="Follow-Up Dates" Margin="10,25,0,0" VerticalAlignment="Top" FontSize="36"/>
-            <HyperlinkButton x:Name="FollowUpDatesLink" Content="0" Grid.Row="4" Grid.Column="1" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="52" Foreground="White" Click="FollowUpDatesLink_Click"/>
+            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="0" Grid.Column="2" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <telerik:RadCustomHubTile x:Name="NewMessagesTile" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Tapped="NewMessagesTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="NewMessagesCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="New Messages" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="OpenTicketsTile" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Tapped="OpenTicketsTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="OpenTicketsCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Open Tickets" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="OpenAsEndUserTile" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="OpenAsEndUserTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="OpenAsEndUserCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Open As End User" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="OnHoldTile" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="OnHoldTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="OnHoldCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="On Hold" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="FollowUpDatesTile" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="FollowUpDatesTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="FollowUpDatesCount" HorizontalAlignment="Center" Text="0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Follow-Up Dates" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+
+                <telerik:RadCustomHubTile x:Name="AddTimeTile" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTimeTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                            <TextBlock Text="Add Time" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="AddTicketTile" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTicketTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                            <TextBlock Text="Add Ticket" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="EndOfDayTile" Grid.Row="2" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="EndOfDayTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text=" " FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                            <TextBlock Text="End Of Day" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <telerik:RadCustomHubTile x:Name="TimesheetTile" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="TimesheetTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text=" " FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                            <TextBlock Text="Timesheet" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+
+            </Grid>
+            <Frame x:Name="LeftFrame" Grid.Column="0" Margin="30,0,0,30" />
+            <Frame x:Name="RightFrame" Grid.Column="4" Margin="30,0,0,30" />
         </Grid>
-        <VisualStateManager.VisualStateGroups>
+    </ScrollViewer>
+    <VisualStateManager.VisualStateGroups>
 
-            <!-- Visual states reflect the application's view state -->
-            <VisualStateGroup x:Name="ApplicationViewStates">
-                <VisualState x:Name="FullScreenLandscape"/>
-                <VisualState x:Name="Filled"/>
+        <!-- Visual states reflect the application's view state -->
+        <VisualStateGroup x:Name="ApplicationViewStates">
+            <VisualState x:Name="FullScreenLandscape"/>
+            <VisualState x:Name="Filled"/>
 
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
-                <VisualState x:Name="FullScreenPortrait">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
+            <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+            <VisualState x:Name="FullScreenPortrait">
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
 
-                <!-- The back button and title have different styles when snapped -->
-                <VisualState x:Name="Snapped">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-    </Grid>
+            <!-- The back button and title have different styles when snapped -->
+            <VisualState x:Name="Snapped">
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
 </common:LayoutAwarePage>
