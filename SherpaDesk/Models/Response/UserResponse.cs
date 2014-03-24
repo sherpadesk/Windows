@@ -19,5 +19,6 @@ namespace SherpaDesk.Models.Response
 
         [DataMember(Name = "type"), Details]
         public string Role { get; set; }
+
     }
 }

@@ -116,6 +116,9 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\Extensions\ComboBoxExtensions.cs" />
+    <Compile Include="Common\Extensions\PageExtensions.cs" />
+    <Compile Include="Common\Extensions\ResponseExtensions.cs" />
     <Compile Include="Common\Helper.cs" />
     <Compile Include="Common\Interfaces\IRequestType.cs" />
     <Compile Include="Common\IntRequired.cs" />
@@ -125,12 +128,14 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Enum\eRequestType.cs" />
     <Compile Include="Models\Enum\eResponseStatus.cs" />
     <Compile Include="Models\Enum\eTimeType.cs" />
     <Compile Include="Models\Request\TicketSearchRequest.cs" />
     <Compile Include="Models\Request\TimeSearchRequest.cs" />
+    <Compile Include="Models\Request\UserRequest.cs" />
+    <Compile Include="Models\Response\ClassResponse.cs" />
     <Compile Include="Models\Response\TicketResponse.cs" />
     <Compile Include="Models\Response\TimeResponse.cs" />
     <Compile Include="Timesheet.xaml.cs">
@@ -227,7 +232,6 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\WideLogo.png" />
-    <Content Include="Common\ReadMe.txt" />
     <Content Include="Telerik\Core\Telerik.Core.dll" />
     <Content Include="Telerik\Core\Telerik.Core.XML" />
     <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.dll" />

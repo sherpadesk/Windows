@@ -80,7 +80,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="EndUserCombo" Grid.Column="1" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="EndUserList" Grid.Column="1" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,3,0,0" VerticalAlignment="Top">
                 <ComboBoxItem />
                 <ComboBoxItem Name="EndUserMe" />
                 <ComboBoxItem Content="Make Me the User" Name="MakeMe" Foreground="#FF0B0078"/>
@@ -89,33 +89,22 @@
             <HyperlinkButton x:Name="EndUserMeLink" Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="AccountComboBox" Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AccountComboBox_SelectionChanged">
-                <ComboBoxItem IsSelected="True" />
-                <ComboBoxItem Content="Micajah" />
-                <ComboBoxItem Content="Add New Account.." Tag="AddNewAccount" Foreground="#FF00A10A"/>
+            <ComboBox x:Name="AccountList" Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
             <CheckBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem />
-                <ComboBoxItem Content="General Question" />
-                <ComboBoxItem Content="Technology Support" />
+            <ComboBox Name="ClassList" Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
             <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="TechnicianCombo" Grid.Column="1" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="Let the system choose." Tag="SystemChoose" IsSelected="True" />
-                <ComboBoxItem Name="TechnicianMe" />
-                <ComboBoxItem Content="Queue, New Tickets" Tag="Queue" />
+            <ComboBox x:Name="TechnicianList" Grid.Column="1" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
             <HyperlinkButton x:Name="TechnicianMeLink" Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="TechnicianMeLink_Click"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="5" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="AlternateTechnicianCombo" Grid.Column="1" Grid.Row="5" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="AlternateTech" />
-                <ComboBoxItem Name="AlternateTechMe" />
+            <ComboBox x:Name="AlternateTechnicianList" Grid.Column="1" Grid.Row="5" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
             <HyperlinkButton x:Name="AlternateTechMeLink" Content="Me" Grid.Row="5" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
 

@@ -1,4 +1,7 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,28 +54,81 @@ namespace SherpaDesk
 
         private void EndUserMeLink_Click(object sender, RoutedEventArgs e)
         {
-            EndUserCombo.SelectedItem = EndUserMe;
+            EndUserList.SetSelectedValue(AppSettings.Current.UserId);
         }
 
         private void TechnicianMeLink_Click(object sender, RoutedEventArgs e)
         {
-            TechnicianCombo.SelectedItem = TechnicianMe;
+            TechnicianList.SetSelectedValue(AppSettings.Current.UserId);
         }
 
         private void AlternateTechMeLink_Click(object sender, RoutedEventArgs e)
         {
-            AlternateTechnicianCombo.SelectedItem = AlternateTechMe;
+            AlternateTechnicianList.SetSelectedValue(AppSettings.Current.UserId);
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            AlternateTechMe.Content = TechnicianMe.Content = EndUserMe.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
-            AlternateTechMe.Tag = TechnicianMe.Tag = EndUserMe.Tag = AppSettings.Current.Email;
-        }
+            using (var connector = new Connector())
+            {
+                // users
+                var resultUsers = await connector.Func<UserResponse[]>("users");
 
-        private void AccountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selected = e.AddedItems.First();
+                if (resultUsers.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultUsers);
+                    return;
+                }
+
+                TechnicianList.FillData(
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    new NameResponse { Id = -1, Name = "Let the system choose." },
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
+                AlternateTechnicianList.FillData(
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
+                EndUserList.FillData(
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
+
+                EndUserList.Items.Add(new ComboBoxItem
+                {
+                    Tag = Constants.INITIAL_ID,
+                    Content = Constants.ADD_NEW_USER,
+                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                });
+
+                // accounts
+                var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
+
+                if (resultAccounts.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultAccounts);
+                    return;
+                }
+
+                AccountList.FillData(resultAccounts.Result.AsEnumerable());
+
+                AccountList.Items.Add(new ComboBoxItem
+                {
+                    Tag = Constants.INITIAL_ID,
+                    Content = Constants.ADD_NEW_ACCOUNT,
+                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                });
+                //classes
+
+                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>("classes", new UserRequest { UserId = AppSettings.Current.UserId });
+
+                if (resultClasses.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultUsers);
+                    return;
+                }
+
+                ClassList.FillData(resultClasses.Result.AsEnumerable());
+            }
         }
 
         private void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
