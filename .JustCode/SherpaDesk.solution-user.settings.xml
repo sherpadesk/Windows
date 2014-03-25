@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<JustCodeSettings Version="0.0" Timestamp="446ca07b-e823-497b-a8c9-8e504a224828">
+  <IgnoredErrorsAndWarningsSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <IgnoredErrorsAndWarnings Version="2">
+      <FilePath>
+        <FileRelativePath>SherpaDesk/AddTicket.xaml.cs</FileRelativePath>
+        <ProjectRelativePath>SherpaDesk/SherpaDesk.csproj</ProjectRelativePath>
+        <IgnoredElement>
+          <TextualIdentifier>14535814085448885640</TextualIdentifier>
+        </IgnoredElement>
+        <IgnoredElement>
+          <TextualIdentifier>5731350497688583252</TextualIdentifier>
+        </IgnoredElement>
+      </FilePath>
+      <FilePath>
+        <FileRelativePath>SherpaDesk/Common/Extensions.cs</FileRelativePath>
+        <ProjectRelativePath>SherpaDesk/SherpaDesk.csproj</ProjectRelativePath>
+        <IgnoredElement>
+          <TextualIdentifier>4552329574401759841</TextualIdentifier>
+        </IgnoredElement>
+      </FilePath>
+    </IgnoredErrorsAndWarnings>
+  </IgnoredErrorsAndWarningsSettings>
+</JustCodeSettings>
