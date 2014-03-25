@@ -128,6 +128,7 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\WorkListEnum.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Enum\eRequestType.cs" />
     <Compile Include="Models\Enum\eResponseStatus.cs" />
@@ -138,6 +139,9 @@
     <Compile Include="Models\Response\ClassResponse.cs" />
     <Compile Include="Models\Response\TicketResponse.cs" />
     <Compile Include="Models\Response\TimeResponse.cs" />
+    <Compile Include="WorkList.xaml.cs">
+      <DependentUpon>WorkList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Timesheet.xaml.cs">
       <DependentUpon>Timesheet.xaml</DependentUpon>
     </Compile>
@@ -164,20 +168,8 @@
     <Compile Include="Models\Response\OrganizationResponse.cs" />
     <Compile Include="Models\Response\Response.cs" />
     <Compile Include="Models\Response\TicketCountsResponse.cs" />
-    <Compile Include="OpenTickets.xaml.cs">
-      <DependentUpon>OpenTickets.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FollowUpDates.xaml.cs">
       <DependentUpon>FollowUpDates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OnHold.xaml.cs">
-      <DependentUpon>OnHold.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OpenAsEndUser.xaml.cs">
-      <DependentUpon>OpenAsEndUser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NewMessages.xaml.cs">
-      <DependentUpon>NewMessages.xaml</DependentUpon>
     </Compile>
     <Compile Include="Info.xaml.cs">
       <DependentUpon>Info.xaml</DependentUpon>
@@ -255,6 +247,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WorkList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -366,23 +362,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="OpenTickets.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="FollowUpDates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="OnHold.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="OpenAsEndUser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NewMessages.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

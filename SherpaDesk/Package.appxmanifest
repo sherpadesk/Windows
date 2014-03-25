@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="3e76fc8a-a847-4db2-b8f1-2ea8e0ee390e" Publisher="CN=Hex" Version="1.1.0.5" />
+  <Identity Name="3e76fc8a-a847-4db2-b8f1-2ea8e0ee390e" Publisher="CN=Hex" Version="1.1.0.6" />
   <Properties>
     <DisplayName>SherpaDesk</DisplayName>
     <PublisherDisplayName>Hex</PublisherDisplayName>
@@ -16,7 +16,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SherpaDesk.App">
       <m2:VisualElements DisplayName="SherpaDesk" Description="SherpaDesk" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\LogoBig.png" Square30x30Logo="Assets\SmallLogo.png">
-        <m2:DefaultTile Wide310x150Logo="Assets\WideLogo.png">
+        <m2:DefaultTile Wide310x150Logo="Assets\WideLogo.png" DefaultSize="wide310x150Logo">
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
             <m2:ShowOn Tile="wide310x150Logo" />
@@ -25,7 +25,7 @@
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />
         </m2:InitialRotationPreference>
-        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+        <m2:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#004174" />
       </m2:VisualElements>
     </Application>
   </Applications>

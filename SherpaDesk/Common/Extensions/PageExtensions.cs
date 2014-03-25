@@ -58,7 +58,7 @@ namespace SherpaDesk.Common
                             toolTip.Height -= 5;
                             toolTip.Width = control.Width;
                             toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
-                            toolTip.VerticalOffset = -control.Height;
+                            toolTip.VerticalOffset = -control.Height;                            
                             ToolTipService.SetToolTip(control, toolTip);
                         }
                         else

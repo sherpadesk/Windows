@@ -20,8 +20,12 @@ namespace SherpaDesk
 
         private async void Refresh()
         {
-            DateField.Value = DateTime.Now;
-            StartTimePicker.Time = EndTimePicker.Time = DateTime.Now.TimeOfDay;
+            var date = DateTime.Now;
+            DateField.Value = date;
+            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
+            StartTimePicker.Value = EndTimePicker.Value = date;
+            StartTimeLabel.Text = date.ToString("t");
+            EndTimeLabel.Text = date.ToString("t");
             using (var connector = new Connector())
             {
                 // types
@@ -113,17 +117,27 @@ namespace SherpaDesk
 
         private void CalculateHours()
         {
-            var time = EndTimePicker.Time - StartTimePicker.Time;
-            HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
+            {
+                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            }
         }
 
-        private void StartTimePicker_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        private void DateField_ValueChanged(object sender, EventArgs e)
         {
+            DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd");
+        }
+
+        private void StartTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
             CalculateHours();
         }
 
-        private void EndTimePicker_TimeChanged(object sender, TimePickerValueChangedEventArgs e)
+        private void EndTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
             CalculateHours();
         }
     }
