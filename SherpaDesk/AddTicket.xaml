@@ -109,10 +109,10 @@
             <HyperlinkButton x:Name="AlternateTechMeLink" Content="Me" Grid.Row="5" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="7" TextWrapping="Wrap" Text="Status" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox Grid.Column="1" Grid.Row="7" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="Open" Tag="1" IsSelected="True" />
-                <ComboBoxItem Content="On Hold" Tag="2" />
-                <ComboBoxItem Content="Closed" Tag="3" />
+            <ComboBox x:Name="StatusList" Grid.Column="1" Grid.Row="7" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <ComboBoxItem Content="Open" Tag="open" IsSelected="True" />
+                <ComboBoxItem Content="On Hold" Tag="on_hold" />
+                <ComboBoxItem Content="Closed" Tag="closed" />
             </ComboBox>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="8" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>

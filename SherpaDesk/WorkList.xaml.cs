@@ -2,25 +2,15 @@
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
     public sealed partial class WorkList : SherpaDesk.Common.LayoutAwarePage
     {
-        private WorkListEnum workType;
+        private eWorkListType _workType;
         public WorkList()
         {
             this.InitializeComponent();
@@ -28,19 +18,19 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            workType = (WorkListEnum)e.Parameter;
-            switch (workType)
+            _workType = (eWorkListType)e.Parameter;
+            switch (_workType)
             {
-                case WorkListEnum.Open:
+                case eWorkListType.Open:
                     pageTitle.Text = "Open Tickets";
                     break;
-                case WorkListEnum.OnHold:
+                case eWorkListType.OnHold:
                     pageTitle.Text = "On Hold";
                     break;
-                case WorkListEnum.NewMessages:
+                case eWorkListType.NewMessages:
                     pageTitle.Text = "New Messages";
                     break;
-                case WorkListEnum.OpenAsEndUser:
+                case eWorkListType.OpenAsEndUser:
                     pageTitle.Text = "Open As End User";
                     break;
             }
@@ -52,36 +42,35 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 TicketSearchRequest request = null;
-                switch (workType)
+                switch (_workType)
                 {
-                    case WorkListEnum.Open:
+                    case eWorkListType.Open:
                         request = new TicketSearchRequest
                         {
-                            UserId = AppSettings.Current.UserId,
-                            Status = "Open"
+                            Status = "open"
                         };
                         break;
-                    case WorkListEnum.OnHold:
+                    case eWorkListType.OnHold:
                         request = new TicketSearchRequest
                         {
-                            UserId = AppSettings.Current.UserId,
-                            Status = "OnHold"
+                            Status = "on_hold"
                         };
                         break;
-                    case WorkListEnum.NewMessages:
+                    case eWorkListType.NewMessages:
                         request = new TicketSearchRequest
                         {
                             UserId = AppSettings.Current.UserId
                         };
                         break;
-                    case WorkListEnum.OpenAsEndUser:
+                    case eWorkListType.OpenAsEndUser:
                         request = new TicketSearchRequest
-                        {                            
-                            UserId = AppSettings.Current.UserId
+                        {
+                            UserId = AppSettings.Current.UserId,
+                            Role = "user"
                         }; break;
                 }
 
-                var result = await connector.Func<TicketSearchRequest, TicketResponse[]>("tickets", request);
+                var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>("tickets", request);
                 if (result.Status != eResponseStatus.Success)
                 {
                     this.HandleError(result);

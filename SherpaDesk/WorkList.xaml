@@ -92,20 +92,15 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTemplateColumn Header="Days Old">
-                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                <telerik:DataGridTextColumn PropertyName="DaysOld" Header="Days Old">
+                    <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
                             <Setter Property="FontSize" Value="20" />
                             <Setter Property="Foreground" Value="White" />
                         </Style>
-                    </telerik:DataGridTemplateColumn.HeaderStyle>
-                    <telerik:DataGridTemplateColumn.CellContentTemplate>
-                        <DataTemplate>
-                            <TextBlock VerticalAlignment="Center" Margin="7,0,0,0" Text="1d 15h" FontSize="20" />
-                        </DataTemplate>
-                    </telerik:DataGridTemplateColumn.CellContentTemplate>
-                </telerik:DataGridTemplateColumn>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
                 <telerik:DataGridTemplateColumn Header="Status">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">

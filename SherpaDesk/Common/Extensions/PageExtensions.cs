@@ -6,6 +6,7 @@ using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 
@@ -45,10 +46,12 @@ namespace SherpaDesk.Common
                     Control control = page.FindName(kv.Key) as Control;
                     if (control != null)
                     {
+
                         ToolTip toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
                         if (toolTip == null)
                         {
                             toolTip = new ToolTip();
+                            toolTip.Name = kv.Key + TOOL_TIP_NAME;
                             toolTip.Content = kv.Value;
                             toolTip.Foreground = new SolidColorBrush(Colors.Black);
                             toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
@@ -58,26 +61,36 @@ namespace SherpaDesk.Common
                             toolTip.Height -= 5;
                             toolTip.Width = control.Width;
                             toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
-                            toolTip.VerticalOffset = -control.Height;                            
-                            ToolTipService.SetToolTip(control, toolTip);
+                            toolTip.VerticalOffset = -control.Height;
+                            toolTip.UseLayoutRounding = true;
+                            toolTip.PlacementTarget = control;
+                            var grid = control.ParentGrid();
+                            if (grid == null)
+                                ToolTipService.SetToolTip(control, toolTip);
+                            else
+                            {
+                                toolTip.Margin = control.Margin;
+                                Grid.SetRow(toolTip, Grid.GetRow(control));
+                                Grid.SetColumn(toolTip, Grid.GetColumn(control));
+                                grid.Children.Add(toolTip);
+                            }
                         }
                         else
                         {
                             toolTip.Content = kv.Value;
                         }
-                        toolTip.IsOpen = true;
-                        control.Unloaded += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                        toolTip.Visibility = Visibility.Visible;
+                        var closing = new RoutedEventHandler((object sender, RoutedEventArgs e) =>
                         {
-                            toolTip.IsOpen = false;
-                            toolTip.Content = string.Empty;
-                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
+                            toolTip.Visibility = Visibility.Collapsed;
                         });
-                        control.GotFocus += new RoutedEventHandler((object sender, RoutedEventArgs e) =>
-                        {
-                            toolTip.IsOpen = false;
-                            toolTip.Content = string.Empty;
-                            toolTip.Background = new SolidColorBrush(Colors.Transparent);
-                        });
+                        control.Unloaded += closing;
+                        control.GotFocus += closing;
+                        toolTip.PointerPressed += new PointerEventHandler((object sender, PointerRoutedEventArgs e) =>
+                            {
+                                toolTip.Visibility = Visibility.Collapsed;
+                                control.Focus(FocusState.Pointer);
+                            });
                     }
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))

@@ -117,8 +117,11 @@
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Extensions\ComboBoxExtensions.cs" />
+    <Compile Include="Common\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Common\Extensions\EnumExtentions.cs" />
     <Compile Include="Common\Extensions\PageExtensions.cs" />
     <Compile Include="Common\Extensions\ResponseExtensions.cs" />
+    <Compile Include="Common\Extensions\UIElementExtensions.cs" />
     <Compile Include="Common\Helper.cs" />
     <Compile Include="Common\Interfaces\IRequestType.cs" />
     <Compile Include="Common\IntRequired.cs" />
@@ -128,7 +131,7 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\WorkListEnum.cs" />
+    <Compile Include="Models\Enum\eWorkListType.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Enum\eRequestType.cs" />
     <Compile Include="Models\Enum\eResponseStatus.cs" />
@@ -136,8 +139,10 @@
     <Compile Include="Models\Request\TicketSearchRequest.cs" />
     <Compile Include="Models\Request\TimeSearchRequest.cs" />
     <Compile Include="Models\Request\UserRequest.cs" />
+    <Compile Include="Models\Response\AddTicketResponse.cs" />
     <Compile Include="Models\Response\ClassResponse.cs" />
     <Compile Include="Models\Response\TicketResponse.cs" />
+    <Compile Include="Models\Response\TicketSearchResponse.cs" />
     <Compile Include="Models\Response\TimeResponse.cs" />
     <Compile Include="WorkList.xaml.cs">
       <DependentUpon>WorkList.xaml</DependentUpon>

@@ -21,7 +21,7 @@ namespace SherpaDesk
                 if (result.Status == eResponseStatus.Success)
                 {
                     NewMessagesCount.Text = result.Result.NewMessages.ToString();
-                    OpenTicketsCount.Text = result.Result.OpenAsTech.ToString();
+                    OpenTicketsCount.Text = result.Result.AllOpen.ToString();
                     OpenAsEndUserCount.Text = result.Result.OpenAsUser.ToString();
                     OnHoldCount.Text = result.Result.OnHold.ToString();
                     FollowUpDatesCount.Text = result.Result.Reminder.ToString();
@@ -38,25 +38,25 @@ namespace SherpaDesk
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), WorkListEnum.NewMessages);
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.NewMessages);
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 
         private void OpenTicketsTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), WorkListEnum.Open);
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 
         private void OpenAsEndUserTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), WorkListEnum.OpenAsEndUser);
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.OpenAsEndUser);
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 
         private void OnHoldTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), WorkListEnum.OnHold);
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.OnHold);
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 

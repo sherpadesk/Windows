@@ -131,9 +131,36 @@ namespace SherpaDesk
             }
         }
 
-        private void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            using (var connector = new Connector())
+            {
+                var result = await connector.Func<AddTicketRequest, AddTicketResponse>(
+                    "tickets",
+                    new AddTicketRequest
+                    {
+                        AccountId = AccountList.GetSelectedValue<int>(),
+                        ClassId = ClassList.GetSelectedValue<int>(),
+                        UserId = EndUserList.GetSelectedValue<int>(),
+                        TechnicianId = TechnicianList.GetSelectedValue<int>(),
+                        Name = SubjectTextbox.Text,
+                        Status = StatusList.GetSelectedValue<string>(),
+                        Comment = DescritionTextbox.Text
+                    });
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                }
+                else
+                {
+                    var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
+                    var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
 
+                    leftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+                    scrollViewer.ChangeView(0, new double?(), new float?());
+                }
+
+            }
         }
     }
 }
