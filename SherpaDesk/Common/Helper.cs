@@ -96,6 +96,14 @@ namespace SherpaDesk.Common
             if (!request.IsEmpty)
             {
                 var type = typeof(TRequest);
+                foreach (var method in type.GetRuntimeMethods())
+                {
+                    var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
+                    if (onSerializing != null)
+                    {
+                        method.Invoke(request, new object[1] { null });
+                    }
+                }
                 foreach (var prop in type.GetRuntimeProperties())
                 {
                     var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();

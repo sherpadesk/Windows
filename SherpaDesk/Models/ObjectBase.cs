@@ -36,23 +36,21 @@ namespace SherpaDesk.Models
 
             foreach (PropertyInfo prop in type.GetRuntimeProperties())
             {
-                if (!prop.IsDefined(typeof(DetailsAttribute))) continue;
-
-                var details = prop.GetCustomAttributes<DetailsAttribute>(true).ToList();
-                if (details != null
-                    && details.Count > 0
-                    && !string.IsNullOrEmpty(((DetailsAttribute)details[0]).Text))
+                var details = prop.GetCustomAttribute<DetailsAttribute>(true);
+                if(details == null)
+                    continue;
+                if (!string.IsNullOrEmpty(details.Text))
                 {
                     result.AppendFormat(TEMPLATE_PROPERTY_TEXT,
                        prop.Name,
-                       ((DetailsAttribute)details[0]).Text,
+                       details.Text,
                        Environment.NewLine);
                 }
                 else
                 {
                     if (!prop.PropertyType.Equals(typeof(string))
                         && (prop.PropertyType.IsArray
-                            || prop.IsDefined(typeof(IEnumerable), true)))
+                        || prop.PropertyType.GetTypeInfo().ImplementedInterfaces.Any(i => typeof(IEnumerable).Equals(i))))
                     {
                         IEnumerable list = prop.GetValue(this, null) as IEnumerable;
 
@@ -103,6 +101,7 @@ namespace SherpaDesk.Models
     /// <summary>
     /// The attribute signs mark for tracking in properties and during reflection process 
     /// </summary>
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DetailsAttribute : Attribute
     {
         /// <summary>

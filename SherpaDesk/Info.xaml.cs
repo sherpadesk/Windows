@@ -1,6 +1,8 @@
 ﻿using SherpaDesk.Common;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Response;
+using System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 
 namespace SherpaDesk
@@ -12,7 +14,7 @@ namespace SherpaDesk
             this.InitializeComponent();
         }
 
-        public async void Refresh()
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             using (var connector = new Connector())
             {
@@ -29,11 +31,6 @@ namespace SherpaDesk
                 else
                     this.pageRoot.HandleError(result);
             }
-        }
-
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Refresh();
         }
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

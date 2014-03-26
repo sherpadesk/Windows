@@ -56,20 +56,16 @@ namespace SherpaDesk.Common
                             toolTip.Foreground = new SolidColorBrush(Colors.Black);
                             toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
                             toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
-                            toolTip.FontSize = 20;
-                            toolTip.HorizontalContentAlignment = HorizontalAlignment.Right;
-                            toolTip.Height -= 5;
+                            toolTip.FontSize = 16;
+                            toolTip.Height = control.Height - 10;
                             toolTip.Width = control.Width;
-                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
-                            toolTip.VerticalOffset = -control.Height;
-                            toolTip.UseLayoutRounding = true;
                             toolTip.PlacementTarget = control;
                             var grid = control.ParentGrid();
                             if (grid == null)
                                 ToolTipService.SetToolTip(control, toolTip);
                             else
                             {
-                                toolTip.Margin = control.Margin;
+                                toolTip.Margin = new Thickness(control.Margin.Left, control.Margin.Top + 10, control.Margin.Right, control.Margin.Bottom);
                                 Grid.SetRow(toolTip, Grid.GetRow(control));
                                 Grid.SetColumn(toolTip, Grid.GetColumn(control));
                                 grid.Children.Add(toolTip);

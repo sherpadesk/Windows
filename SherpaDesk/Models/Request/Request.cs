@@ -43,7 +43,7 @@ namespace SherpaDesk.Models.Request
             get { return eRequestType.POST; }
         }
 
-        public bool IsEmpty
+        public virtual bool IsEmpty
         {
             get { return false; }
         }
@@ -57,7 +57,7 @@ namespace SherpaDesk.Models.Request
             get { return eRequestType.GET; }
         }
 
-        public bool IsEmpty
+        public virtual bool IsEmpty
         {
             get { return false; }
         }
@@ -66,7 +66,7 @@ namespace SherpaDesk.Models.Request
     [DataContract]
     internal sealed class EmptyRequest : GetRequest
     {
-        public bool IsEmpty
+        public override bool IsEmpty
         {
             get { return true; }
         }

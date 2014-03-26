@@ -47,13 +47,13 @@ namespace SherpaDesk
                     case eWorkListType.Open:
                         request = new TicketSearchRequest
                         {
-                            Status = "open"
+                            Status = eTicketStatus.Open | eTicketStatus.OnHold
                         };
                         break;
                     case eWorkListType.OnHold:
                         request = new TicketSearchRequest
                         {
-                            Status = "on_hold"
+                            Status = eTicketStatus.OnHold
                         };
                         break;
                     case eWorkListType.NewMessages:
@@ -65,8 +65,8 @@ namespace SherpaDesk
                     case eWorkListType.OpenAsEndUser:
                         request = new TicketSearchRequest
                         {
-                            UserId = AppSettings.Current.UserId,
-                            Role = "user"
+                            Role = eRoles.EndUser,
+                            Status = eTicketStatus.Open | eTicketStatus.OnHold
                         }; break;
                 }
 

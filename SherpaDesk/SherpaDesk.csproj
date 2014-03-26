@@ -131,6 +131,8 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enum\eRoles.cs" />
+    <Compile Include="Models\Enum\eTicketStatus.cs" />
     <Compile Include="Models\Enum\eWorkListType.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Enum\eRequestType.cs" />
