@@ -134,7 +134,6 @@
                 </telerik:RadCustomHubTile>
 
             </Grid>
-            <Frame x:Name="DetailsFrame" Grid.Column="0" Margin="30,0,0,30" />
             <Frame x:Name="LeftFrame" Grid.Column="1" Margin="30,0,0,30" />
             <Frame x:Name="RightFrame" Grid.Column="5" Margin="30,0,0,30" />
         </Grid>

@@ -131,6 +131,9 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TicketDetails.xaml.cs">
+      <DependentUpon>TicketDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enum\eRoles.cs" />
     <Compile Include="Models\Enum\eTicketStatus.cs" />
     <Compile Include="Models\Enum\eWorkListType.cs" />
@@ -254,6 +257,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TicketDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
