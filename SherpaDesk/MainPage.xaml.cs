@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,6 +23,9 @@ namespace SherpaDesk
     public sealed partial class MainPage : Page
     {
         private const string AVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/{0}?s=40";
+        
+        private CoreCursor _cursor;
+        
         public MainPage()
         {
             this.InitializeComponent();
@@ -30,6 +34,19 @@ namespace SherpaDesk
         private void MyProfileMenu_Click(object sender, RoutedEventArgs e)
         {
             this.MainFrame.Navigate(typeof(UpdateProfile)); 
+        }
+
+        public void StartProgress()
+        {
+            progressRing.IsActive = true;
+            _cursor = Window.Current.CoreWindow.PointerCursor;
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 2);
+        }
+
+        public void StopProgress()
+        {
+            progressRing.IsActive = false;
+            Window.Current.CoreWindow.PointerCursor = _cursor ?? new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
         }
 
         private async void LogOutMenu_Click(object sender, RoutedEventArgs e)

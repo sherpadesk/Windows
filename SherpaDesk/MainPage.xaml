@@ -41,9 +41,11 @@
                         <MenuFlyoutItem x:Name="MyProfileMenu" Text="My Profile" Click="MyProfileMenu_Click" />
                         <MenuFlyoutItem x:Name="LogOutMenu" Text="Log Out" Click="LogOutMenu_Click" />
                     </MenuFlyout>
-                </Button.Flyout>                
+                </Button.Flyout>
             </Button>
             <Image x:Name="Avatar" Source="https://www.gravatar.com/avatar/93097425c5522cfc4372c53896a962b2?s=40" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Top"/>
         </Grid>
+        <ProgressRing Name="progressRing" HorizontalAlignment="Left" Margin="400,5,5,5" Height="40" Width="40" VerticalAlignment="Top"/>
+        
     </Grid>
 </Page>

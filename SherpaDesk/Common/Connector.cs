@@ -10,6 +10,8 @@ using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 
 namespace SherpaDesk.Common
@@ -32,6 +34,9 @@ namespace SherpaDesk.Common
 
         public Connector()
         {
+            if (Window.Current.Content is Frame &&
+                ((Frame)Window.Current.Content).Content is MainPage)
+                ((MainPage)((Frame)Window.Current.Content).Content).StartProgress();
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(API_URL);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -131,6 +136,9 @@ namespace SherpaDesk.Common
         {
             if (_httpClient != null)
                 _httpClient.Dispose();
+            if (Window.Current.Content is Frame &&
+                ((Frame)Window.Current.Content).Content is MainPage)
+                ((MainPage)((Frame)Window.Current.Content).Content).StopProgress();
         }
 
         private void Authentication()

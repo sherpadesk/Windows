@@ -4,6 +4,7 @@ using SherpaDesk.Models.Response;
 using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace SherpaDesk
 {
@@ -31,6 +32,7 @@ namespace SherpaDesk
                 else
                     this.pageRoot.HandleError(result);
             }
+            ((MainPage)((Frame)Window.Current.Content).Content).StopProgress();
         }
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
