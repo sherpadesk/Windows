@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -55,21 +56,23 @@ namespace SherpaDesk.Common
                             toolTip.Content = kv.Value;
                             toolTip.Foreground = new SolidColorBrush(Colors.Black);
                             toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
-                            toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
-                            toolTip.FontSize = 20;
-                            toolTip.HorizontalContentAlignment = HorizontalAlignment.Right;
-                            toolTip.Height -= 5;
+                            toolTip.Background = new SolidColorBrush(Color.FromArgb(255, 242, 108, 108));
+                            toolTip.Height = 40;
                             toolTip.Width = control.Width;
-                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Top;
-                            toolTip.VerticalOffset = -control.Height;
+                            toolTip.FontSize = 16;
+                            toolTip.FontWeight = FontWeights.Bold;
+                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Bottom;
                             toolTip.UseLayoutRounding = true;
                             toolTip.PlacementTarget = control;
+                            toolTip.HorizontalAlignment = control.HorizontalAlignment;
+                            toolTip.VerticalAlignment = control.VerticalAlignment;
                             var grid = control.ParentGrid();
                             if (grid == null)
                                 ToolTipService.SetToolTip(control, toolTip);
                             else
                             {
-                                toolTip.Margin = control.Margin;
+                                var margin = control.Margin;
+                                toolTip.Margin = margin;                                
                                 Grid.SetRow(toolTip, Grid.GetRow(control));
                                 Grid.SetColumn(toolTip, Grid.GetColumn(control));
                                 grid.Children.Add(toolTip);

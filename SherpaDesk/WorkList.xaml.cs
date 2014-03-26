@@ -79,5 +79,14 @@ namespace SherpaDesk
                 ItemsGrid.ItemsSource = result.Result.ToList();
             }
         }
+
+        private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count() > 0 && e.AddedItems.First() is TicketResponse)
+            {
+                var ticket = (TicketResponse)e.AddedItems.First();
+//                DetailsFrame.Navigate(typeof(TicketDetails), ticket.TicketKey);
+            }
+        }
     }
 }

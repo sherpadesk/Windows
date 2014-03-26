@@ -35,8 +35,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
-        </Grid>
-        <telerik:RadDataGrid x:Name="ItemsGrid" UserGroupMode="Disabled" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1">
+        </Grid>        
+        <telerik:RadDataGrid x:Name="ItemsGrid" UserGroupMode="Disabled" Grid.Column="0" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTextColumn PropertyName="TicketId" Header="Tkt#">
                     <telerik:DataGridTextColumn.HeaderStyle>

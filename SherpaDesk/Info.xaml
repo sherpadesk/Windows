@@ -35,12 +35,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="0" Grid.Column="2" Background="Transparent">
+            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="0" Grid.Column="3" Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -133,8 +134,9 @@
                 </telerik:RadCustomHubTile>
 
             </Grid>
-            <Frame x:Name="LeftFrame" Grid.Column="0" Margin="30,0,0,30" />
-            <Frame x:Name="RightFrame" Grid.Column="4" Margin="30,0,0,30" />
+            <Frame x:Name="DetailsFrame" Grid.Column="0" Margin="30,0,0,30" />
+            <Frame x:Name="LeftFrame" Grid.Column="1" Margin="30,0,0,30" />
+            <Frame x:Name="RightFrame" Grid.Column="5" Margin="30,0,0,30" />
         </Grid>
     </ScrollViewer>
     <VisualStateManager.VisualStateGroups>

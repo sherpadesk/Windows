@@ -13,6 +13,9 @@ namespace SherpaDesk
 {
     public sealed partial class AddTime : SherpaDesk.Common.LayoutAwarePage
     {
+        private const string ERROR_EMPTY_HOURS = "Hours should be positive number.";
+        private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.";
+
         public AddTime()
         {
             this.InitializeComponent();
@@ -92,25 +95,37 @@ namespace SherpaDesk
             {
                 var hours = decimal.Zero;
                 decimal.TryParse(HoursTextBox.Text, out hours);
-                var result = await connector.Action<AddTimeRequest>(
-                    "time",
-                    new AddTimeRequest
-                    {
-                        AccountId = AccountList.GetSelectedValue<int>(),
-                        TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
-                        TechnicianId = TechnicianList.GetSelectedValue<int>(),
-                        Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
-                        Hours = hours,
-                        Note = NoteTextBox.Text
-                    });
-
-                if (result.Status != eResponseStatus.Success)
+                if (hours == 0)
                 {
-                    this.HandleError(result);
+                    ErrorHours.Text = ERROR_EMPTY_HOURS;
+                }
+                else if (hours > 24)
+                {
+                    ErrorHours.Text = ERROR_MUCH_HOURS;
                 }
                 else
                 {
-                    ((Frame)this.Parent).Navigate(typeof(Timesheet));
+                    ErrorHours.Text = string.Empty;
+                    var result = await connector.Action<AddTimeRequest>(
+                        "time",
+                        new AddTimeRequest
+                        {
+                            AccountId = AccountList.GetSelectedValue<int>(),
+                            TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
+                            TechnicianId = TechnicianList.GetSelectedValue<int>(),
+                            Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
+                            Hours = hours,
+                            Note = NoteTextBox.Text
+                        });
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                    }
+                    else
+                    {
+                        ((Frame)this.Parent).Navigate(typeof(Timesheet));
+                    }
                 }
             }
         }
