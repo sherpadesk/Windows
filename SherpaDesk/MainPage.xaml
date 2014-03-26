@@ -16,6 +16,9 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
+        </StackPanel>
         <Image HorizontalAlignment="Left" Height="152" Margin="15,5,0,0" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Width="512" Source="Assets/StoreLogo.png" />
         <!--<Button x:Name="AddTimeButton" Content="Add Time" Grid.Column="1" Margin="0,0,10,0" Grid.Row="0" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="245" FontSize="48" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal">
             <Button.Flyout>
@@ -45,7 +48,5 @@
             </Button>
             <Image x:Name="Avatar" Source="https://www.gravatar.com/avatar/93097425c5522cfc4372c53896a962b2?s=40" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <ProgressRing Name="progressRing" HorizontalAlignment="Left" Margin="400,5,5,5" Height="40" Width="40" VerticalAlignment="Top"/>
-        
     </Grid>
 </Page>
