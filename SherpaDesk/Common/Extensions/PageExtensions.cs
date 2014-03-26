@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Popups;
-using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -56,34 +55,17 @@ namespace SherpaDesk.Common
                             toolTip.Content = kv.Value;
                             toolTip.Foreground = new SolidColorBrush(Colors.Black);
                             toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
-<<<<<<< HEAD
-                            toolTip.Background = new SolidColorBrush(Color.FromArgb(255, 242, 108, 108));
-                            toolTip.Height = 40;
-                            toolTip.Width = control.Width;
-                            toolTip.FontSize = 16;
-                            toolTip.FontWeight = FontWeights.Bold;
-                            toolTip.Placement = Windows.UI.Xaml.Controls.Primitives.PlacementMode.Bottom;
-                            toolTip.UseLayoutRounding = true;
-=======
                             toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
                             toolTip.FontSize = 16;
                             toolTip.Height = control.Height - 10;
                             toolTip.Width = control.Width;
->>>>>>> b6ec0af792b5302dde61ae1e537b8e708ac2aa4c
                             toolTip.PlacementTarget = control;
-                            toolTip.HorizontalAlignment = control.HorizontalAlignment;
-                            toolTip.VerticalAlignment = control.VerticalAlignment;
                             var grid = control.ParentGrid();
                             if (grid == null)
                                 ToolTipService.SetToolTip(control, toolTip);
                             else
                             {
-<<<<<<< HEAD
-                                var margin = control.Margin;
-                                toolTip.Margin = margin;                                
-=======
                                 toolTip.Margin = new Thickness(control.Margin.Left, control.Margin.Top + 10, control.Margin.Right, control.Margin.Bottom);
->>>>>>> b6ec0af792b5302dde61ae1e537b8e708ac2aa4c
                                 Grid.SetRow(toolTip, Grid.GetRow(control));
                                 Grid.SetColumn(toolTip, Grid.GetColumn(control));
                                 grid.Children.Add(toolTip);
@@ -101,10 +83,10 @@ namespace SherpaDesk.Common
                         control.Unloaded += closing;
                         control.GotFocus += closing;
                         toolTip.PointerPressed += new PointerEventHandler((object sender, PointerRoutedEventArgs e) =>
-                            {
-                                toolTip.Visibility = Visibility.Collapsed;
-                                control.Focus(FocusState.Pointer);
-                            });
+                        {
+                            toolTip.Visibility = Visibility.Collapsed;
+                            control.Focus(FocusState.Pointer);
+                        });
                     }
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))
