@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace SherpaDesk.Common
     public class Connector : IDisposable
     {
         protected const string API_URL = "http://api.sherpadesk.com/";
-        protected const string ERROR_INVALID_REQUEST = "Unable to connect to sherpadesk.com";
+        public const string ERROR_INVALID_REQUEST = "Unable to connect to sherpadesk.com";
         protected const string ERROR_EMTPY_REQUEST = "Request cannot be empty or null";
         protected const string ERROR_INVALID_RESPONSE = "Invalid response from sherpadesk.com";
         protected const string ERROR_INTERNAL = "internal error";
@@ -37,12 +38,12 @@ namespace SherpaDesk.Common
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_MEDIA_TYPE));
         }
 
-        public async Task<Response<EmptyResponse>> Action<TRequest>(
+        public Task<Response<EmptyResponse>> Action<TRequest>(
                 string command,
                 TRequest model)
             where TRequest : IRequestType
         {
-            return await this.Func<TRequest, EmptyResponse>(
+            return this.Func<TRequest, EmptyResponse>(
                 command,
                 model);
         }
@@ -96,7 +97,7 @@ namespace SherpaDesk.Common
                         }
                     }
 
-                    response = await _httpClient.PostAsync(command, 
+                    response = await _httpClient.PostAsync(command,
                         new StringContent(requestContent, Encoding.UTF8, JSON_MEDIA_TYPE));
                 }
                 else
@@ -115,16 +116,16 @@ namespace SherpaDesk.Common
                 }
                 else
                 {
-                    return result.Fail(response.ReasonPhrase, response.ToString(), response.RequestMessage.ToString());
+                    result = result.Fail(response.ReasonPhrase, response.ToString(), response.RequestMessage != null ? response.RequestMessage.ToString() : string.Empty);
                 }
             }
             catch (Exception ex)
             {
-                return result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString(), request.ToString());
+                string message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                result = result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString(), request.ToString());
             }
             return result;
         }
-
 
         public void Dispose()
         {
