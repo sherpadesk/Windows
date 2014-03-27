@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace SherpaDesk.Models.Response
 {
     [DataContract]
-    public abstract class TicketResponse : ObjectBase
+    public abstract class TicketBaseResponse : ObjectBase
     {
         [DataMember(Name = "key"), Details]
         public string TicketKey { get; set; }

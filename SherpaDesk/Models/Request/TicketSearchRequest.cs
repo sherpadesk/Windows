@@ -24,7 +24,7 @@ namespace SherpaDesk.Models.Request
         public string Class { get; set; }
 
         [DataMember(Name = "role")]
-        public string _role { get; set; }
+        protected string _role { get; set; }
 
         [DataMember(Name = "status")]
         protected string _status;
@@ -40,24 +40,28 @@ namespace SherpaDesk.Models.Request
         {
             _status = string.Empty;
             if (this.Status.HasFlag(eTicketStatus.Open))
-                _status += eTicketStatus.Open.Description() + ",";
+                _status += eTicketStatus.Open.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.Closed))
-                _status += eTicketStatus.Closed.Description() + ",";
+                _status += eTicketStatus.Closed.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.OnHold))
-                _status += eTicketStatus.OnHold.Description() + ",";
+                _status += eTicketStatus.OnHold.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.Waiting))
-                _status += eTicketStatus.Waiting.Description() + ",";
+                _status += eTicketStatus.Waiting.Details() + ",";
             _status = _status.Trim(',');
 
-            _role = string.Empty;
-            if (this.Role.HasFlag(eRoles.EndUser))
-                _role += eRoles.EndUser.Description() + ",";
-            if (this.Role.HasFlag(eRoles.Technician))
-                _role += eRoles.Technician.Description() + ",";
-            if (this.Role.HasFlag(eRoles.AltTechnician))
-                _role += eRoles.AltTechnician.Description() + ",";
-
-            _role = _role.Trim(',');
+            if (this.Role == eRoles.All)
+                _role = eRoles.All.Details();
+            else
+            {
+                _role = string.Empty;
+                if (this.Role.HasFlag(eRoles.EndUser))
+                    _role += eRoles.EndUser.Details() + ",";
+                if (this.Role.HasFlag(eRoles.Technician))
+                    _role += eRoles.Technician.Details() + ",";
+                if (this.Role.HasFlag(eRoles.AltTechnician))
+                    _role += eRoles.AltTechnician.Details() + ",";
+                _role = _role.Trim(',');
+            }
         }
     }
 }

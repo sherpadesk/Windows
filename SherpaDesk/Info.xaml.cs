@@ -24,7 +24,7 @@ namespace SherpaDesk
                 if (result.Status == eResponseStatus.Success)
                 {
                     NewMessagesCount.Text = result.Result.NewMessages.ToString();
-                    OpenTicketsCount.Text = result.Result.AllOpen.ToString();
+                    OpenTicketsCount.Text = result.Result.OpenAsTech.ToString();
                     OpenAsEndUserCount.Text = result.Result.OpenAsUser.ToString();
                     OnHoldCount.Text = result.Result.OnHold.ToString();
                     FollowUpDatesCount.Text = result.Result.Reminder.ToString();

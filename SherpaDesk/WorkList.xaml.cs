@@ -3,6 +3,7 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System.Linq;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
@@ -47,7 +48,8 @@ namespace SherpaDesk
                     case eWorkListType.Open:
                         request = new TicketSearchRequest
                         {
-                            Status = eTicketStatus.Open | eTicketStatus.OnHold
+                            Status = eTicketStatus.Open,
+                            Role = eRoles.Technician
                         };
                         break;
                     case eWorkListType.OnHold:
@@ -65,9 +67,9 @@ namespace SherpaDesk
                     case eWorkListType.OpenAsEndUser:
                         request = new TicketSearchRequest
                         {
-                            Role = eRoles.EndUser,
-                            Status = eTicketStatus.Open | eTicketStatus.OnHold
-                        }; break;
+                            Role = eRoles.EndUser
+                        }; 
+                        break;
                 }
 
                 var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>("tickets", request);
@@ -82,11 +84,10 @@ namespace SherpaDesk
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count() > 0 && e.AddedItems.First() is TicketResponse)
-            {
-                var ticket = (TicketResponse)e.AddedItems.First();
+            var ticket = e.AddedItems.FirstOrDefault() as TicketSearchResponse;
+            if (ticket != null)
                 DetailsFrame.Navigate(typeof(TicketDetails), ticket.TicketKey);
-            }
+
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SherpaDesk.Common
             return Enum.GetName(item.GetType(), item);
         }
 
-        public static String Description(this Enum item)
+        public static String Details(this Enum item)
         {
             String result = item.ToString();
 

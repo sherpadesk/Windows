@@ -1,4 +1,8 @@
-﻿using System;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,7 +20,7 @@ namespace SherpaDesk
 {
     public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage
     {
-        private string ticketKey;
+        private string _ticketKey;
         public TicketDetails()
         {
             this.InitializeComponent();
@@ -24,13 +28,30 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ticketKey = (string)e.Parameter;
+            _ticketKey = (string)e.Parameter;
             base.OnNavigatedTo(e);
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            SubjectDecorate.Height = SubjectLabel.ActualHeight;            
+            SubjectDecorate.Height = SubjectLabel.ActualHeight;
+            using (var connector = new Connector())
+            {
+                var result = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
+
+                if (result.Status == eResponseStatus.Success)
+                {
+                    var ticket = result.Result;
+                    SubjectLabel.Text = ticket.Subject;
+                    EndUserLabel.Text = ticket.UserFullName;
+                    InitialPostLabel.Text = ticket.InitialPost;
+                    WorkpadLabel.Text = Windows.Data.Html.HtmlUtilities.ConvertToText(ticket.Workpad);
+                }
+                else
+                {
+                    this.HandleError(result);
+                }
+            }
         }
 
         private void ToggleWorkpad()

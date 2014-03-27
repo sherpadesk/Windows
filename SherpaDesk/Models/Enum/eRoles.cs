@@ -10,6 +10,8 @@ namespace SherpaDesk.Models
         [Details("tech")]
         Technician = 2,
         [Details("alt_tech")]
-        AltTechnician = 4
+        AltTechnician = 4,
+        [Details("all")]
+        All = EndUser | Technician | AltTechnician
     }
 }

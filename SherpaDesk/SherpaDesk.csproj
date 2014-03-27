@@ -131,6 +131,8 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\KeyRequest.cs" />
+    <Compile Include="Models\Response\TicketDetailsResponse.cs" />
     <Compile Include="TicketDetails.xaml.cs">
       <DependentUpon>TicketDetails.xaml</DependentUpon>
     </Compile>
@@ -146,7 +148,7 @@
     <Compile Include="Models\Request\UserRequest.cs" />
     <Compile Include="Models\Response\AddTicketResponse.cs" />
     <Compile Include="Models\Response\ClassResponse.cs" />
-    <Compile Include="Models\Response\TicketResponse.cs" />
+    <Compile Include="Models\Response\TicketBaseResponse.cs" />
     <Compile Include="Models\Response\TicketSearchResponse.cs" />
     <Compile Include="Models\Response\TimeResponse.cs" />
     <Compile Include="WorkList.xaml.cs">

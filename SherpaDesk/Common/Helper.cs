@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SherpaDesk.Models.Request;
+using System;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -96,40 +97,47 @@ namespace SherpaDesk.Common
             if (!request.IsEmpty)
             {
                 var type = typeof(TRequest);
-                foreach (var method in type.GetRuntimeMethods())
+                if (type.Equals(typeof(KeyRequest)))
                 {
-                    var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
-                    if (onSerializing != null)
-                    {
-                        method.Invoke(request, new object[1] { null });
-                    }
+                    result = "/" + request.ToString();
                 }
-                foreach (var prop in type.GetRuntimeProperties())
+                else
                 {
-                    var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
-                    if (dataMember != null)
+                    foreach (var method in type.GetRuntimeMethods())
                     {
-                        object val = prop.GetValue(request);
-                        if (!IsDefault(val, prop.PropertyType))
+                        var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
+                        if (onSerializing != null)
                         {
-                            result += string.Format("{0}={1}&", dataMember.Name, val);
+                            method.Invoke(request, new object[1] { null });
                         }
                     }
-                }
-                foreach (var field in type.GetRuntimeFields())
-                {
-                    var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
-                    if (dataMember != null)
+                    foreach (var prop in type.GetRuntimeProperties())
                     {
-                        object val = field.GetValue(request);
-                        if (!IsDefault(val, field.FieldType))
+                        var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
+                        if (dataMember != null)
                         {
-                            result += string.Format("{0}={1}&", dataMember.Name, val);
+                            object val = prop.GetValue(request);
+                            if (!IsDefault(val, prop.PropertyType))
+                            {
+                                result += string.Format("{0}={1}&", dataMember.Name, val);
+                            }
                         }
                     }
+                    foreach (var field in type.GetRuntimeFields())
+                    {
+                        var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
+                        if (dataMember != null)
+                        {
+                            object val = field.GetValue(request);
+                            if (!IsDefault(val, field.FieldType))
+                            {
+                                result += string.Format("{0}={1}&", dataMember.Name, val);
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(result))
+                        result = "?" + result.TrimEnd('&');
                 }
-                if (!string.IsNullOrEmpty(result))
-                    result = "?" + result.TrimEnd('&');
             }
             return result;
         }
