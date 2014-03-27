@@ -16,9 +16,16 @@ namespace SherpaDesk
 {
     public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage
     {
+        private string ticketKey;
         public TicketDetails()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ticketKey = (string)e.Parameter;
+            base.OnNavigatedTo(e);
         }
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
