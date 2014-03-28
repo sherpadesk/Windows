@@ -131,6 +131,7 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageView.cs" />
     <Compile Include="Models\Request\KeyRequest.cs" />
     <Compile Include="Models\Response\TicketDetailsResponse.cs" />
     <Compile Include="TicketDetails.xaml.cs">

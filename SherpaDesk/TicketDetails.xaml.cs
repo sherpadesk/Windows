@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
@@ -21,6 +22,7 @@ namespace SherpaDesk
     public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage
     {
         private string _ticketKey;
+
         public TicketDetails()
         {
             this.InitializeComponent();
@@ -44,8 +46,12 @@ namespace SherpaDesk
                     var ticket = result.Result;
                     SubjectLabel.Text = ticket.Subject;
                     EndUserLabel.Text = ticket.UserFullName;
-                    InitialPostLabel.Text = ticket.InitialPost;
+                    InitialPostLabel.Text = ticket.InitialPost.Replace("<br>", "\n");
                     WorkpadLabel.Text = Windows.Data.Html.HtmlUtilities.ConvertToText(ticket.Workpad);
+                    var imageList = new List<ImageView>();
+                    imageList.Add(new ImageView { FileName = "Logo.png", Image = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.Absolute)) });
+                    imageList.Add(new ImageView { FileName = "WideLogo.png", Image = new BitmapImage(new Uri("ms-appx:///Assets/WideLogo.png", UriKind.Absolute)) });
+                    AttachedView.ItemsSource = imageList;
                 }
                 else
                 {

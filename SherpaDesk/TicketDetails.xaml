@@ -10,6 +10,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Primitives"
+    xmlns:telerikPagination="using:Telerik.UI.Xaml.Controls.Primitives.Pagination"    
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"    
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
@@ -59,7 +61,20 @@
             <ScrollViewer VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,4,0,61" MaxHeight="150" Width="550" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
                 <TextBlock x:Name="InitialPostLabel" Text="" Margin="0,0,18,0" TextWrapping="Wrap" FontSize="25" Foreground="White" />
             </ScrollViewer>
-            <TextBlock Text="Following file was uploaded:" Grid.ColumnSpan="3" FontSize="30" Grid.Row="3" Margin="0,30,0,0" Foreground="White" />
+            <TextBlock Text="Following file was uploaded:" Grid.ColumnSpan="3" FontSize="30" Grid.Row="3" Margin="0,160,0,0" Foreground="White" />
+            <FlipView x:Name="AttachedView" Grid.Row="4" Margin="0,0,0,0" Width="300" Height="200">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="DarkGray" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Image Source="{Binding Image}" Margin="0" Stretch="Uniform" />
+                                <TextBlock Text="{Binding FileName}" Margin="5,5,0,0" FontSize="10" Foreground="LightBlue" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <telerikPrimitives:RadPaginationControl DisplayMode="IndexLabel" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="4" Width="300" Margin="10,220,0,0" Foreground="White" PageProvider="{Binding ElementName=AttachedView}" />
             <Grid Grid.Column="4" Grid.Row="1" Grid.RowSpan="4" MinWidth="500" Canvas.ZIndex="1" Margin="10,10,20,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
