@@ -8,13 +8,13 @@
     xmlns:common="using:SherpaDesk.Common"
     xmlns:Controls="using:WinRTXamlToolkit.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerikInput ="using:Telerik.UI.Xaml.Controls.Input"
+    xmlns:telerikCalendar ="using:Telerik.UI.Xaml.Controls.Input.Calendar"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
     <Page.Resources>
-
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        <ResourceDictionary Source="TimesheetResources.xaml"/>
     </Page.Resources>
 
     <!--
@@ -46,7 +46,28 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <GridView x:Name="TimesheetGridView" Grid.Row="1" Margin="20"/>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="600" />
+            </Grid.ColumnDefinitions>
+            <telerikInput:RadCalendar SelectionMode="Single" CellStyleSelector="{StaticResource selector}" x:Name="TimesheetCalendar" Margin="0,0,0,0" 
+                RequestedTheme="Light" Background="White" VerticalAlignment="Top" Height="500" Loaded="TimesheetCalendar_Loaded" />
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="DateLabel" Grid.Column="0" FontSize="40" />
+                <telerikInput:RadDatePicker x:Name="DateField" Grid.Column="2" Height="60" Width="30" FontSize="40" Grid.Row="0" DisplayValueFormat="dddd, MMMM dd, yyyy" ItemLength="90" Margin="0,-10,0,0" />
+            </Grid>
+        </Grid>
+        <GridView x:Name="TimesheetGridView" Visibility="Collapsed" Grid.Row="1" Margin="20"/>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

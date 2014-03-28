@@ -116,6 +116,7 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\CustomStyleSelector.cs" />
     <Compile Include="Common\Extensions\ComboBoxExtensions.cs" />
     <Compile Include="Common\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Common\Extensions\EnumExtentions.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Models\ImageView.cs" />
     <Compile Include="Models\Request\KeyRequest.cs" />
     <Compile Include="Models\Response\TicketDetailsResponse.cs" />
+    <Compile Include="Models\TimeLog.cs" />
     <Compile Include="TicketDetails.xaml.cs">
       <DependentUpon>TicketDetails.xaml</DependentUpon>
     </Compile>
@@ -264,6 +266,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TicketDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimesheetResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -30,7 +30,7 @@
             <ColumnDefinition Width="auto" />           
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="240"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Frame x:Name="DetailsFrame" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,0,0" />
@@ -38,7 +38,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
+            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
         </Grid>        
         <telerik:RadDataGrid  x:Name="ItemsGrid" MinHeight="500" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Columns>
