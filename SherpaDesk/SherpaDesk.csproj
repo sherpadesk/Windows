@@ -124,6 +124,7 @@
     <Compile Include="Common\Extensions\ResponseExtensions.cs" />
     <Compile Include="Common\Extensions\UIElementExtensions.cs" />
     <Compile Include="Common\Helper.cs" />
+    <Compile Include="Common\Interfaces\IPath.cs" />
     <Compile Include="Common\Interfaces\IRequestType.cs" />
     <Compile Include="Common\IntRequired.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
@@ -132,8 +133,11 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ImageView.cs" />
+    <Compile Include="Models\Request\FileRequest.cs" />
+    <Compile Include="Models\Request\GetRequest.cs" />
     <Compile Include="Models\Request\KeyRequest.cs" />
+    <Compile Include="Models\Request\PostRequest.cs" />
+    <Compile Include="Models\Response\FileResponse.cs" />
     <Compile Include="Models\Response\TicketDetailsResponse.cs" />
     <Compile Include="Models\TimeLog.cs" />
     <Compile Include="TicketDetails.xaml.cs">

@@ -39,23 +39,34 @@ namespace SherpaDesk
             SubjectDecorate.Height = SubjectLabel.ActualHeight;
             using (var connector = new Connector())
             {
-                var result = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
+                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest("/" + _ticketKey));
 
-                if (result.Status == eResponseStatus.Success)
+                if (resultTicket.Status != eResponseStatus.Success)
                 {
-                    var ticket = result.Result;
-                    SubjectLabel.Text = ticket.Subject;
-                    EndUserLabel.Text = ticket.UserFullName;
-                    InitialPostLabel.Text = ticket.InitialPost.Replace("<br>", "\n");
-                    WorkpadLabel.Text = Windows.Data.Html.HtmlUtilities.ConvertToText(ticket.Workpad);
-                    var imageList = new List<ImageView>();
-                    imageList.Add(new ImageView { FileName = "Logo.png", Image = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.Absolute)) });
-                    imageList.Add(new ImageView { FileName = "WideLogo.png", Image = new BitmapImage(new Uri("ms-appx:///Assets/WideLogo.png", UriKind.Absolute)) });
-                    AttachedView.ItemsSource = imageList;
+                    this.HandleError(resultTicket);
+                    return;
                 }
-                else
+
+                var ticket = resultTicket.Result;
+                SubjectLabel.Text = ticket.Subject;
+                EndUserLabel.Text = ticket.UserFullName;
+                InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
+                WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
+
+                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=" + _ticketKey));
+
+                if (resultTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    this.HandleError(resultTicket);
+                    return;
+                }
+                if (resultFiles.Result != null && resultFiles.Result.Length > 0)
+                {
+                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
+                    {
+                        FileName = file.Name,
+                        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
+                    }).ToList();
                 }
             }
         }

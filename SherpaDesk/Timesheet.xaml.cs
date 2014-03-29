@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SherpaDesk.Common;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
@@ -63,12 +64,11 @@ namespace SherpaDesk
                     this.HandleError(result);
                 }
 
-                var timeLogs = new List<TimeLog>();
-                foreach (var time in result.Result)
+                TimesheetCalendar.DataContext = result.Result.Select(time => new TimeLog
                 {
-                    timeLogs.Add(new TimeLog { Date = time.Date, Text = time.Hours.ToString("F") });
-                }
-                TimesheetCalendar.DataContext = timeLogs;
+                    Date = time.Date,
+                    Text = time.Hours.ToString("F")
+                }).ToList();
                 var currentDate = DateTime.Now;
                 TimesheetCalendar.DisplayDateStart = new DateTime(currentDate.Year, currentDate.Month, 1);
             }

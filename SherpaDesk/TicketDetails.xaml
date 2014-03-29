@@ -67,7 +67,7 @@
                     <DataTemplate>
                         <Border BorderBrush="DarkGray" BorderThickness="1,1,1,1">
                             <Grid>
-                                <Image Source="{Binding Image}" Margin="0" Stretch="Uniform" />
+                                <Image Source="{Binding Image}" Margin="0" Stretch="Uniform"  />
                                 <TextBlock Text="{Binding FileName}" Margin="5,5,0,0" FontSize="10" Foreground="LightBlue" />
                             </Grid>
                         </Border>

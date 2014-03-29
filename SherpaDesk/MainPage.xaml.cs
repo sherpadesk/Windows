@@ -41,12 +41,14 @@ namespace SherpaDesk
             progressRing.IsActive = true;
             _cursor = Window.Current.CoreWindow.PointerCursor;
             Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 2);
+            Window.Current.CoreWindow.IsInputEnabled = false;
         }
 
         public void StopProgress()
         {
             progressRing.IsActive = false;
             Window.Current.CoreWindow.PointerCursor = _cursor ?? new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
+            Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
         private async void LogOutMenu_Click(object sender, RoutedEventArgs e)

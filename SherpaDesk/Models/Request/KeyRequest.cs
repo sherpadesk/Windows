@@ -1,19 +1,20 @@
-﻿
+﻿using SherpaDesk.Common;
+
 namespace SherpaDesk.Models.Request
 {
-    public class KeyRequest : GetRequest
+    public class KeyRequest : GetRequest, IPath
     {
         public KeyRequest(string key)
         {
-            this.Key = key;
+            this.Path = key;
         }
 
         [Details]
-        public string Key { get; set; }
+        public string Path { get; set; }
 
         public override string ToString()
         {
-            return this.Key ?? string.Empty;
+            return this.Path ?? string.Empty;
         }
     }
 }

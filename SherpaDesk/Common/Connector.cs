@@ -18,12 +18,11 @@ namespace SherpaDesk.Common
 {
     public class Connector : IDisposable
     {
-        protected const string API_URL = "http://api.sherpadesk.com/";
+        protected const string API_URL = "https://api.sherpadesk.com/";
         public const string ERROR_INVALID_REQUEST = "Unable to connect to sherpadesk.com";
         protected const string ERROR_EMTPY_REQUEST = "Request cannot be empty or null";
         protected const string ERROR_INVALID_RESPONSE = "Invalid response from sherpadesk.com";
         protected const string ERROR_INTERNAL = "internal error";
-        protected const string JSON_MEDIA_TYPE = "application/json";
         protected const string AUTHORIZATION = "Authorization";
         protected const string BASIC = "Basic ";
         protected const string AUTH_FORMAT = "{0}-{1}:{2}";
@@ -40,7 +39,7 @@ namespace SherpaDesk.Common
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(API_URL);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JSON_MEDIA_TYPE));
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(PostRequest.JSON_MEDIA_TYPE));
         }
 
         public Task<Response<EmptyResponse>> Action<TRequest>(
@@ -83,41 +82,32 @@ namespace SherpaDesk.Common
 
                 Authentication();
 
-                HttpResponseMessage response;
+                HttpResponseMessage response = null;
 
+                if (model is IPath)
+                {
+                    command += ((IPath)model).Path;
+                }
+                
                 if (request.Data.Type == eRequestType.POST)
                 {
-                    var jsonRequestSerializer = new DataContractJsonSerializer(typeof(TRequest));
-
-                    string requestContent;
-                    using (var stream = new MemoryStream())
+                    using (var content = request.Data.GetContent())
                     {
-                        jsonRequestSerializer.WriteObject(stream, model);
-
-                        stream.Position = 0;
-
-                        using (var reader = new StreamReader(stream))
-                        {
-                            requestContent = reader.ReadToEnd();
-                        }
+                        response = await _httpClient.PostAsync(command, content);
                     }
-
-                    response = await _httpClient.PostAsync(command,
-                        new StringContent(requestContent, Encoding.UTF8, JSON_MEDIA_TYPE));
+                }
+                else if (request.Data.Type == eRequestType.GET)
+                {
+                    response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
                 }
                 else
                 {
-                    response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
+                    throw new ArgumentException("Unknown type of request!");
                 }
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var jsonResponseSerializer = new DataContractJsonSerializer(typeof(TResponse));
-                    using (var responseStream = await response.Content.ReadAsStreamAsync())
-                    {
-                        responseStream.Position = 0;
-                        result.Result = (TResponse)jsonResponseSerializer.ReadObject(responseStream);
-                    }
+                    result.Fill(response.Content);
                 }
                 else
                 {

@@ -1,6 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace SherpaDesk.Models.Response
 {
@@ -30,6 +32,20 @@ namespace SherpaDesk.Models.Response
     {
         [Details]
         public T Result { get; set; }
+
+        public async void Fill(HttpContent content)
+        {
+            this.Result = default(T);
+            var jsonResponseSerializer = new DataContractJsonSerializer(typeof(T));
+            using (var responseStream = await content.ReadAsStreamAsync())
+            {
+                responseStream.Position = 0;
+                if (responseStream.Length > 0)
+                {
+                    this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
+                }
+            }
+        }
     }
 
     [DataContract]

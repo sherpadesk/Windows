@@ -22,9 +22,11 @@ namespace SherpaDesk
 {
     public sealed partial class AddTicket : SherpaDesk.Common.LayoutAwarePage
     {
+        private IList<StorageFile> _attachment = null;
         public AddTicket()
         {
             this.InitializeComponent();
+            _attachment = new List<StorageFile>();
         }
 
         private async void filepickButton_Click(object sender, RoutedEventArgs e)
@@ -36,6 +38,7 @@ namespace SherpaDesk
             openPicker.FileTypeFilter.Add(".jpeg");
             openPicker.FileTypeFilter.Add(".png");
             var files = await openPicker.PickMultipleFilesAsync();
+            _attachment.Clear();
             if (files != null && files.Count > 0)
             {
                 SelectedFilesList.Text = "Picked photos: ";
@@ -43,6 +46,7 @@ namespace SherpaDesk
                 foreach (var file in files)
                 {
                     fileNames.Add(file.Name);
+                    _attachment.Add(file);
                 }
                 SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
             }
@@ -135,7 +139,7 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var result = await connector.Func<AddTicketRequest, AddTicketResponse>(
+                var resultAddTicket = await connector.Func<AddTicketRequest, AddTicketResponse>(
                     "tickets",
                     new AddTicketRequest
                     {
@@ -147,19 +151,30 @@ namespace SherpaDesk
                         Status = StatusList.GetSelectedValue<string>(),
                         Comment = DescritionTextbox.Text
                     });
-                if (result.Status != eResponseStatus.Success)
+                if (resultAddTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
-                }
-                else
-                {
-                    var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
-                    var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
-
-                    leftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-                    scrollViewer.ChangeView(0, new double?(), new float?());
+                    this.HandleError(resultAddTicket);
+                    return;
                 }
 
+                using (FileRequest fileRequest = new FileRequest("?ticket=" + resultAddTicket.Result.TicketKey))
+                {
+                    foreach (var file in _attachment)
+                    {
+                        fileRequest.Add(file);
+                    }
+                    var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
+                    if (resultUploadFile.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultUploadFile);
+                        return;
+                    }
+                }
+                var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
+                var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
+
+                leftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+                scrollViewer.ChangeView(0, new double?(), new float?());
             }
         }
     }

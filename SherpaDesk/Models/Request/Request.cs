@@ -32,35 +32,8 @@ namespace SherpaDesk.Models.Request
             else
                 return new List<ValidationResult>();
         }
-    }
 
-   
-    [DataContract]
-    public abstract class PostRequest : ObjectBase, IRequestType
-    {
-        public virtual eRequestType Type
-        {
-            get { return eRequestType.POST; }
-        }
 
-        public virtual bool IsEmpty
-        {
-            get { return false; }
-        }
-    }
-
-    [DataContract]
-    public abstract class GetRequest : ObjectBase, IRequestType
-    {
-        public virtual eRequestType Type
-        {
-            get { return eRequestType.GET; }
-        }
-
-        public virtual bool IsEmpty
-        {
-            get { return false; }
-        }
     }
 
     [DataContract]

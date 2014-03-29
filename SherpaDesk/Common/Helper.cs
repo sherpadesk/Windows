@@ -89,7 +89,6 @@ namespace SherpaDesk.Common
             return string.Format("{1}, {0}", firstName, lastName).Trim(',');
         }
 
-
         public static string GetUrlParams<TRequest>(TRequest request) where TRequest : IRequestType
         {
             string result = string.Empty;
@@ -97,47 +96,40 @@ namespace SherpaDesk.Common
             if (!request.IsEmpty)
             {
                 var type = typeof(TRequest);
-                if (type.Equals(typeof(KeyRequest)))
+                foreach (var method in type.GetRuntimeMethods())
                 {
-                    result = "/" + request.ToString();
+                    var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
+                    if (onSerializing != null)
+                    {
+                        method.Invoke(request, new object[1] { null });
+                    }
                 }
-                else
+                foreach (var prop in type.GetRuntimeProperties())
                 {
-                    foreach (var method in type.GetRuntimeMethods())
+                    var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
+                    if (dataMember != null)
                     {
-                        var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
-                        if (onSerializing != null)
+                        object val = prop.GetValue(request);
+                        if (!IsDefault(val, prop.PropertyType))
                         {
-                            method.Invoke(request, new object[1] { null });
+                            result += string.Format("{0}={1}&", dataMember.Name, val);
                         }
                     }
-                    foreach (var prop in type.GetRuntimeProperties())
-                    {
-                        var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
-                        if (dataMember != null)
-                        {
-                            object val = prop.GetValue(request);
-                            if (!IsDefault(val, prop.PropertyType))
-                            {
-                                result += string.Format("{0}={1}&", dataMember.Name, val);
-                            }
-                        }
-                    }
-                    foreach (var field in type.GetRuntimeFields())
-                    {
-                        var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
-                        if (dataMember != null)
-                        {
-                            object val = field.GetValue(request);
-                            if (!IsDefault(val, field.FieldType))
-                            {
-                                result += string.Format("{0}={1}&", dataMember.Name, val);
-                            }
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(result))
-                        result = "?" + result.TrimEnd('&');
                 }
+                foreach (var field in type.GetRuntimeFields())
+                {
+                    var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
+                    if (dataMember != null)
+                    {
+                        object val = field.GetValue(request);
+                        if (!IsDefault(val, field.FieldType))
+                        {
+                            result += string.Format("{0}={1}&", dataMember.Name, val);
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(result))
+                    result = "?" + result.TrimEnd('&');
             }
             return result;
         }
@@ -164,6 +156,12 @@ namespace SherpaDesk.Common
                 }
             }
             else return false;
+        }
+
+        public static string HtmlToString(string html)
+        {
+            html = html.Replace("<br>", Environment.NewLine);
+            return Windows.Data.Html.HtmlUtilities.ConvertToText(html);
         }
     }
 }
