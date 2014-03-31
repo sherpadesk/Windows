@@ -80,11 +80,11 @@ namespace SherpaDesk.Models.Response
         {
             DateTime date;
             if (DateTime.TryParse(this._date, out date))
-                this.Date = date;
+                this.Date = date.ToLocalTime();
             if (DateTime.TryParse(this._startTime, out date))
-                this.StartTime = date;
+                this.StartTime = date.ToLocalTime();
             if (DateTime.TryParse(this._stopTime, out date))
-                this.StopTime = date;
+                this.StopTime = date.ToLocalTime();
         }
 
     }

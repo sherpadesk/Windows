@@ -55,9 +55,9 @@ namespace SherpaDesk.Models.Request
         {
             DateTime date;
             if (DateTime.TryParse(this._startDate, out date))
-                this.StartDate = date;
+                this.StartDate = date.ToLocalTime();
             if (DateTime.TryParse(this._endDate, out date))
-                this.EndDate = date;
+                this.EndDate = date.ToLocalTime();
         }
 
     }

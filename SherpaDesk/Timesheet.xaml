@@ -65,9 +65,28 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="DateLabel" Grid.Column="0" FontSize="40" />
                 <telerikInput:RadDatePicker x:Name="DateField" Grid.Column="2" Height="60" Width="30" FontSize="40" Grid.Row="0" DisplayValueFormat="dddd, MMMM dd, yyyy" ItemLength="90" Margin="0,-10,0,0" />
+                <GridView x:Name="TimesheetGridView" Visibility="Collapsed" Grid.Column="0" Grid.Row="2" Margin="20">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Height="100" 
+                                Width="200" 
+                                Background="Blue">
+                                <Rectangle x:Name="placeholderRectangle" 
+                                   Fill="Red" 
+                                   Opacity="0"/>
+                                <TextBlock Text="{Binding Hours}" 
+                                   Foreground="Yellow"/>
+                                <TextBlock Text="{Binding AccountName}" 
+                                   Foreground="Aqua"/>
+                                <TextBlock x:Name="descriptionTextBlock" 
+                                   Text="{Binding Note}" 
+                                   Foreground="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </Grid>
         </Grid>
-        <GridView x:Name="TimesheetGridView" Visibility="Collapsed" Grid.Row="1" Margin="20"/>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
