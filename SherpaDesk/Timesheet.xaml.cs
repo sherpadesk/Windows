@@ -22,6 +22,12 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            var date = DateTime.Now;
+            DateField.Value = date;
+            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
+            StartTimePicker.Value = EndTimePicker.Value = date;
+            StartTimeLabel.Text = date.ToString("t");
+            EndTimeLabel.Text = date.ToString("t");
             var currentDate = DateTime.Now.Date;
             TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(currentDate, currentDate);
             DateField.Value = currentDate;
@@ -29,7 +35,6 @@ namespace SherpaDesk
             TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
             DateField.ValueChanged += DateField_ValueChanged;
             FillTimesheetGrid(currentDate);
-
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
@@ -59,7 +64,27 @@ namespace SherpaDesk
         private void FillTimesheetGrid(DateTime selectedDate)
         {
             TimesheetGridView.ItemsSource = _timeLogList.Where(x => x.Date.Date == selectedDate).ToList();
-            TimesheetGridView.Visibility = TimesheetGridView.Items.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+//          TimesheetGridView.Visibility = TimesheetGridView.Items.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void CalculateHours()
+        {
+            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
+            {
+                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            }
+        }
+        private void StartTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
+            CalculateHours();
+        }
+
+        private void EndTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
+            CalculateHours();
         }
 
         private async void TimesheetCalendar_Loaded(object sender, RoutedEventArgs e)

@@ -27,7 +27,7 @@
     <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="Transparent" RequestedTheme="Light">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />           
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -38,19 +38,53 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
-        </Grid>        
-        <telerik:RadDataGrid  x:Name="ItemsGrid" MinHeight="500" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionChanged="ItemsGrid_SelectionChanged">
+            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,70" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
+            <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
+            <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
+                <Button.Flyout>
+                    <MenuFlyout Placement="Right">
+                        <MenuFlyoutItem x:Name="MarkReadMenu" Text="Mark Read" Tapped="MarkReadMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="DeleteMenu" Text="Delete" Tapped="DeleteMenu_Tapped" />
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+        <telerik:RadDataGrid  x:Name="ItemsGrid" MinHeight="500" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
             <telerik:RadDataGrid.Columns>
-                <telerik:DataGridTextColumn PropertyName="TicketId" Header="Tkt#">
-                    <telerik:DataGridTextColumn.HeaderStyle>
+                <telerik:DataGridTemplateColumn Width="50">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
                             <Setter Property="FontSize" Value="20" />
                             <Setter Property="Foreground" Value="White" />
                         </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                </telerik:DataGridTextColumn>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                    <telerik:DataGridTemplateColumn.Header>
+                        <Grid HorizontalAlignment="Stretch">
+                            <CheckBox x:Name="HeaderGridCheckbox" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
+                        </Grid>                        
+                    </telerik:DataGridTemplateColumn.Header>
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked}" Margin="8,0,0,0" HorizontalAlignment="Left" Tag="{Binding TicketId}" Checked="GridCheckbox_Checked" Unchecked="GridCheckbox_Unchecked" />
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTemplateColumn Header="Tkt#">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <Button x:Name="GridTicketId" Content="{Binding TicketId}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Background="#FFD3D1E7" />
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>
                 <telerik:DataGridTextColumn PropertyName="UserFullName" Header="End User">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">

@@ -30,6 +30,8 @@ namespace SherpaDesk.Models.Response
         [Details]
         public string DaysOld { get; set; }
 
+        public bool IsChecked { get; set; }
+
         [OnDeserialized]
         protected new void OnDeserialized(StreamingContext context)
         {

@@ -165,9 +165,6 @@
     <Compile Include="Timesheet.xaml.cs">
       <DependentUpon>Timesheet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EndOfDay.xaml.cs">
-      <DependentUpon>EndOfDay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\Request\AccountSearchRequest.cs" />
     <Compile Include="Models\Request\AddTicketRequest.cs" />
     <Compile Include="Models\Request\AddTimeRequest.cs" />
@@ -238,6 +235,7 @@
     <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\arrow.gif" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\LogoBig.png" />
     <Content Include="Assets\SmallLogo.png" />
@@ -379,10 +377,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Timesheet.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="EndOfDay.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

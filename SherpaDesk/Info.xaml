@@ -116,14 +116,6 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="EndOfDayTile" Grid.Row="2" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="EndOfDayTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text=" " FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                            <TextBlock Text="End Of Day" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
                 <telerik:RadCustomHubTile x:Name="TimesheetTile" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="TimesheetTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">

@@ -6,6 +6,8 @@ using System.Linq;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Controls;
 
 namespace SherpaDesk
 {
@@ -68,7 +70,7 @@ namespace SherpaDesk
                         request = new TicketSearchRequest
                         {
                             Role = eRoles.EndUser
-                        }; 
+                        };
                         break;
                 }
 
@@ -88,6 +90,69 @@ namespace SherpaDesk
             if (ticket != null)
                 DetailsFrame.Navigate(typeof(TicketDetails), ticket.TicketKey);
 
+        }
+
+        private void GridCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
+            {
+                int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
+                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketId == ticketId);
+                if (item != null)
+                {
+                    ItemsGrid.SelectedItems.Add(item);
+                }
+            }
+        }
+
+        private void GridCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
+            {
+                int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
+                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketId == ticketId);
+                if (item != null)
+                {
+                    ItemsGrid.SelectedItems.Remove(item);
+                }
+            }
+        }
+
+        private void MarkReadMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            //            ItemsGrid.SelectedItems has checked items
+        }
+
+        private void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+        }
+
+        private void DeleteMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+        }
+
+        private void GridTicketId_Click(object sender, RoutedEventArgs e)
+        {
+            DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
+        }
+
+        private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            ItemsGrid.SelectedItems.Clear();
+            foreach (var item in ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource))
+            {
+                item.IsChecked = true;
+                ItemsGrid.SelectedItems.Add(item);
+            }
+        }
+
+        private void HeaderGridCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ItemsGrid.SelectedItems.Clear();
+            foreach (var item in ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource))
+            {
+                item.IsChecked = false;
+            }
         }
     }
 }

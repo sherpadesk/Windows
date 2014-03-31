@@ -82,11 +82,5 @@ namespace SherpaDesk
             this.RightFrame.Navigate(typeof(Timesheet));
             scrollViewer.ChangeView(2000, new double?(), new float?());
         }
-
-        private void EndOfDayTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            this.RightFrame.Navigate(typeof(EndOfDay));
-            scrollViewer.ChangeView(2000, new double?(), new float?());
-        }
     }
 }
