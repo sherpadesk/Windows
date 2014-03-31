@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SherpaDesk.Models
 {
-    public class TimeLog
+    public class CalendarCell
     {
         public DateTime Date { get; set; }
 

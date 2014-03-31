@@ -1,10 +1,6 @@
 ﻿using SherpaDesk.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Input.Calendar;
 using Windows.UI.Xaml;
 
@@ -16,9 +12,9 @@ namespace SherpaDesk.Common
 
         protected override void SelectStyleCore(CalendarCellStyleContext context, Telerik.UI.Xaml.Controls.Input.RadCalendar container)
         {
-            if (container.DataContext != null && container.DataContext is IList<TimeLog>)
+            if (container.DataContext != null && container.DataContext is IList<CalendarCell>)
             {
-                var events = container.DataContext as IList<TimeLog>;
+                var events = container.DataContext as IList<CalendarCell>;
 
                 if (events.Any(e => e.Date.Date == context.Date.Date))
                 {

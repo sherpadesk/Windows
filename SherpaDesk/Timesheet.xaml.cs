@@ -64,11 +64,14 @@ namespace SherpaDesk
                     this.HandleError(result);
                 }
 
-                TimesheetCalendar.DataContext = result.Result.Select(time => new TimeLog
-                {
-                    Date = time.Date,
-                    Text = time.Hours.ToString("F")
-                }).ToList();
+                TimesheetCalendar.DataContext = result
+                    .Result
+                    .GroupBy(x => x.Date.ToLocalTime().Date)
+                    .Select(time => new CalendarCell
+                    {
+                        Date = time.Key,
+                        Text = time.Sum(x => x.Hours).ToString("F")
+                    }).ToList();
                 var currentDate = DateTime.Now;
                 TimesheetCalendar.DisplayDateStart = new DateTime(currentDate.Year, currentDate.Month, 1);
             }

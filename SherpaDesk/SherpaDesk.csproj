@@ -112,6 +112,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AppSettings.cs" />
+    <Compile Include="Common\CellModelToTimeLogConverter.cs" />
     <Compile Include="Common\Connector.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
@@ -139,7 +140,7 @@
     <Compile Include="Models\Request\PostRequest.cs" />
     <Compile Include="Models\Response\FileResponse.cs" />
     <Compile Include="Models\Response\TicketDetailsResponse.cs" />
-    <Compile Include="Models\TimeLog.cs" />
+    <Compile Include="Models\CalendarCell.cs" />
     <Compile Include="TicketDetails.xaml.cs">
       <DependentUpon>TicketDetails.xaml</DependentUpon>
     </Compile>
