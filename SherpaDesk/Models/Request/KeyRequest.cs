@@ -6,7 +6,12 @@ namespace SherpaDesk.Models.Request
     {
         public KeyRequest(string key)
         {
-            this.Path = key;
+            this.Path = "/" + key;
+        }
+
+        public KeyRequest(string symbols, string key)
+        {
+            this.Path = string.Concat(symbols, key);
         }
 
         [Details]

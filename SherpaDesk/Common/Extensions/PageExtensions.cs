@@ -3,6 +3,7 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +18,6 @@ namespace SherpaDesk.Common
         private const string TOOL_TIP_NAME = "ToolTip";
         public static async void HandleError(this Page page, Response response)
         {
-            MessageDialog dialog = new MessageDialog(response.Message);
             if (response.Status == eResponseStatus.Invalid)
             {
                 string messageWithoutControl = string.Empty;
@@ -91,22 +91,30 @@ namespace SherpaDesk.Common
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))
                 {
-                    dialog.Title = "Invalid input data";
-                    dialog.Content = messageWithoutControl;
-                    await dialog.ShowAsync();
+                    await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        var md = new MessageDialog(messageWithoutControl, "Invalid input data");
+                        await md.ShowAsync();
+                    });
                 }
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                dialog.Title = "Failed Operation";
-                await dialog.ShowAsync();
+                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    var md = new MessageDialog(response.Message, "Failed Operation");
+                    await md.ShowAsync();
+                });
             }
             else if (response.Status == eResponseStatus.Error)
             {
                 //TODO: show the complex dialog with internal error message and descriptions from response.Messagess
                 // It can has a possibility to send response object by email
-                dialog.Title = "Internal Error";
-                await dialog.ShowAsync();
+                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        var md = new MessageDialog(response.Message, "Internal Error");
+                        await md.ShowAsync();
+                    });
             }
         }
     }

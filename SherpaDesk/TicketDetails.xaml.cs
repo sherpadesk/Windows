@@ -39,7 +39,7 @@ namespace SherpaDesk
             SubjectDecorate.Height = SubjectLabel.ActualHeight;
             using (var connector = new Connector())
             {
-                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest("/" + _ticketKey));
+                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
@@ -53,7 +53,7 @@ namespace SherpaDesk
                 InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
                 WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
 
-                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=" + _ticketKey));
+                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {

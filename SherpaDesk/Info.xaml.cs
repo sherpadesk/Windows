@@ -1,5 +1,6 @@
 ﻿using SherpaDesk.Common;
 using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
 using Windows.UI.Popups;
@@ -19,8 +20,8 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var result = await connector.Func<TicketCountsResponse>(
-                    "tickets/counts");
+                var result = await connector.Func<KeyRequest, TicketCountsResponse>(
+                    "tickets", new KeyRequest("counts"));
                 if (result.Status == eResponseStatus.Success)
                 {
                     NewMessagesCount.Text = result.Result.NewMessages.ToString();
@@ -32,7 +33,6 @@ namespace SherpaDesk
                 else
                     this.pageRoot.HandleError(result);
             }
-            ((MainPage)((Frame)Window.Current.Content).Content).StopProgress();
         }
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
