@@ -10,6 +10,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:telerikInput ="using:Telerik.UI.Xaml.Controls.Input"
     xmlns:telerikCalendar ="using:Telerik.UI.Xaml.Controls.Input.Calendar"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"        
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
@@ -54,6 +56,8 @@
                 <ColumnDefinition Width="600" />
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="600" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <telerikInput:RadCalendar SelectionMode="Single" CellStyleSelector="{StaticResource selector}" x:Name="TimesheetCalendar" Margin="0,0,0,0" 
                 RequestedTheme="Light" Background="White" VerticalAlignment="Top" Height="500" Loaded="TimesheetCalendar_Loaded" />
@@ -122,37 +126,190 @@
                         <TextBlock x:Name="EndTimeLabel" Grid.Column="0" FontSize="24" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <telerikInput:RadTimePicker x:Name="EndTimePicker" Grid.Column="2" Height="30" Width="30" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" ValueChanged="EndTimePicker_ValueChanged" />
                     </Grid>
-                    
+
                     <TextBlock HorizontalAlignment="left" Grid.Row="7" Margin="10,10,0,0" TextWrapping="Wrap" Text="Hours" VerticalAlignment="Top" FontSize="24" />
                     <TextBox x:Name="HoursTextBox" Margin="0,5,0,0" HorizontalAlignment="Left" Height="35" InputScope="NumberFullWidth" Text="0.00" Grid.Row="7" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" Width="130" />
-                    
+
                     <TextBlock HorizontalAlignment="left" Grid.Row="8" Margin="10,10,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" FontSize="24" />
                     <TextBox x:Name="NoteTextBox" Margin="0,5,0,0" HorizontalAlignment="Stretch" Height="100" InputScope="NumberFullWidth" Grid.Row="8" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" />
-                   
-                    <Button Content="Save Time" Grid.Column="0" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.ColumnSpan="3" Grid.Row="9" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Background="#FF2F9129" />
 
-                </Grid>                    
-                
-                <GridView x:Name="TimesheetGridView" Visibility="Collapsed" Grid.Column="0" Grid.Row="2" Margin="20">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Height="100" 
-                                Width="200" 
-                                Background="Blue">
-                                <Rectangle x:Name="placeholderRectangle" 
-                                   Fill="Red" 
-                                   Opacity="0"/>
-                                <TextBlock Text="{Binding Hours}" 
-                                   Foreground="Yellow"/>
-                                <TextBlock Text="{Binding AccountName}" 
-                                   Foreground="Aqua"/>
-                                <TextBlock x:Name="descriptionTextBlock" 
-                                   Text="{Binding Note}" 
-                                   Foreground="Gray"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                    <Button Content="Save Time" Grid.Column="0" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.ColumnSpan="3" Grid.Row="9" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Background="#FF2F9129" />
+                </Grid>
+            </Grid>
+            <Grid x:Name="TimesheetGrids" Grid.Column="4" Width="1500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Non-Ticket Time Logs" FontSize="24" />
+                <TextBlock Text="Ticket Time Logs" Grid.Row="3" FontSize="24" />
+
+                <telerik:RadDataGrid RequestedTheme="Light" x:Name="NonTicketsGrid" Height="200" UserGroupMode="Disabled" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
+                    <telerik:RadDataGrid.Columns>
+                        <telerik:DataGridTextColumn PropertyName="Date" Header="Date">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="AccountName" Header="Account">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="StartTime" Header="Start/Stop">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="Hours" Header="Time">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>                        
+                        <telerik:DataGridTemplateColumn Width="50" Header="Billable">
+                            <telerik:DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTemplateColumn.HeaderStyle>
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="BillableCheckbox" IsChecked="True" Margin="8,0,0,0" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
+                        <telerik:DataGridTextColumn PropertyName="TaskTypeName" Header="Task">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                    </telerik:RadDataGrid.Columns>
+                </telerik:RadDataGrid>
+
+                <telerik:RadDataGrid RequestedTheme="Light" x:Name="TicketTimeGrid" Height="200" UserGroupMode="Disabled" Grid.Row="4" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
+                    <telerik:RadDataGrid.Columns>
+                        <telerik:DataGridTemplateColumn Header="Tkt#">
+                            <telerik:DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTemplateColumn.HeaderStyle>
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="TimeTicketId" Background="#FFD3D1E7" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
+                        <telerik:DataGridTextColumn PropertyName="Date" Header="Date">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="AccountName" Header="Account">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="StartTime" Header="Start/Stop">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="Hours" Header="Time Log">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="UserName" Header="Name">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>                        
+                        <telerik:DataGridTemplateColumn Width="50" Header="Billable">
+                            <telerik:DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTemplateColumn.HeaderStyle>
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="BillableCheckbox" IsChecked="True" Margin="8,0,0,0" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
+                        <telerik:DataGridTextColumn PropertyName="TaskTypeName" Header="Task">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                        <telerik:DataGridTextColumn PropertyName="Note" Header="Note">
+                            <telerik:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF006AC1"/>
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </telerik:DataGridTextColumn.HeaderStyle>
+                        </telerik:DataGridTextColumn>
+                    </telerik:RadDataGrid.Columns>
+                </telerik:RadDataGrid>
+
             </Grid>
         </Grid>
         <VisualStateManager.VisualStateGroups>

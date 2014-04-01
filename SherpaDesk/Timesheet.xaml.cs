@@ -63,8 +63,10 @@ namespace SherpaDesk
 
         private void FillTimesheetGrid(DateTime selectedDate)
         {
-            TimesheetGridView.ItemsSource = _timeLogList.Where(x => x.Date.Date == selectedDate).ToList();
-//          TimesheetGridView.Visibility = TimesheetGridView.Items.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+            var list = _timeLogList.Where(x => x.Date.Date == selectedDate).ToList();
+            NonTicketsGrid.ItemsSource = list;
+            TicketTimeGrid.ItemsSource = list;
+            TimesheetGrids.Visibility = list.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void CalculateHours()
@@ -113,7 +115,9 @@ namespace SherpaDesk
                         Text = time.Sum(x => x.Hours).ToString("F")
                     }).ToList();
                 var currentDate = DateTime.Now;
-                TimesheetCalendar.DisplayDateStart = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+                // This is refreshing grid
+                TimesheetCalendar.DisplayDateStart = new DateTime(2010, 1, 1);
             }
         }
     }
