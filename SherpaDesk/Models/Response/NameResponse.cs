@@ -1,9 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using SherpaDesk.Common;
+using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Response
 {
     [DataContract]
-    public class NameResponse : ObjectBase
+    public class NameResponse : ObjectBase, IKeyName
     {
 
         [DataMember(Name = "id"), Details]
@@ -11,5 +12,10 @@ namespace SherpaDesk.Models.Response
 
         [DataMember(Name = "name"), Details]
         public string Name { get; set; }
+
+        public object Key
+        {
+            get { return this.Id; }
+        }
     }
 }

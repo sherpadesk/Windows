@@ -16,6 +16,7 @@ namespace SherpaDesk
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+
     public sealed partial class Login : Page
     {
         public Login()
@@ -53,61 +54,41 @@ namespace SherpaDesk
                     this.HandleError(resultLogin);
                     return;
                 }
-                if (string.IsNullOrEmpty(resultLogin.Result.ApiToken))
-                {
-                    MessageDialog dialog = new MessageDialog("Invalid API Token", "Error");
-                    await dialog.ShowAsync();
-                    return;
-                }
 
-                AppSettings.Current.ApiToken = resultLogin.Result.ApiToken;
-                AppSettings.Current.Email = UserNameTextbox.Text;
+                AppSettings.Current.AddToken(
+                    resultLogin.Result.ApiToken.IsNull("Invalid API Token"), 
+                    UserNameTextbox.Text);
 
                 // load organization and instance info
                 var resultOrg = await connector.Func<OrganizationResponse[]>(
                         "organizations");
-                
+
                 if (resultOrg.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultOrg);
                     return;
                 }
 
-                var org = resultOrg.Result.DefaultIfEmpty(new OrganizationResponse()).First();
-                AppSettings.Current.OrganizationKey = org.Key;
-                AppSettings.Current.OrganizationName = org.Name;
+                var orgList = resultOrg.Result.ToList();
 
-                var instance = org.Instances.DefaultIfEmpty(new InstanceResponse()).First();
-                
-                AppSettings.Current.InstanceKey = instance.Key;
-                AppSettings.Current.InstanceName = instance.Name;
-
-                //load user info
-                var resultUser = await connector.Func<UserSearchRequest, UserResponse[]>(
-                    "users",
-                    new UserSearchRequest { Email = UserNameTextbox.Text });
-
-                if (resultUser.Status != eResponseStatus.Success)
+                if (orgList.IsSingle())
                 {
-                    this.HandleError(resultUser);
-                    return;
+                    var org = orgList.First();
+                    var instance = org.Instances.First();
+                    AppSettings.Current.AddOrganization(
+                        org.Key.IsNull("Invalid Organiation Key"),
+                        org.Name,
+                        instance.Key.IsNull("Invalid Instance Key"),
+                        instance.Name,
+                        true);
+
+                    // redirect to main page
+                    this.Frame.Navigate(typeof(MainPage));
                 }
-                if (resultUser.Result == null || resultUser.Result.Length == 0)
+                else
                 {
-                    MessageDialog dialog = new MessageDialog("Cannot found useer", "Error");
-                    await dialog.ShowAsync();
-                    return;
+                    this.Frame.Navigate(typeof(Organization));
                 }
-                var user = resultUser.Result.First();
-
-                AppSettings.Current.UserId = user.Id;
-                AppSettings.Current.FirstName = user.FirstName;
-                AppSettings.Current.LastName = user.LastName;
-                AppSettings.Current.Role = user.Role;
-
-                // redirect to main page
-                this.Frame.Navigate(typeof(MainPage));
-
             }
         }
     }

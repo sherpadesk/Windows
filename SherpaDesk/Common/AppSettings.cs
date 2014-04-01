@@ -32,6 +32,7 @@ namespace SherpaDesk.Common
         private const string ORGANIZATION_NAME_SETTING = "OrganizationNameSettings";
         private const string INSTANCE_KEY_SETTING = "InstanceKeySettings";
         private const string INSTANCE_NAME_SETTING = "InstanceNameSettings";
+        private const string SINGLE_SETTING = "SingleSettings";
 
         public string ApiToken
         {
@@ -163,6 +164,19 @@ namespace SherpaDesk.Common
             }
         }
 
+        public bool Single
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(SINGLE_SETTING, true);
+            }
+            set
+            {
+                AddOrUpdateValue(SINGLE_SETTING, value);
+                Save();
+            }
+        }
+
         // Our isolated storage settings
         //IsolatedStorageSettings isolatedStore;
         ApplicationDataContainer localSettings;
@@ -255,5 +269,30 @@ namespace SherpaDesk.Common
             localSettings.Values.Clear();
         }
 
+        public void AddToken(string token, string email)
+        {
+            this.AddOrUpdateValue(API_TOKEN_SETTING, token);
+            this.AddOrUpdateValue(EMAIL_SETTING, email);
+            this.Save();
+        }
+
+        public void AddOrganization(string orgKey, string orgName, string instKey, string instName, bool single)
+        {
+            this.AddOrUpdateValue(ORGANIZATION_KEY_SETTING, orgKey);
+            this.AddOrUpdateValue(ORGANIZATION_NAME_SETTING, orgName);
+            this.AddOrUpdateValue(INSTANCE_KEY_SETTING, instKey);
+            this.AddOrUpdateValue(INSTANCE_NAME_SETTING, instName);
+            this.AddOrUpdateValue(SINGLE_SETTING, single);
+            this.Save();
+        }
+
+        public void AddUser(int userId, string firstName, string lastName, string role)
+        {
+            this.AddOrUpdateValue(USER_ID_SETTING, userId);
+            this.AddOrUpdateValue(FIRST_NAME_SETTING, firstName);
+            this.AddOrUpdateValue(LAST_NAME_SETTING, lastName);
+            this.AddOrUpdateValue(ROLE_SETTING, role);
+            this.Save();
+        }
     }
 }

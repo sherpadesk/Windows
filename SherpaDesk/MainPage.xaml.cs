@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
@@ -23,9 +24,9 @@ namespace SherpaDesk
     public sealed partial class MainPage : Page
     {
         private const string AVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/{0}?s=40";
-        
+
         private CoreCursor _cursor;
-        
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -33,7 +34,7 @@ namespace SherpaDesk
 
         private void MyProfileMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.MainFrame.Navigate(typeof(UpdateProfile)); 
+            this.MainFrame.Navigate(typeof(UpdateProfile));
         }
 
         public void StartProgress()
@@ -53,25 +54,57 @@ namespace SherpaDesk
 
         private async void LogOutMenu_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog dialog = new MessageDialog("Are you sure?");
-            dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
-            dialog.Commands.Add(new UICommand { Label = "Cancel", Id = "cancel" });
-            var confirmResult = await dialog.ShowAsync();
-            if (confirmResult.Id.ToString() == "ok")
+            if (AppSettings.Current.Single)
             {
-                AppSettings.Current.Clear();
-                this.Frame.Navigate(typeof(Login));
+                MessageDialog dialog = new MessageDialog("Are you sure?");
+                dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
+                dialog.Commands.Add(new UICommand { Label = "Cancel", Id = "cancel" });
+                var confirmResult = await dialog.ShowAsync();
+                if (confirmResult.Id.ToString() == "ok")
+                {
+                    AppSettings.Current.Clear();
+                    this.Frame.Navigate(typeof(Login));
+                }
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(Organization));
             }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            using (var connector = new Connector())
+            {
+
+                //load user info
+                var resultUser = await connector.Func<UserSearchRequest, UserResponse[]>(
+                    "users",
+                    new UserSearchRequest { Email = AppSettings.Current.Email });
+
+                if (resultUser.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultUser);
+                    return;
+                }
+
+                var user = resultUser.Result.IsNull("Cannot found user").First();
+
+                AppSettings.Current.AddUser(
+                    user.Id.IsNull("Invalid user identifier"),
+                    user.FirstName,
+                    user.LastName,
+                    user.Role.IsNull("Invalid role"));
+
+                this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName);
+                
+                this.Avatar.Source = new BitmapImage(
+                    new Uri(string.Format(AVATAR_URL_FORMAT,
+                        Helper.GetMD5(user.Email)),
+                        UriKind.Absolute));
+            }
+
             this.MainFrame.Navigate(typeof(Info));
-            this.LoginNameButton.Content = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName);
-            this.Avatar.Source = new BitmapImage(
-                new Uri(string.Format(AVATAR_URL_FORMAT,
-                    Helper.GetMD5(AppSettings.Current.Email)),
-                    UriKind.Absolute));
         }
     }
 }

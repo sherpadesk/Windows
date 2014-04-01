@@ -7,24 +7,24 @@ namespace SherpaDesk.Common
 {
     public static class ComboBoxExtensions
     {
-        public static void FillData(this ComboBox comboBox, IEnumerable<NameResponse> list, params NameResponse[] args)
+        public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
         {
             comboBox.Items.Clear();
             foreach (var kv in args)
             {
                 comboBox.Items.Add(new ComboBoxItem
                 {
-                    Tag = kv.Id,
+                    Tag = kv.Key,
                     Content = kv.Name
                 });
             }
             foreach (var kv in list)
             {
-                if (!args.Any(x => x.Id == kv.Id))
+                if (!args.Any(x => x.Key == kv.Key))
                 {
                     comboBox.Items.Add(new ComboBoxItem
                     {
-                        Tag = kv.Id,
+                        Tag = kv.Key,
                         Content = kv.Name
                     });
                 }
@@ -39,6 +39,16 @@ namespace SherpaDesk.Common
             }
             else
                 return default(T);
+        }
+
+        public static string GetSelectedText(this ComboBox comboBox)
+        {
+            if (comboBox.SelectedIndex > -1)
+            {
+                return (string)((ComboBoxItem)comboBox.Items[comboBox.SelectedIndex]).Content;
+            }
+            else
+                return string.Empty;
         }
 
         public static void SetSelectedValue(this ComboBox comboBox, object value)

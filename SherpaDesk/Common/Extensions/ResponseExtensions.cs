@@ -1,4 +1,7 @@
 ﻿using SherpaDesk.Models;
+using System.Linq;
+using SherpaDesk.Models.Response;
+using System.Collections.Generic;
 
 namespace SherpaDesk.Common
 {
@@ -36,6 +39,11 @@ namespace SherpaDesk.Common
                 response.Messages.Add(msg);
 
             return response;
+        }
+
+        public static bool IsSingle(this IEnumerable<OrganizationResponse> list)
+        {
+            return list.Count() == 1 && list.First().Instances.Count() == 1;
         }
 
     }

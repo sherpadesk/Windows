@@ -29,7 +29,7 @@ namespace SherpaDesk
             StartTimeLabel.Text = date.ToString("t");
             EndTimeLabel.Text = date.ToString("t");
             var currentDate = DateTime.Now.Date;
-            TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(currentDate, currentDate);
+            //TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(currentDate, currentDate);
             DateField.Value = currentDate;
             DateLabel.Text = currentDate.ToString("MMMM dd, yyyy - dddd");
             TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;

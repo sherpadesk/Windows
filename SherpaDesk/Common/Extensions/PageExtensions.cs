@@ -2,6 +2,8 @@
 using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -16,7 +18,7 @@ namespace SherpaDesk.Common
     public static class PageExtensions
     {
         private const string TOOL_TIP_NAME = "ToolTip";
-        public static async void HandleError(this Page page, Response response)
+        public static void HandleError(this Page page, Response response)
         {
             if (response.Status == eResponseStatus.Invalid)
             {
@@ -91,31 +93,66 @@ namespace SherpaDesk.Common
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))
                 {
-                    await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
-                        var md = new MessageDialog(messageWithoutControl, "Invalid input data");
-                        await md.ShowAsync();
-                    });
+                    App.ShowErrorMessage(messageWithoutControl, eErrorType.InvalidInputData);
                 }
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    var md = new MessageDialog(response.Message, "Failed Operation");
-                    await md.ShowAsync();
-                });
+                App.ShowErrorMessage(response.Message, eErrorType.FailedOperation);
             }
             else if (response.Status == eResponseStatus.Error)
             {
                 //TODO: show the complex dialog with internal error message and descriptions from response.Messagess
                 // It can has a possibility to send response object by email
-                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
-                        var md = new MessageDialog(response.Message, "Internal Error");
-                        await md.ShowAsync();
-                    });
+                App.ShowErrorMessage(response.Message, eErrorType.InternalError);
             }
         }
+
+
+        //public static async void Handle(this Page page, Action handling)
+        //{
+            //string title = string.Empty, message = string.Empty;
+            //try
+            //{
+            //    handling();
+            //}
+            //catch (InternalException e)
+            //{
+            //    title = e.Title;
+            //    message = e.Message;
+            //}
+            //catch (Exception e)
+            //{
+            //    title = eExceptionType.Error.Details();
+            //    message = e.Message;
+            //}
+            //if (!string.IsNullOrEmpty(message))
+            //{
+            //    await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            //        {
+            //            var md = new MessageDialog(message, title);
+            //            await md.ShowAsync();
+            //        });
+            //}
+            //Task.Factory
+            //    .StartNew(handling)
+            //    .ContinueWith(antecedent =>
+            //    {
+            //        if (antecedent.Status == TaskStatus.Faulted)
+            //        {
+            //            string title = "Error";
+            //            if (antecedent.Exception.InnerException is InternalException)
+            //                title = ((InternalException)antecedent.Exception.InnerException).Title;
+                        
+            //            var task = CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            //            {
+            //                var md = new MessageDialog(antecedent.Exception.InnerException.Message, title);
+            //                await md.ShowAsync();
+            //            }).AsTask();
+            //            task.Start();
+            //            task.Wait();
+            //        }
+            //    }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
+        //}
     }
 }

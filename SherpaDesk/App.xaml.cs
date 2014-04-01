@@ -1,12 +1,18 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,14 +32,30 @@ namespace SherpaDesk
     {
         private const string APPLICATION_FRAME = "appFrame";
 
+        public static async void ShowErrorMessage(string message, eErrorType title)
+        {
+            await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var md = new MessageDialog(message, title.Details());
+                await md.ShowAsync();
+            });
+        } 
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            //this.InitializeComponent();
             this.Suspending += OnSuspending;
+            UnhandledException += App_UnhandledException;
+        }
+
+        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            ShowErrorMessage(e.Message, eErrorType.Error);
         }
 
         /// <summary>
