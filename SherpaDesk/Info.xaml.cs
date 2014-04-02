@@ -28,7 +28,9 @@ namespace SherpaDesk
                     OpenTicketsCount.Text = result.Result.OpenAsTech.ToString();
                     OpenAsEndUserCount.Text = result.Result.OpenAsUser.ToString();
                     OnHoldCount.Text = result.Result.OnHold.ToString();
-                    FollowUpDatesCount.Text = result.Result.Reminder.ToString();
+                    //TODO: make awaiting count of tickets
+                    WaitingCount.Text = result.Result.NewMessages.ToString();
+                    //FollowUpDatesCount.Text = result.Result.Reminder.ToString();
                 }
                 else
                     this.pageRoot.HandleError(result);
@@ -59,9 +61,15 @@ namespace SherpaDesk
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 
-        private void FollowUpDatesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        //private void FollowUpDatesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        //{
+        //    this.LeftFrame.Navigate(typeof(FollowUpDates));
+        //    scrollViewer.ChangeView(0, new double?(), new float?());
+        //}
+
+        private void WaitingTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(FollowUpDates));
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.AwaitingResponse);
             scrollViewer.ChangeView(0, new double?(), new float?());
         }
 

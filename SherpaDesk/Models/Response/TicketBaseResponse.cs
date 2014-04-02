@@ -17,7 +17,7 @@ namespace SherpaDesk.Models.Response
         public DateTime СreatedTime { get; set; }
 
         [DataMember(Name = "number"), Details]
-        public int Number { get; set; }
+        public int TicketId { get; set; }
 
         [DataMember(Name = "prefix"), Details]
         public string Prefix { get; set; }

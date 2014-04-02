@@ -12,6 +12,8 @@ namespace SherpaDesk.Models
         [Details("on_hold")]
         OnHold = 4,
         [Details("waiting")]
-        Waiting = 8
+        Waiting = 8,
+        [Details("new_messages")]
+        NewMessages = 16
     }
 }

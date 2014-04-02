@@ -91,14 +91,22 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="FollowUpDatesTile" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="FollowUpDatesTile_Tapped">
+                <telerik:RadCustomHubTile x:Name="WaitingTile" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,25,0,0" VerticalAlignment="Top" Width="210" Tapped="WaitingTile_Tapped">
+                    <telerik:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="WaitingCount" HorizontalAlignment="Center" Text="0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Awaiting Response" FontSize="20" Margin="0,-12,0,4"/>
+                        </StackPanel>
+                    </telerik:RadCustomHubTile.FrontContent>
+                </telerik:RadCustomHubTile>
+                <!--<telerik:RadCustomHubTile x:Name="FollowUpDatesTile" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="FollowUpDatesTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock x:Name="FollowUpDatesCount" HorizontalAlignment="Center" Text="0" FontSize="82.667" FontWeight="SemiLight"/>
                             <TextBlock Text="Follow-Up Dates" FontSize="20" Margin="0,-12,0,4"/>
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
+                </telerik:RadCustomHubTile>-->
 
                 <telerik:RadCustomHubTile x:Name="AddTimeTile" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTimeTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>

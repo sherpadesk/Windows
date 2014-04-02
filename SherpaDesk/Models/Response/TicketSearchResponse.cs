@@ -24,9 +24,6 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "technician_email"), Details]
         public string TechnicianEmail { get; set; }
 
-        [DataMember(Name = "id"), Details]
-        public int TicketId { get; set; }
-
         [Details]
         public string DaysOld { get; set; }
 

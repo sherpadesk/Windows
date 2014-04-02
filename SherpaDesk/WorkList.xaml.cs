@@ -36,6 +36,9 @@ namespace SherpaDesk
                 case eWorkListType.OpenAsEndUser:
                     pageTitle.Text = "Open As End User";
                     break;
+                case eWorkListType.AwaitingResponse:
+                    pageTitle.Text = "Awaiting Response";
+                    break;
             }
             base.OnNavigatedTo(e);
         }
@@ -63,13 +66,21 @@ namespace SherpaDesk
                     case eWorkListType.NewMessages:
                         request = new TicketSearchRequest
                         {
-                            UserId = AppSettings.Current.UserId
+                            Role = eRoles.Technician, 
+                            Status = eTicketStatus.NewMessages
                         };
                         break;
                     case eWorkListType.OpenAsEndUser:
                         request = new TicketSearchRequest
                         {
                             Role = eRoles.EndUser
+                        };
+                        break;
+                    case eWorkListType.AwaitingResponse:
+                        request = new TicketSearchRequest
+                        {
+                            Role = eRoles.EndUser,
+                            Status = eTicketStatus.Waiting
                         };
                         break;
                 }

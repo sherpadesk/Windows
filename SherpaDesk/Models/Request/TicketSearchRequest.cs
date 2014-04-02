@@ -47,6 +47,8 @@ namespace SherpaDesk.Models.Request
                 _status += eTicketStatus.OnHold.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.Waiting))
                 _status += eTicketStatus.Waiting.Details() + ",";
+            if (this.Status.HasFlag(eTicketStatus.NewMessages))
+                _status += eTicketStatus.NewMessages.Details() + ",";
             _status = _status.Trim(',');
 
             if (this.Role == eRoles.All)

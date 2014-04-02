@@ -6,6 +6,7 @@ namespace SherpaDesk.Models
         Open,
         OnHold,
         NewMessages,
-        OpenAsEndUser
+        OpenAsEndUser,
+        AwaitingResponse
     }
 }
