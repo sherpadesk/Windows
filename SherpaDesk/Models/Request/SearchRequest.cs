@@ -32,26 +32,28 @@ namespace SherpaDesk.Models.Request
         public DateTime EndDate { get; set; }
 
         [DataMember(Name = "start_date", EmitDefaultValue = false)]
-        private string _startDate;
+        protected string _startDate;
 
         [DataMember(Name = "end_date", EmitDefaultValue = false)]
-        private string _endDate;
+        protected string _endDate;
 
         [OnSerializing]
-        void OnSerializing(StreamingContext context)
+        protected virtual void OnSerializing(StreamingContext context)
         {
-            this._startDate = this.StartDate.ToString();
-            this._endDate = this.EndDate.ToString();
+            if (this.StartDate != DateTime.MinValue)
+                this._startDate = this.StartDate.ToString("yyyy-MM-dd");
+            if (this.EndDate != DateTime.MinValue)
+                this._endDate = this.EndDate.ToString("yyyy-MM-dd");
         }
 
         [OnDeserializing]
-        void OnDeserializing(StreamingContext context)
+        protected virtual void OnDeserializing(StreamingContext context)
         {
             this._endDate = this._startDate = DateTime.MinValue.ToString();
         }
 
         [OnDeserialized]
-        void OnDeserialized(StreamingContext context)
+        protected virtual void OnDeserialized(StreamingContext context)
         {
             DateTime date;
             if (DateTime.TryParse(this._startDate, out date))

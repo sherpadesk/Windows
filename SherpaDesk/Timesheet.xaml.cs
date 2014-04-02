@@ -8,6 +8,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.Collections;
 using System.Collections.Generic;
+using Telerik.UI.Xaml.Controls.Input.Calendar.Commands;
+using Telerik.UI.Xaml.Controls.Input.Calendar;
 
 namespace SherpaDesk
 {
@@ -19,6 +21,8 @@ namespace SherpaDesk
             this.InitializeComponent();
             _timeLogList = new List<TimeResponse>();
         }
+
+        #region Handlers
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
@@ -61,22 +65,6 @@ namespace SherpaDesk
             FillTimesheetGrid(selectedDate);
         }
 
-        private void FillTimesheetGrid(DateTime selectedDate)
-        {
-            var list = _timeLogList.Where(x => x.Date.Date == selectedDate).ToList();
-            NonTicketsGrid.ItemsSource = list;
-            TicketTimeGrid.ItemsSource = list;
-            TimesheetGrids.Visibility = list.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
-        }
-
-        private void CalculateHours()
-        {
-            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
-            {
-                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
-                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
-            }
-        }
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)
         {
             StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
@@ -89,7 +77,20 @@ namespace SherpaDesk
             CalculateHours();
         }
 
-        private async void TimesheetCalendar_Loaded(object sender, RoutedEventArgs e)
+        private void TimesheetCalendar_Loaded(object sender, RoutedEventArgs e)
+        {
+            var now = DateTime.Now;
+            TimesheetCalendar.DisplayDateStart = new DateTime(now.Year - 3, 1, 1);
+            this.LoadTimesheet(
+                new DateTime(now.Year, now.Month, 1),
+                new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month)));
+
+        }
+        #endregion
+
+        #region Methods
+
+        private async void LoadTimesheet(DateTime startDate, DateTime endDate)
         {
             using (var connector = new Connector())
             {
@@ -97,7 +98,10 @@ namespace SherpaDesk
                     "time",
                     new TimeSearchRequest
                     {
-                        TechnicianId = AppSettings.Current.UserId
+                        TechnicianId = AppSettings.Current.UserId,
+                        TimeType = eTimeType.Recent,
+                        StartDate = startDate,
+                        EndDate = endDate
                     });
                 if (result.Status != eResponseStatus.Success)
                 {
@@ -114,11 +118,49 @@ namespace SherpaDesk
                         Date = time.Key,
                         Text = time.Sum(x => x.Hours).ToString("F")
                     }).ToList();
-                var currentDate = DateTime.Now;
-
                 // This is refreshing grid
-                TimesheetCalendar.DisplayDateStart = new DateTime(2010, 1, 1);
+                TimesheetCalendar.DisplayDateStart = new DateTime(startDate.Year - 3, 1, 1);
             }
+        }
+
+        private void FillTimesheetGrid(DateTime selectedDate)
+        {
+            var nonTicketsList = _timeLogList
+                .Where(x => x.Date.Date == selectedDate && x.TicketId == 0)
+                .ToList();
+            NonTicketsGrid.ItemsSource = nonTicketsList;
+            NonTicketsGrid.Visibility = nonTicketsList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+            var ticketTimeList = _timeLogList
+                .Where(x => x.Date.Date == selectedDate && x.TicketId > 0)
+                .ToList();
+            TicketTimeGrid.ItemsSource = ticketTimeList;
+            TicketTimeGrid.Visibility = ticketTimeList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+            if (ticketTimeList.Count > 0 && nonTicketsList.Count > 0)
+            {
+                TimesheetGrids.Visibility = Visibility.Visible;
+                //TODO: move screen to right
+            }
+            else
+                TimesheetGrids.Visibility = Visibility.Visible;
+        }
+
+        private void CalculateHours()
+        {
+            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
+            {
+                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            }
+        }
+        #endregion
+
+        private void TimesheetCalendar_CurrentDateChanged(object sender, EventArgs e)
+        {
+            this.LoadTimesheet(
+                TimesheetCalendar.DisplayDateStart,
+                TimesheetCalendar.DisplayDateEnd);
         }
     }
 }

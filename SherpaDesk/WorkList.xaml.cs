@@ -108,7 +108,7 @@ namespace SherpaDesk
             if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
             {
                 int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
-                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketId == ticketId);
+                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketNumber == ticketId);
                 if (item != null)
                 {
                     ItemsGrid.SelectedItems.Add(item);
@@ -121,7 +121,7 @@ namespace SherpaDesk
             if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
             {
                 int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
-                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketId == ticketId);
+                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketNumber == ticketId);
                 if (item != null)
                 {
                     ItemsGrid.SelectedItems.Remove(item);

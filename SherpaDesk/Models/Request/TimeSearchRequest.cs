@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using SherpaDesk.Common;
 
 namespace SherpaDesk.Models.Request
 {
@@ -20,8 +21,11 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "account"), Details]
         public int AccountId { get; set; }
 
-        [DataMember(Name = "type"), Details]
+        [Details]
         public eTimeType TimeType { get; set; }
+
+        [DataMember(Name = "type")]
+        protected string _type;
 
         [DataMember(Name = "project"), Details]
         public int ProjectId { get; set; }
@@ -31,5 +35,13 @@ namespace SherpaDesk.Models.Request
 
         [DataMember(Name = "key"), Details]
         public string TimeKey { get; set; }
+
+        [OnSerializing]
+        protected override void OnSerializing(StreamingContext context)
+        {
+            base.OnSerializing(context);
+            if (this.TimeType != eTimeType.None)
+                _type = this.TimeType.Details();
+        }
     }
 }

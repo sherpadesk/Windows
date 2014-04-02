@@ -67,7 +67,7 @@
                     </telerik:DataGridTemplateColumn.Header>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked}" Margin="8,0,0,0" HorizontalAlignment="Left" Tag="{Binding TicketId}" Checked="GridCheckbox_Checked" Unchecked="GridCheckbox_Unchecked" />
+                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked}" Margin="8,0,0,0" HorizontalAlignment="Left" Tag="{Binding TicketNumber}" Checked="GridCheckbox_Checked" Unchecked="GridCheckbox_Unchecked" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>

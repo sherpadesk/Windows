@@ -7,6 +7,9 @@ namespace SherpaDesk.Models.Response
     [DataContract]
     public class TicketSearchResponse : TicketBaseResponse
     {
+        [DataMember(Name = "id"), Details]
+        public int TicketId { get; set; }
+
         [DataMember(Name = "is_new_user_post"), Details]
         public bool NewUserPost { get; set; }
 
