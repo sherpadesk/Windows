@@ -190,15 +190,20 @@
                                 </Style>
                             </telerik:DataGridTextColumn.HeaderStyle>
                         </telerik:DataGridTextColumn>
-                        <telerik:DataGridBooleanColumn PropertyName="Billable" Width="50" Header="Billable">
-                            <telerik:DataGridBooleanColumn.HeaderStyle>
+                        <telerik:DataGridTemplateColumn Width="50" Header="Billable">
+                            <telerik:DataGridTemplateColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">
                                     <Setter Property="Background" Value="#FF006AC1"/>
                                     <Setter Property="FontSize" Value="20" />
                                     <Setter Property="Foreground" Value="White" />
                                 </Style>
-                            </telerik:DataGridBooleanColumn.HeaderStyle>
-                        </telerik:DataGridBooleanColumn>
+                            </telerik:DataGridTemplateColumn.HeaderStyle>
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="BillableCheckbox" IsEnabled="False" IsChecked="{Binding Billable}" Margin="8,0,0,0" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
                         <telerik:DataGridTextColumn PropertyName="TaskTypeName" Header="Task">
                             <telerik:DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">
@@ -232,7 +237,7 @@
                             </telerik:DataGridTemplateColumn.HeaderStyle>
                             <telerik:DataGridTemplateColumn.CellContentTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="TimeTicketId"  Content="{Binding TicketNumber}" Background="#FFD3D1E7" />
+                                    <Button x:Name="TimeTicketId" Content="{Binding TicketNumber}" Background="#FFD3D1E7" Tapped="TimeTicketId_Tapped" />
                                 </DataTemplate>
                             </telerik:DataGridTemplateColumn.CellContentTemplate>
                         </telerik:DataGridTemplateColumn>
@@ -281,15 +286,20 @@
                                 </Style>
                             </telerik:DataGridTextColumn.HeaderStyle>
                         </telerik:DataGridTextColumn>
-                        <telerik:DataGridBooleanColumn PropertyName="Billable" Width="50" Header="Billable">
-                            <telerik:DataGridBooleanColumn.HeaderStyle>
+                        <telerik:DataGridTemplateColumn Width="50" Header="Billable">
+                            <telerik:DataGridTemplateColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">
                                     <Setter Property="Background" Value="#FF006AC1"/>
                                     <Setter Property="FontSize" Value="20" />
                                     <Setter Property="Foreground" Value="White" />
                                 </Style>
-                            </telerik:DataGridBooleanColumn.HeaderStyle>
-                        </telerik:DataGridBooleanColumn>
+                            </telerik:DataGridTemplateColumn.HeaderStyle>
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="BillableCheckbox" IsEnabled="False" IsChecked="{Binding Billable}" Margin="8,0,0,0" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
                         <telerik:DataGridTextColumn PropertyName="TaskTypeName" Header="Task">
                             <telerik:DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">

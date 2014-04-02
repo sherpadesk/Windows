@@ -97,12 +97,12 @@ namespace SherpaDesk
                     resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
 
-                EndUserList.Items.Add(new ComboBoxItem
-                {
-                    Tag = Constants.INITIAL_ID,
-                    Content = Constants.ADD_NEW_USER,
-                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                });
+                //EndUserList.Items.Add(new ComboBoxItem
+                //{
+                //    Tag = Constants.INITIAL_ID,
+                //    Content = Constants.ADD_NEW_USER,
+                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                //});
 
                 // accounts
                 var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
@@ -115,12 +115,12 @@ namespace SherpaDesk
 
                 AccountList.FillData(resultAccounts.Result.AsEnumerable());
 
-                AccountList.Items.Add(new ComboBoxItem
-                {
-                    Tag = Constants.INITIAL_ID,
-                    Content = Constants.ADD_NEW_ACCOUNT,
-                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                });
+                //AccountList.Items.Add(new ComboBoxItem
+                //{
+                //    Tag = Constants.INITIAL_ID,
+                //    Content = Constants.ADD_NEW_ACCOUNT,
+                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                //});
                 //classes
 
                 var resultClasses = await connector.Func<UserRequest, ClassResponse[]>("classes", new UserRequest { UserId = AppSettings.Current.UserId });

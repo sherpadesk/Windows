@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="LoginNameButton" Grid.Column="1" Content="LastName, FirstName" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal">
+            <Button x:Name="LoginNameButton" Grid.Column="1" Content="" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal">
                 <Button.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Name="MyProfileMenu" Text="My Profile" Click="MyProfileMenu_Click" />

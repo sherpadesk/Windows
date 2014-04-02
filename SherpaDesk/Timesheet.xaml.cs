@@ -137,13 +137,13 @@ namespace SherpaDesk
             TicketTimeGrid.ItemsSource = ticketTimeList;
             TicketTimeGrid.Visibility = ticketTimeList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
-            if (ticketTimeList.Count > 0 && nonTicketsList.Count > 0)
+            if (ticketTimeList.Count > 0 || nonTicketsList.Count > 0)
             {
                 TimesheetGrids.Visibility = Visibility.Visible;
                 //TODO: move screen to right
             }
             else
-                TimesheetGrids.Visibility = Visibility.Visible;
+                TimesheetGrids.Visibility = Visibility.Collapsed;
         }
 
         private void CalculateHours()
@@ -161,6 +161,11 @@ namespace SherpaDesk
             this.LoadTimesheet(
                 TimesheetCalendar.DisplayDateStart,
                 TimesheetCalendar.DisplayDateEnd);
+        }
+
+        private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -77,7 +77,6 @@
 
             <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="2" Margin="0,25,0,0" TextWrapping="Wrap" Text="Account" VerticalAlignment="Top" FontSize="30"/>
             <ComboBox Name="AccountList" Grid.Column="2" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="400" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem Content="Add New Account..." Foreground="#FF00A10A" />
             </ComboBox>
 
             <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="4" Margin="0,25,0,0" TextWrapping="Wrap" Text="Task Type" VerticalAlignment="Top" FontSize="30"/>

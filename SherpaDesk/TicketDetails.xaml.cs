@@ -71,5 +71,10 @@ namespace SherpaDesk
                 }
             }
         }
+
+        private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ResponseFrame.Navigate(typeof(AddResponse), ((Button)sender).Tag.ToString());
+        }
     }
 }

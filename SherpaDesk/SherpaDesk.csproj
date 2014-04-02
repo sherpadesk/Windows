@@ -106,6 +106,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddResponse.xaml.cs">
+      <DependentUpon>AddResponse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddTime.xaml.cs">
       <DependentUpon>AddTime.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddResponse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddTime.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

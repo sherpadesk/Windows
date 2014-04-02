@@ -50,7 +50,7 @@
                 </Button.Flyout>
             </Button>
         </Grid>
-        <telerik:RadDataGrid  x:Name="ItemsGrid" MinHeight="500" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
+        <telerik:RadDataGrid  x:Name="ItemsGrid" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTemplateColumn Width="50">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
@@ -71,7 +71,7 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
-                <telerik:DataGridTemplateColumn Header="Tkt#">
+                <telerik:DataGridTemplateColumn Header="Tkt#" Width="50">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>

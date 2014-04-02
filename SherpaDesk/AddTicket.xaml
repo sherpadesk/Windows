@@ -84,7 +84,6 @@
                 <ComboBoxItem />
                 <ComboBoxItem Name="EndUserMe" />
                 <ComboBoxItem Content="Make Me the User" Name="MakeMe" Foreground="#FF0B0078"/>
-                <ComboBoxItem Content="Add New User.." Foreground="#FF00A10A"/>
             </ComboBox>
             <HyperlinkButton x:Name="EndUserMeLink" Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
@@ -96,7 +95,6 @@
             <TextBlock HorizontalAlignment="right" Grid.Row="3" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
             <ComboBox Name="ClassList" Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
-            <HyperlinkButton Content="Edit Classes" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Row="4" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
             <ComboBox x:Name="TechnicianList" Grid.Column="1" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="500" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">

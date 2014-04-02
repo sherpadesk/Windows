@@ -44,12 +44,12 @@ namespace SherpaDesk
 
                 TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
                 
-                TaskTypeList.Items.Add(new ComboBoxItem
-                {
-                    Tag = Constants.INITIAL_ID,
-                    Content = Constants.ADD_NEW_TASK_TYPE,
-                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                });
+                //TaskTypeList.Items.Add(new ComboBoxItem
+                //{
+                //    Tag = Constants.INITIAL_ID,
+                //    Content = Constants.ADD_NEW_TASK_TYPE,
+                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                //});
 
                 // technician
                 var resultUsers = await connector.Func<UserResponse[]>("users");
@@ -75,12 +75,12 @@ namespace SherpaDesk
 
                 AccountList.FillData(resultAccounts.Result.AsEnumerable());
 
-                AccountList.Items.Add(new ComboBoxItem
-                {
-                    Tag = Constants.INITIAL_ID,
-                    Content = Constants.ADD_NEW_ACCOUNT,
-                    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                });
+                //AccountList.Items.Add(new ComboBoxItem
+                //{
+                //    Tag = Constants.INITIAL_ID,
+                //    Content = Constants.ADD_NEW_ACCOUNT,
+                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                //});
             }
         }
 

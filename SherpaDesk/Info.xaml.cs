@@ -76,19 +76,19 @@ namespace SherpaDesk
         private void AddTicketTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             this.RightFrame.Navigate(typeof(AddTicket));
-            scrollViewer.ChangeView(2000, new double?(), new float?());
+            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
 
         private void AddTimeTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             this.RightFrame.Navigate(typeof(AddTime));
-            scrollViewer.ChangeView(2000, new double?(), new float?());
+            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
 
         private void TimesheetTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             this.RightFrame.Navigate(typeof(Timesheet));
-            scrollViewer.ChangeView(2000, new double?(), new float?());
+            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
     }
 }
