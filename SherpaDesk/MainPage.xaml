@@ -20,7 +20,7 @@
             <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
         </StackPanel>
         <Image HorizontalAlignment="Left" Height="152" Margin="15,5,0,0" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Width="512" Source="Assets/StoreLogo.png" />
-        <Frame x:Name="MainFrame" Content="Frame" HorizontalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalAlignment="Top" />
+        <Frame x:Name="MainFrame" HorizontalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalAlignment="Top" />
         <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="right" Margin="0,0,50,0" VerticalAlignment="Top" Foreground="White"/>
         <Grid Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="right" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>

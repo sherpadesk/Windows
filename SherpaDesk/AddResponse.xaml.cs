@@ -3,7 +3,10 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,7 +18,7 @@ namespace SherpaDesk
     {
         private const string ERROR_EMPTY_HOURS = "Hours should be positive number.";
         private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.";
-
+        private IList<StorageFile> _attachment = new List<StorageFile>();
         public AddResponse()
         {
             this.InitializeComponent();
@@ -55,6 +58,30 @@ namespace SherpaDesk
         private void SaveButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
 
+        }
+
+        private async void filepickButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+            var files = await openPicker.PickMultipleFilesAsync();
+            _attachment.Clear();
+            if (files != null && files.Count > 0)
+            {
+                filepickButton.Content = String.Format("Attached Files: {0}", files.Count);
+                foreach (var file in files)
+                {
+                    _attachment.Add(file);
+                }
+            }
+            else
+            {
+                filepickButton.Content = "Select Files";
+            }
         }
     }
 }
