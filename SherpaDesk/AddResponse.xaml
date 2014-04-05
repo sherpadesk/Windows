@@ -95,7 +95,8 @@
                 <TextBlock x:Name="EndTimeLabel" Grid.Column="0" FontSize="40" VerticalAlignment="Top" Margin="0,5,0,0" />
                 <telerikInput:RadTimePicker x:Name="EndTimePicker" Grid.Column="2" Height="50" Width="30" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" ValueChanged="EndTimePicker_ValueChanged" />
             </Grid>
-            <TextBox x:Name="HoursTextBox" Margin="0,0,0,0" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Center" Height="50" Grid.Row="1" TextWrapping="Wrap" Grid.Column="4" VerticalAlignment="Top" FontSize="30" Width="130" />
+            <TextBox x:Name="HoursTextBox" Margin="0,0,0,0" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Left" Height="50" Grid.Row="1" TextWrapping="Wrap" Grid.Column="4" VerticalAlignment="Top" FontSize="30" Width="130" />
+            <TextBlock x:Name="ErrorHours" Grid.Column="4" HorizontalAlignment="Left" Margin="0 0 0 0" Grid.Row="1" Height="50" VerticalAlignment="Top"/>
             <ComboBox Name="CompleteList" Grid.Column="6" Grid.Row="1" FontSize="24" HorizontalAlignment="Stretch" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
                 <ComboBoxItem Tag="0" />
                 <ComboBoxItem Content="5%" Tag="5" />
@@ -116,8 +117,8 @@
             <Button x:Name="filepickButton" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Content="Select Files" Height="50" Margin="0,0,0,0" Grid.Row="5" FontSize="24" Tapped="filepickButton_Tapped" />
 
             <Button x:Name="SaveButton" Content="Add Response &amp; Update" Grid.Row="7" FontSize="30" Grid.ColumnSpan="5" Background="#FF2F9129" Tapped="SaveButton_Tapped" />
-            <CheckBox Content="Place on Hold" FontSize="30" Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="3" />
-            <CheckBox Content="Waiting On Response" FontSize="30" Grid.Row="7" Grid.ColumnSpan="10" Grid.Column="6" Margin="30,0,0,0" />
+            <CheckBox Name="HoldBox" Content="Place on Hold" FontSize="30" Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="3" />
+            <CheckBox Name="WaitingBox" Content="Waiting On Response" FontSize="30" Grid.Row="7" Grid.ColumnSpan="10" Grid.Column="6" Margin="30,0,0,0" />
         </Grid>
         <VisualStateManager.VisualStateGroups>
 

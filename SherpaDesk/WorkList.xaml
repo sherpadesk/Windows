@@ -81,7 +81,7 @@
                     </telerik:DataGridTemplateColumn.HeaderStyle>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <Button x:Name="GridTicketId" Content="{Binding TicketId}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Background="#FFD3D1E7" />
+                            <Button x:Name="GridTicketId" Content="{Binding TicketNumber}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Background="#FFD3D1E7" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>

@@ -90,22 +90,29 @@ namespace SherpaDesk.Common
                     command += ((IPath)model).Path;
                 }
 
-                if (request.Data.Type == eRequestType.POST)
+                switch (request.Data.Type)
                 {
-                    using (var content = request.Data.GetContent())
-                    {
-                        response = await _httpClient.PostAsync(command, content);
-                    }
+                    case eRequestType.POST:
+                        using (var content = request.Data.GetContent())
+                        {
+                            response = await _httpClient.PostAsync(command, content);
+                        }
+                        break;
+                    case eRequestType.GET:
+                        response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
+                        break;
+                    case eRequestType.PUT:
+                        using (var content = request.Data.GetContent())
+                        {
+                            response = await _httpClient.PutAsync(command, content);
+                        }
+                        break;
+                    case eRequestType.DELETE:
+                        response = await _httpClient.DeleteAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
+                        break;
+                    default:
+                        throw new ArgumentException("Unknown type of request!");
                 }
-                else if (request.Data.Type == eRequestType.GET)
-                {
-                    response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
-                }
-                else
-                {
-                    throw new ArgumentException("Unknown type of request!");
-                }
-
                 if (response.IsSuccessStatusCode)
                 {
                     result.Fill(response.Content);

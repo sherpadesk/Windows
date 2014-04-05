@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
@@ -42,7 +43,11 @@ namespace SherpaDesk.Models.Response
                 responseStream.Position = 0;
                 if (responseStream.Length > 0)
                 {
-                    this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
+                    try
+                    {
+                        this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
+                    }
+                    catch (Exception) { }
                 }
             }
         }

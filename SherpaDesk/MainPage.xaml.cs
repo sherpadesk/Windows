@@ -40,7 +40,9 @@ namespace SherpaDesk
         public void StartProgress()
         {
             progressRing.IsActive = true;
-            _cursor = Window.Current.CoreWindow.PointerCursor;
+            _cursor = Window.Current.CoreWindow.PointerCursor.Type != Windows.UI.Core.CoreCursorType.Wait ?
+                Window.Current.CoreWindow.PointerCursor :
+                new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
             Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 2);
             Window.Current.CoreWindow.IsInputEnabled = false;
         }
@@ -99,13 +101,13 @@ namespace SherpaDesk
                         new Uri(string.Format(AVATAR_URL_FORMAT,
                             Helper.GetMD5(user.Email)),
                             UriKind.Absolute));
-                    
+
                     this.MainFrame.Navigate(typeof(Info));
                 }
                 else
                 {
                     this.HandleError(resultUser);
-                    
+
                     AppSettings.Current.Clear();
                     this.Frame.Navigate(typeof(Login));
                 }

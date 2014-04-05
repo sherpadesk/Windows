@@ -45,7 +45,7 @@ namespace SherpaDesk.Common
                 }
                 foreach (var kv in controls)
                 {
-                    Control control = page.FindName(kv.Key) as Control;
+                    FrameworkElement control = page.FindName(kv.Key) as FrameworkElement;
                     if (control != null)
                     {
 
@@ -87,7 +87,8 @@ namespace SherpaDesk.Common
                         toolTip.PointerPressed += new PointerEventHandler((object sender, PointerRoutedEventArgs e) =>
                         {
                             toolTip.Visibility = Visibility.Collapsed;
-                            control.Focus(FocusState.Pointer);
+                            if (control is Control)
+                                ((Control)control).Focus(FocusState.Pointer);
                         });
                     }
                 }

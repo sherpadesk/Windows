@@ -11,6 +11,8 @@ namespace SherpaDesk.Models.Request
         private const string ERROR_EMPTY_TECHNICIAN_ID = "Please select a Technician.#TechnicianList";
         private const string ERROR_EMPTY_ACCOUNT_ID = "Please select a Account.#AccountList";
         private const string ERROR_EMPTY_TASK_TYPE_ID = "Please select a Task Type.#TaskTypeList";
+        private const string ERROR_EMPTY_HOURS = "Hours should be positive number.#ErrorHours";
+        private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.#ErrorHours";
 
         [DataMember(Name = "ticket_key"), Details]
         public string TicketKey { get; set; }
@@ -22,8 +24,8 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "note_text"), Details]
         public string Note { get; set; }
 
-        //        [IntRequired(ErrorMessage = ERROR_EMPTY_HOURS)]
-        //[Range(0.01, 24.0, ErrorMessage = ERROR_MUCH_HOURS)]
+        [IntRequired(ErrorMessage = ERROR_EMPTY_HOURS)]
+        [Range(0.01, 24.0, ErrorMessage = ERROR_MUCH_HOURS)]
         [DataMember(Name = "hours"), Details]
         public decimal Hours { get; set; }
 
