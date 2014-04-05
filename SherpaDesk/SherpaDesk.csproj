@@ -142,6 +142,7 @@
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Enum\eErrorType.cs" />
+    <Compile Include="Models\Response\ProjectResponse.cs" />
     <Compile Include="Organization.xaml.cs">
       <DependentUpon>Organization.xaml</DependentUpon>
     </Compile>

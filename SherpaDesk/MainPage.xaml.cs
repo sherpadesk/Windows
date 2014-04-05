@@ -82,29 +82,35 @@ namespace SherpaDesk
                     "users",
                     new UserSearchRequest { Email = AppSettings.Current.Email });
 
-                if (resultUser.Status != eResponseStatus.Success)
+                if (resultUser.Status == eResponseStatus.Success)
+                {
+
+                    var user = resultUser.Result.IsNull("Cannot found user").First();
+
+                    AppSettings.Current.AddUser(
+                        user.Id.IsNull("Invalid user identifier"),
+                        user.FirstName,
+                        user.LastName,
+                        user.Role.IsNull("Invalid role"));
+
+                    this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName);
+
+                    this.Avatar.Source = new BitmapImage(
+                        new Uri(string.Format(AVATAR_URL_FORMAT,
+                            Helper.GetMD5(user.Email)),
+                            UriKind.Absolute));
+                    
+                    this.MainFrame.Navigate(typeof(Info));
+                }
+                else
                 {
                     this.HandleError(resultUser);
-                    return;
+                    
+                    AppSettings.Current.Clear();
+                    this.Frame.Navigate(typeof(Login));
                 }
-
-                var user = resultUser.Result.IsNull("Cannot found user").First();
-
-                AppSettings.Current.AddUser(
-                    user.Id.IsNull("Invalid user identifier"),
-                    user.FirstName,
-                    user.LastName,
-                    user.Role.IsNull("Invalid role"));
-
-                this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName);
-                
-                this.Avatar.Source = new BitmapImage(
-                    new Uri(string.Format(AVATAR_URL_FORMAT,
-                        Helper.GetMD5(user.Email)),
-                        UriKind.Absolute));
             }
 
-            this.MainFrame.Navigate(typeof(Info));
         }
     }
 }

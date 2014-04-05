@@ -31,5 +31,8 @@ namespace SherpaDesk.Models.Response
 
         [DataMember(Name = "unconfirmed"), Details]
         public int Uncomfirmed { get; set; }
+
+        [DataMember(Name = "waiting"), Details]
+        public int Waiting { get; set; }
     }
 }

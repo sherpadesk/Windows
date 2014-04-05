@@ -36,10 +36,12 @@ namespace SherpaDesk
 
         private async void SignIn(object sender, RoutedEventArgs e)
         {
+            AppSettings.Current.Clear();
+
+            AppSettings.Current.Beta = ModeBox.IsChecked ?? false;
+
             using (var connector = new Connector())
             {
-                AppSettings.Current.Clear();
-
                 // authentication
                 var resultLogin = await connector.Func<LoginRequest, LoginResponse>(
                         "login",
@@ -91,5 +93,6 @@ namespace SherpaDesk
                 }
             }
         }
+
     }
 }

@@ -18,7 +18,8 @@ namespace SherpaDesk.Common
 {
     public class Connector : IDisposable
     {
-        protected const string API_URL = "https://api.sherpadesk.com/";
+        public const string API_URL = "https://api.sherpadesk.com/";
+        public const string API_URL_BETA = "http://api.beta.sherpadesk.com/";
         public const string ERROR_INVALID_REQUEST = "Unable to connect to sherpadesk.com";
         protected const string ERROR_EMTPY_REQUEST = "Request cannot be empty or null";
         protected const string ERROR_INVALID_RESPONSE = "Invalid response from sherpadesk.com";
@@ -37,7 +38,7 @@ namespace SherpaDesk.Common
                 ((Frame)Window.Current.Content).Content is MainPage)
                 ((MainPage)((Frame)Window.Current.Content).Content).StartProgress();
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(API_URL);
+            _httpClient.BaseAddress = new Uri(AppSettings.Current.Beta ? API_URL_BETA : API_URL);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(PostRequest.JSON_MEDIA_TYPE));
         }
@@ -88,7 +89,7 @@ namespace SherpaDesk.Common
                 {
                     command += ((IPath)model).Path;
                 }
-                
+
                 if (request.Data.Type == eRequestType.POST)
                 {
                     using (var content = request.Data.GetContent())

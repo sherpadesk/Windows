@@ -59,7 +59,7 @@ namespace SherpaDesk.Common
             }
         }
 
-        public static T GetSelectedValue<T>(this ComboBox comboBox)
+        public static T GetSelectedValue<T>(this ComboBox comboBox, T defaultValue = default(T))
         {
             if (comboBox.SelectedIndex > -1)
             {
@@ -69,7 +69,7 @@ namespace SherpaDesk.Common
                     return (T)((ComboBoxItem)item).Tag;
                 }
             }
-            return default(T);
+            return defaultValue;
         }
 
         public static string GetSelectedText(this ComboBox comboBox)

@@ -24,7 +24,7 @@ namespace SherpaDesk
 
         #region Handlers
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             var date = DateTime.Now;
             DateField.Value = date;
@@ -39,6 +39,48 @@ namespace SherpaDesk
             TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
             DateField.ValueChanged += DateField_ValueChanged;
             FillTimesheetGrid(currentDate);
+
+            using (var connector = new Connector())
+            {
+                // types
+                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                    "task_types",
+                    new TaskTypeRequest());
+
+                if (resultTaskType.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+
+                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+
+                // technician
+                var resultUsers = await connector.Func<UserResponse[]>("users");
+
+                if (resultUsers.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultUsers);
+                    return;
+                }
+
+                TechnicianList.FillData(
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
+                // projects
+                var resultProjects = await connector.Func<ProjectResponse[]>("projects");
+
+                if (resultProjects.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultProjects);
+                    return;
+                }
+
+                ProjectList.FillData(resultProjects.Result.AsEnumerable());
+
+            }
+
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
@@ -84,6 +126,18 @@ namespace SherpaDesk
             this.LoadTimesheet(
                 new DateTime(now.Year, now.Month, 1),
                 new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month)));
+
+        }
+
+        private void TimesheetCalendar_CurrentDateChanged(object sender, EventArgs e)
+        {
+            this.LoadTimesheet(
+                TimesheetCalendar.DisplayDateStart,
+                TimesheetCalendar.DisplayDateEnd);
+        }
+
+        private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
 
         }
         #endregion
@@ -156,16 +210,40 @@ namespace SherpaDesk
         }
         #endregion
 
-        private void TimesheetCalendar_CurrentDateChanged(object sender, EventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var hours = decimal.Zero;
+            decimal.TryParse(HoursTextBox.Text, out hours);
+            var date = DateField.Value ?? DateTime.Now;
+            
+            using (var connector = new Connector())
+            {
+                var result = await connector.Action<AddTimeRequest>(
+                            "time",
+                            new AddTimeRequest
+                            {
+                                AccountId = -1,
+                                ProjectId = ProjectList.GetSelectedValue<int>(-1),
+                                TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
+                                TechnicianId = TechnicianList.GetSelectedValue<int>(),
+                                Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
+                                Hours = hours,
+                                Note = NoteTextBox.Text,
+                                Date = date
+                            });
+
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                    return;
+                }
+            }
+
             this.LoadTimesheet(
-                TimesheetCalendar.DisplayDateStart,
-                TimesheetCalendar.DisplayDateEnd);
-        }
-
-        private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
+                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
 
         }
+
     }
 }

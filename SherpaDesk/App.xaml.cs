@@ -34,12 +34,16 @@ namespace SherpaDesk
 
         public static async void ShowErrorMessage(string message, eErrorType title)
         {
-            await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                var md = new MessageDialog(message, title.Details());
-                await md.ShowAsync();
+                try
+                {
+                    var md = new MessageDialog(message, title.Details());
+                    await md.ShowAsync();
+                }
+                catch (UnauthorizedAccessException) { }
             });
-        } 
+        }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

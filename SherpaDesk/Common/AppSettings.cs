@@ -33,6 +33,7 @@ namespace SherpaDesk.Common
         private const string INSTANCE_KEY_SETTING = "InstanceKeySettings";
         private const string INSTANCE_NAME_SETTING = "InstanceNameSettings";
         private const string SINGLE_SETTING = "SingleSettings";
+        private const string BETA_SETTING = "BetaSettings";
 
         public string ApiToken
         {
@@ -173,6 +174,19 @@ namespace SherpaDesk.Common
             set
             {
                 AddOrUpdateValue(SINGLE_SETTING, value);
+                Save();
+            }
+        }
+
+        public bool Beta
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(BETA_SETTING, false);
+            }
+            set
+            {
+                AddOrUpdateValue(BETA_SETTING, value);
                 Save();
             }
         }

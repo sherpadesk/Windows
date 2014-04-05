@@ -43,7 +43,7 @@ namespace SherpaDesk
                 }
 
                 TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
-                
+
                 //TaskTypeList.Items.Add(new ComboBoxItem
                 //{
                 //    Tag = Constants.INITIAL_ID,
@@ -59,21 +59,21 @@ namespace SherpaDesk
                     this.HandleError(resultUsers);
                     return;
                 }
-                
+
                 TechnicianList.FillData(
                     resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
-                // accounts
-                var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
+                // projects
+                var resultProjects = await connector.Func<ProjectResponse[]>("projects");
 
-                if (resultAccounts.Status != eResponseStatus.Success)
+                if (resultProjects.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultAccounts);
+                    this.HandleError(resultProjects);
                     return;
                 }
 
-                AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                ProjectList.FillData(resultProjects.Result.AsEnumerable());
 
                 //AccountList.Items.Add(new ComboBoxItem
                 //{
@@ -110,12 +110,13 @@ namespace SherpaDesk
                         "time",
                         new AddTimeRequest
                         {
-                            AccountId = AccountList.GetSelectedValue<int>(),
+                            AccountId = -1,
+                            ProjectId = ProjectList.GetSelectedValue<int>(-1),
                             TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
                             TechnicianId = TechnicianList.GetSelectedValue<int>(),
                             Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                             Hours = hours,
-                            Note = NoteTextBox.Text
+                            Note = NoteTextBox.Text, Date = DateField.Value ?? DateTime.Now
                         });
 
                     if (result.Status != eResponseStatus.Success)

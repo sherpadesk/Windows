@@ -28,9 +28,7 @@ namespace SherpaDesk
                     OpenTicketsCount.Text = result.Result.OpenAsTech.ToString();
                     OpenAsEndUserCount.Text = result.Result.OpenAsUser.ToString();
                     OnHoldCount.Text = result.Result.OnHold.ToString();
-                    //TODO: make awaiting count of tickets
-                    WaitingCount.Text = result.Result.NewMessages.ToString();
-                    //FollowUpDatesCount.Text = result.Result.Reminder.ToString();
+                    WaitingCount.Text = result.Result.Waiting.ToString();
                 }
                 else
                     this.pageRoot.HandleError(result);
