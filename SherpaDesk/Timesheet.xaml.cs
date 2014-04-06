@@ -39,7 +39,6 @@ namespace SherpaDesk
             TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
             DateField.ValueChanged += DateField_ValueChanged;
             FillTimesheetGrid(currentDate);
-
             using (var connector = new Connector())
             {
                 // types

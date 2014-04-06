@@ -10,7 +10,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Primitives"
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"    
+    xmlns:telerikPagination="using:Telerik.UI.Xaml.Controls.Primitives.Pagination"    
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
     <Page.Resources>
@@ -50,7 +52,7 @@
                 </Button.Flyout>
             </Button>
         </Grid>
-        <telerik:RadDataGrid  x:Name="ItemsGrid" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
+        <telerik:RadDataGrid  x:Name="ItemsGrid" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" IncrementalLoadingMode="Explicit">
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTemplateColumn Width="50">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
@@ -154,7 +156,8 @@
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
-        </telerik:RadDataGrid>
+        </telerik:RadDataGrid>        
+        
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
