@@ -36,7 +36,7 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            SubjectDecorate.Height = SubjectLabel.ActualHeight;
+//            SubjectDecorate.Height = SubjectLabel.ActualHeight;
             using (var connector = new Connector())
             {
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
@@ -48,27 +48,30 @@ namespace SherpaDesk
                 }
 
                 var ticket = resultTicket.Result;
-                SubjectLabel.Text = ticket.Subject;
-                EndUserLabel.Text = ticket.UserFullName;
-                InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
-                WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
+                TicketDetailsList.Items.Add(ticket);
+                TicketDetailsList.Items.Add(ticket);
+                TicketDetailsList.Items.Add(ticket);
+                //SubjectLabel.Text = ticket.Subject;
+                //EndUserLabel.Text = ticket.UserFullName;
+                //InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
+                //WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
 
-                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
+                //var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
 
-                if (resultTicket.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultTicket);
-                    return;
-                }
-                if (resultFiles.Result != null && resultFiles.Result.Length > 0)
-                {
-                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
-                    {
-                        FileName = file.Name,
-                        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
-                    }).ToList();
-                    FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                }
+                //if (resultTicket.Status != eResponseStatus.Success)
+                //{
+                //    this.HandleError(resultTicket);
+                //    return;
+                //}
+                //if (resultFiles.Result != null && resultFiles.Result.Length > 0)
+                //{
+                //    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
+                //    {
+                //        FileName = file.Name,
+                //        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
+                //    }).ToList();
+                //    FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                //}
             }
         }
 
