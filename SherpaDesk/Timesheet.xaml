@@ -61,7 +61,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <telerikInput:RadCalendar SelectionMode="Single" CellStyleSelector="{StaticResource selector}" x:Name="TimesheetCalendar" Margin="0,0,0,28" 
-                RequestedTheme="Light" Background="White" VerticalAlignment="Bottom" Height="500" Loaded="TimesheetCalendar_Loaded" >
+                RequestedTheme="Light" Background="White" VerticalAlignment="Bottom" Height="500" SelectionChanged="TimesheetCalendar_SelectionChanged">
             </telerikInput:RadCalendar>
             <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
@@ -75,7 +75,9 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <TextBlock x:Name="DateLabel" Grid.Column="0" FontSize="40" />
-                <telerikInput:RadDatePicker x:Name="DateField" Grid.Column="2" Height="60" Width="30" FontSize="40" Grid.Row="0" DisplayValueFormat="dddd, MMMM dd, yyyy" ItemLength="90" Margin="0,-10,0,0" />
+                <telerikInput:RadDatePicker x:Name="DateField" Grid.Column="2" 
+                                            Height="60" Width="30" FontSize="40" Grid.Row="0" DisplayValueFormat="dddd, MMMM dd, yyyy" 
+                                            ItemLength="90" Margin="0,-10,0,0" ValueChanged="DateField_ValueChanged" />
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Width="570">
                     <Grid.ColumnDefinitions>
@@ -164,7 +166,7 @@
                                 </Style>
                             </telerik:DataGridTextColumn.HeaderStyle>
                         </telerik:DataGridTextColumn>
-                        <telerik:DataGridTextColumn PropertyName="AccountName" Header="Account">
+                        <telerik:DataGridTextColumn PropertyName="ProjectName" Header="Project">
                             <telerik:DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">
                                     <Setter Property="Background" Value="#FF006AC1"/>
@@ -251,7 +253,7 @@
                                 </Style>
                             </telerik:DataGridTextColumn.HeaderStyle>
                         </telerik:DataGridTextColumn>
-                        <telerik:DataGridTextColumn PropertyName="AccountName" Header="Account">
+                        <telerik:DataGridTextColumn PropertyName="ProjectName" Header="Project">
                             <telerik:DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="gridPrimitives:DataGridColumnHeader">
                                     <Setter Property="Background" Value="#FF006AC1"/>

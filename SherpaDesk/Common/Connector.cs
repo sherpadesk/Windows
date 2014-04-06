@@ -125,7 +125,11 @@ namespace SherpaDesk.Common
             catch (Exception ex)
             {
                 string message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+#if DEBUG
+                result = result.Error(ex.Message, ex.ToString(), request.ToString()); 
+#else
                 result = result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString(), request.ToString());
+#endif
             }
             return result;
         }

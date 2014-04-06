@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Telerik.UI.Xaml.Controls.Input.Calendar.Commands;
 using Telerik.UI.Xaml.Controls.Input.Calendar;
+using System.Threading.Tasks;
 
 namespace SherpaDesk
 {
@@ -27,59 +28,53 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             var date = DateTime.Now;
-            DateField.Value = date;
-            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
             StartTimePicker.Value = EndTimePicker.Value = date;
-            StartTimeLabel.Text = date.ToString("t");
-            EndTimeLabel.Text = date.ToString("t");
-            var currentDate = DateTime.Now.Date;
-            //TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(currentDate, currentDate);
-            DateField.Value = currentDate;
-            DateLabel.Text = currentDate.ToString("MMMM dd, yyyy - dddd");
-            TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
-            DateField.ValueChanged += DateField_ValueChanged;
-            FillTimesheetGrid(currentDate);
+            StartTimeLabel.Text = EndTimeLabel.Text = date.ToString("t");
+            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
+
+            this.LoadTimesheet(
+                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
+
             using (var connector = new Connector())
             {
                 // types
                 var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
                     "task_types",
                     new TaskTypeRequest());
-
                 if (resultTaskType.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultTaskType);
                     return;
                 }
-
                 TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
 
                 // technician
                 var resultUsers = await connector.Func<UserResponse[]>("users");
-
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultUsers);
                     return;
                 }
-
                 TechnicianList.FillData(
                     resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                    new NameResponse
+                    {
+                        Id = AppSettings.Current.UserId,
+                        Name = Constants.TECHNICIAN_ME
+                    });
 
                 // projects
                 var resultProjects = await connector.Func<ProjectResponse[]>("projects");
-
                 if (resultProjects.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultProjects);
                     return;
                 }
-
                 ProjectList.FillData(resultProjects.Result.AsEnumerable());
-
             }
 
+            TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(date, date);
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
@@ -118,32 +113,62 @@ namespace SherpaDesk
             CalculateHours();
         }
 
-        private void TimesheetCalendar_Loaded(object sender, RoutedEventArgs e)
-        {
-            var now = DateTime.Now;
-            TimesheetCalendar.DisplayDateStart = new DateTime(now.Year - 3, 1, 1);
-            this.LoadTimesheet(
-                new DateTime(now.Year, now.Month, 1),
-                new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month)));
-
-        }
-
         private void TimesheetCalendar_CurrentDateChanged(object sender, EventArgs e)
         {
-            this.LoadTimesheet(
-                TimesheetCalendar.DisplayDateStart,
-                TimesheetCalendar.DisplayDateEnd);
+            //    this.LoadTimesheet(
+            //        connector,
+            //        TimesheetCalendar.DisplayDateStart,
+            //        TimesheetCalendar.DisplayDateEnd);
         }
 
         private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
 
         }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var hours = decimal.Zero;
+            decimal.TryParse(HoursTextBox.Text, out hours);
+            var date = DateField.Value ?? DateTime.Now;
+
+            using (var connector = new Connector())
+            {
+                var result = await connector.Action<AddTimeRequest>(
+                            "time",
+                            new AddTimeRequest
+                            {
+                                AccountId = -1,
+                                ProjectId = ProjectList.GetSelectedValue<int>(-1),
+                                TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
+                                TechnicianId = TechnicianList.GetSelectedValue<int>(),
+                                Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
+                                Hours = hours,
+                                Note = NoteTextBox.Text,
+                                Date = date
+                            });
+
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                    return;
+                }
+            }
+            TaskTypeList.SelectedIndex = -1;
+            NoteTextBox.Text = string.Empty;
+            HoursTextBox.Text = "0.00";
+
+            await this.LoadTimesheet(
+                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
+
+            this.FillTimesheetGrid(date.Date);
+        }
         #endregion
 
         #region Methods
 
-        private async void LoadTimesheet(DateTime startDate, DateTime endDate)
+        private async Task LoadTimesheet(DateTime startDate, DateTime endDate)
         {
             using (var connector = new Connector())
             {
@@ -174,6 +199,7 @@ namespace SherpaDesk
                 // This is refreshing grid
                 TimesheetCalendar.DisplayDateStart = new DateTime(startDate.Year - 3, 1, 1);
             }
+            return;
         }
 
         private void FillTimesheetGrid(DateTime selectedDate)
@@ -208,41 +234,6 @@ namespace SherpaDesk
             }
         }
         #endregion
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var hours = decimal.Zero;
-            decimal.TryParse(HoursTextBox.Text, out hours);
-            var date = DateField.Value ?? DateTime.Now;
-            
-            using (var connector = new Connector())
-            {
-                var result = await connector.Action<AddTimeRequest>(
-                            "time",
-                            new AddTimeRequest
-                            {
-                                AccountId = -1,
-                                ProjectId = ProjectList.GetSelectedValue<int>(-1),
-                                TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
-                                TechnicianId = TechnicianList.GetSelectedValue<int>(),
-                                Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
-                                Hours = hours,
-                                Note = NoteTextBox.Text,
-                                Date = date
-                            });
-
-                if (result.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(result);
-                    return;
-                }
-            }
-
-            this.LoadTimesheet(
-                new DateTime(date.Year, date.Month, 1),
-                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
-
-        }
 
     }
 }
