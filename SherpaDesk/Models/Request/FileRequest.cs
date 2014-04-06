@@ -56,7 +56,7 @@ namespace SherpaDesk.Models.Request
 
         public void Dispose()
         {
-            if (_streamContent == null)
+            if (_streamContent != null)
             {
                 _streamContent.Dispose();
             }

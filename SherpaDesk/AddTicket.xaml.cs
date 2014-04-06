@@ -156,18 +156,20 @@ namespace SherpaDesk
                     this.HandleError(resultAddTicket);
                     return;
                 }
-
-                using (FileRequest fileRequest = new FileRequest("?ticket=" + resultAddTicket.Result.TicketKey))
+                if (_attachment.Count > 0)
                 {
-                    foreach (var file in _attachment)
+                    using (FileRequest fileRequest = new FileRequest("?ticket=" + resultAddTicket.Result.TicketKey))
                     {
-                        fileRequest.Add(file);
-                    }
-                    var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
-                    if (resultUploadFile.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(resultUploadFile);
-                        return;
+                        foreach (var file in _attachment)
+                        {
+                            fileRequest.Add(file);
+                        }
+                        var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
+                        if (resultUploadFile.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultUploadFile);
+                            return;
+                        }
                     }
                 }
                 var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");

@@ -11,13 +11,13 @@ namespace SherpaDesk.Models.Request
         public WaitingOnPostRequest(string ticketKey)
         {
             this.Path = "/" + ticketKey;
-            this.IsWaitingOnPost = true;
+            this.IsWaiting = true;
         }
         [DataMember(Name = "note_text"), Details]
         public string Note { get; set; }
 
         [DataMember(Name = "is_waiting_on_post"), Details]
-        public bool IsWaitingOnPost { get; private set; }
+        public bool IsWaiting { get; private set; }
 
         [Details]
         public string Path { get; set; }

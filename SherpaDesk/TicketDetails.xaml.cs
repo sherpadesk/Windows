@@ -48,9 +48,26 @@ namespace SherpaDesk
                 }
 
                 var ticket = resultTicket.Result;
+                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>("tickets", new NoteSearchRequest(_ticketKey));
+                if (resultNotes.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultNotes);
+                    return;
+                }
+
+                //вот эти данные надо показывать в тикете в списке
+                var resultView = resultNotes.Result.Select(x => new
+                {
+                    x.FullName, 
+                    x.ResponseDateText,
+                    x.NoteType,
+                    x.NoteText
+                }).ToList();
+
                 TicketDetailsList.Items.Add(ticket);
-                TicketDetailsList.Items.Add(ticket);
-                TicketDetailsList.Items.Add(ticket);
+
+                //тема, файлы и другая инфа должны быть использованы как раньше - вне списка
+
                 //SubjectLabel.Text = ticket.Subject;
                 //EndUserLabel.Text = ticket.UserFullName;
                 //InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
