@@ -185,7 +185,7 @@ namespace SherpaDesk
                         }
                     }
                 }
-                ((Frame)this.Parent).Navigate(typeof(TicketDetails), _ticketKey);
+                ((Frame)this.Parent).Navigate(typeof(Empty));
             }
         }
     }

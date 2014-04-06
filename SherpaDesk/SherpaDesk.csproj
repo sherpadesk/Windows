@@ -141,6 +141,9 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Empty.xaml.cs">
+      <DependentUpon>Empty.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enum\eErrorType.cs" />
     <Compile Include="Models\Request\AddNoteRequest.cs" />
     <Compile Include="Models\Request\DeleteRequest.cs" />
@@ -202,9 +205,6 @@
     <Compile Include="Models\Response\OrganizationResponse.cs" />
     <Compile Include="Models\Response\Response.cs" />
     <Compile Include="Models\Response\TicketCountsResponse.cs" />
-    <Compile Include="FollowUpDates.xaml.cs">
-      <DependentUpon>FollowUpDates.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Info.xaml.cs">
       <DependentUpon>Info.xaml</DependentUpon>
     </Compile>
@@ -286,6 +286,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="AddTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Empty.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -406,10 +410,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UpdateProfile.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FollowUpDates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
