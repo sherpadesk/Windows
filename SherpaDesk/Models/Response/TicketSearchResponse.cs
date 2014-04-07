@@ -22,7 +22,7 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "technician_lastname"), Details]
         public string TechnicianLastName { get; set; }
 
-        public string TechnicianFullName { get { return Helper.FullName(this.TechnicianFirstName, this.TechnicianLastName); } }
+        public string TechnicianFullName { get { return Helper.FullName(this.TechnicianFirstName, this.TechnicianLastName, this.TechnicianEmail); } }
 
         [DataMember(Name = "technician_email"), Details]
         public string TechnicianEmail { get; set; }

@@ -86,8 +86,10 @@ namespace SherpaDesk
 
                 if (resultUser.Status == eResponseStatus.Success)
                 {
+                    if (resultUser.Result.Length == 0)
+                        throw new InternalException("User not found", eErrorType.InvalidOutputData);
 
-                    var user = resultUser.Result.IsNull("Cannot found user").First();
+                    var user = resultUser.Result.First();
 
                     AppSettings.Current.AddUser(
                         user.Id.IsNull("Invalid user identifier"),
@@ -95,7 +97,7 @@ namespace SherpaDesk
                         user.LastName,
                         user.Role.IsNull("Invalid role"));
 
-                    this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName);
+                    this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName, user.Email);
 
                     this.Avatar.Source = new BitmapImage(
                         new Uri(string.Format(AVATAR_URL_FORMAT,

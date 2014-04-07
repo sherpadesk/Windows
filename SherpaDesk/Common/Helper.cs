@@ -84,9 +84,12 @@ namespace SherpaDesk.Common
             }
         }
 
-        public static string FullName(string firstName, string lastName)
+        public static string FullName(string firstName, string lastName, string email)
         {
-            return string.Format("{1}, {0}", firstName, lastName).Trim(',');
+            if (string.IsNullOrWhiteSpace(firstName + lastName))
+                return email;
+            else
+                return string.Format("{1}, {0}", firstName, lastName).Trim(',');
         }
 
         public static string GetUrlParams<TRequest>(TRequest request) where TRequest : IRequestType

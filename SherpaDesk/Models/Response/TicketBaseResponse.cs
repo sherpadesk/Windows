@@ -31,7 +31,7 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "user_lastname"), Details]
         public string UserLastName { get; set; }
 
-        public string UserFullName { get { return Helper.FullName(this.UserFirstName, this.UserLastName); } }
+        public string UserFullName { get { return Helper.FullName(this.UserFirstName, this.UserLastName, this.UserEmail); } }
 
         [DataMember(Name = "user_email"), Details]
         public string UserEmail { get; set; }

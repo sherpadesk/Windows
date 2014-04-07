@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Telerik.UI.Xaml.Controls.Input;
+using Telerik.UI.Xaml.Controls.Input.AutoCompleteBox;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -76,7 +78,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 // users
-                var resultUsers = await connector.Func<UserResponse[]>("users");
+                var resultUsers = await connector.Func<UserSearchRequest, UserResponse[]>("users", new UserSearchRequest());
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -84,25 +86,45 @@ namespace SherpaDesk
                     return;
                 }
 
+                if (resultUsers.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
+                {
+                    EndUserList.FillData(
+                        resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }),
+                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
+                }
+                else
+                {
+                    EndUserList.AutoComplete(async (object obj, TextChangedEventArgs args) =>
+                    {
+                        using (var inсonn = new Connector())
+                        {
+                            RadAutoCompleteBox searchBox = (RadAutoCompleteBox)obj;
+
+                            searchBox.FilterMemberPath = "Name";
+                            if (searchBox.Text.Length > 1)
+                            {
+                                var result = await inсonn.Func<UserSearchRequest, UserResponse[]>("users",
+                                    new UserSearchRequest { Query = "LastName like '%" + searchBox.Text + "%'" });
+
+                                if (result.Status != eResponseStatus.Success)
+                                {
+                                    this.HandleError(result);
+                                    return;
+                                }
+                                searchBox.ItemsSource = result.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }).ToList();
+                            }
+                        }
+                    });
+                }
+
                 TechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
                     new NameResponse { Id = -1, Name = "Let the system choose." },
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
                 AlternateTechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
-
-                EndUserList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
-
-                //EndUserList.Items.Add(new ComboBoxItem
-                //{
-                //    Tag = Constants.INITIAL_ID,
-                //    Content = Constants.ADD_NEW_USER,
-                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                //});
 
                 // accounts
                 var resultAccounts = await connector.Func<AccountResponse[]>("accounts");

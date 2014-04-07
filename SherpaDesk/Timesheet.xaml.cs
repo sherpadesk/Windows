@@ -57,7 +57,7 @@ namespace SherpaDesk
                     return;
                 }
                 TechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName) }),
+                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
                     new NameResponse
                     {
                         Id = AppSettings.Current.UserId,

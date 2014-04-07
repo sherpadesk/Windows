@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Telerik.UI.Xaml.Controls.Input;
@@ -8,22 +9,29 @@ namespace SherpaDesk.Common
 {
     public static class ComboBoxExtensions
     {
-        public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
+        public static void AutoComplete(this ComboBox comboBox, TextChangedEventHandler textChangedEventHandler)
         {
             var searchBox = new RadAutoCompleteBox
             {
                 Watermark = "Search",
-                ItemsSource = list.Select(x => x.Name),
                 Width = comboBox.ActualWidth - 30,
                 Height = comboBox.ActualHeight,
+                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
                 FontSize = 18,
                 FilterComparisonMode = System.StringComparison.CurrentCultureIgnoreCase,
                 FilterMode = AutoCompleteBoxFilterMode.Contains,
-                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center
+                FilterDelay = TimeSpan.FromSeconds(5),
+                IsDropDownOpen = true,
+                AutosuggestFirstItem = false
             };
-            searchBox.SelectionChanged += searchBox_SelectionChanged;
+            searchBox.TextChanged += textChangedEventHandler;
             comboBox.Items.Clear();
             comboBox.Items.Add(searchBox);
+        }
+
+        public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
+        {
+            comboBox.Items.Clear();
             foreach (var kv in args)
             {
                 comboBox.Items.Add(new ComboBoxItem
@@ -46,16 +54,6 @@ namespace SherpaDesk.Common
             if (comboBox.Items.Count > 0)
             {
                 comboBox.SelectedIndex = 0;
-            }
-        }
-
-        static void searchBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                var selected = e.AddedItems.First().ToString();
-                ((Windows.UI.Xaml.Controls.ComboBox)((Control)sender).Parent).SetSelectedValueByName(selected);
-                ((RadAutoCompleteBox)sender).Text = string.Empty;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using SherpaDesk.Common;
+using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Response
 {
@@ -20,5 +21,14 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "type"), Details]
         public string Role { get; set; }
 
+        [Details]
+        public string FullName
+        {
+            get
+            {
+                return Helper.FullName(this.FirstName, this.LastName, this.Email);
+            }
+        }
     }
+
 }

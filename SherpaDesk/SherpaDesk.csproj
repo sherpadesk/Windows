@@ -141,6 +141,7 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\UserSearchProvider.cs" />
     <Compile Include="Empty.xaml.cs">
       <DependentUpon>Empty.xaml</DependentUpon>
     </Compile>
