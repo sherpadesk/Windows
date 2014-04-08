@@ -141,7 +141,7 @@
                     <Button Content="Save Time" Grid.Column="0" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.ColumnSpan="3" Grid.Row="9" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Background="#FF2F9129" Click="Button_Click" />
                 </Grid>
             </Grid>
-            <Grid x:Name="TimesheetGrids" Grid.Column="4" Width="1500" Margin="0,-15,0,15">
+            <Grid x:Name="TimesheetGrids" Visibility="Collapsed" Grid.Column="4" Width="1500" Margin="0,-15,0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -152,8 +152,8 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="Non-Ticket Time Logs" FontSize="24" />
-                <TextBlock Text="Ticket Time Logs" Grid.Row="3" FontSize="24" />
+                <TextBlock x:Name="NonTicketsLabel" Text="Non-Ticket Time Logs" FontSize="24" />
+                <TextBlock x:Name="TicketTimeLabel" Text="Ticket Time Logs" Grid.Row="3" FontSize="24" />
 
                 <telerik:RadDataGrid RequestedTheme="Light" x:Name="NonTicketsGrid" Height="200" UserGroupMode="Disabled" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Disabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None">
                     <telerik:RadDataGrid.Columns>

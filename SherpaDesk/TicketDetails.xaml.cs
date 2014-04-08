@@ -55,7 +55,6 @@ namespace SherpaDesk
                     return;
                 }
 
-                //вот эти данные надо показывать в тикете в списке
                 var resultView = resultNotes.Result.Select(x => new
                 {
                     x.FullName, 
@@ -64,31 +63,31 @@ namespace SherpaDesk
                     x.NoteText
                 }).ToList();
 
-                TicketDetailsList.Items.Add(ticket);
+                TicketDetailsList.ItemsSource = resultView;
 
-                //тема, файлы и другая инфа должны быть использованы как раньше - вне списка
+                AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
-                //SubjectLabel.Text = ticket.Subject;
-                //EndUserLabel.Text = ticket.UserFullName;
-                //InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
-                //WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
+                SubjectLabel.Text = ticket.Subject;
+                EndUserLabel.Text = ticket.UserFullName;
+                InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
+                WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
 
-                //var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
+                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
 
-                //if (resultTicket.Status != eResponseStatus.Success)
-                //{
-                //    this.HandleError(resultTicket);
-                //    return;
-                //}
-                //if (resultFiles.Result != null && resultFiles.Result.Length > 0)
-                //{
-                //    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
-                //    {
-                //        FileName = file.Name,
-                //        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
-                //    }).ToList();
-                //    FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                //}
+                if (resultTicket.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTicket);
+                    return;
+                }
+                if (resultFiles.Result != null && resultFiles.Result.Length > 0)
+                {
+                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
+                    {
+                        FileName = file.Name,
+                        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
+                    }).ToList();
+                    FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
             }
         }
 

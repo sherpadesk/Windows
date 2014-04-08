@@ -13,7 +13,7 @@ namespace SherpaDesk
     {
         public Info()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();            
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
@@ -85,7 +85,22 @@ namespace SherpaDesk
 
         private void TimesheetTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            this.RightFrame.Loaded += RightFrame_Loaded;
             this.RightFrame.Navigate(typeof(Timesheet));
+            scrollViewer.ChangeView(20000, new double?(), new float?());
+        }
+
+        void RightFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (((ContentControl)sender).Content is Timesheet)
+            {
+                ((Timesheet)((ContentControl)sender).Content).MoveScrollToRight += TimeSheetClicked;
+            }
+            this.RightFrame.Loaded -= RightFrame_Loaded;
+        }
+
+        void TimeSheetClicked(object sender, EventArgs e)
+        {
             scrollViewer.ChangeView(20000, new double?(), new float?());
         }
     }

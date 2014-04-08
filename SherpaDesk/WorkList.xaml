@@ -156,7 +156,7 @@
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
-        </telerik:RadDataGrid>        
+        </telerik:RadDataGrid>
         
         <VisualStateManager.VisualStateGroups>
 

@@ -17,6 +17,9 @@ namespace SherpaDesk
     public sealed partial class Timesheet : SherpaDesk.Common.LayoutAwarePage
     {
         IList<TimeResponse> _timeLogList = null;
+
+        public event EventHandler MoveScrollToRight;
+
         public Timesheet()
         {
             this.InitializeComponent();
@@ -98,7 +101,7 @@ namespace SherpaDesk
             DateField.Value = selectedDate;
             DateLabel.Text = selectedDate.ToString("MMMM dd, yyyy - dddd");
             DateField.ValueChanged += DateField_ValueChanged;
-            FillTimesheetGrid(selectedDate);
+            FillTimesheetGrid(selectedDate);            
         }
 
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)
@@ -208,18 +211,21 @@ namespace SherpaDesk
                 .Where(x => x.Date.Date == selectedDate && x.TicketId == 0)
                 .ToList();
             NonTicketsGrid.ItemsSource = nonTicketsList;
-            NonTicketsGrid.Visibility = nonTicketsList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+            NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = nonTicketsList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
             var ticketTimeList = _timeLogList
                 .Where(x => x.Date.Date == selectedDate && x.TicketId > 0)
                 .ToList();
             TicketTimeGrid.ItemsSource = ticketTimeList;
-            TicketTimeGrid.Visibility = ticketTimeList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+            TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = ticketTimeList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
             if (ticketTimeList.Count > 0 || nonTicketsList.Count > 0)
             {
                 TimesheetGrids.Visibility = Visibility.Visible;
-                //TODO: move screen to right
+                if (MoveScrollToRight != null)
+                {
+                    MoveScrollToRight(this, new EventArgs());
+                }
             }
             else
                 TimesheetGrids.Visibility = Visibility.Collapsed;
