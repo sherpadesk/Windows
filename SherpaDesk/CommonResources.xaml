@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SherpaDesk.Common"
+    xmlns:Controls="using:WinRTXamlToolkit.Controls"
+    xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:telerikInput ="using:Telerik.UI.Xaml.Controls.Input">
+
+    <DataTemplate x:Key="AutoCompleteItemTemplate">
+        <TextBlock Text="{Binding Name}" Tag="{Binding Id}" FontSize="16" FontFamily="Segoe UI" Height="45" 
+                                    TextWrapping="Wrap" Margin="5,0,0,0" telerikInput:RadAutoCompleteBox.IsTextMatchHighlightEnabled="True"/>
+    </DataTemplate>
+
+</ResourceDictionary>

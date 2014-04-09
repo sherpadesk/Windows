@@ -60,7 +60,7 @@ namespace SherpaDesk
                     x.FullName, 
                     x.ResponseDateText,
                     x.NoteType,
-                    x.NoteText
+                    NoteText = Helper.HtmlToString(x.NoteText)
                 }).ToList();
 
                 TicketDetailsList.ItemsSource = resultView;

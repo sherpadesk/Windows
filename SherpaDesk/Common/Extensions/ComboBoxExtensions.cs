@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Telerik.UI.Xaml.Controls.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace SherpaDesk.Common
 {
@@ -11,22 +13,46 @@ namespace SherpaDesk.Common
     {
         public static void AutoComplete(this ComboBox comboBox, TextChangedEventHandler textChangedEventHandler)
         {
+            var grid = comboBox.ParentGrid();
+            if (grid == null) return;
+
+            comboBox.Visibility = Visibility.Collapsed;
+
             var searchBox = new RadAutoCompleteBox
             {
+                Name = comboBox.Name + "_Text",
                 Watermark = "Search",
-                Width = comboBox.ActualWidth - 30,
+                Width = comboBox.ActualWidth,
                 Height = comboBox.ActualHeight,
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
-                FontSize = 18,
+                FontSize = 24,
                 FilterComparisonMode = System.StringComparison.CurrentCultureIgnoreCase,
                 FilterMode = AutoCompleteBoxFilterMode.Contains,
-                FilterDelay = TimeSpan.FromSeconds(5),
+                FilterDelay = TimeSpan.FromSeconds(1),
                 IsDropDownOpen = true,
-                AutosuggestFirstItem = false
+                Visibility = Visibility.Visible
             };
+            searchBox.ItemTemplate = (DataTemplate)((ResourceDictionary)App.Current.Resources["CommonResources"])["AutoCompleteItemTemplate"];
             searchBox.TextChanged += textChangedEventHandler;
-            comboBox.Items.Clear();
-            comboBox.Items.Add(searchBox);
+            searchBox.SelectionChanged += (object sender, SelectionChangedEventArgs e) =>
+            {
+                var tb = e.AddedItems.FirstOrDefault() as IKeyName;
+                if (tb != null)
+                    searchBox.Tag = tb.Key;
+            };
+            searchBox.Margin = new Thickness(comboBox.Margin.Left, comboBox.Margin.Top, comboBox.Margin.Right, comboBox.Margin.Bottom);
+
+            Grid.SetRow(searchBox, Grid.GetRow(comboBox));
+            Grid.SetColumn(searchBox, Grid.GetColumn(comboBox));
+
+            grid.Children.Add(searchBox);
+
+            //comboBox.Items.Clear();
+            //comboBox.Items.Add(searchBox);
+            //comboBox.DropDownOpened += (object sender, object e) => 
+            //{
+            //    searchBox.Focus(FocusState.Pointer);
+            //};
         }
 
         public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
@@ -59,12 +85,23 @@ namespace SherpaDesk.Common
 
         public static T GetSelectedValue<T>(this ComboBox comboBox, T defaultValue = default(T))
         {
-            if (comboBox.SelectedIndex > -1)
+            if (comboBox.Visibility == Visibility.Visible)
             {
-                var item = comboBox.Items[comboBox.SelectedIndex];
-                if (item is ComboBoxItem)
+                if (comboBox.SelectedIndex > -1)
                 {
-                    return (T)((ComboBoxItem)item).Tag;
+                    var item = comboBox.Items[comboBox.SelectedIndex];
+                    if (item is ComboBoxItem)
+                    {
+                        return (T)((ComboBoxItem)item).Tag;
+                    }
+                }
+            }
+            else
+            {
+                var textBox = comboBox.ParentGrid().FindName(comboBox.Name + "_Text") as RadAutoCompleteBox;
+                if (textBox != null && textBox.Tag != null)
+                {
+                    return (T)textBox.Tag;
                 }
             }
             return defaultValue;

@@ -163,7 +163,7 @@ namespace SherpaDesk.Common
 
         public static string HtmlToString(string html)
         {
-            html = html.Replace("<br>", Environment.NewLine);
+            html = html.Replace("<br>", "<br/>");
             return Windows.Data.Html.HtmlUtilities.ConvertToText(html);
         }
     }

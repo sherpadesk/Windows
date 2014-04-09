@@ -4,21 +4,13 @@ using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Telerik.UI.Xaml.Controls.Input;
-using Telerik.UI.Xaml.Controls.Input.AutoCompleteBox;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -58,19 +50,56 @@ namespace SherpaDesk
             }
         }
 
+        private void SetMe(ComboBox combobox)
+        {
+            if (combobox.Visibility == Visibility.Visible)
+                combobox.SetSelectedValue(AppSettings.Current.UserId);
+            else
+            {
+                var textBox = this.FindName(combobox.Name + "_Text") as RadAutoCompleteBox;
+                if (textBox != null)
+                {
+                    textBox.Text = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName, AppSettings.Current.Email);
+                    textBox.Tag = AppSettings.Current.UserId;
+                }
+            }
+        }
+
         private void EndUserMeLink_Click(object sender, RoutedEventArgs e)
         {
-            EndUserList.SetSelectedValue(AppSettings.Current.UserId);
+            this.SetMe(this.EndUserList);
         }
 
         private void TechnicianMeLink_Click(object sender, RoutedEventArgs e)
         {
-            TechnicianList.SetSelectedValue(AppSettings.Current.UserId);
+            this.SetMe(this.TechnicianList);
         }
 
         private void AlternateTechMeLink_Click(object sender, RoutedEventArgs e)
         {
-            AlternateTechnicianList.SetSelectedValue(AppSettings.Current.UserId);
+            this.SetMe(this.AlternateTechnicianList);
+        }
+
+        private async void SearchUsers(object obj, TextChangedEventArgs args)
+        {
+            using (var inсonn = new Connector())
+            {
+                RadAutoCompleteBox searchBox = (RadAutoCompleteBox)obj;
+
+                searchBox.FilterMemberPath = "Name";
+                if (searchBox.Text.Length > 1)
+                {
+                    var result = await inсonn.Func<UserSearchRequest, UserResponse[]>("users",
+                        new UserSearchRequest { Query = searchBox.Text });
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
+                    searchBox.ItemsSource = result.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }).ToList();
+                }
+            }
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
@@ -91,40 +120,23 @@ namespace SherpaDesk
                     EndUserList.FillData(
                         resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }),
                         new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
+
+                    TechnicianList.FillData(
+                        resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
+                        new NameResponse { Id = -1, Name = "Let the system choose." },
+                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
+                    AlternateTechnicianList.FillData(
+                        resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
+                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
                 }
                 else
                 {
-                    EndUserList.AutoComplete(async (object obj, TextChangedEventArgs args) =>
-                    {
-                        using (var inсonn = new Connector())
-                        {
-                            RadAutoCompleteBox searchBox = (RadAutoCompleteBox)obj;
-
-                            searchBox.FilterMemberPath = "Name";
-                            if (searchBox.Text.Length > 1)
-                            {
-                                var result = await inсonn.Func<UserSearchRequest, UserResponse[]>("users",
-                                    new UserSearchRequest { Query = "LastName like '%" + searchBox.Text + "%'" });
-
-                                if (result.Status != eResponseStatus.Success)
-                                {
-                                    this.HandleError(result);
-                                    return;
-                                }
-                                searchBox.ItemsSource = result.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }).ToList();
-                            }
-                        }
-                    });
+                    EndUserList.AutoComplete(this.SearchUsers);
+                    TechnicianList.AutoComplete(this.SearchUsers);
+                    AlternateTechnicianList.AutoComplete(this.SearchUsers);
                 }
-
-                TechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                    new NameResponse { Id = -1, Name = "Let the system choose." },
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
-
-                AlternateTechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
                 // accounts
                 var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
@@ -136,14 +148,6 @@ namespace SherpaDesk
                 }
 
                 AccountList.FillData(resultAccounts.Result.AsEnumerable());
-
-                //AccountList.Items.Add(new ComboBoxItem
-                //{
-                //    Tag = Constants.INITIAL_ID,
-                //    Content = Constants.ADD_NEW_ACCOUNT,
-                //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
-                //});
-                //classes
 
                 var resultClasses = await connector.Func<UserRequest, ClassResponse[]>("classes", new UserRequest { UserId = AppSettings.Current.UserId });
 
@@ -194,6 +198,11 @@ namespace SherpaDesk
                         }
                     }
                 }
+                // if all okay to clear form
+                
+                _attachment.Clear();
+                DescritionTextbox.Text = SubjectTextbox.Text = string.Empty;
+
                 var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
                 var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
 
