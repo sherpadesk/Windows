@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -34,6 +35,29 @@ namespace SherpaDesk
             base.OnNavigatedTo(e);
         }
 
+        private async void FillResponses()
+        {
+            using (var connector = new Connector())
+            {
+                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>("tickets", new NoteSearchRequest(_ticketKey));
+                if (resultNotes.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultNotes);
+                    return;
+                }
+
+                var resultView = resultNotes.Result.Select(x => new
+                {
+                    x.FullName,
+                    x.ResponseDateText,
+                    x.NoteType,
+                    NoteText = Helper.HtmlToString(x.NoteText)
+                }).Where(x => x.NoteType != "Initial Post").ToList(); // Жесткий хардкод
+                TicketDetailsList.ItemsSource = null; // For Visual Effect
+                TicketDetailsList.ItemsSource = resultView;
+            }
+        }
+
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
 //            SubjectDecorate.Height = SubjectLabel.ActualHeight;
@@ -46,24 +70,8 @@ namespace SherpaDesk
                     this.HandleError(resultTicket);
                     return;
                 }
-
+                FillResponses();
                 var ticket = resultTicket.Result;
-                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>("tickets", new NoteSearchRequest(_ticketKey));
-                if (resultNotes.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultNotes);
-                    return;
-                }
-
-                var resultView = resultNotes.Result.Select(x => new
-                {
-                    x.FullName, 
-                    x.ResponseDateText,
-                    x.NoteType,
-                    NoteText = Helper.HtmlToString(x.NoteText)
-                }).ToList();
-
-                TicketDetailsList.ItemsSource = resultView;
 
                 AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
@@ -93,7 +101,22 @@ namespace SherpaDesk
 
         private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            ResponseFrame.Navigated += ResponseFrame_Navigated;
             ResponseFrame.Navigate(typeof(AddResponse), _ticketKey);
+        }
+
+        private void ResponseFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (((ContentControl)sender).Content is AddResponse)
+            {
+                ((AddResponse)((ContentControl)sender).Content).UpdateTicketDetailsEvent -= UpdateTicketDetails;
+                ((AddResponse)((ContentControl)sender).Content).UpdateTicketDetailsEvent += UpdateTicketDetails;
+            }
+        }
+
+        void UpdateTicketDetails(object sender, EventArgs e)
+        {
+            FillResponses();
         }
     }
 }

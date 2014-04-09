@@ -17,6 +17,8 @@ namespace SherpaDesk
 {
     public sealed partial class AddResponse : SherpaDesk.Common.LayoutAwarePage
     {
+        public event EventHandler UpdateTicketDetailsEvent;
+
         private const string ERROR_EMPTY_HOURS = "Hours should be positive number.";
         private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.";
         private IList<StorageFile> _attachment = new List<StorageFile>();
@@ -184,6 +186,10 @@ namespace SherpaDesk
                             return;
                         }
                     }
+                }
+                if (UpdateTicketDetailsEvent != null)
+                {
+                    UpdateTicketDetailsEvent(this, new EventArgs());
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
             }

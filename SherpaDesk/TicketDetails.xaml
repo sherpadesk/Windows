@@ -355,8 +355,13 @@
                             </ScrollViewer>
                         </Grid>
                     </Grid>
-                    <ScrollViewer Height="540" VerticalScrollMode="Auto" Grid.Column="1" HorizontalScrollMode="Disabled" Width="700">
-                        <GridView x:Name="TicketDetailsList" IsTapEnabled="False" ItemContainerStyle="{StaticResource GridViewItemStyle1}" Grid.Column="1" SelectionMode="None">
+                    <ScrollViewer Height="540" VerticalScrollMode="Auto" Grid.Column="1" Margin="0,0,20,0" HorizontalScrollMode="Disabled" Width="auto">
+                        <GridView x:Name="TicketDetailsList" Margin="0,0,40,0" HorizontalAlignment="Stretch" IsTapEnabled="False" ItemContainerStyle="{StaticResource GridViewItemStyle1}" Grid.Column="1" SelectionMode="None">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Stretch">
@@ -364,8 +369,6 @@
                                             <RowDefinition Height="auto" />
                                             <RowDefinition Height="auto" />
                                             <RowDefinition Height="auto" />
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
