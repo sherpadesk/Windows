@@ -10,8 +10,8 @@ namespace SherpaDesk.Models.Request
     [DataContract]
     public abstract class SearchRequest : GetRequest
     {
-        public const int DEFAULT_PAGE_COUNT = 20;
-        public const int DEFAULT_PAGE_INDEX = 1;
+        public const int DEFAULT_PAGE_COUNT = 10;
+        public const int DEFAULT_PAGE_INDEX = 0;
 
         protected SearchRequest()
         {

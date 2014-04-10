@@ -14,9 +14,12 @@ namespace SherpaDesk
     public sealed partial class WorkList : SherpaDesk.Common.LayoutAwarePage
     {
         private eWorkListType _workType;
+        private int _pageIndex;
+
         public WorkList()
         {
             this.InitializeComponent();
+            _pageIndex = SearchRequest.DEFAULT_PAGE_INDEX;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -43,45 +46,29 @@ namespace SherpaDesk
             base.OnNavigatedTo(e);
         }
 
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void LoadTicketList()
         {
             using (var connector = new Connector())
             {
-                TicketSearchRequest request = null;
+                TicketSearchRequest request = new TicketSearchRequest { PageIndex = _pageIndex };
                 switch (_workType)
                 {
                     case eWorkListType.Open:
-                        request = new TicketSearchRequest
-                        {
-                            Status = eTicketStatus.Open,
-                            Role = eRoles.Technician
-                        };
+                        request.Status = eTicketStatus.Open;
+                        request.Role = eRoles.Technician;
                         break;
                     case eWorkListType.OnHold:
-                        request = new TicketSearchRequest
-                        {
-                            Status = eTicketStatus.OnHold
-                        };
+                        request.Status = eTicketStatus.OnHold;
                         break;
                     case eWorkListType.NewMessages:
-                        request = new TicketSearchRequest
-                        {
-                            Role = eRoles.Technician, 
-                            Status = eTicketStatus.NewMessages
-                        };
+                        request.Role = eRoles.Technician;
+                        request.Status = eTicketStatus.NewMessages;
                         break;
                     case eWorkListType.OpenAsEndUser:
-                        request = new TicketSearchRequest
-                        {
-                            Role = eRoles.EndUser
-                        };
+                        request.Role = eRoles.EndUser;
                         break;
                     case eWorkListType.AwaitingResponse:
-                        request = new TicketSearchRequest
-                        {
-                            Role = eRoles.EndUser,
-                            Status = eTicketStatus.Waiting
-                        };
+                        request.Status = eTicketStatus.Waiting;
                         break;
                 }
 
@@ -92,7 +79,16 @@ namespace SherpaDesk
                     return;
                 }
                 ItemsGrid.ItemsSource = result.Result.ToList();
+
+                PagePrev.IsEnabled = _pageIndex > SearchRequest.DEFAULT_PAGE_INDEX;
+                PageNext.IsEnabled = result.Result.Length >= SearchRequest.DEFAULT_PAGE_COUNT;
             }
+
+        }
+
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadTicketList();
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
@@ -164,6 +160,19 @@ namespace SherpaDesk
             {
                 item.IsChecked = false;
             }
+        }
+
+        private void PageNext_Click(object sender, RoutedEventArgs e)
+        {
+            _pageIndex++;
+            LoadTicketList();
+        }
+
+        private void PagePrev_Click(object sender, RoutedEventArgs e)
+        {
+            if (_pageIndex > SearchRequest.DEFAULT_PAGE_INDEX)
+                _pageIndex--;
+            LoadTicketList();
         }
     }
 }
