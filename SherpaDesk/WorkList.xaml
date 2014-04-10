@@ -42,7 +42,7 @@
                 <ColumnDefinition Width="170"/>
                 <ColumnDefinition Width="170"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,70" Style="{StaticResource PageHeaderTextStyle}" Text="Open Tickets" FontWeight="Normal" />
+            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,70" Style="{StaticResource PageHeaderTextStyle}" Grid.ColumnSpan="3" Text="Open Tickets" FontWeight="Normal" />
             <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
             <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
                 <Button.Flyout>
@@ -53,12 +53,12 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-            <Button x:Name="PagePrev" Grid.Column="1" Content="Page Prev" Margin="0,232,10,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
+            <Button x:Name="PagePrev" Grid.Column="1" Content="Page Prev" Margin="0,235,10,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
             </Button>
-            <Button x:Name="PageNext" Grid.Column="2" Content="Page Next" Margin="10,232,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
+            <Button x:Name="PageNext" Grid.Column="2" Content="Page Next" Margin="10,235,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
-        <telerik:RadDataGrid  x:Name="ItemsGrid" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" IncrementalLoadingMode="Explicit">
+        <telerik:RadDataGrid  x:Name="ItemsGrid" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" IncrementalLoadingMode="Explicit" IsSynchronizedWithCurrentItem="True">
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTemplateColumn Width="50">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
@@ -70,7 +70,7 @@
                     </telerik:DataGridTemplateColumn.HeaderStyle>
                     <telerik:DataGridTemplateColumn.Header>
                         <Grid HorizontalAlignment="Stretch">
-                            <CheckBox x:Name="HeaderGridCheckbox" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
+                            <CheckBox x:Name="HeaderGridCheckbox" Visibility="Collapsed" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
                         </Grid>                        
                     </telerik:DataGridTemplateColumn.Header>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
