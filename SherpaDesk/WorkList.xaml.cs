@@ -103,7 +103,6 @@ namespace SherpaDesk
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            ItemsGrid.SelectedItems.Clear();
             foreach (var item in ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource))
             {
                 item.IsChecked = true;
