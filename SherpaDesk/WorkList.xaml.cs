@@ -14,12 +14,10 @@ namespace SherpaDesk
     public sealed partial class WorkList : SherpaDesk.Common.LayoutAwarePage
     {
         private eWorkListType _workType;
-        private int _pageIndex;
 
         public WorkList()
         {
             this.InitializeComponent();
-            _pageIndex = SearchRequest.DEFAULT_PAGE_INDEX;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,49 +44,9 @@ namespace SherpaDesk
             base.OnNavigatedTo(e);
         }
 
-        private async void LoadTicketList()
-        {
-            using (var connector = new Connector())
-            {
-                TicketSearchRequest request = new TicketSearchRequest { PageIndex = _pageIndex };
-                switch (_workType)
-                {
-                    case eWorkListType.Open:
-                        request.Status = eTicketStatus.Open;
-                        request.Role = eRoles.Technician;
-                        break;
-                    case eWorkListType.OnHold:
-                        request.Status = eTicketStatus.OnHold;
-                        break;
-                    case eWorkListType.NewMessages:
-                        request.Role = eRoles.Technician;
-                        request.Status = eTicketStatus.NewMessages;
-                        break;
-                    case eWorkListType.OpenAsEndUser:
-                        request.Role = eRoles.EndUser;
-                        break;
-                    case eWorkListType.AwaitingResponse:
-                        request.Status = eTicketStatus.Waiting;
-                        break;
-                }
-
-                var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>("tickets", request);
-                if (result.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(result);
-                    return;
-                }
-                ItemsGrid.ItemsSource = result.Result.ToList();
-
-                PagePrev.IsEnabled = _pageIndex > SearchRequest.DEFAULT_PAGE_INDEX;
-                PageNext.IsEnabled = result.Result.Length >= SearchRequest.DEFAULT_PAGE_COUNT;
-            }
-
-        }
-
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadTicketList();
+            Load(_workType);
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
@@ -164,15 +122,51 @@ namespace SherpaDesk
 
         private void PageNext_Click(object sender, RoutedEventArgs e)
         {
-            _pageIndex++;
-            LoadTicketList();
+            this.Model.PageNext();
         }
 
         private void PagePrev_Click(object sender, RoutedEventArgs e)
         {
-            if (_pageIndex > SearchRequest.DEFAULT_PAGE_INDEX)
-                _pageIndex--;
-            LoadTicketList();
+            this.Model.PagePrev();
         }
+
+        public async void Load(eWorkListType workType)
+        {
+            using (var connector = new Connector())
+            {
+                TicketSearchRequest request = new TicketSearchRequest { PageIndex = this.Model.PageIndex };
+                switch (workType)
+                {
+                    case eWorkListType.Open:
+                        request.Status = eTicketStatus.Open;
+                        request.Role = eRoles.Technician;
+                        break;
+                    case eWorkListType.OnHold:
+                        request.Status = eTicketStatus.OnHold;
+                        break;
+                    case eWorkListType.NewMessages:
+                        request.Role = eRoles.Technician;
+                        request.Status = eTicketStatus.NewMessages;
+                        break;
+                    case eWorkListType.OpenAsEndUser:
+                        request.Role = eRoles.EndUser;
+                        break;
+                    case eWorkListType.AwaitingResponse:
+                        request.Status = eTicketStatus.Waiting;
+                        break;
+                }
+
+                var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>("tickets", request);
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                }
+                else
+                {
+                    this.Model.Data = result.Result.ToList();
+                }
+            }
+        }
+
     }
 }

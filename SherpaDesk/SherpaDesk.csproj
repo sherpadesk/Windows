@@ -154,6 +154,7 @@
     <Compile Include="Models\Request\WaitingOnPostRequest.cs" />
     <Compile Include="Models\Response\NoteResponse.cs" />
     <Compile Include="Models\Response\ProjectResponse.cs" />
+    <Compile Include="Models\ViewModels\WorkListViewModel.cs" />
     <Compile Include="Organization.xaml.cs">
       <DependentUpon>Organization.xaml</DependentUpon>
     </Compile>
