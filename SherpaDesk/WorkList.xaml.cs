@@ -63,32 +63,6 @@ namespace SherpaDesk
             }
         }
 
-        private void GridCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
-            {
-                int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
-                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketNumber == ticketId);
-                if (item != null)
-                {
-                    ItemsGrid.SelectedItems.Add(item);
-                }
-            }
-        }
-
-        private void GridCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (ItemsGrid.ItemsSource is IList<TicketSearchResponse>)
-            {
-                int ticketId; int.TryParse(((CheckBox)sender).Tag.ToString(), out ticketId);
-                var item = ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource).FirstOrDefault(x => x.TicketNumber == ticketId);
-                if (item != null)
-                {
-                    ItemsGrid.SelectedItems.Remove(item);
-                }
-            }
-        }
-
         private void MarkReadMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             
@@ -144,7 +118,7 @@ namespace SherpaDesk
                         request.Status = eTicketStatus.OnHold;
                         break;
                     case eWorkListType.NewMessages:
-                        request.Role = eRoles.Technician;
+                        request.Role = eRoles.EndUser;
                         request.Status = eTicketStatus.NewMessages;
                         break;
                     case eWorkListType.OpenAsEndUser:
