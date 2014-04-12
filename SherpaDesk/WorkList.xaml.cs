@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
 
 namespace SherpaDesk
 {
@@ -18,6 +19,7 @@ namespace SherpaDesk
         public WorkList()
         {
             this.InitializeComponent();
+            this.Model.DataLoading += Load;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,15 +48,19 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            Load(_workType);
+            Load(this.Model, EventArgs.Empty);
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
         {
-            var ticket = e.AddedItems.FirstOrDefault() as TicketSearchResponse;
-            if (ticket != null)
-                DetailsFrame.Navigate(typeof(TicketDetails), ticket.TicketKey);
-
+            foreach (var ticket in e.AddedItems)
+            {
+                ((TicketSearchResponse)ticket).IsChecked = true;
+            }
+            foreach (var ticket in e.RemovedItems)
+            {
+                ((TicketSearchResponse)ticket).IsChecked = false;
+            }
         }
 
         private void GridCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -85,7 +91,7 @@ namespace SherpaDesk
 
         private void MarkReadMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //            ItemsGrid.SelectedItems has checked items
+            
         }
 
         private void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -103,20 +109,14 @@ namespace SherpaDesk
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource))
-            {
-                item.IsChecked = true;
-                ItemsGrid.SelectedItems.Add(item);
-            }
+            this.Model.SelectAll(true);
+            ItemsGrid.SelectAll();
         }
 
         private void HeaderGridCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
+            this.Model.SelectAll(false);
             ItemsGrid.SelectedItems.Clear();
-            foreach (var item in ((IList<TicketSearchResponse>)ItemsGrid.ItemsSource))
-            {
-                item.IsChecked = false;
-            }
         }
 
         private void PageNext_Click(object sender, RoutedEventArgs e)
@@ -129,12 +129,12 @@ namespace SherpaDesk
             this.Model.PagePrev();
         }
 
-        public async void Load(eWorkListType workType)
+        public async void Load(object sender, EventArgs e)
         {
             using (var connector = new Connector())
             {
                 TicketSearchRequest request = new TicketSearchRequest { PageIndex = this.Model.PageIndex };
-                switch (workType)
+                switch (_workType)
                 {
                     case eWorkListType.Open:
                         request.Status = eTicketStatus.Open;
@@ -162,7 +162,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.Model.Data = result.Result.ToList();
+                    this.Model.Data = new ObservableCollection<TicketSearchResponse>(result.Result.ToList());
                 }
             }
         }

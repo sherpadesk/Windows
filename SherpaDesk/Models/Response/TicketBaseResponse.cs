@@ -13,7 +13,7 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "created_time")]
         protected string _createdTime;
 
-        [Details]
+        [Details, IgnoreDataMember]
         public DateTime СreatedTime { get; set; }
 
         [DataMember(Name = "number"), Details]
@@ -31,6 +31,7 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "user_lastname"), Details]
         public string UserLastName { get; set; }
 
+        [IgnoreDataMember]
         public string UserFullName { get { return Helper.FullName(this.UserFirstName, this.UserLastName, this.UserEmail); } }
 
         [DataMember(Name = "user_email"), Details]

@@ -18,6 +18,7 @@
 
     <Page.Resources>
         <x:String x:Key="AppName">My Application</x:String>
+        <model:WorkListViewModel x:Key="Model" x:Name="Model" />
     </Page.Resources>
 
     <!--
@@ -26,9 +27,6 @@
         * Row 1 contains the rest of the page layout
     -->
     <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="Transparent" RequestedTheme="Light">
-        <Grid.Resources>
-            <model:WorkListViewModel x:Key="Model" x:Name="Model" />
-        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -57,10 +55,11 @@
             </Button>
             <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Page Prev" Margin="0,232,10,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
             </Button>
-            <Button x:Name="PageNext" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,232,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
+            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,232,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
-        <telerik:RadDataGrid  x:Name="ItemsGrid" ItemsSource="{Binding Path=Data, Source={StaticResource Model}}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" IncrementalLoadingMode="Explicit">
+        <telerik:RadDataGrid  x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="Multiple" SelectionUnit="Row" 
+                              SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTemplateColumn Width="50">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
@@ -72,12 +71,12 @@
                     </telerik:DataGridTemplateColumn.HeaderStyle>
                     <telerik:DataGridTemplateColumn.Header>
                         <Grid HorizontalAlignment="Stretch">
-                            <CheckBox x:Name="HeaderGridCheckbox" Visibility="Collapsed" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
-                        </Grid>                        
+                            <CheckBox x:Name="HeaderGridCheckbox" Visibility="Visible" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
+                        </Grid>
                     </telerik:DataGridTemplateColumn.Header>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked}" Margin="8,0,0,0" HorizontalAlignment="Left" Tag="{Binding TicketNumber}" Checked="GridCheckbox_Checked" Unchecked="GridCheckbox_Unchecked" />
+                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Margin="8,0,0,0" HorizontalAlignment="Left" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
@@ -165,7 +164,7 @@
                 </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
-        
+
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
