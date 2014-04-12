@@ -53,9 +53,9 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Page Prev" Margin="0,232,10,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
+            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Page Prev" Margin="0,235,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
             </Button>
-            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,232,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
+            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,235,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
         <telerik:RadDataGrid  x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="Multiple" SelectionUnit="Row" 
