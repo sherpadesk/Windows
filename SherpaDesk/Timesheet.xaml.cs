@@ -36,7 +36,7 @@ namespace SherpaDesk
             DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
 
             this.LoadTimesheet(
-                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year-5, date.Month, 1),
                 new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
 
             using (var connector = new Connector())
@@ -162,7 +162,7 @@ namespace SherpaDesk
             HoursTextBox.Text = "0.00";
 
             await this.LoadTimesheet(
-                new DateTime(date.Year, date.Month, 1),
+                new DateTime(date.Year-5, date.Month, 1),
                 new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
 
             this.FillTimesheetGrid(date.Date);
