@@ -177,7 +177,7 @@ namespace SherpaDesk
                     {
                         foreach (var file in _attachment)
                         {
-                            fileRequest.Add(file);
+                            await fileRequest.Add(file);
                         }
                         var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
