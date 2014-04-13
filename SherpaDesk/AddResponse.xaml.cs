@@ -75,9 +75,20 @@ namespace SherpaDesk
                     this.HandleError(resultTaskType);
                     return;
                 }
-
                 TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
 
+                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
+                if (resultTicket.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTicket);
+                    return;
+                }
+                var ticket = resultTicket.Result;
+                if (ticket.Status == eTicketStatus.OnHold.ToString())
+                {
+                    SaveAndReopenButton.Visibility = SaveDoNotReopenLink.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    SaveButton.Visibility = HoldBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
             }
         }
 
@@ -193,6 +204,16 @@ namespace SherpaDesk
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
             }
+        }
+
+        private void SaveAndReopenButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveDoNotReopenLink_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
