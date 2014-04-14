@@ -9,16 +9,23 @@ namespace SherpaDesk.Common
     public class CustomStyleSelector : CalendarCellStyleSelector
     {
         public DataTemplate EventTemplate { get; set; }
+        public DataTemplate YearTemplate { get; set; }
 
         protected override void SelectStyleCore(CalendarCellStyleContext context, Telerik.UI.Xaml.Controls.Input.RadCalendar container)
         {
             if (container.DataContext != null && container.DataContext is IList<CalendarCell>)
             {
                 var events = container.DataContext as IList<CalendarCell>;
-
-                if (events.Any(e => e.Date.Date == context.Date.Date))
+                if (container.DisplayMode == Telerik.UI.Xaml.Controls.Input.CalendarDisplayMode.MonthView)
                 {
-                    context.CellTemplate = this.EventTemplate;
+                    if (events.Any(e => e.Date.Date == context.Date.Date))
+                    {
+                        context.CellTemplate = this.EventTemplate;
+                    }
+                }
+                else if (container.DisplayMode == Telerik.UI.Xaml.Controls.Input.CalendarDisplayMode.YearView)
+                {
+                    context.CellTemplate = this.YearTemplate;
                 }
             }
         }

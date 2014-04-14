@@ -61,8 +61,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <telerikInput:RadCalendar SelectionMode="Single" CellStyleSelector="{StaticResource selector}" x:Name="TimesheetCalendar" Margin="0,0,0,28" 
-                RequestedTheme="Light" Background="White" VerticalAlignment="Bottom" Height="500" SelectionChanged="TimesheetCalendar_SelectionChanged">
-            </telerikInput:RadCalendar>
+                RequestedTheme="Light" Background="White" VerticalAlignment="Bottom" Height="500" SelectionChanged="TimesheetCalendar_SelectionChanged" />
             <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />

@@ -76,7 +76,6 @@ namespace SherpaDesk
                 }
                 ProjectList.FillData(resultProjects.Result.AsEnumerable());
             }
-
             TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(date, date);
         }
 
@@ -197,7 +196,8 @@ namespace SherpaDesk
                     .Select(time => new CalendarCell
                     {
                         Date = time.Key,
-                        Text = time.Sum(x => x.Hours).ToString("F")
+                        Text = time.Sum(x => x.Hours).ToString("F"),
+                        Value = time.Sum(x => x.Hours)
                     }).ToList();
                 // This is refreshing grid
                 TimesheetCalendar.DisplayDateStart = new DateTime(startDate.Year - 3, 1, 1);
