@@ -118,5 +118,15 @@ namespace SherpaDesk
         {
             FillResponses();
         }
+
+        private void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }
