@@ -116,12 +116,14 @@ namespace SherpaDesk
                         break;
                     case eWorkListType.OnHold:
                         request.Status = eTicketStatus.OnHold;
+                        request.Role = eRoles.Technician;
                         break;
                     case eWorkListType.NewMessages:
-                        request.Role = eRoles.EndUser;
+                        request.Role = eRoles.Technician;
                         request.Status = eTicketStatus.NewMessages;
                         break;
                     case eWorkListType.OpenAsEndUser:
+                        request.Status = eTicketStatus.Open;
                         request.Role = eRoles.EndUser;
                         break;
                     case eWorkListType.AwaitingResponse:

@@ -34,9 +34,8 @@ namespace SherpaDesk.Common
 
         public Connector()
         {
-            if (Window.Current.Content is Frame &&
-                ((Frame)Window.Current.Content).Content is MainPage)
-                ((MainPage)((Frame)Window.Current.Content).Content).StartProgress();
+            App.ExternalAction(x => x.StartProgress());
+
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(AppSettings.Current.Beta ? API_URL_BETA : API_URL);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -138,9 +137,8 @@ namespace SherpaDesk.Common
         {
             if (_httpClient != null)
                 _httpClient.Dispose();
-            if (Window.Current.Content is Frame &&
-                ((Frame)Window.Current.Content).Content is MainPage)
-                ((MainPage)((Frame)Window.Current.Content).Content).StopProgress();
+            
+            App.ExternalAction(x => x.StopProgress());
         }
 
         private void Authentication()

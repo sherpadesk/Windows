@@ -54,6 +54,15 @@ namespace SherpaDesk
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
+        public void UpdateInfo()
+        {
+            Info info = this.MainFrame.Content as Info;
+            if (info != null)
+            {
+                info.RefreshData();
+            }
+        }
+
         private async void LogOutMenu_Click(object sender, RoutedEventArgs e)
         {
             if (AppSettings.Current.Single)

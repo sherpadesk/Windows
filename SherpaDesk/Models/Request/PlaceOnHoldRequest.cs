@@ -13,7 +13,7 @@ namespace SherpaDesk.Models.Request
         public PlaceOnHoldRequest(string key)
             : base(key)
         {
-            this.Status = "on_hold";
+            this.Status = "onhold";
         }
 
         [DataMember(Name = "status"), Details]

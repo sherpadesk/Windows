@@ -45,6 +45,19 @@ namespace SherpaDesk
             });
         }
 
+        public static void ExternalAction(Action<MainPage> action)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+                MainPage page = rootFrame.Content as MainPage;
+                if (page != null)
+                {
+                    action(page);
+                }
+            }
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -53,7 +66,7 @@ namespace SherpaDesk
         {
             //this.InitializeComponent();
             this.Suspending += OnSuspending;
-            UnhandledException += App_UnhandledException;
+            this.UnhandledException += App_UnhandledException;
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -16,7 +16,8 @@ namespace SherpaDesk
             this.InitializeComponent();            
         }
 
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+
+        public async void RefreshData()
         {
             using (var connector = new Connector())
             {
@@ -33,6 +34,11 @@ namespace SherpaDesk
                 else
                     this.pageRoot.HandleError(result);
             }
+        }
+
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.RefreshData();
         }
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

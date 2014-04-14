@@ -188,7 +188,7 @@ namespace SherpaDesk
                     {
                         foreach (var file in _attachment)
                         {
-                            fileRequest.Add(file);
+                            await fileRequest.Add(file);
                         }
                         var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
@@ -208,6 +208,8 @@ namespace SherpaDesk
 
                 leftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
                 scrollViewer.ChangeView(0, new double?(), new float?());
+
+                App.ExternalAction(x => x.UpdateInfo());
             }
         }
     }

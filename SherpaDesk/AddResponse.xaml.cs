@@ -121,6 +121,7 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
+                bool statusUpdated = false;
                 decimal hours;
                 decimal.TryParse(HoursTextBox.Text, out hours);
                 if (hours > decimal.Zero)
@@ -146,6 +147,28 @@ namespace SherpaDesk
                         return;
                     }
                 }
+                else if (HoldBox.IsChecked ?? false)
+                {
+                    var resultOnHold = await connector.Action<PlaceOnHoldRequest>("tickets",
+                        new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
+
+                    if (resultOnHold.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultOnHold);
+                    }
+                    statusUpdated = true;
+                }
+                else if (WaitingBox.IsChecked ?? false)
+                {
+                    var resultWait = await connector.Action<WaitingOnPostRequest>("tickets",
+                        new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
+
+                    if (resultWait.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultWait);
+                    }
+
+                }
                 else if (!string.IsNullOrEmpty(CommentsTextbox.Text))
                 {
                     var resultNote = await connector.Action<AddNoteRequest>("posts", new AddNoteRequest
@@ -158,29 +181,6 @@ namespace SherpaDesk
                         this.HandleError(resultNote);
                         return;
                     }
-                }
-
-                if (HoldBox.IsChecked ?? false)
-                {
-                    var resultOnHold = await connector.Action<PlaceOnHoldRequest>("tickets",
-                        new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
-
-                    if (resultOnHold.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(resultOnHold);
-                    }
-                }
-
-                if (WaitingBox.IsChecked ?? false)
-                {
-                    var resultWait = await connector.Action<WaitingOnPostRequest>("tickets",
-                        new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
-
-                    if (resultWait.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(resultWait);
-                    }
-
                 }
                 if (_attachment.Count > 0)
                 {
@@ -203,6 +203,10 @@ namespace SherpaDesk
                     UpdateTicketDetailsEvent(this, new EventArgs());
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
+                if (statusUpdated)
+                {
+                    App.ExternalAction(x => x.UpdateInfo());
+                }
             }
         }
 
