@@ -6,7 +6,6 @@
     xmlns:local="using:SherpaDesk.Common">
 
     <local:CellModelToTimeLogConverter x:Key="timeLogConverter" />
-    <local:CellModelToTimeLogYearConverter x:Key="timeLogYearConverter" />
 
     <DataTemplate x:Key="template">
         <Grid>
@@ -15,12 +14,5 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="year">
-        <Grid>
-            <TextBlock Foreground="Black" Text="{Binding Converter={StaticResource timeLogYearConverter}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,0,10" />
-            <TextBlock Text="{Binding Label}" Foreground="#FF767676" FontSize="13.333" VerticalAlignment="Bottom" Margin="6,0,0,4" />
-        </Grid>
-    </DataTemplate>
-
-    <local:CustomStyleSelector x:Key="selector" EventTemplate="{StaticResource template}" YearTemplate="{StaticResource year}" />
+    <local:CustomStyleSelector x:Key="selector" EventTemplate="{StaticResource template}" />
 </ResourceDictionary>

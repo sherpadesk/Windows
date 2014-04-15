@@ -24,6 +24,8 @@ namespace SherpaDesk
     public sealed partial class MainPage : Page
     {
         private const string AVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/{0}?s=40";
+        private const string USER_INFO_FORMAT_WITH_INSTANCE = "{0} / {1} / {2}";
+        private const string USER_INFO_FORMAT_SINGLE = "{0} / {1}";
 
         private CoreCursor _cursor;
 
@@ -106,7 +108,7 @@ namespace SherpaDesk
                         user.LastName,
                         user.Role.IsNull("Invalid role"));
 
-                    this.LoginNameButton.Content = Helper.FullName(user.FirstName, user.LastName, user.Email);
+                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
 
                     this.Avatar.Source = new BitmapImage(
                         new Uri(string.Format(AVATAR_URL_FORMAT,

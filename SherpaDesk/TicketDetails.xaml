@@ -330,8 +330,8 @@
                         </Button>
                         <TextBlock x:Name="SubjectLabel" FontSize="50" Grid.Row="0" Margin="0,0,0,0" Grid.ColumnSpan="3" Foreground="White" />
                         <TextBlock x:Name="EndUserLabel" FontSize="40" Grid.Row="1" Foreground="White" />
-                        <TextBlock Text="Initial Post" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="1" Grid.Column="2" Margin="12,10,0,0" FontSize="25" Foreground="White" />
-                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Left" Canvas.ZIndex="0" Grid.Row="1" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top" Width="139"  RenderTransformOrigin="0.459,0.468"/>
+                        <TextBlock Text="Initial Post" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="1" Grid.Column="2" Margin="12,13,12,0" FontSize="25" Foreground="White" />
+                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Stretch" Canvas.ZIndex="0" Grid.Row="1" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.459,0.468"/>
                         <ScrollViewer VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,4,0,61" MaxHeight="150" Width="550" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto">
                             <TextBlock x:Name="InitialPostLabel" Margin="0,0,18,0" TextWrapping="Wrap" FontSize="25" Foreground="White" />
                         </ScrollViewer>
@@ -384,8 +384,8 @@
                                             <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock FontSize="40" Text="{Binding FullName}" Grid.Row="0" Foreground="White" />
-                                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Left" Canvas.ZIndex="0" Grid.Row="0" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top" Width="139"  RenderTransformOrigin="0.459,0.468"/>
-                                        <TextBlock Text="{Binding NoteType}" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="0" Grid.Column="2" Margin="12,10,0,0" FontSize="25" Foreground="White" />
+                                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Stretch" Canvas.ZIndex="0" Grid.Row="0" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.459,0.468"/>
+                                        <TextBlock Text="{Binding NoteType}" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="0" Grid.Column="2" Margin="12,10,12,0" FontSize="25" Foreground="White" />
                                         <TextBlock Text="{Binding ResponseDateText}" HorizontalAlignment="Right" Grid.Column="2" Canvas.ZIndex="1" Grid.Row="1" Margin="0,-10,0,0" FontSize="18" Foreground="White" />
                                         <TextBlock Text="{Binding NoteText}" HorizontalAlignment="Stretch" Width="500" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,10,0,50" FontSize="18" Foreground="White" />
                                     </Grid>

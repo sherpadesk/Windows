@@ -15,16 +15,18 @@ namespace SherpaDesk.Common
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var cellModel = value as CalendarCellModel;
-
             var calendar = cellModel.Presenter as RadCalendar;
-
-            var model = calendar.DataContext as TimesheetViewModel;
-            if (model.Timesheet != null)
+            
+            if (calendar.DisplayMode == CalendarDisplayMode.MonthView)
             {
-                var eventInfo = model.Timesheet.Where(e => e.Date == cellModel.Date).FirstOrDefault();
-                if (eventInfo != null)
+                var model = calendar.DataContext as TimesheetViewModel;
+                if (model.Timesheet != null)
                 {
-                    return eventInfo.Text;
+                    var eventInfo = model.Timesheet.Where(e => e.Date == cellModel.Date).FirstOrDefault();
+                    if (eventInfo != null)
+                    {
+                        return eventInfo.Text;
+                    }
                 }
             }
             return cellModel.Label;
