@@ -116,23 +116,23 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AppSettings.cs" />
-    <Compile Include="Common\CellModelToTimeLogConverter.cs" />
+    <Compile Include="Converters\CellModelToTimeLogConverter.cs" />
     <Compile Include="Common\Connector.cs" />
-    <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="Common\BooleanNegationConverter.cs" />
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Common\CustomStyleSelector.cs" />
-    <Compile Include="Common\Extensions\ApplicationExtensions.cs" />
-    <Compile Include="Common\Extensions\ComboBoxExtensions.cs" />
-    <Compile Include="Common\Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Common\Extensions\EnumExtentions.cs" />
-    <Compile Include="Common\Extensions\PageExtensions.cs" />
-    <Compile Include="Common\Extensions\ResponseExtensions.cs" />
-    <Compile Include="Common\Extensions\UIElementExtensions.cs" />
+    <Compile Include="Models\BindableBase.cs" />
+    <Compile Include="Converters\BooleanNegationConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Styles\CustomStyleSelector.cs" />
+    <Compile Include="Extensions\ApplicationExtensions.cs" />
+    <Compile Include="Extensions\ComboBoxExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EnumExtentions.cs" />
+    <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Extensions\ResponseExtensions.cs" />
+    <Compile Include="Extensions\UIElementExtensions.cs" />
     <Compile Include="Common\Helper.cs" />
-    <Compile Include="Common\Interfaces\IKeyName.cs" />
-    <Compile Include="Common\Interfaces\IPath.cs" />
-    <Compile Include="Common\Interfaces\IRequestType.cs" />
+    <Compile Include="Interfaces\IKeyName.cs" />
+    <Compile Include="Interfaces\IPath.cs" />
+    <Compile Include="Interfaces\IRequestType.cs" />
     <Compile Include="Common\InternalException.cs" />
     <Compile Include="Common\IntRequired.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
@@ -154,6 +154,7 @@
     <Compile Include="Models\Request\WaitingOnPostRequest.cs" />
     <Compile Include="Models\Response\NoteResponse.cs" />
     <Compile Include="Models\Response\ProjectResponse.cs" />
+    <Compile Include="Models\ViewModels\TimesheetViewModel.cs" />
     <Compile Include="Models\ViewModels\WorkListViewModel.cs" />
     <Compile Include="Organization.xaml.cs">
       <DependentUpon>Organization.xaml</DependentUpon>
@@ -164,7 +165,7 @@
     <Compile Include="Models\Request\PostRequest.cs" />
     <Compile Include="Models\Response\FileResponse.cs" />
     <Compile Include="Models\Response\TicketDetailsResponse.cs" />
-    <Compile Include="Models\CalendarCell.cs" />
+    <Compile Include="Models\ViewModels\CalendarCell.cs" />
     <Compile Include="TicketDetails.xaml.cs">
       <DependentUpon>TicketDetails.xaml</DependentUpon>
     </Compile>
@@ -290,7 +291,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Common\StandardStyles.xaml">
+    <Page Include="Styles\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -310,7 +311,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TimesheetResources.xaml">
+    <Page Include="Styles\TimesheetResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

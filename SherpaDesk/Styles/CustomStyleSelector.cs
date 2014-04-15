@@ -12,11 +12,11 @@ namespace SherpaDesk.Common
 
         protected override void SelectStyleCore(CalendarCellStyleContext context, Telerik.UI.Xaml.Controls.Input.RadCalendar container)
         {
-            if (container.DataContext != null && container.DataContext is IList<CalendarCell>)
+            if (container.DataContext != null && container.DataContext is TimesheetViewModel)
             {
-                var events = container.DataContext as IList<CalendarCell>;
+                var model = container.DataContext as TimesheetViewModel;
 
-                if (events.Any(e => e.Date.Date == context.Date.Date))
+                if (model.Timesheet != null && model.Timesheet.Any(e => e.Date.Date == context.Date.Date))
                 {
                     context.CellTemplate = this.EventTemplate;
                 }

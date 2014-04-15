@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary x:Key="CommonResources" Source="CommonResources.xaml" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Common/StandardStyles.xaml"/>
+                <ResourceDictionary Source="Styles/StandardStyles.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Primitives/Themes/ThemeColorsLight.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Primitives/Themes/ThemeResourcesLight.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Grid/Themes/ThemeResourcesLight.xaml"/>

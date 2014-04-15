@@ -11,22 +11,63 @@ using System.Collections.Generic;
 using Telerik.UI.Xaml.Controls.Input.Calendar.Commands;
 using Telerik.UI.Xaml.Controls.Input.Calendar;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Telerik.UI.Xaml.Controls.Input;
 
 namespace SherpaDesk
 {
     public sealed partial class Timesheet : SherpaDesk.Common.LayoutAwarePage
     {
-        IList<TimeResponse> _timeLogList = null;
-
         public event EventHandler MoveScrollToRight;
 
         public Timesheet()
         {
             this.InitializeComponent();
-            _timeLogList = new List<TimeResponse>();
+            this.Model.OnDataLoading += async (object sender, TimesheetEventArgs e) => await TimesheetLoad(sender, e);
         }
 
         #region Handlers
+
+        private async Task TimesheetLoad(object sender, TimesheetEventArgs e)
+        {
+            using (var connector = new Connector())
+            {
+                var result = await connector.Func<TimeSearchRequest, TimeResponse[]>(
+                    "time",
+                    new TimeSearchRequest
+                    {
+                        TechnicianId = AppSettings.Current.UserId,
+                        TimeType = eTimeType.Recent,
+                        StartDate = e.StartDate.AddDays(-7),
+                        EndDate = e.EndDate.AddDays(7)
+                    });
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                    return;
+                }
+
+                this.Model.TimeLogList = new ObservableCollection<TimeResponse>(result.Result.ToList());
+
+                this.TimesheetCalendar.DisplayDateStart = e.StartDate.AddYears(-3);
+                this.TimesheetCalendar.DisplayDateEnd = e.EndDate.AddYears(3);
+            }
+        }
+
+        //private void TimesheetSelectedDate(object sender, TimesheetEventArgs e)
+        //{
+        //    if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
+        //    {
+        //        TimesheetGrids.Visibility = Visibility.Visible;
+        //        if (MoveScrollToRight != null)
+        //        {
+        //            MoveScrollToRight(this, new EventArgs());
+        //        }
+        //    }
+        //    else
+        //        TimesheetGrids.Visibility = Visibility.Collapsed;
+        //}
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
@@ -34,10 +75,6 @@ namespace SherpaDesk
             StartTimePicker.Value = EndTimePicker.Value = date;
             StartTimeLabel.Text = EndTimeLabel.Text = date.ToString("t");
             DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
-
-            this.LoadTimesheet(
-                new DateTime(date.Year-5, date.Month, 1),
-                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
 
             using (var connector = new Connector())
             {
@@ -77,7 +114,7 @@ namespace SherpaDesk
                 ProjectList.FillData(resultProjects.Result.AsEnumerable());
             }
 
-            TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(date, date);
+            //TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(date, date);
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
@@ -87,8 +124,7 @@ namespace SherpaDesk
                 TimesheetCalendar.SelectionChanged -= TimesheetCalendar_SelectionChanged;
                 var selectedDate = DateField.Value.Value;
                 DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd");
-                TimesheetCalendar.DisplayDateStart = new DateTime(selectedDate.Year, selectedDate.Month, 1);
-                TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(selectedDate, selectedDate);
+                TimesheetCalendar.SelectedDateRange = new CalendarDateRange(selectedDate, selectedDate);
                 TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
                 FillTimesheetGrid(selectedDate);
             }
@@ -101,7 +137,7 @@ namespace SherpaDesk
             DateField.Value = selectedDate;
             DateLabel.Text = selectedDate.ToString("MMMM dd, yyyy - dddd");
             DateField.ValueChanged += DateField_ValueChanged;
-            FillTimesheetGrid(selectedDate);            
+            FillTimesheetGrid(selectedDate);
         }
 
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)
@@ -161,65 +197,27 @@ namespace SherpaDesk
             NoteTextBox.Text = string.Empty;
             HoursTextBox.Text = "0.00";
 
-            await this.LoadTimesheet(
-                new DateTime(date.Year-5, date.Month, 1),
-                new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month)));
+            await TimesheetLoad(this, new TimesheetEventArgs(this.Model));
 
-            this.FillTimesheetGrid(date.Date);
+            this.FillTimesheetGrid(date);
         }
         #endregion
 
         #region Methods
 
-        private async Task LoadTimesheet(DateTime startDate, DateTime endDate)
+
+        private void FillTimesheetGrid(DateTime date)
         {
-            using (var connector = new Connector())
-            {
-                var result = await connector.Func<TimeSearchRequest, TimeResponse[]>(
-                    "time",
-                    new TimeSearchRequest
-                    {
-                        TechnicianId = AppSettings.Current.UserId,
-                        TimeType = eTimeType.Recent,
-                        StartDate = startDate,
-                        EndDate = endDate
-                    });
-                if (result.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(result);
-                    return;
-                }
+            this.Model.CurrentDate = date;
+            NonTicketsGrid.ItemsSource = this.Model.NonTicketsList;
+            NonTicketsGrid.UpdateLayout();
+            NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = this.Model.VisibleNonTickets;
 
-                _timeLogList = result.Result.ToList();
-
-                TimesheetCalendar.DataContext = _timeLogList
-                    .GroupBy(x => x.Date.Date)
-                    .Select(time => new CalendarCell
-                    {
-                        Date = time.Key,
-                        Text = time.Sum(x => x.Hours).ToString("F")
-                    }).ToList();
-                // This is refreshing grid
-                TimesheetCalendar.DisplayDateStart = new DateTime(startDate.Year - 3, 1, 1);
-            }
-            return;
-        }
-
-        private void FillTimesheetGrid(DateTime selectedDate)
-        {
-            var nonTicketsList = _timeLogList
-                .Where(x => x.Date.Date == selectedDate && x.TicketId == 0)
-                .ToList();
-            NonTicketsGrid.ItemsSource = nonTicketsList;
-            NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = nonTicketsList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-
-            var ticketTimeList = _timeLogList
-                .Where(x => x.Date.Date == selectedDate && x.TicketId > 0)
-                .ToList();
-            TicketTimeGrid.ItemsSource = ticketTimeList;
-            TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = ticketTimeList.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-
-            if (ticketTimeList.Count > 0 || nonTicketsList.Count > 0)
+            TicketTimeGrid.ItemsSource = this.Model.TicketTimeList;
+            TicketTimeGrid.UpdateLayout();
+            TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = this.Model.VisibleTicketTime;
+            
+            if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
             {
                 TimesheetGrids.Visibility = Visibility.Visible;
                 if (MoveScrollToRight != null)

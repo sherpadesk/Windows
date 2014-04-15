@@ -16,19 +16,17 @@ namespace SherpaDesk.Common
         {
             var cellModel = value as CalendarCellModel;
 
-            // Get a reference to the calendar container
             var calendar = cellModel.Presenter as RadCalendar;
 
-            // Then you can get a reference to its DataContext (i.e. the page view model that holds the event information)
-            var events = calendar.DataContext as IList<CalendarCell>;
-
-            // return custom label for event cells
-            var eventInfo = events.Where(e => e.Date == cellModel.Date).FirstOrDefault();
-            if (eventInfo != null)
+            var model = calendar.DataContext as TimesheetViewModel;
+            if (model.Timesheet != null)
             {
-                return eventInfo.Text;
+                var eventInfo = model.Timesheet.Where(e => e.Date == cellModel.Date).FirstOrDefault();
+                if (eventInfo != null)
+                {
+                    return eventInfo.Text;
+                }
             }
-            // return default label for regular cells
             return cellModel.Label;
         }
 

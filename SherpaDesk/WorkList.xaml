@@ -14,10 +14,10 @@
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Primitives"
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"    
     xmlns:telerikPagination="using:Telerik.UI.Xaml.Controls.Primitives.Pagination"    
-    mc:Ignorable="d" Loaded="pageRoot_Loaded">
+    mc:Ignorable="d" Loaded="pageRoot_Loaded" Margin="0,-1,0,1">
 
     <Page.Resources>
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">SherpaDesk</x:String>
         <model:WorkListViewModel x:Key="Model" x:Name="Model" />
     </Page.Resources>
 
