@@ -40,10 +40,6 @@ namespace SherpaDesk.Models
         {
             get
             {
-                if (_timesheet == null && this.OnDataLoading != null)
-                {
-                    this.OnDataLoading(this, new TimesheetEventArgs(this));
-                }
                 return _timesheet;
             }
             set
@@ -70,7 +66,8 @@ namespace SherpaDesk.Models
                     .Select(time => new CalendarCell
                     {
                         Date = time.Key,
-                        Text = time.Sum(x => x.Hours).ToString("F")
+                        Text = time.Sum(x => x.Hours).ToString("F"), 
+                        Value = time.Sum(x => x.Hours)
                     }));
                 if (this.PropertyChanged != null)
                 {

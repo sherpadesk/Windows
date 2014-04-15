@@ -55,26 +55,14 @@ namespace SherpaDesk
             }
         }
 
-        //private void TimesheetSelectedDate(object sender, TimesheetEventArgs e)
-        //{
-        //    if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
-        //    {
-        //        TimesheetGrids.Visibility = Visibility.Visible;
-        //        if (MoveScrollToRight != null)
-        //        {
-        //            MoveScrollToRight(this, new EventArgs());
-        //        }
-        //    }
-        //    else
-        //        TimesheetGrids.Visibility = Visibility.Collapsed;
-        //}
-
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             var date = DateTime.Now;
             StartTimePicker.Value = EndTimePicker.Value = date;
             StartTimeLabel.Text = EndTimeLabel.Text = date.ToString("t");
             DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
+
+            await TimesheetLoad(this, new TimesheetEventArgs(this.Model));
 
             using (var connector = new Connector())
             {
