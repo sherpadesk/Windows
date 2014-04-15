@@ -113,8 +113,6 @@ namespace SherpaDesk
                 }
                 ProjectList.FillData(resultProjects.Result.AsEnumerable());
             }
-
-            //TimesheetCalendar.SelectedDateRange = new Telerik.UI.Xaml.Controls.Input.CalendarDateRange(date, date);
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
@@ -150,14 +148,6 @@ namespace SherpaDesk
         {
             EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
             CalculateHours();
-        }
-
-        private void TimesheetCalendar_CurrentDateChanged(object sender, EventArgs e)
-        {
-            //    this.LoadTimesheet(
-            //        connector,
-            //        TimesheetCalendar.DisplayDateStart,
-            //        TimesheetCalendar.DisplayDateEnd);
         }
 
         private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -204,7 +194,6 @@ namespace SherpaDesk
         #endregion
 
         #region Methods
-
 
         private void FillTimesheetGrid(DateTime date)
         {

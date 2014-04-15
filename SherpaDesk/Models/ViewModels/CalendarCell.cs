@@ -46,5 +46,25 @@ namespace SherpaDesk.Models
                 }
             }
         }
+
+        private decimal _value;
+        public decimal Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (value != _value)
+                {
+                    _value = value;
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                    }
+                }
+            }
+        }
     }
 }

@@ -318,8 +318,16 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle x:Name="SubjectDecorate" Grid.ColumnSpan="5" Fill="#4C8787FE" HorizontalAlignment="Stretch" Margin="-30,0,10,0" />
+                        <Rectangle x:Name="SubjectDecorate" Grid.ColumnSpan="5" MinWidth="700" Fill="#4C8787FE" HorizontalAlignment="Stretch" Margin="-30,0,10,0" />
                         <Button x:Name="AddResponseButton" Visibility="Visible" Content="Add Response" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="0,-50,7,0" FontSize="20" Foreground="White" Tapped="AddResponseButton_Tapped" />
+                        <Button Visibility="Visible" Content="Actions" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="50,-50,180,0" FontSize="20" Foreground="White">
+                            <Button.Flyout>
+                                <MenuFlyout Placement="Right">
+                                    <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
+                                    <MenuFlyoutItem x:Name="DeleteMenu" Text="Delete" Tapped="DeleteMenu_Tapped" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
                         <TextBlock x:Name="SubjectLabel" FontSize="50" Grid.Row="0" Margin="0,0,0,0" Grid.ColumnSpan="3" Foreground="White" />
                         <TextBlock x:Name="EndUserLabel" FontSize="40" Grid.Row="1" Foreground="White" />
                         <TextBlock Text="Initial Post" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="1" Grid.Column="2" Margin="12,10,0,0" FontSize="25" Foreground="White" />
