@@ -117,7 +117,7 @@
     </Compile>
     <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Converters\CellModelToTimeLogConverter.cs" />
-    <Compile Include="Common\CellModelToTimeLogYearConverter.cs" />
+    <Compile Include="Converters\CellModelToTimeLogYearConverter.cs" />
     <Compile Include="Common\Connector.cs" />
     <Compile Include="Models\BindableBase.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
