@@ -58,10 +58,10 @@
             <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,235,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
-        <telerik:RadDataGrid  x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="Multiple" SelectionUnit="Row" 
+        <telerik:RadDataGrid x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" SelectionUnit="Row"
                               SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Columns>
-                <telerik:DataGridTemplateColumn Width="50">
+                <telerik:DataGridTemplateColumn Width="50" SizeMode="Auto">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -80,7 +80,7 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
-                <telerik:DataGridTemplateColumn Header="Tkt#" Width="50">
+                <telerik:DataGridTemplateColumn Header="Tkt#" SizeMode="Auto">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -94,7 +94,7 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
-                <telerik:DataGridTextColumn PropertyName="UserFullName" Header="End User">
+                <telerik:DataGridTextColumn PropertyName="UserFullName" SizeMode="Auto" Header="End User">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -103,7 +103,7 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="TechnicianFullName" Header="Tech Name">
+                <telerik:DataGridTextColumn PropertyName="TechnicianFullName" SizeMode="Auto" Header="Tech Name">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -112,7 +112,7 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="AccountName" Header="Account">
+                <telerik:DataGridTextColumn PropertyName="AccountName" SizeMode="Auto" Header="Account">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -121,7 +121,7 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="ClassName" Header="Class">
+                <telerik:DataGridTextColumn PropertyName="ClassName" SizeMode="Auto" Header="Class">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -130,7 +130,7 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="СreatedTime" Header="Time">
+                <telerik:DataGridTextColumn PropertyName="DaysOld" SizeMode="Auto" Header="Days Old">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>
@@ -139,16 +139,7 @@
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="DaysOld" Header="Days Old">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTemplateColumn Header="Status">
+                <telerik:DataGridTemplateColumn Header="Status" SizeMode="Auto">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
                             <Setter Property="Background" Value="#FF006AC1"/>

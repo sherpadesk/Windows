@@ -329,39 +329,35 @@
                             </Button.Flyout>
                         </Button>
                         <TextBlock x:Name="SubjectLabel" FontSize="50" Grid.Row="0" Margin="0,0,0,0" Grid.ColumnSpan="3" Foreground="White" />
-                        <TextBlock x:Name="EndUserLabel" FontSize="40" Grid.Row="1" Foreground="White" />
-                        <TextBlock Text="Initial Post" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="1" Grid.Column="2" Margin="12,13,12,0" FontSize="25" Foreground="White" />
-                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Stretch" Canvas.ZIndex="0" Grid.Row="1" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top"  RenderTransformOrigin="0.459,0.468"/>
-                        <ScrollViewer VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,4,0,61" MaxHeight="150" Width="550" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto">
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="EndUserLabel" FontSize="40" Foreground="White" />
+                            <TextBlock Text="Initial Post" HorizontalAlignment="Left" Grid.Column="1" Margin="12,13,12,0" FontSize="18" Foreground="White" />
+                        </Grid>                        
+                        <ScrollViewer VerticalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="3" Margin="0,0,0,61" MaxHeight="150" Width="550" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Auto">
                             <TextBlock x:Name="InitialPostLabel" Margin="0,0,18,0" TextWrapping="Wrap" FontSize="25" Foreground="White" />
                         </ScrollViewer>
                         <TextBlock x:Name="FilesLabel" Visibility="Collapsed" Text="Following file was uploaded:" Grid.ColumnSpan="3" FontSize="30" Grid.Row="3" Margin="0,160,0,0" Foreground="White" />
-                        <FlipView x:Name="AttachedView" Visibility="Collapsed" Grid.Row="4" HorizontalAlignment="Left" Margin="0,0,0,0" Width="300" Height="200">
+                        <FlipView x:Name="AttachedView" Visibility="Collapsed" Grid.Row="4" HorizontalAlignment="Left" Margin="0,0,0,0" Width="400" Height="240">
                             <FlipView.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="DarkGray" BorderThickness="1,1,1,1">
                                         <Grid>
                                             <Image Source="{Binding Image}" Margin="0" Stretch="Uniform"  />
-                                            <TextBlock Text="{Binding FileName}" Margin="5,5,0,0" FontSize="10" Foreground="LightBlue" />
+                                            <TextBlock Text="{Binding FileName}" Margin="5,5,0,0" FontSize="10" Foreground="White" FontWeight="Bold" />
+                                            <Button Content="View" Margin="0,5,5,0" FontSize="16" Foreground="White" VerticalAlignment="Top" Tapped="AttachedView_Tapped" HorizontalAlignment="Right" FontWeight="Bold" Background="#FF636363" />
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
                             </FlipView.ItemTemplate>
                         </FlipView>
                         <telerikPrimitives:RadPaginationControl Visibility="Collapsed" HorizontalAlignment="Left" x:Name="AttachedPages" DisplayMode="IndexLabel" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="4" Width="300" Margin="10,220,0,0" Foreground="White" PageProvider="{Binding ElementName=AttachedView}" />
-                        <Grid Grid.Column="4" Grid.Row="1" Grid.RowSpan="4" MaxWidth="500" Canvas.ZIndex="1" Margin="10,10,20,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ScrollViewer VerticalAlignment="Stretch" MaxHeight="350" Margin="0,0,0,50" Grid.RowSpan="3" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                                <TextBlock x:Name="WorkpadLabel" MaxWidth="500" Margin="0,0,18,0" VerticalAlignment="Stretch" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" Text="" Foreground="White" FontSize="20" />
-                            </ScrollViewer>
-                        </Grid>
+                        <ScrollViewer Grid.Column="2" Margin="0,0,12,0" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2" MaxWidth="500" MaxHeight="350" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="WorkpadLabel" MaxWidth="500" VerticalAlignment="Stretch" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" Text="asd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdas" Foreground="White" FontSize="20" />
+                        </ScrollViewer>
                     </Grid>
                     <ScrollViewer Height="540" VerticalScrollMode="Auto" Grid.Column="1" Margin="0,0,20,0" VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled" Width="auto">
                         <GridView x:Name="TicketDetailsList" Margin="0,0,40,0" HorizontalAlignment="Stretch" IsTapEnabled="False" ItemContainerStyle="{StaticResource GridViewItemStyle1}" Grid.Column="1" SelectionMode="None">
@@ -383,9 +379,14 @@
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock FontSize="40" Text="{Binding FullName}" Grid.Row="0" Foreground="White" />
-                                        <Ellipse Fill="#7F739CB0" HorizontalAlignment="Stretch" Canvas.ZIndex="0" Grid.Row="0" Grid.Column="2" Height="36" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.459,0.468"/>
-                                        <TextBlock Text="{Binding NoteType}" HorizontalAlignment="Left" Canvas.ZIndex="1" Grid.Row="0" Grid.Column="2" Margin="12,10,12,0" FontSize="25" Foreground="White" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock FontSize="40" Text="{Binding FullName}" Foreground="White" />
+                                            <TextBlock Text="{Binding NoteType}" HorizontalAlignment="Left" Grid.Column="1" Margin="12,13,12,0" FontSize="18" Foreground="White" />
+                                        </Grid>                                        
                                         <TextBlock Text="{Binding ResponseDateText}" HorizontalAlignment="Right" Grid.Column="2" Canvas.ZIndex="1" Grid.Row="1" Margin="0,-10,0,0" FontSize="18" Foreground="White" />
                                         <TextBlock Text="{Binding NoteText}" HorizontalAlignment="Stretch" Width="500" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,10,0,50" FontSize="18" Foreground="White" />
                                     </Grid>

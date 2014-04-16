@@ -39,6 +39,12 @@ namespace SherpaDesk
             this.MainFrame.Navigate(typeof(UpdateProfile));
         }
 
+        public void ShowFullScreenImage(BitmapImage image)
+        {
+            ImageFull.Source = image;
+            FullscreenPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
         public void StartProgress()
         {
             progressRing.IsActive = true;
@@ -126,6 +132,11 @@ namespace SherpaDesk
                 }
             }
 
+        }
+
+        private void FullscreenPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FullscreenPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

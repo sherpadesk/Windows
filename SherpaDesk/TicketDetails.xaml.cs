@@ -91,7 +91,7 @@ namespace SherpaDesk
                 }
                 if (resultFiles.Result != null && resultFiles.Result.Length > 0)
                 {
-                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new
+                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new AttachmentModel
                     {
                         FileName = file.Name,
                         Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
@@ -146,6 +146,11 @@ namespace SherpaDesk
         private void DeleteMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+
+        private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            App.ExternalAction(x=>x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
     }
 }
