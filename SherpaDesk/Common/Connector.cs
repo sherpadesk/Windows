@@ -43,33 +43,34 @@ namespace SherpaDesk.Common
         }
 
         public Task<Response<EmptyResponse>> Action<TRequest>(
-                string command,
+                Func<Commands, Command> funcCommand,
                 TRequest model)
             where TRequest : IRequestType
         {
             return this.Func<TRequest, EmptyResponse>(
-                command,
+                funcCommand,
                 model);
         }
 
 
         public Task<Response<TResponse>> Func<TResponse>(
-                string command)
+                Func<Commands, Command> funcCommand)
             where TResponse : class
         {
             return this.Func<EmptyRequest, TResponse>(
-                command,
+                funcCommand,
                 new EmptyRequest());
         }
 
         public async Task<Response<TResponse>> Func<TRequest, TResponse>(
-                string command,
+                Func<Commands, Command> funcCommand,
                 TRequest model)
             where TRequest : IRequestType
             where TResponse : class
         {
             var request = new Request<TRequest>(model);
             var result = new Response<TResponse>();
+            var command = funcCommand(Commands.Empty);
             try
             {
                 if (request == null || request.Data == null)
@@ -94,20 +95,20 @@ namespace SherpaDesk.Common
                     case eRequestType.POST:
                         using (var content = request.Data.GetContent())
                         {
-                            response = await _httpClient.PostAsync(command, content);
+                            response = await _httpClient.PostAsync(command.ToString(), content);
                         }
                         break;
                     case eRequestType.GET:
-                        response = await _httpClient.GetAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
+                        response = await _httpClient.GetAsync((command + Helper.GetUrlParams<TRequest>(request.Data)).ToString());
                         break;
                     case eRequestType.PUT:
                         using (var content = request.Data.GetContent())
                         {
-                            response = await _httpClient.PutAsync(command, content);
+                            response = await _httpClient.PutAsync(command.ToString(), content);
                         }
                         break;
                     case eRequestType.DELETE:
-                        response = await _httpClient.DeleteAsync(command + Helper.GetUrlParams<TRequest>(request.Data));
+                        response = await _httpClient.DeleteAsync((command + Helper.GetUrlParams<TRequest>(request.Data)).ToString());
                         break;
                     default:
                         throw new ArgumentException("Unknown type of request!");

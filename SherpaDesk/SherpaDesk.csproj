@@ -116,6 +116,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AppSettings.cs" />
+    <Compile Include="Common\Command.cs" />
     <Compile Include="Converters\CellModelToTimeLogConverter.cs" />
     <Compile Include="Common\Connector.cs" />
     <Compile Include="Models\AttachmentModel.cs" />

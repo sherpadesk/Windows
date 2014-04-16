@@ -67,7 +67,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    "task_types",
+                    x => x.TaskTypes,
                     new TaskTypeRequest());
 
                 if (resultTaskType.Status != eResponseStatus.Success)
@@ -77,7 +77,7 @@ namespace SherpaDesk
                 }
                 TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
 
-                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
+                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultTicket);
@@ -127,7 +127,7 @@ namespace SherpaDesk
                 if (hours > decimal.Zero)
                 {
                     var resultAddTime = await connector.Action<AddTimeRequest>(
-                        "time",
+                        x => x.Time,
                         new AddTimeRequest
                         {
                             TicketKey = _ticketKey,
@@ -149,7 +149,7 @@ namespace SherpaDesk
                 }
                 if (HoldBox.IsChecked ?? false)
                 {
-                    var resultOnHold = await connector.Action<PlaceOnHoldRequest>("tickets",
+                    var resultOnHold = await connector.Action<PlaceOnHoldRequest>(x => x.Tickets,
                         new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
 
                     if (resultOnHold.Status != eResponseStatus.Success)
@@ -160,7 +160,7 @@ namespace SherpaDesk
                 }
                 if (WaitingBox.IsChecked ?? false)
                 {
-                    var resultWait = await connector.Action<WaitingOnPostRequest>("tickets",
+                    var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
                         new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
 
                     if (resultWait.Status != eResponseStatus.Success)
@@ -171,7 +171,7 @@ namespace SherpaDesk
                 }
                 else if (!string.IsNullOrEmpty(CommentsTextbox.Text) && hours == decimal.Zero && !statusUpdated)
                 {
-                    var resultNote = await connector.Action<AddNoteRequest>("posts", new AddNoteRequest
+                    var resultNote = await connector.Action<AddNoteRequest>(x => x.Posts, new AddNoteRequest
                     {
                         TicketKey = _ticketKey,
                         Note = CommentsTextbox.Text
@@ -190,7 +190,7 @@ namespace SherpaDesk
                         {
                             await fileRequest.Add(file);
                         }
-                        var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
+                        var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
                         {
                             this.HandleError(resultUploadFile);

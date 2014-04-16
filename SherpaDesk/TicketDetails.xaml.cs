@@ -41,7 +41,7 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>("tickets", new NoteSearchRequest(_ticketKey));
+                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
                 if (resultNotes.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultNotes);
@@ -54,7 +54,7 @@ namespace SherpaDesk
                     x.ResponseDateText,
                     x.NoteType,
                     NoteText = Helper.HtmlToString(x.NoteText)
-                }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList(); 
+                }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
                 TicketDetailsList.ItemsSource = null; // For Visual Effect
                 TicketDetailsList.ItemsSource = resultView;
             }
@@ -62,10 +62,10 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-//            SubjectDecorate.Height = SubjectLabel.ActualHeight;
+            //            SubjectDecorate.Height = SubjectLabel.ActualHeight;
             using (var connector = new Connector())
             {
-                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>("tickets", new KeyRequest(_ticketKey));
+                var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
@@ -82,7 +82,7 @@ namespace SherpaDesk
                 InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
                 WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
 
-                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>("files", new KeyRequest("?ticket=", _ticketKey));
+                var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
@@ -126,7 +126,7 @@ namespace SherpaDesk
             //TODO: make confirm window
             using (var connector = new Connector())
             {
-                var result = await connector.Action<CloseTicketRequest>("tickets",
+                var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
                         new CloseTicketRequest(_ticketKey));
 
                 if (result.Status != eResponseStatus.Success)
@@ -150,7 +150,7 @@ namespace SherpaDesk
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            App.ExternalAction(x=>x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
+            App.ExternalAction(x => x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SherpaDesk
                 {
                     // load organization and instance info
                     var resultOrg = await connector.Func<OrganizationResponse[]>(
-                            "organizations");
+                            x => x.Organizations);
 
                     if (resultOrg.Status != eResponseStatus.Success)
                     {

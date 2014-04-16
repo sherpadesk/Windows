@@ -30,7 +30,7 @@ namespace SherpaDesk
             {
                 // types
                 var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    "task_types",
+                    x => x.TaskTypes,
                     new TaskTypeRequest());
 
                 if (resultTaskType.Status != eResponseStatus.Success)
@@ -49,7 +49,7 @@ namespace SherpaDesk
                 //});
 
                 // technician
-                var resultUsers = await connector.Func<UserResponse[]>("users");
+                var resultUsers = await connector.Func<UserResponse[]>(x => x.Users);
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -62,7 +62,7 @@ namespace SherpaDesk
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
                 // projects
-                var resultProjects = await connector.Func<ProjectResponse[]>("projects");
+                var resultProjects = await connector.Func<ProjectResponse[]>(x => x.Projects);
 
                 if (resultProjects.Status != eResponseStatus.Success)
                 {
@@ -93,7 +93,7 @@ namespace SherpaDesk
                 var hours = decimal.Zero;
                 decimal.TryParse(HoursTextBox.Text, out hours);
                 var result = await connector.Action<AddTimeRequest>(
-                    "time",
+                    x => x.Time,
                     new AddTimeRequest
                     {
                         AccountId = -1,

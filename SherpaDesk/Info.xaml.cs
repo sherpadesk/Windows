@@ -22,7 +22,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 var result = await connector.Func<KeyRequest, TicketCountsResponse>(
-                    "tickets", new KeyRequest("counts"));
+                    x => x.Tickets, new KeyRequest("counts"));
                 if (result.Status == eResponseStatus.Success)
                 {
                     NewMessagesCount.Text = result.Result.NewMessages.ToString();

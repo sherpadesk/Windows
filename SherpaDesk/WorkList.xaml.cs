@@ -143,7 +143,7 @@ namespace SherpaDesk
                         break;
                 }
 
-                var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>("tickets", request);
+                var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>(x => x.Tickets, request);
                 if (result.Status != eResponseStatus.Success)
                 {
                     this.HandleError(result);

@@ -98,7 +98,7 @@ namespace SherpaDesk
 
                 //load user info
                 var resultUser = await connector.Func<UserSearchRequest, UserResponse[]>(
-                    "users",
+                    x => x.Users,
                     new UserSearchRequest { Email = AppSettings.Current.Email });
 
                 if (resultUser.Status == eResponseStatus.Success)

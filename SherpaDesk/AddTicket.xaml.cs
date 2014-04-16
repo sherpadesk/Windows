@@ -89,7 +89,7 @@ namespace SherpaDesk
                 searchBox.FilterMemberPath = "Name";
                 if (searchBox.Text.Length > 1)
                 {
-                    var result = await inсonn.Func<UserSearchRequest, UserResponse[]>("users",
+                    var result = await inсonn.Func<UserSearchRequest, UserResponse[]>(x => x.Users,
                         new UserSearchRequest { Query = searchBox.Text });
 
                     if (result.Status != eResponseStatus.Success)
@@ -107,7 +107,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 // users
-                var resultUsers = await connector.Func<UserSearchRequest, UserResponse[]>("users", new UserSearchRequest());
+                var resultUsers = await connector.Func<UserSearchRequest, UserResponse[]>(x => x.Users, new UserSearchRequest());
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -139,7 +139,7 @@ namespace SherpaDesk
                 }
 
                 // accounts
-                var resultAccounts = await connector.Func<AccountResponse[]>("accounts");
+                var resultAccounts = await connector.Func<AccountResponse[]>(x => x.Accounts);
 
                 if (resultAccounts.Status != eResponseStatus.Success)
                 {
@@ -149,7 +149,7 @@ namespace SherpaDesk
 
                 AccountList.FillData(resultAccounts.Result.AsEnumerable());
 
-                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>("classes", new UserRequest { UserId = AppSettings.Current.UserId });
+                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
 
                 if (resultClasses.Status != eResponseStatus.Success)
                 {
@@ -166,7 +166,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 var resultAddTicket = await connector.Func<AddTicketRequest, AddTicketResponse>(
-                    "tickets",
+                    x => x.Tickets,
                     new AddTicketRequest
                     {
                         AccountId = AccountList.GetSelectedValue<int>(),
@@ -190,7 +190,7 @@ namespace SherpaDesk
                         {
                             await fileRequest.Add(file);
                         }
-                        var resultUploadFile = await connector.Action<FileRequest>("files", fileRequest);
+                        var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
                         {
                             this.HandleError(resultUploadFile);

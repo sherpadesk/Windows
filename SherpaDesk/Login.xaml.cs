@@ -44,7 +44,7 @@ namespace SherpaDesk
             {
                 // authentication
                 var resultLogin = await connector.Func<LoginRequest, LoginResponse>(
-                        "login",
+                        x => x.Login,
                         new LoginRequest
                         {
                             Email = UserNameTextbox.Text,
@@ -63,7 +63,7 @@ namespace SherpaDesk
 
                 // load organization and instance info
                 var resultOrg = await connector.Func<OrganizationResponse[]>(
-                        "organizations");
+                        x => x.Organizations);
 
                 if (resultOrg.Status != eResponseStatus.Success)
                 {
