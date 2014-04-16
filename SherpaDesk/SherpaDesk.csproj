@@ -121,6 +121,13 @@
     <Compile Include="Models\BindableBase.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Models\Enum\eNoteType.cs" />
+    <Compile Include="Models\Request\ActionTicketRequest.cs" />
+    <Compile Include="Models\Request\CloseTicketRequest.cs" />
+    <Compile Include="Models\Request\ConfirmRequest.cs" />
+    <Compile Include="Models\Request\PickUpRequest.cs" />
+    <Compile Include="Models\Request\ReOpenRequest.cs" />
+    <Compile Include="Models\Request\StatusTicketRequest.cs" />
     <Compile Include="Styles\CustomStyleSelector.cs" />
     <Compile Include="Extensions\ApplicationExtensions.cs" />
     <Compile Include="Extensions\ComboBoxExtensions.cs" />

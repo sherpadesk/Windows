@@ -1,26 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public class PlaceOnHoldRequest : PutRequest
+    public class PlaceOnHoldRequest : StatusTicketRequest
     {
         public PlaceOnHoldRequest(string key)
-            : base(key)
+            : base(key, "onhold")
         {
-            this.Status = "onhold";
         }
-
-        [DataMember(Name = "status"), Details]
-        public string Status { get; private set; }
-
-        [DataMember(Name = "note_text"), Details]
-        public string Note { get; set; }
-
     }
 }

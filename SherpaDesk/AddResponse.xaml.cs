@@ -147,7 +147,7 @@ namespace SherpaDesk
                         return;
                     }
                 }
-                else if (HoldBox.IsChecked ?? false)
+                if (HoldBox.IsChecked ?? false)
                 {
                     var resultOnHold = await connector.Action<PlaceOnHoldRequest>("tickets",
                         new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
@@ -158,7 +158,7 @@ namespace SherpaDesk
                     }
                     statusUpdated = true;
                 }
-                else if (WaitingBox.IsChecked ?? false)
+                if (WaitingBox.IsChecked ?? false)
                 {
                     var resultWait = await connector.Action<WaitingOnPostRequest>("tickets",
                         new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
@@ -169,7 +169,7 @@ namespace SherpaDesk
                     }
 
                 }
-                else if (!string.IsNullOrEmpty(CommentsTextbox.Text))
+                else if (!string.IsNullOrEmpty(CommentsTextbox.Text) && hours == decimal.Zero && !statusUpdated)
                 {
                     var resultNote = await connector.Action<AddNoteRequest>("posts", new AddNoteRequest
                     {
@@ -205,14 +205,15 @@ namespace SherpaDesk
                 ((Frame)this.Parent).Navigate(typeof(Empty));
                 if (statusUpdated)
                 {
-                    App.ExternalAction(x => x.UpdateInfo());
+                    App.ExternalAction(x => 
+                        x.UpdateInfo());
                 }
             }
         }
 
         private void SaveAndReopenButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void SaveDoNotReopenLink_Click(object sender, RoutedEventArgs e)

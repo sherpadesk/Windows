@@ -24,24 +24,27 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _workType = (eWorkListType)e.Parameter;
-            switch (_workType)
+            if (e.Parameter != null)
             {
-                case eWorkListType.Open:
-                    pageTitle.Text = "Open Tickets";
-                    break;
-                case eWorkListType.OnHold:
-                    pageTitle.Text = "On Hold";
-                    break;
-                case eWorkListType.NewMessages:
-                    pageTitle.Text = "New Messages";
-                    break;
-                case eWorkListType.OpenAsEndUser:
-                    pageTitle.Text = "Open As End User";
-                    break;
-                case eWorkListType.AwaitingResponse:
-                    pageTitle.Text = "Awaiting Response";
-                    break;
+                _workType = (eWorkListType)e.Parameter;
+                switch (_workType)
+                {
+                    case eWorkListType.Open:
+                        pageTitle.Text = "Open Tickets";
+                        break;
+                    case eWorkListType.OnHold:
+                        pageTitle.Text = "On Hold";
+                        break;
+                    case eWorkListType.NewMessages:
+                        pageTitle.Text = "New Messages";
+                        break;
+                    case eWorkListType.OpenAsEndUser:
+                        pageTitle.Text = "Open As End User";
+                        break;
+                    case eWorkListType.AwaitingResponse:
+                        pageTitle.Text = "Awaiting Response";
+                        break;
+                }
             }
             base.OnNavigatedTo(e);
         }
@@ -65,7 +68,7 @@ namespace SherpaDesk
 
         private void MarkReadMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            
+
         }
 
         private void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -78,8 +81,17 @@ namespace SherpaDesk
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
         {
+            DetailsFrame.Navigated += (object s, NavigationEventArgs a) =>
+            {
+                if (((ContentControl)s).Content is TicketDetails)
+                {
+                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent -= Load;
+                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent += Load;
+                }
+            };
             DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
+
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {

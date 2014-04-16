@@ -24,6 +24,8 @@ namespace SherpaDesk
     {
         private string _ticketKey;
 
+        public event EventHandler UpdateTicketListEvent;
+
         public TicketDetails()
         {
             this.InitializeComponent();
@@ -52,7 +54,7 @@ namespace SherpaDesk
                     x.ResponseDateText,
                     x.NoteType,
                     NoteText = Helper.HtmlToString(x.NoteText)
-                }).Where(x => x.NoteType != "Initial Post").ToList(); // Жесткий хардкод
+                }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList(); 
                 TicketDetailsList.ItemsSource = null; // For Visual Effect
                 TicketDetailsList.ItemsSource = resultView;
             }
@@ -114,14 +116,31 @@ namespace SherpaDesk
             }
         }
 
-        void UpdateTicketDetails(object sender, EventArgs e)
+        private void UpdateTicketDetails(object sender, EventArgs e)
         {
             FillResponses();
         }
 
-        private void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            //TODO: make confirm window
+            using (var connector = new Connector())
+            {
+                var result = await connector.Action<CloseTicketRequest>("tickets",
+                        new CloseTicketRequest(_ticketKey));
 
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                    return;
+                }
+            }
+            ((Frame)this.Parent).Navigate(typeof(Empty));
+            if (this.UpdateTicketListEvent != null)
+            {
+                this.UpdateTicketListEvent(this, EventArgs.Empty);
+            }
+            App.ExternalAction(x => x.UpdateInfo());
         }
 
         private void DeleteMenu_Tapped(object sender, TappedRoutedEventArgs e)
