@@ -47,9 +47,9 @@
             <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
                 <Button.Flyout>
                     <MenuFlyout Placement="Right">
-                        <MenuFlyoutItem x:Name="MarkReadMenu" Text="Mark Read" Tapped="MarkReadMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="ConfirmMenu" Text="Confirm" Tapped="ConfirmMenu_Tapped" Visibility="Collapsed" />
                         <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
-                        <MenuFlyoutItem x:Name="DeleteMenu" Text="Delete" Tapped="DeleteMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="TransferMenu" Text="Transfer" Tapped="TransferMenu_Tapped" />
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>

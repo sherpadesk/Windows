@@ -143,9 +143,9 @@ namespace SherpaDesk
             App.ExternalAction(x => x.UpdateInfo());
         }
 
-        private void DeleteMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            // TODO: switch to transfer section
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)

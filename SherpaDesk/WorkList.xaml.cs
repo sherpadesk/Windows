@@ -66,7 +66,7 @@ namespace SherpaDesk
             }
         }
 
-        private void MarkReadMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
 
         }
@@ -75,7 +75,7 @@ namespace SherpaDesk
         {
         }
 
-        private void DeleteMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void TransferMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
         }
 

@@ -324,7 +324,7 @@
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
-                                    <MenuFlyoutItem x:Name="DeleteMenu" Text="Delete" Tapped="DeleteMenu_Tapped" />
+                                    <MenuFlyoutItem x:Name="TransferMenu" Text="Transfer" Tapped="TransferMenu_Tapped" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
