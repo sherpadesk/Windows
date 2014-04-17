@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace SherpaDesk
 {
@@ -19,7 +20,7 @@ namespace SherpaDesk
         public WorkList()
         {
             this.InitializeComponent();
-            this.Model.DataLoading += Load;
+            this.Model.DataLoading += DataLoad;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -49,9 +50,9 @@ namespace SherpaDesk
             base.OnNavigatedTo(e);
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            Load(this.Model, EventArgs.Empty);
+            await Load();
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
@@ -71,8 +72,29 @@ namespace SherpaDesk
 
         }
 
-        private void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            //TODO: add confirm message
+            using (var connector = new Connector())
+            {
+                foreach (var ticket in this.Model.Data.ToList())
+                {
+                    if (ticket.IsChecked)
+                    {
+                        var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                                new CloseTicketRequest(ticket.TicketKey));
+
+                        if (result.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(result);
+                            return;
+                        }
+                    }
+                }
+            }
+            await this.Load();
+
+            App.ExternalAction(x => x.UpdateInfo());
         }
 
         private void TransferMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -85,8 +107,8 @@ namespace SherpaDesk
             {
                 if (((ContentControl)s).Content is TicketDetails)
                 {
-                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent -= Load;
-                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent += Load;
+                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent -= DataLoad;
+                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent += DataLoad;
                 }
             };
             DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
@@ -115,7 +137,12 @@ namespace SherpaDesk
             this.Model.PagePrev();
         }
 
-        public async void Load(object sender, EventArgs e)
+        public async void DataLoad(object sender, EventArgs e)
+        {
+            await Load();
+        } 
+
+        public async Task Load()
         {
             using (var connector = new Connector())
             {
