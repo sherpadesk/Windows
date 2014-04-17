@@ -48,8 +48,7 @@
                 <Button.Flyout>
                     <MenuFlyout Placement="Right">
                         <MenuFlyoutItem x:Name="ConfirmMenu" Text="Confirm" Tapped="ConfirmMenu_Tapped" Visibility="Collapsed" />
-                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
-                        <MenuFlyoutItem x:Name="TransferMenu" Text="Transfer" Tapped="TransferMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />                        
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
@@ -153,6 +152,20 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTemplateColumn SizeMode="Auto">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <Button x:Name="TransferButton" Content="Transfer" Tag="{Binding TicketKey}" Click="Transfer_Click" Background="#FFD3D1E7" />
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>                
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
 

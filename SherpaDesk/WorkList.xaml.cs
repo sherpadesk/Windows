@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace SherpaDesk
 {
@@ -67,38 +68,43 @@ namespace SherpaDesk
             }
         }
 
-        private void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            if (await App.ConfirmMessage())
+            {
+            }
         }
 
         private async void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //TODO: add confirm message
-            using (var connector = new Connector())
+            if (!this.Model.Data.Any(x=>x.IsChecked))
             {
-                foreach (var ticket in this.Model.Data.ToList())
+                App.ShowErrorMessage("No Items selected", eErrorType.Warning);
+                return;
+            }
+            if (await App.ConfirmMessage())
+            {
+                using (var connector = new Connector())
                 {
-                    if (ticket.IsChecked)
+                    foreach (var ticket in this.Model.Data.ToList())
                     {
-                        var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                                new CloseTicketRequest(ticket.TicketKey));
-
-                        if (result.Status != eResponseStatus.Success)
+                        if (ticket.IsChecked)
                         {
-                            this.HandleError(result);
-                            return;
+                            var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                                    new CloseTicketRequest(ticket.TicketKey));
+
+                            if (result.Status != eResponseStatus.Success)
+                            {
+                                this.HandleError(result);
+                                return;
+                            }
                         }
                     }
                 }
+                await this.Load();
+
+                App.ExternalAction(x => x.UpdateInfo());
             }
-            await this.Load();
-
-            App.ExternalAction(x => x.UpdateInfo());
-        }
-
-        private void TransferMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
         }
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
@@ -114,6 +120,10 @@ namespace SherpaDesk
             DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
+        private void Transfer_Click(object sender, RoutedEventArgs e)
+        {
+            DetailsFrame.Navigate(typeof(Transfer), ((Button)sender).Tag.ToString());
+        }
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {

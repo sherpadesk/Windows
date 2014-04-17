@@ -18,6 +18,7 @@ namespace SherpaDesk.Common
     public static class PageExtensions
     {
         private const string TOOL_TIP_NAME = "ToolTip";
+
         public static void HandleError(this Page page, Response response)
         {
             if (response.Status == eResponseStatus.Invalid)

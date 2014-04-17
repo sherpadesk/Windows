@@ -44,6 +44,14 @@ namespace SherpaDesk
                 catch (UnauthorizedAccessException) { }
             });
         }
+        public static async Task<bool> ConfirmMessage()
+        {
+            MessageDialog dialog = new MessageDialog("Are you sure?");
+            dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
+            dialog.Commands.Add(new UICommand { Label = "Cancel", Id = "cancel" });
+            var confirmResult = await dialog.ShowAsync();
+            return confirmResult.Id.ToString() == "ok";
+        }
 
         public static void ExternalAction(Action<MainPage> action)
         {

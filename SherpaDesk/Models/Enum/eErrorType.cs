@@ -16,6 +16,9 @@ namespace SherpaDesk.Models
         FailedOperation,
 
         [Details("Internal Error")]
-        InternalError
+        InternalError,
+
+        [Details("Warning")]
+        Warning
     }
 }

@@ -123,29 +123,31 @@ namespace SherpaDesk
 
         private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //TODO: make confirm window
-            using (var connector = new Connector())
+            if (await App.ConfirmMessage())
             {
-                var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                        new CloseTicketRequest(_ticketKey));
-
-                if (result.Status != eResponseStatus.Success)
+                using (var connector = new Connector())
                 {
-                    this.HandleError(result);
-                    return;
+                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                            new CloseTicketRequest(_ticketKey));
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
                 }
+                ((Frame)this.Parent).Navigate(typeof(Empty));
+                if (this.UpdateTicketListEvent != null)
+                {
+                    this.UpdateTicketListEvent(this, EventArgs.Empty);
+                }
+                App.ExternalAction(x => x.UpdateInfo());
             }
-            ((Frame)this.Parent).Navigate(typeof(Empty));
-            if (this.UpdateTicketListEvent != null)
-            {
-                this.UpdateTicketListEvent(this, EventArgs.Empty);
-            }
-            App.ExternalAction(x => x.UpdateInfo());
         }
 
-        private void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            // TODO: switch to transfer section
+            ResponseFrame.Navigate(typeof(Transfer), _ticketKey);
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)

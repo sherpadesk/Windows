@@ -75,11 +75,7 @@ namespace SherpaDesk
         {
             if (AppSettings.Current.Single)
             {
-                MessageDialog dialog = new MessageDialog("Are you sure?");
-                dialog.Commands.Add(new UICommand { Label = "Ok", Id = "ok" });
-                dialog.Commands.Add(new UICommand { Label = "Cancel", Id = "cancel" });
-                var confirmResult = await dialog.ShowAsync();
-                if (confirmResult.Id.ToString() == "ok")
+                if (await App.ConfirmMessage())
                 {
                     AppSettings.Current.Clear();
                     this.Frame.Navigate(typeof(Login));
