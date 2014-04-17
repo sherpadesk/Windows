@@ -7,11 +7,11 @@ namespace SherpaDesk.Models.Request
     [DataContract]
     public class AddTicketRequest : PostRequest
     {
-        private const string ERROR_EMPTY_TECHNICIAN_ID = "Please select a Technician.#TechnicianList";
-        private const string ERROR_EMPTY_USER_ID = "Please select a End User.#EndUserList";
-        private const string ERROR_EMPTY_ACCOUNT_ID = "Please select a Account.#AccountList";
-        private const string ERROR_EMPTY_CLASS_ID = "Please select a Class.#ClassList";
-        private const string ERROR_EMPTY_SUBJECT = "Please enter a Subject.#SubjectTextbox";
+        internal const string ERROR_EMPTY_TECHNICIAN_ID = "Please select a Technician.#TechnicianList";
+        internal const string ERROR_EMPTY_USER_ID = "Please select a End User.#EndUserList";
+        internal const string ERROR_EMPTY_ACCOUNT_ID = "Please select a Account.#AccountList";
+        internal const string ERROR_EMPTY_CLASS_ID = "Please select a Class.#ClassList";
+        internal const string ERROR_EMPTY_SUBJECT = "Please enter a Subject.#SubjectTextbox";
         
         [DataMember(Name = "status"), Details]
         public string Status { get; set; }

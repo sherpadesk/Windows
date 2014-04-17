@@ -3,7 +3,7 @@
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public abstract class StatusTicketRequest: PutRequest
+    public abstract class StatusTicketRequest : PutRequest
     {
         public StatusTicketRequest(string key, string status)
             : base(key)

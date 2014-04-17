@@ -86,6 +86,14 @@ namespace SherpaDesk.Common
                 return new Command("users");
             }
         }
+        public Command Technicians
+        {
+            get
+            {
+                return new Command("technicians");
+            }
+        }
+
         public Command TaskTypes
         {
             get

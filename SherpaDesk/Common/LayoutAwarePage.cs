@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
@@ -397,6 +395,21 @@ namespace SherpaDesk.Common
         }
 
         #endregion
+
+        protected void SetMe(ComboBox combobox)
+        {
+            if (combobox.Visibility == Visibility.Visible)
+                combobox.SetSelectedValue(AppSettings.Current.UserId);
+            else
+            {
+                var textBox = this.FindName(combobox.Name + "_Text") as Telerik.UI.Xaml.Controls.Input.RadAutoCompleteBox;
+                if (textBox != null)
+                {
+                    textBox.Text = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName, AppSettings.Current.Email);
+                    textBox.Tag = AppSettings.Current.UserId;
+                }
+            }
+        }
 
         /// <summary>
         /// Implementation of IObservableMap that supports reentrancy for use as a default view

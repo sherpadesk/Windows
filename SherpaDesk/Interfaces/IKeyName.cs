@@ -1,6 +1,6 @@
 ﻿namespace SherpaDesk.Common
 {
-    public interface IKeyName
+    public interface  IKeyName
     {
         object Key { get; }
 

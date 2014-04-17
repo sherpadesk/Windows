@@ -32,6 +32,16 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            using (var connector = new Connector())
+            {
+                var resultTechnicians = await connector.Func<TechniciansRequest, UserResponse[]>(x => x.Technicians, new TechniciansRequest());
+
+                if (resultTechnicians.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTechnicians);
+                    return;
+                }
+            }
         }
 
         private void SubmitTransferButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

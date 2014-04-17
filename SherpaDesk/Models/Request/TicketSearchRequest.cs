@@ -33,32 +33,37 @@ namespace SherpaDesk.Models.Request
         [OnSerializing]
         internal void OnSerializing(StreamingContext context)
         {
-            _status = string.Empty;
+            string status = string.Empty, role = string.Empty;
             if (this.Status.HasFlag(eTicketStatus.Open))
-                _status += eTicketStatus.Open.Details() + ",";
+                status += eTicketStatus.Open.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.Closed))
-                _status += eTicketStatus.Closed.Details() + ",";
+                status += eTicketStatus.Closed.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.OnHold))
-                _status += eTicketStatus.OnHold.Details() + ",";
+                status += eTicketStatus.OnHold.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.Waiting))
-                _status += eTicketStatus.Waiting.Details() + ",";
+                status += eTicketStatus.Waiting.Details() + ",";
             if (this.Status.HasFlag(eTicketStatus.NewMessages))
-                _status += eTicketStatus.NewMessages.Details() + ",";
-            _status = _status.Trim(',');
+                status += eTicketStatus.NewMessages.Details() + ",";
+            status = status.Trim(',');
 
             if (this.Role == eRoles.All)
-                _role = eRoles.All.Details();
+                role = eRoles.All.Details();
             else
             {
-                _role = string.Empty;
+                role = string.Empty;
                 if (this.Role.HasFlag(eRoles.EndUser))
-                    _role += eRoles.EndUser.Details() + ",";
+                    role += eRoles.EndUser.Details() + ",";
                 if (this.Role.HasFlag(eRoles.Technician))
-                    _role += eRoles.Technician.Details() + ",";
+                    role += eRoles.Technician.Details() + ",";
                 if (this.Role.HasFlag(eRoles.AltTechnician))
-                    _role += eRoles.AltTechnician.Details() + ",";
-                _role = _role.Trim(',');
+                    role += eRoles.AltTechnician.Details() + ",";
+                role = role.Trim(',');
             }
+
+            if (!string.IsNullOrEmpty(role))
+                _role = role;
+            if (!string.IsNullOrEmpty(status))
+                _status = status;
         }
     }
 }
