@@ -117,9 +117,9 @@
             <Button x:Name="filepickButton" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Content="Select Files" Height="50" Margin="0,0,0,0" Grid.Row="5" FontSize="24" Tapped="filepickButton_Tapped" />
 
             <Button x:Name="SaveButton" Content="Add Response &amp; Update" Grid.Row="7" FontSize="30" Grid.ColumnSpan="5" Background="#FF2F9129" Tapped="SaveButton_Tapped" />
-            <Button x:Name="SaveAndReopenButton" Content="Save &amp; ReOpen ticket" Grid.Row="7" FontSize="30" Grid.ColumnSpan="4" Background="#FF2F9129" Tapped="SaveButton_Tapped" Click="SaveAndReopenButton_Click" Visibility="Collapsed" />
+            <Button x:Name="SaveAndReopenButton" Content="Save &amp; ReOpen ticket" Grid.Row="7" FontSize="30" Grid.ColumnSpan="4" Background="#FF2F9129" Tapped="SaveAndReopenButton_Click" Visibility="Collapsed" />
             <CheckBox Name="HoldBox" Content="Place on Hold" FontSize="30" Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="3" />
-            <Button Name="SaveDoNotReopenLink" Content="Save but Do Not ReOpen" FontSize="30" Grid.Row="7" Grid.ColumnSpan="4" Grid.Column="0" Click="SaveDoNotReopenLink_Click" Margin="0,65,-3,-65" Visibility="Collapsed" />
+            <Button Name="SaveDoNotReopenLink" Content="Save but Do Not ReOpen" FontSize="30" Grid.Row="7" Grid.ColumnSpan="4" Grid.Column="0" Tapped="SaveDoNotReopenLink_Click" Margin="0,65,-3,-65" Visibility="Collapsed" />
             <CheckBox Name="WaitingBox" Content="Waiting On Response" FontSize="30" Grid.Row="7" Grid.ColumnSpan="10" Grid.Column="6" Margin="30,0,0,0" />
         </Grid>
         <VisualStateManager.VisualStateGroups>

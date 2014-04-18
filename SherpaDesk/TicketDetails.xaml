@@ -356,7 +356,7 @@
                         </FlipView>
                         <telerikPrimitives:RadPaginationControl Visibility="Collapsed" HorizontalAlignment="Left" x:Name="AttachedPages" DisplayMode="IndexLabel" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="4" Width="300" Margin="10,220,0,0" Foreground="White" PageProvider="{Binding ElementName=AttachedView}" />
                         <ScrollViewer Grid.Column="2" Margin="0,0,12,0" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2" MaxWidth="500" MaxHeight="350" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                            <TextBlock x:Name="WorkpadLabel" MaxWidth="500" VerticalAlignment="Stretch" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" Text="asd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdasasd asdas" Foreground="White" FontSize="20" />
+                            <TextBlock x:Name="WorkpadLabel" MaxWidth="500" VerticalAlignment="Stretch" TextWrapping="WrapWholeWords" HorizontalAlignment="Left" Text="" Foreground="White" FontSize="20" />
                         </ScrollViewer>
                     </Grid>
                     <ScrollViewer Height="540" VerticalScrollMode="Auto" Grid.Column="1" Margin="0,0,20,0" VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled" Width="auto">

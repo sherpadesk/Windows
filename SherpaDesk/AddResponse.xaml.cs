@@ -5,10 +5,12 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
@@ -114,8 +116,7 @@ namespace SherpaDesk
             }
         }
 
-
-        private async void SaveButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        public async Task PostResponse(bool hold, bool reopen)
         {
             using (var connector = new Connector())
             {
@@ -145,7 +146,7 @@ namespace SherpaDesk
                         return;
                     }
                 }
-                if (HoldBox.IsChecked ?? false)
+                if (hold)
                 {
                     var resultOnHold = await connector.Action<PlaceOnHoldRequest>(x => x.Tickets,
                         new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
@@ -156,28 +157,43 @@ namespace SherpaDesk
                     }
                     statusUpdated = true;
                 }
-                if (WaitingBox.IsChecked ?? false)
+                if (reopen)
                 {
-                    var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
-                        new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
+                    var resultReOpen = await connector.Action<ReOpenRequest>(x => x.Tickets,
+                        new ReOpenRequest(_ticketKey) { Note = CommentsTextbox.Text });
 
-                    if (resultWait.Status != eResponseStatus.Success)
+                    if (resultReOpen.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultWait);
+                        this.HandleError(resultReOpen);
                     }
-
+                    statusUpdated = true;
                 }
-                else if (!string.IsNullOrEmpty(CommentsTextbox.Text) && hours == decimal.Zero && !statusUpdated)
+
+
+                if (!string.IsNullOrEmpty(CommentsTextbox.Text))
                 {
-                    var resultNote = await connector.Action<AddNoteRequest>(x => x.Posts, new AddNoteRequest
+                    if (WaitingBox.IsChecked ?? false)
                     {
-                        TicketKey = _ticketKey,
-                        Note = CommentsTextbox.Text
-                    });
-                    if (resultNote.Status != eResponseStatus.Success)
+                        var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
+                            new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
+
+                        if (resultWait.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultWait);
+                        }
+                    }
+                    else if (hours == decimal.Zero && !statusUpdated)
                     {
-                        this.HandleError(resultNote);
-                        return;
+                        var resultNote = await connector.Action<AddNoteRequest>(x => x.Posts, new AddNoteRequest
+                        {
+                            TicketKey = _ticketKey,
+                            Note = CommentsTextbox.Text
+                        });
+                        if (resultNote.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultNote);
+                            return;
+                        }
                     }
                 }
                 if (_attachment.Count > 0)
@@ -200,23 +216,31 @@ namespace SherpaDesk
                 {
                     UpdatePage(this, EventArgs.Empty);
                 }
-                ((Frame)this.Parent).Navigate(typeof(Empty));
+                if (this.Parent != null)
+                {
+                    ((Frame)this.Parent).Navigate(typeof(Empty));
+                }
                 if (statusUpdated)
                 {
-                    App.ExternalAction(x => 
+                    App.ExternalAction(x =>
                         x.UpdateInfo());
                 }
             }
         }
 
-        private void SaveAndReopenButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            
+            await PostResponse(HoldBox.IsChecked ?? false, false);
         }
 
-        private void SaveDoNotReopenLink_Click(object sender, RoutedEventArgs e)
+        private async void SaveAndReopenButton_Click(object sender, TappedRoutedEventArgs e)
         {
+            await PostResponse(false, true);
+        }
 
+        private async void SaveDoNotReopenLink_Click(object sender, TappedRoutedEventArgs e)
+        {
+            await PostResponse(false, false);
         }
     }
 }
