@@ -10,6 +10,7 @@ namespace SherpaDesk.Models.Request
         {
             this.Path = "/" + key;
             this.Action = "add_tech";
+            this.TechnicianId = techId;
         }
 
         [Details]
@@ -19,7 +20,6 @@ namespace SherpaDesk.Models.Request
         public string Action { get; private set; }
 
         [DataMember(Name = "tech_id"), Details]
-        [IntRequired(ErrorMessage = AddTicketRequest.ERROR_EMPTY_TECHNICIAN_ID)]
         public int TechnicianId { get; set; }
     }
 }

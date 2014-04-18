@@ -7,17 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
-    public sealed partial class AddResponse : SherpaDesk.Common.LayoutAwarePage
+    public sealed partial class AddResponse : SherpaDesk.Common.LayoutAwarePage, IChildPage
     {
-        public event EventHandler UpdateTicketDetailsEvent;
+        public event EventHandler UpdatePage;
 
         private const string ERROR_EMPTY_HOURS = "Hours should be positive number.";
         private const string ERROR_MUCH_HOURS = "Hours cannot be more then 24 hours in day.";
@@ -198,9 +196,9 @@ namespace SherpaDesk
                         }
                     }
                 }
-                if (UpdateTicketDetailsEvent != null)
+                if (UpdatePage != null)
                 {
-                    UpdateTicketDetailsEvent(this, new EventArgs());
+                    UpdatePage(this, EventArgs.Empty);
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
                 if (statusUpdated)

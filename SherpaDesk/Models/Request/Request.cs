@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace SherpaDesk.Models.Request
 {
     public abstract class Request : ObjectBase
     {
-        public abstract IList<ValidationResult> Validate();
+        public abstract IEnumerable<ValidationResult> Validate();
     }
 
     public sealed class Request<T> : Request where T : IRequestType
@@ -20,17 +21,24 @@ namespace SherpaDesk.Models.Request
         [Details]
         public T Data { get; set; }
 
-        public override IList<ValidationResult> Validate()
+        public override IEnumerable<ValidationResult> Validate()
         {
-            var results = new List<ValidationResult>();
-            if (!Validator.TryValidateObject(
-                    this.Data,
-                    new ValidationContext(this.Data),
-                    results,
-                    true))
-                return results;
+            if (this.Data is IValidatableObject)
+            {
+                return ((IValidatableObject)this.Data).Validate(new ValidationContext(this.Data)).ToList();
+            }
             else
-                return new List<ValidationResult>();
+            {
+                var results = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(
+                        this.Data,
+                        new ValidationContext(this.Data),
+                        results,
+                        true))
+                    return results;
+                else
+                    return (new ValidationResult[0]).AsEnumerable();
+            }
         }
 
 

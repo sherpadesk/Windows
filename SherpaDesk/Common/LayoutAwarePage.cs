@@ -310,7 +310,7 @@ namespace SherpaDesk.Common
                 string visualState = DetermineVisualState(ApplicationView.Value);
                 foreach (var layoutAwareControl in this._layoutAwareControls)
                 {
-//                    VisualStateManager.GoToState(layoutAwareControl, visualState, false);
+                    //                    VisualStateManager.GoToState(layoutAwareControl, visualState, false);
                 }
             }
         }
@@ -409,6 +409,20 @@ namespace SherpaDesk.Common
                     textBox.Tag = AppSettings.Current.UserId;
                 }
             }
+        }
+
+        protected void ChildPage_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (((ContentControl)sender).Content is IChildPage)
+            {
+                ((IChildPage)((ContentControl)sender).Content).UpdatePage -= UpdatedPage;
+                ((IChildPage)((ContentControl)sender).Content).UpdatePage += UpdatedPage;
+            }
+        }
+
+        protected virtual void UpdatedPage(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>

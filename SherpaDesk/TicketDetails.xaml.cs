@@ -20,11 +20,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
-    public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage
+    public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage, IChildPage
     {
         private string _ticketKey;
 
-        public event EventHandler UpdateTicketListEvent;
+        public event EventHandler UpdatePage;
 
         public TicketDetails()
         {
@@ -37,32 +37,8 @@ namespace SherpaDesk
             base.OnNavigatedTo(e);
         }
 
-        private async void FillResponses()
+        private async Task LoadPage()
         {
-            using (var connector = new Connector())
-            {
-                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
-                if (resultNotes.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultNotes);
-                    return;
-                }
-
-                var resultView = resultNotes.Result.Select(x => new
-                {
-                    x.FullName,
-                    x.ResponseDateText,
-                    x.NoteType,
-                    NoteText = Helper.HtmlToString(x.NoteText)
-                }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
-                TicketDetailsList.ItemsSource = null; // For Visual Effect
-                TicketDetailsList.ItemsSource = resultView;
-            }
-        }
-
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {
-            //            SubjectDecorate.Height = SubjectLabel.ActualHeight;
             using (var connector = new Connector())
             {
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
@@ -72,7 +48,6 @@ namespace SherpaDesk
                     this.HandleError(resultTicket);
                     return;
                 }
-                FillResponses();
                 var ticket = resultTicket.Result;
 
                 AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -98,27 +73,48 @@ namespace SherpaDesk
                     }).ToList();
                     FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
+                await FillResponses();
             }
+
+        }
+        private async Task FillResponses()
+        {
+            using (var connector = new Connector())
+            {
+                var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
+                if (resultNotes.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultNotes);
+                    return;
+                }
+
+                var resultView = resultNotes.Result.Select(x => new
+                {
+                    x.FullName,
+                    x.ResponseDateText,
+                    x.NoteType,
+                    NoteText = Helper.HtmlToString(x.NoteText)
+                }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
+                TicketDetailsList.ItemsSource = null; // For Visual Effect
+                TicketDetailsList.ItemsSource = resultView;
+            }
+        }
+
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadPage();
         }
 
         private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ResponseFrame.Navigated += ResponseFrame_Navigated;
+            ResponseFrame.Navigated -= ChildPage_Navigated;
+            ResponseFrame.Navigated += ChildPage_Navigated;
             ResponseFrame.Navigate(typeof(AddResponse), _ticketKey);
         }
 
-        private void ResponseFrame_Navigated(object sender, NavigationEventArgs e)
+        protected async override void UpdatedPage(object sender, EventArgs e)
         {
-            if (((ContentControl)sender).Content is AddResponse)
-            {
-                ((AddResponse)((ContentControl)sender).Content).UpdateTicketDetailsEvent -= UpdateTicketDetails;
-                ((AddResponse)((ContentControl)sender).Content).UpdateTicketDetailsEvent += UpdateTicketDetails;
-            }
-        }
-
-        private void UpdateTicketDetails(object sender, EventArgs e)
-        {
-            FillResponses();
+            await LoadPage();
         }
 
         private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
@@ -137,22 +133,25 @@ namespace SherpaDesk
                     }
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
-                if (this.UpdateTicketListEvent != null)
+                if (this.UpdatePage != null)
                 {
-                    this.UpdateTicketListEvent(this, EventArgs.Empty);
+                    this.UpdatePage(this, EventArgs.Empty);
                 }
                 App.ExternalAction(x => x.UpdateInfo());
             }
         }
 
-        private async void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
+        private void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            ResponseFrame.Navigated -= ChildPage_Navigated;
+            ResponseFrame.Navigated += ChildPage_Navigated;
             ResponseFrame.Navigate(typeof(Transfer), _ticketKey);
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            App.ExternalAction(x => x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
+            App.ExternalAction(x => 
+                x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
     }
 }

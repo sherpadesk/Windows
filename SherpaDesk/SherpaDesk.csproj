@@ -106,6 +106,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IChildPage.cs" />
+    <Compile Include="Interfaces\IValidatableObject.cs" />
     <Compile Include="Models\Request\AttachAltTechRequest.cs" />
     <Compile Include="Models\Request\TechniciansRequest.cs" />
     <Compile Include="Models\Request\TransferRequest.cs" />

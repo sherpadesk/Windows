@@ -78,7 +78,7 @@ namespace SherpaDesk.Common
 
                 var validationResults = request.Validate();
 
-                if (validationResults.Count > 0)
+                if (validationResults.Count() > 0)
                     return result.Invalid(validationResults.Select(x => x.ErrorMessage).ToArray());
 
                 Authentication();

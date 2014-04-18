@@ -21,7 +21,7 @@ namespace SherpaDesk
         public WorkList()
         {
             this.InitializeComponent();
-            this.Model.DataLoading += DataLoad;
+            this.Model.DataLoading += UpdatedPage;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -52,6 +52,11 @@ namespace SherpaDesk
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            await Load();
+        }
+
+        protected async override void UpdatedPage(object sender, EventArgs e)
         {
             await Load();
         }
@@ -109,19 +114,15 @@ namespace SherpaDesk
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
         {
-            DetailsFrame.Navigated += (object s, NavigationEventArgs a) =>
-            {
-                if (((ContentControl)s).Content is TicketDetails)
-                {
-                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent -= DataLoad;
-                    ((TicketDetails)((ContentControl)s).Content).UpdateTicketListEvent += DataLoad;
-                }
-            };
+            DetailsFrame.Navigated -= ChildPage_Navigated;
+            DetailsFrame.Navigated += ChildPage_Navigated;
             DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
         private void Transfer_Click(object sender, RoutedEventArgs e)
         {
+            DetailsFrame.Navigated -= ChildPage_Navigated;
+            DetailsFrame.Navigated += ChildPage_Navigated;
             DetailsFrame.Navigate(typeof(Transfer), ((Button)sender).Tag.ToString());
         }
 
@@ -146,11 +147,6 @@ namespace SherpaDesk
         {
             this.Model.PagePrev();
         }
-
-        public async void DataLoad(object sender, EventArgs e)
-        {
-            await Load();
-        } 
 
         public async Task Load()
         {

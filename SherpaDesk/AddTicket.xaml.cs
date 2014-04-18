@@ -66,35 +66,15 @@ namespace SherpaDesk
             this.SetMe(this.AlternateTechnicianList);
         }
 
-        private async Task Search(RadAutoCompleteBox searchBox, bool tech)
-        {
-            using (var connector = new Connector())
-            {
-                searchBox.FilterMemberPath = "Name";
-                if (searchBox.Text.Length > 1)
-                {
-                    var result = await connector.Func<SearchRequest, UserResponse[]>(x => tech ? x.Technicians : x.Users,
-                        tech ? ((SearchRequest)new TechniciansRequest() { Query = searchBox.Text }) : new UserSearchRequest { Query = searchBox.Text });
-
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                    searchBox.ItemsSource = result.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }).ToList();
-                }
-            }
-
-        }
 
         private async void SearchUsers(object obj, TextChangedEventArgs args)
         {
-            await Search((RadAutoCompleteBox)obj, false);
+            await ((RadAutoCompleteBox)obj).Search(false);
         }
 
         private async void SearchTechnicians(object obj, TextChangedEventArgs args)
         {
-            await Search((RadAutoCompleteBox)obj, true);
+            await ((RadAutoCompleteBox)obj).Search(false);
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
@@ -164,7 +144,7 @@ namespace SherpaDesk
 
                 if (resultClasses.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultUsers);
+                    this.HandleError(resultClasses);
                     return;
                 }
 

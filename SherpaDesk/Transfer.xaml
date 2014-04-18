@@ -59,16 +59,16 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <RadioButton Content="Remove me after transfer" GroupName="Group" FontSize="24" IsChecked="True" Grid.ColumnSpan="7" />
-            <RadioButton Grid.Row="1" Content="Keep me attached to this ticket" GroupName="Group" Grid.ColumnSpan="7" FontSize="24" />
-            <RadioButton Grid.Row="3" Content="Transfer to Technician" GroupName="Group2" FontSize="20" IsChecked="True" />
-            <ComboBox x:Name="TechnicanList" Grid.Column="2" Grid.Row="3" FontSize="20" HorizontalAlignment="Left" Width="300" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+            <RadioButton Name="RemoveMeCheckBox" Content="Remove me after transfer" GroupName="Group" FontSize="24" IsChecked="True" Grid.ColumnSpan="7" />
+            <RadioButton Name="KeepMeCheckBox" Grid.Row="1" Content="Keep me attached to this ticket" GroupName="Group" Grid.ColumnSpan="7" FontSize="24" />
+            <RadioButton Name="TransferToTechCheckBox" Grid.Row="3" Content="Transfer to Technician" GroupName="Group2" FontSize="20" IsChecked="True" />
+            <ComboBox x:Name="TechnicianList" Grid.Column="2" Grid.Row="3" FontSize="20" HorizontalAlignment="Left" Width="300" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
                 <ComboBoxItem Content="Let the system choose" Tag="SystemChoose" IsSelected="True" />
             </ComboBox>
             <HyperlinkButton x:Name="TechnicianMeLink" Content="Me" Grid.Row="3" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Height="51" Tapped="TechnicianMeLink_Tapped" />
             <CheckBox x:Name="MakeMeAlternateCheckBox" Content="Make Me an Alternate" Grid.Column="6" Grid.Row="3" FontSize="20" />
 
-            <RadioButton Grid.Row="4" Content="Transfer to Class" GroupName="Group2" FontSize="20" />
+            <RadioButton Name="TransferToClassCheckBox" Grid.Row="4" Content="Transfer to Class" GroupName="Group2" FontSize="20" />
             <ComboBox x:Name="ClassList" Grid.Column="2" Grid.Row="4" FontSize="20" HorizontalAlignment="Left" Width="300" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" />
 
             <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Stretch" Grid.ColumnSpan="7" WatermarkText="Details..." Grid.Row="5" Grid.RowSpan="3" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="20" />

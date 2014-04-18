@@ -1,7 +1,10 @@
-﻿using SherpaDesk.Models.Response;
+﻿using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,6 +56,30 @@ namespace SherpaDesk.Common
             //{
             //    searchBox.Focus(FocusState.Pointer);
             //};
+        }
+
+
+        public async static Task Search(this RadAutoCompleteBox searchBox, bool tech)
+        {
+            using (var connector = new Connector())
+            {
+                searchBox.FilterMemberPath = "Name";
+                if (searchBox.Text.Length > 1)
+                {
+                    var result = await connector.Func<SearchRequest, UserResponse[]>(x => tech ? x.Technicians : x.Users,
+                        tech ? ((SearchRequest)new TechniciansRequest() { Query = searchBox.Text }) : new UserSearchRequest { Query = searchBox.Text });
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        App.ShowErrorMessage(result.Message, eErrorType.FailedOperation);
+                    }
+                    else
+                    {
+                        searchBox.ItemsSource = result.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }).ToList();
+                    }
+                }
+            }
+
         }
 
         public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
