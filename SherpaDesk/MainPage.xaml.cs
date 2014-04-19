@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -127,7 +128,12 @@ namespace SherpaDesk
                     this.Frame.Navigate(typeof(Login));
                 }
             }
-
+#if DEBUG
+            BuildNumber.Visibility = Visibility.Visible;
+            BuildNumber.Text = this.GetType().GetTypeInfo().Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+#else
+            BuildNumber.Visibility = Visibility.Collapsed;
+#endif
         }
 
         private void FullscreenPanel_Tapped(object sender, TappedRoutedEventArgs e)
