@@ -34,13 +34,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Frame x:Name="DetailsFrame" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,0,0" />
+        <Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,170,0,70" Style="{StaticResource PageHeaderTextStyle}" Grid.ColumnSpan="3" Text="Open Tickets" FontWeight="Normal" />
             <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
@@ -51,10 +50,6 @@
                         <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />                        
                     </MenuFlyout>
                 </Button.Flyout>
-            </Button>
-            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Page Prev" Margin="0,235,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
-            </Button>
-            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="2" Content="Page Next" Margin="10,235,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
         <telerik:RadDataGrid x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" SelectionUnit="Row"
@@ -160,15 +155,19 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTemplateColumn.HeaderStyle>
-                    <telerik:DataGridTemplateColumn.CellContentTemplate>
-                        <DataTemplate>
-                            <Button x:Name="TransferButton" Content="Transfer" Tag="{Binding TicketKey}" Click="Transfer_Click" Background="#FFD3D1E7" />
-                        </DataTemplate>
-                    </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>                
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
-
+        <Grid Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="0" Content="&lt; Prev" Margin="0,5,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
+            </Button>
+            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Next &gt;" Margin="5,5,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
+            </Button>
+        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

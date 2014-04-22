@@ -385,7 +385,6 @@
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock FontSize="40" Text="{Binding FullName}" Foreground="White" />
-                                            <TextBlock Text="{Binding NoteType}" HorizontalAlignment="Left" Grid.Column="1" Margin="12,13,12,0" FontSize="18" Foreground="White" />
                                         </Grid>                                        
                                         <TextBlock Text="{Binding ResponseDateText}" HorizontalAlignment="Right" Grid.Column="2" Canvas.ZIndex="1" Grid.Row="1" Margin="0,-10,0,0" FontSize="18" Foreground="White" />
                                         <TextBlock Text="{Binding NoteText}" HorizontalAlignment="Stretch" Width="500" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,10,0,50" FontSize="18" Foreground="White" />

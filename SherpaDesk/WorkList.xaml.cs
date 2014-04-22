@@ -119,13 +119,6 @@ namespace SherpaDesk
             DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
-        private void Transfer_Click(object sender, RoutedEventArgs e)
-        {
-            DetailsFrame.Navigated -= ChildPage_Navigated;
-            DetailsFrame.Navigated += ChildPage_Navigated;
-            DetailsFrame.Navigate(typeof(Transfer), ((Button)sender).Tag.ToString());
-        }
-
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             this.Model.SelectAll(true);
