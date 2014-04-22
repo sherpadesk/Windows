@@ -9,7 +9,7 @@
     mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF004174">
 
-        <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="446">
+        <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="606">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -18,14 +18,17 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Image Height="219" Grid.Row="0" VerticalAlignment="Top" Width="705" Source="Assets/StoreLogo.png" />
-            <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" FontSize="36" Width="619"/>
-            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="619" Password="" />
-            <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="625" Height="66" Click="SignIn" FontSize="36" Background="#FF57AE57" />
+            <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" FontSize="36" Width="672"/>
+            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="672" Password="" />
+            <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="680" Height="66" Click="SignIn" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF57AE57" />
             <CheckBox x:Name="ModeBox" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top"/>
+            <HyperlinkButton x:Name="ApiHyperlink" Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="658,168,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <HyperlinkButton Content="Register New SherpaDesk Organization" NavigateUri="http://www.sherpadesk.com/start-your-climb/" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="5" FontSize="36" Foreground="White" Background="#FF57AE57" BorderBrush="White" BorderThickness="2" Height="66" Width="680"/>
         </Grid>
-        <HyperlinkButton x:Name="ApiHyperlink" Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="658,168,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Popup/>
     </Grid>
 </Page>
