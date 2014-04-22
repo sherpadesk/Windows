@@ -27,7 +27,7 @@
             <Button x:Name="SignInButton" Content="Sign In" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="680" Height="66" Click="SignIn" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF57AE57" />
             <CheckBox x:Name="ModeBox" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top"/>
             <HyperlinkButton x:Name="ApiHyperlink" Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="658,168,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <HyperlinkButton Content="Register New SherpaDesk Organization" NavigateUri="http://www.sherpadesk.com/start-your-climb/" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="5" FontSize="36" Foreground="White" Background="#FF57AE57" BorderBrush="White" BorderThickness="2" Height="66" Width="680"/>
+            <HyperlinkButton Content="Register New SherpaDesk Organization" NavigateUri="http://www.sherpadesk.com/start-your-climb/" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="5" FontSize="30" Foreground="White" Background="#FF6B9452" BorderBrush="White" BorderThickness="2" Height="66" Width="680"/>
         </Grid>
         <Popup/>
     </Grid>
