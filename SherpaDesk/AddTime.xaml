@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="120"/>
@@ -83,14 +83,14 @@
             <ComboBox Name="ProjectList" Grid.Column="2" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="400" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
 
-            <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="4" Margin="0,25,0,0" TextWrapping="Wrap" Text="Task Type" VerticalAlignment="Top" FontSize="30"/>
-            <ComboBox Name="TaskTypeList" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="3" FontSize="24" HorizontalAlignment="Left" Width="400" Height="50" Margin="0,0,20,0" VerticalAlignment="Top">
+            <TextBlock HorizontalAlignment="left" Grid.Row="1" Grid.Column="4" Margin="-5,25,0,0" TextWrapping="Wrap" Text="Task Type" VerticalAlignment="Top" FontSize="30"/>
+            <ComboBox Name="TaskTypeList" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="3" FontSize="24" HorizontalAlignment="Left" Width="400" Height="50" Margin="-5,0,20,0" VerticalAlignment="Top">
             </ComboBox>
 
             <TextBlock HorizontalAlignment="left" Grid.Row="3" Grid.Column="0" Margin="10,25,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" FontSize="30"/>
             <TextBox Name="NoteTextBox" AcceptsReturn="True" Margin="10,0,0,0" Grid.RowSpan="3" HorizontalAlignment="Center" Height="300" Grid.Row="4" TextWrapping="Wrap" Grid.Column="0" Text="" VerticalAlignment="Top" FontSize="24" Width="400" />
 
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Column="2" Grid.ColumnSpan="5" Width="740" HorizontalAlignment="Left" Grid.RowSpan="3" Grid.Row="4" Background="#FF6B3B28" Margin="1,0,0,0">
+            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Column="2" Grid.ColumnSpan="6" Width="740" HorizontalAlignment="Left" Grid.RowSpan="3" Grid.Row="4" Background="#FF6B3B28" Margin="1,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
