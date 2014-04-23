@@ -59,7 +59,7 @@ namespace SherpaDesk.Models.Response
         protected new void OnDeserialized(StreamingContext context)
         {
             if (this.СreatedTime != DateTime.MinValue)
-                this.DaysOld = (DateTime.Now - this.СreatedTime).CalculateTime();
+                this.DaysOld = (DateTime.Now - this.СreatedTime).CalculateDate();
         }
 
         //		[{\"key\":\"sujtm8\",\"created_time\":\"2014-03-25T20:36:00.0000000\",\"number\":4,\"is_new_user_post\":true,\"is_new_tech_post\":false,\"prefix\":\"\",\"subject\":\"second ticket\",\"user_firstname\":\"Organization\",\"user_lastname\":\"Administrator\",\"user_email\":\"alexey.gavrilov@gmail.com\",\"technician_firstname\":\"Artem\",\"technician_lastname\":\"Korzhavin\",\"technician_email\":\"livehex@gmail.com\",\"account_id\":-1,\"account_name\":\"Yoshkar\",\"location_id\":null,\"location_name\":\"\",\"account_location_id\":null,\"account_location_name\":\"\",\"priority_name\":\"\",\"level_name\":\"\",\"status\":\"Open\",\"creation_category_id\":null,\"creation_category_name\":\"\",\"class_id\":11341,\"class_name\":\"General Question\",\"id\":99076},

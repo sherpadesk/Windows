@@ -39,7 +39,7 @@ namespace SherpaDesk.Models.Response
         {
             get
             {
-                var days = (DateTime.Now - this.ResponseDate).CalculateTime();
+                var days = (DateTime.Now - this.ResponseDate).DaysAgo();
                 return !string.IsNullOrEmpty(days) ? string.Format("{0} old", days) : string.Empty;
             }
         }
