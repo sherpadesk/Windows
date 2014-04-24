@@ -11,6 +11,8 @@ using Windows.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using Telerik.UI.Xaml.Controls.Grid;
+using Windows.UI.Xaml.Input;
 
 namespace SherpaDesk
 {
@@ -61,26 +63,26 @@ namespace SherpaDesk
             await Load();
         }
 
-        private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
+        private void ItemsGrid_SelectionChanged(object sender, DataGridSelectionChangedEventArgs e)
         {
             foreach (var ticket in e.AddedItems)
             {
-                ((TicketSearchResponse)ticket).IsChecked = true;
+                ((WorkListItem)ticket).IsChecked = true;
             }
             foreach (var ticket in e.RemovedItems)
             {
-                ((TicketSearchResponse)ticket).IsChecked = false;
+                ((WorkListItem)ticket).IsChecked = false;
             }
         }
 
-        private async void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void ConfirmMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (await App.ConfirmMessage())
             {
             }
         }
 
-        private async void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!this.Model.Data.Any(x=>x.IsChecked))
             {
@@ -175,7 +177,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.Model.Data = new ObservableCollection<TicketSearchResponse>(result.Result.ToList());
+                    this.Model.AddList(result.Result.ToList());
                 }
             }
         }

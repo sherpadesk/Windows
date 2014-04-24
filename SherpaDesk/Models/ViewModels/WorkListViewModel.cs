@@ -8,13 +8,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml;
 
 namespace SherpaDesk.Models
 {
     public class WorkListViewModel : INotifyPropertyChanged
     {
         private int _pageIndex;
-        private ObservableCollection<TicketSearchResponse> _data;
+        private ObservableCollection<WorkListItem> _data;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler DataLoading;
@@ -25,7 +26,7 @@ namespace SherpaDesk.Models
             this._data = null;
         }
 
-        public ObservableCollection<TicketSearchResponse> Data
+        public ObservableCollection<WorkListItem> Data
         {
             get
             {
@@ -115,6 +116,84 @@ namespace SherpaDesk.Models
             {
                 if (_data[i].TicketId == ticketId)
                     _data[i].IsChecked = @checked;
+            }
+        }
+
+        public void AddList(IList<TicketSearchResponse> list)
+        {
+            int i = 1;
+            var result = new ObservableCollection<WorkListItem>();
+            foreach (var x in list)
+            {
+                result.Add(new WorkListItem
+                {
+                    Index = "CheckBox" + i.ToString(),
+                    TicketId = x.TicketId,
+                    TicketKey = x.TicketKey,
+                    AccountName = x.AccountName,
+                    ClassName = x.ClassName,
+                    Status = x.Status,
+                    TechnicianFullName = Helper.FullName(x.TechnicianFirstName, x.TechnicianLastName, x.TechnicianEmail),
+                    TicketNumber = x.TicketNumber,
+                    UserFullName = x.UserFullName,
+                    DaysOld = (x.СreatedTime != DateTime.MinValue) ?
+                        (DateTime.Now - x.СreatedTime).CalculateDate() :
+                        string.Empty
+                });
+                i++;
+                //this.Data.Add(new WorkListItem
+                //{
+                //    RowVisibility = Visibility.Collapsed,
+                //    AlternateRowVisibility = Visibility.Visible,
+                //    Subject = x.Subject
+                //});
+            }
+            this.Data = result;
+        }
+    }
+
+    public class WorkListItem : INotifyPropertyChanged
+    {
+        public string Index { get; set; }
+
+        public int TicketId { get; set; }
+
+        public string TicketKey { get; set; }
+
+        public int TicketNumber { get; set; }
+
+        public string TechnicianFullName { get; set; }
+
+        public string Subject { get; set; }
+
+        public string Status { get; set; }
+
+        public string UserFullName { get; set; }
+
+        public string AccountName { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string DaysOld { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _checked = false;
+
+        public bool IsChecked
+        {
+            get { return _checked; }
+            set
+            {
+                if (_checked != value)
+                {
+                    _checked = value;
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged(this,
+                              new PropertyChangedEventArgs("IsChecked"));
+                    }
+                }
             }
         }
     }
