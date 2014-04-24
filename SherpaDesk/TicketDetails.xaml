@@ -303,7 +303,7 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <Grid MinWidth="700">
+                    <Grid MinWidth="70">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
@@ -318,16 +318,10 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle x:Name="SubjectDecorate" Grid.ColumnSpan="5" MinWidth="700" Fill="#4C8787FE" HorizontalAlignment="Stretch" Margin="-30,0,10,0" />
+                        <Rectangle x:Name="SubjectDecorate" Grid.ColumnSpan="5" MinWidth="730" Fill="#4C8787FE" HorizontalAlignment="Stretch" Margin="-30,0,10,0" />
+                        <Button x:Name="CloseMenu" Visibility="Visible" Content="Close" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="0,-50,285,0" FontSize="20" Foreground="White" Tapped="CloseMenu_Tapped" />
+                        <Button x:Name="TransferMenu" Visibility="Visible" Content="Transfer" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="0,-50,175,0" FontSize="20" Foreground="White" Tapped="TransferMenu_Tapped" />
                         <Button x:Name="AddResponseButton" Visibility="Visible" Content="Add Response" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="0,-50,7,0" FontSize="20" Foreground="White" Tapped="AddResponseButton_Tapped" />
-                        <Button Visibility="Visible" Content="Actions" Grid.ColumnSpan="5" HorizontalAlignment="Right" VerticalAlignment="Top" Canvas.ZIndex="1" Margin="50,-50,180,0" FontSize="20" Foreground="White">
-                            <Button.Flyout>
-                                <MenuFlyout Placement="Right">
-                                    <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
-                                    <MenuFlyoutItem x:Name="TransferMenu" Text="Transfer" Tapped="TransferMenu_Tapped" />
-                                </MenuFlyout>
-                            </Button.Flyout>
-                        </Button>
                         <TextBlock x:Name="SubjectLabel" FontSize="50" Grid.Row="0" Margin="0,0,0,0" Grid.ColumnSpan="3" Foreground="White" />
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>

@@ -94,5 +94,13 @@ namespace SherpaDesk
             }
         }
 
+        private void UserNameTextbox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Tab)
+            {
+                PasswordTextBox.Focus(FocusState.Keyboard);
+            }
+        }
+
     }
 }
