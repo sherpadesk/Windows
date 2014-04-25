@@ -30,6 +30,8 @@ namespace SherpaDesk.Models
         {
             get
             {
+                //return new ObservableCollection<WorkListItem>(
+                //    (new WorkListItem[1] { new WorkListItem { Subject = "text", TicketId = 1, Status = "Open" } }).AsEnumerable());
                 return _data;
             }
             set
@@ -121,15 +123,14 @@ namespace SherpaDesk.Models
 
         public void AddList(IList<TicketSearchResponse> list)
         {
-            int i = 1;
             var result = new ObservableCollection<WorkListItem>();
             foreach (var x in list)
             {
                 result.Add(new WorkListItem
                 {
-                    Index = "CheckBox" + i.ToString(),
                     TicketId = x.TicketId,
                     TicketKey = x.TicketKey,
+                    Subject = x.Subject.Length > 80 ? x.Subject.Substring(0, x.Subject.Substring(0, 80).LastIndexOf(' ')) + "..." : x.Subject,
                     AccountName = x.AccountName,
                     ClassName = x.ClassName,
                     Status = x.Status,
@@ -140,13 +141,6 @@ namespace SherpaDesk.Models
                         (DateTime.Now - x.СreatedTime).CalculateDate() :
                         string.Empty
                 });
-                i++;
-                //this.Data.Add(new WorkListItem
-                //{
-                //    RowVisibility = Visibility.Collapsed,
-                //    AlternateRowVisibility = Visibility.Visible,
-                //    Subject = x.Subject
-                //});
             }
             this.Data = result;
         }
