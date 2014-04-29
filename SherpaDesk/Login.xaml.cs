@@ -31,6 +31,9 @@ namespace SherpaDesk
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+#if !DEBUG
+            ModeBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+#endif
             base.OnNavigatedTo(e);
         }
 

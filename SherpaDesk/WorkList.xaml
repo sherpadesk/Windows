@@ -88,6 +88,23 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTextColumn PropertyName="Subject" SizeMode="Fixed" Width="300" Header="Subject">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Margin" Value="8,3,3,3" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
+                </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="UserFullName" SizeMode="Auto" Header="End User">
                     <telerik:DataGridTextColumn.HeaderStyle>
                         <Style TargetType="gridPrimitives:DataGridColumnHeader">
