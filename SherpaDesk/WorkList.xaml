@@ -47,7 +47,7 @@
                 <Button.Flyout>
                     <MenuFlyout Placement="Right">
                         <MenuFlyoutItem x:Name="ConfirmMenu" Text="Confirm" Tapped="ConfirmMenu_Tapped" Visibility="Collapsed" />
-                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
+                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />                        
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
@@ -70,9 +70,7 @@
                     </telerik:DataGridTemplateColumn.Header>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <Grid Grid.RowSpan="3">
-                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Margin="8,0,0,0" HorizontalAlignment="Left" />
-                            </Grid>
+                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Margin="8,0,0,0" HorizontalAlignment="Left" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
@@ -84,7 +82,6 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTemplateColumn.HeaderStyle>
-
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
                             <Button x:Name="GridTicketId" Content="{Binding TicketNumber}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Background="#FFD3D1E7" />
@@ -158,7 +155,7 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTemplateColumn.HeaderStyle>
-                </telerik:DataGridTemplateColumn>
+                </telerik:DataGridTemplateColumn>                
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
         <Grid Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Right">
@@ -166,7 +163,6 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid.ChildrenTransitions></Grid.ChildrenTransitions>
             <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="0" Content="&lt; Prev" Margin="0,5,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
             </Button>
             <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Next &gt;" Margin="5,5,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
