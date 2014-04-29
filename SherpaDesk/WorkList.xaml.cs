@@ -63,7 +63,7 @@ namespace SherpaDesk
             await Load();
         }
 
-        private void WorkListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ItemsGrid_SelectionChanged(object sender, DataGridSelectionChangedEventArgs e)
         {
             foreach (var ticket in e.AddedItems)
             {
@@ -84,7 +84,7 @@ namespace SherpaDesk
 
         private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (!this.Model.Data.Any(x => x.IsChecked))
+            if (!this.Model.Data.Any(x=>x.IsChecked))
             {
                 App.ShowErrorMessage("No Items selected", eErrorType.Warning);
                 return;
@@ -124,13 +124,13 @@ namespace SherpaDesk
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             this.Model.SelectAll(true);
-            WorkListGrid.SelectAll();
+            ItemsGrid.SelectAll();
         }
 
         private void HeaderGridCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             this.Model.SelectAll(false);
-            WorkListGrid.SelectedItems.Clear();
+            ItemsGrid.SelectedItems.Clear();
         }
 
         private void PageNext_Click(object sender, RoutedEventArgs e)
@@ -152,7 +152,7 @@ namespace SherpaDesk
                 {
                     case eWorkListType.Open:
                         request.Status = eTicketStatus.Open;
-                        request.Query = eRoles.Technician.Details();
+                        request.Role = eRoles.Technician;
                         break;
                     case eWorkListType.OnHold:
                         request.Status = eTicketStatus.OnHold;
@@ -163,7 +163,7 @@ namespace SherpaDesk
                         break;
                     case eWorkListType.OpenAsEndUser:
                         request.Status = eTicketStatus.Open | eTicketStatus.OnHold;
-                        request.Query = eRoles.EndUser.Details();
+                        request.Role = eRoles.EndUser;
                         break;
                     case eWorkListType.AwaitingResponse:
                         request.Status = eTicketStatus.Waiting;

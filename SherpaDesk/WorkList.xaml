@@ -19,43 +19,6 @@
     <Page.Resources>
         <x:String x:Key="AppName">SherpaDesk</x:String>
         <model:WorkListViewModel x:Key="Model" x:Name="Model" />
-        <Style x:Key="WorkListItemStyle" TargetType="GridViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Margin" Value="0,0,2,2"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridViewItem">
-                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
-                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
-                                               ContentMargin="4" 
-                                               ContentTransitions="{TemplateBinding ContentTransitions}" 
-                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
-                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
-                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
-                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                               Padding="{TemplateBinding Padding}" 
-                                               PointerOverBackgroundMargin="1" 
-                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
-                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
-                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
-                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
-                                               SelectionCheckMarkVisualEnabled="False" 
-                                               SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
-                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
-                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}" 
-                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}" 
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
 
     <!--
@@ -74,7 +37,7 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />
-        <Grid Grid.Column="1" Grid.Row="0">
+        <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
@@ -89,86 +52,115 @@
                 </Button.Flyout>
             </Button>
         </Grid>
-        <GridView x:Name="WorkListGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" Grid.Column="1" Grid.Row="1" BorderBrush="#FF006AC1" SelectionMode="Multiple" Margin="0,10,0,10" SelectionChanged="WorkListGrid_SelectionChanged" ItemContainerStyle="{StaticResource WorkListItemStyle}" >
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid Name="HeaderGrid" Background="#FF006AC1" Height="50" VerticalAlignment="Top" Margin="4 0 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="160" />
-                        </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
-                        <TextBlock Text="Tkt#" Grid.Column="1" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="End User" Grid.Column="2" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="Tech Name" Grid.Column="3" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="Account" Grid.Column="4" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="Class" Grid.Column="5" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Text="Days Old | Status" Grid.Column="7" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </GridView.HeaderTemplate>
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="1"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Border BorderBrush="#FF006AC1" BorderThickness="4" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0"></Border>
-                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="0" Grid.Column="1"></Border>
-                        <Grid Background="LightGray" Grid.Row="1" Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="800" />
-                                <ColumnDefinition Width="160" />
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="GridTicketId" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 0 0 0" HorizontalContentAlignment="Center" Content="{Binding TicketNumber}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" FontSize="18" FontWeight="Bold" Background="Transparent" />
-                            <Button x:Name="GridTicketSubject" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 0 0 0" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Content="{Binding Subject}" Grid.Column="1" FontSize="18" FontWeight="Bold" Background="Transparent"></Button>
-                            <TextBlock Text="{Binding Status}" Grid.Column="2" Canvas.ZIndex="1" HorizontalAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="White"></TextBlock>
-                            <Ellipse Fill="#92C74F" HorizontalAlignment="Center" Canvas.ZIndex="0" Grid.Column="2" Height="30" VerticalAlignment="Center" Width="160" />
+        <telerik:RadDataGrid x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" SelectionUnit="Row"
+                              SelectionChanged="ItemsGrid_SelectionChanged">
+            <telerik:RadDataGrid.Columns>
+                <telerik:DataGridTemplateColumn Width="50" SizeMode="Auto">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                    <telerik:DataGridTemplateColumn.Header>
+                        <Grid HorizontalAlignment="Stretch">
+                            <CheckBox x:Name="HeaderGridCheckbox" Visibility="Visible" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
                         </Grid>
-                        <Grid Background="White" Grid.Row="2" Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="160" />
-                            </Grid.ColumnDefinitions>
-                            <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="White" />
-                            <TextBlock Text="{Binding UserFullName}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" FontSize="18"></TextBlock>
-                            <TextBlock Text="{Binding TechnicianFullName}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" FontSize="18"></TextBlock>
-                            <TextBlock Text="{Binding AccountName}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" FontSize="18"></TextBlock>
-                            <TextBlock Text="{Binding ClassName}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" FontSize="18"></TextBlock>
-                            <TextBlock Text="{Binding DaysOld}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" FontSize="18"></TextBlock>
-                        </Grid>
-                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.Column="1">
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+                    </telerik:DataGridTemplateColumn.Header>
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <Grid Grid.RowSpan="3">
+                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Margin="8,0,0,0" HorizontalAlignment="Left" />
+                            </Grid>
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTemplateColumn Header="Tkt#" SizeMode="Auto">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
 
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <Button x:Name="GridTicketId" Content="{Binding TicketNumber}" Tag="{Binding TicketKey}" Click="GridTicketId_Click" Background="#FFD3D1E7" />
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTextColumn PropertyName="UserFullName" SizeMode="Auto" Header="End User">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="TechnicianFullName" SizeMode="Auto" Header="Tech Name">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="AccountName" SizeMode="Auto" Header="Account">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="ClassName" SizeMode="Auto" Header="Class">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="DaysOld" SizeMode="Auto" Header="Days Old">
+                    <telerik:DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTextColumn.HeaderStyle>
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTemplateColumn Header="Status" SizeMode="Auto">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Status}" FontWeight="Bold" />
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTemplateColumn SizeMode="Auto">
+                    <telerik:DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF006AC1"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </telerik:DataGridTemplateColumn.HeaderStyle>
+                </telerik:DataGridTemplateColumn>
+            </telerik:RadDataGrid.Columns>
+        </telerik:RadDataGrid>
         <Grid Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
