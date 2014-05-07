@@ -63,6 +63,14 @@ namespace SherpaDesk.Common
             }
         }
 
+        public Command Activity
+        {
+            get
+            {
+                return new Command("activity");
+            }
+        }
+
         public Command Accounts
         {
             get

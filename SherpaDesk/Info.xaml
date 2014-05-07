@@ -53,6 +53,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="auto"/>
@@ -99,16 +100,10 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
-                <!--<telerik:RadCustomHubTile x:Name="FollowUpDatesTile" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="FollowUpDatesTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="FollowUpDatesCount" HorizontalAlignment="Center" Text="0" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="Follow-Up Dates" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>-->
 
-                <telerik:RadCustomHubTile x:Name="AddTimeTile" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTimeTile_Tapped">
+                <ListView x:Name="ActivityList" Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" Margin="0,198,0,2" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollMode="Auto" MaxWidth="450" MaxHeight="500" />
+
+                <telerik:RadCustomHubTile x:Name="AddTimeTile" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTimeTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
@@ -116,7 +111,7 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="AddTicketTile" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTicketTile_Tapped">
+                <telerik:RadCustomHubTile x:Name="AddTicketTile" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTicketTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
@@ -124,7 +119,7 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="TimesheetTile" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="TimesheetTile_Tapped">
+                <telerik:RadCustomHubTile x:Name="TimesheetTile" Grid.Row="1" Grid.Column="8" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="TimesheetTile_Tapped">
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text=" " FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
@@ -132,6 +127,7 @@
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>
+                <ListView Grid.Column="4" HorizontalAlignment="Left" Height="100" Margin="93,306,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
 
             </Grid>
             <Frame x:Name="LeftFrame" VerticalAlignment="Top" Grid.Column="1" Margin="30,0,0,30" />

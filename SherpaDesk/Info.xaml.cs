@@ -3,6 +3,7 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
+using System.Linq;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +14,7 @@ namespace SherpaDesk
     {
         public Info()
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
         }
 
 
@@ -21,18 +22,27 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var result = await connector.Func<KeyRequest, TicketCountsResponse>(
+                var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
                     x => x.Tickets, new KeyRequest("counts"));
-                if (result.Status == eResponseStatus.Success)
+                if (resultCounts.Status != eResponseStatus.Success)
                 {
-                    NewMessagesCount.Text = result.Result.NewMessages.ToString();
-                    OpenTicketsCount.Text = result.Result.OpenAsTech.ToString();
-                    OpenAsEndUserCount.Text = result.Result.OpenAsUser.ToString();
-                    OnHoldCount.Text = result.Result.OnHold.ToString();
-                    WaitingCount.Text = result.Result.Waiting.ToString();
+                    this.pageRoot.HandleError(resultCounts);
+                    return;
                 }
-                else
-                    this.pageRoot.HandleError(result);
+                
+                NewMessagesCount.Text = resultCounts.Result.NewMessages.ToString();
+                OpenTicketsCount.Text = resultCounts.Result.OpenAsTech.ToString();
+                OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
+                OnHoldCount.Text = resultCounts.Result.OnHold.ToString();
+                WaitingCount.Text = resultCounts.Result.Waiting.ToString();
+
+                var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);
+                if (resultActivities.Status != eResponseStatus.Success)
+                {
+                    this.pageRoot.HandleError(resultActivities);
+                    return;
+                }
+                ActivityList.ItemsSource = resultActivities.Result.Select(x => x.ToString()).AsEnumerable();
             }
         }
 
