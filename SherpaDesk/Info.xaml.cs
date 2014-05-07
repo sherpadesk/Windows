@@ -29,7 +29,7 @@ namespace SherpaDesk
                     this.pageRoot.HandleError(resultCounts);
                     return;
                 }
-                
+
                 NewMessagesCount.Text = resultCounts.Result.NewMessages.ToString();
                 OpenTicketsCount.Text = resultCounts.Result.OpenAsTech.ToString();
                 OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
@@ -42,7 +42,22 @@ namespace SherpaDesk
                     this.pageRoot.HandleError(resultActivities);
                     return;
                 }
-                ActivityList.ItemsSource = resultActivities.Result.Select(x => x.ToString()).AsEnumerable();
+                var dataSource = resultActivities.Result.Select(x=> new
+                {
+                    UserName = x.UserName,
+                    Title = x.Title,
+                    Note = Helper.HtmlToString(x.Note)
+                }).ToList();
+
+                if (dataSource.Count > 0)
+                {
+                    ActivityList.ItemsSource = dataSource;
+                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
             }
         }
 

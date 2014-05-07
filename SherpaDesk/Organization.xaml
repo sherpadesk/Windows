@@ -27,8 +27,8 @@
             <ComboBox Name="OrganizationList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="2" VerticalAlignment="Top" FontSize="36" Width="619" SelectionChanged="OrganizationList_SelectionChanged"/>
             <TextBlock VerticalAlignment="Bottom" FontSize="40" Grid.Row="3" Margin="45,10,0,0" Text="Select Instance"/>
             <ComboBox Name="InstanceList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="4" VerticalAlignment="Top" FontSize="36" Width="619"/>
-            <Button x:Name="SelectOrgButton" Content="Select Organization/Instance" HorizontalAlignment="Center" Grid.Row="5" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" Click="SelectOrgButton_Click" FontSize="36" Background="#FF57AE57" />
-            <Button x:Name="LogoffButton" Content="Logoff" HorizontalAlignment="Center" Grid.Row="6" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" FontSize="36" Background="#FF57AE57" Click="LogoffButton_Click" />
+            <Button x:Name="SelectOrgButton" Content="Continue" HorizontalAlignment="Center" Grid.Row="5" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" Click="SelectOrgButton_Click" FontSize="36" Background="#FF57AE57" />
+            <Button x:Name="LogoffButton" Content="Logoff" HorizontalAlignment="Center" Grid.Row="6" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" FontSize="36" Background="Gray" Click="LogoffButton_Click" />
         </Grid>
         <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="659,190,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Popup/>
