@@ -4,7 +4,7 @@
   <Properties>
     <DisplayName>SherpaDesk</DisplayName>
     <PublisherDisplayName>AlexeyG</PublisherDisplayName>
-    <Logo>Assets\Logo.png</Logo>
+    <Logo>Assets\Images\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
     <OSMinVersion>6.3.0</OSMinVersion>
@@ -15,17 +15,18 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SherpaDesk.App">
-      <m2:VisualElements DisplayName="SherpaDesk" Description="SherpaDesk" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\LogoBig.png" Square30x30Logo="Assets\SmallLogo.png">
-        <m2:DefaultTile Wide310x150Logo="Assets\WideLogo.png" DefaultSize="wide310x150Logo">
+      <m2:VisualElements DisplayName="SherpaDesk" Description="SherpaDesk" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Images\Bluesquare150x150Logo.png" Square30x30Logo="Assets\Images\Square30x30Logo.png">
+        <m2:DefaultTile DefaultSize="wide310x150Logo" Square70x70Logo="Assets\Images\Bluesquare70x70Logo.png" Square310x310Logo="Assets\Images\square310x310Logo.png" Wide310x150Logo="Assets\Images\Wide310x150Logo.png">
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
             <m2:ShowOn Tile="wide310x150Logo" />
+            <m2:ShowOn Tile="square310x310Logo" />
           </m2:ShowNameOnTiles>
         </m2:DefaultTile>
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />
         </m2:InitialRotationPreference>
-        <m2:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#004174" />
+        <m2:SplashScreen Image="Assets\Images\Splash screen 620x300.png" BackgroundColor="#004174" />
       </m2:VisualElements>
     </Application>
   </Applications>
