@@ -22,8 +22,22 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <xtk:WatermarkTextBox x:Name="UserNameTextbox" TabIndex="0" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" FontSize="36" Width="672" KeyDown="UserNameTextbox_KeyDown"/>
-            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" TabIndex="1" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="672" Password="" KeyDown="PasswordTextBox_KeyDown" />
+            <xtk:WatermarkTextBox x:Name="UserNameTextbox" HorizontalContentAlignment="Center" TabIndex="0" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Email Address" Height="66" Grid.Row="1" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" FontSize="36" Width="672" KeyDown="UserNameTextbox_KeyDown">
+                <xtk:WatermarkTextBox.WatermarkTextStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="10,0,0,0" />
+                    </Style>
+                </xtk:WatermarkTextBox.WatermarkTextStyle>
+            </xtk:WatermarkTextBox>
+            <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" TabIndex="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10" WatermarkText="Password" Height="66" Grid.Row="2"  VerticalAlignment="Top" FontSize="36" Width="672" Password="" KeyDown="PasswordTextBox_KeyDown">
+                <xtk:WatermarkPasswordBox.WatermarkTextStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Padding" Value="10,0,0,0" />
+                    </Style>
+                </xtk:WatermarkPasswordBox.WatermarkTextStyle>
+            </xtk:WatermarkPasswordBox>
             <Button x:Name="SignInButton" Content="Sign In" TabIndex="2" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="680" Height="66" Click="SignIn" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF57AE57" />
             <HyperlinkButton Content="Register New SherpaDesk Organization" TabIndex="3" NavigateUri="http://www.sherpadesk.com/start-your-climb/" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="5" FontSize="30" Foreground="White" Background="#FF6B9452" BorderBrush="White" BorderThickness="2" Height="66" Width="680"/>
             <CheckBox x:Name="ModeBox" Canvas.ZIndex="10" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top"/>

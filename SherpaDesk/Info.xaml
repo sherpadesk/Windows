@@ -385,7 +385,7 @@
                     <telerik:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                            <TextBlock Text="Add Ticket" FontSize="20" Margin="0,-12,0,4"/>
+                            <TextBlock Text="Create Ticket" FontSize="20" Margin="0,-12,0,4"/>
                         </StackPanel>
                     </telerik:RadCustomHubTile.FrontContent>
                 </telerik:RadCustomHubTile>

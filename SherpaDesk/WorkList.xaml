@@ -47,7 +47,7 @@
                 <Button.Flyout>
                     <MenuFlyout Placement="Right">
                         <MenuFlyoutItem x:Name="ConfirmMenu" Text="Confirm" Tapped="ConfirmMenu_Tapped" Visibility="Collapsed" />
-                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />                        
+                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
@@ -113,6 +113,12 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="TechnicianFullName" SizeMode="Auto" Header="Tech Name">
                     <telerik:DataGridTextColumn.HeaderStyle>
@@ -122,6 +128,12 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="AccountName" SizeMode="Auto" Header="Account">
                     <telerik:DataGridTextColumn.HeaderStyle>
@@ -131,6 +143,12 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="ClassName" SizeMode="Auto" Header="Class">
                     <telerik:DataGridTextColumn.HeaderStyle>
@@ -140,6 +158,12 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="DaysOld" SizeMode="Auto" Header="Days Old">
                     <telerik:DataGridTextColumn.HeaderStyle>
@@ -149,6 +173,12 @@
                             <Setter Property="Foreground" Value="White" />
                         </Style>
                     </telerik:DataGridTextColumn.HeaderStyle>
+                    <telerik:DataGridTextColumn.CellContentStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </telerik:DataGridTextColumn.CellContentStyle>
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTemplateColumn Header="Status" SizeMode="Auto">
                     <telerik:DataGridTemplateColumn.HeaderStyle>
@@ -160,7 +190,7 @@
                     </telerik:DataGridTemplateColumn.HeaderStyle>
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Status}" FontWeight="Bold" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Status}" FontWeight="Bold" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
@@ -171,8 +201,8 @@
                             <Setter Property="FontSize" Value="20" />
                             <Setter Property="Foreground" Value="White" />
                         </Style>
-                    </telerik:DataGridTemplateColumn.HeaderStyle>
-                </telerik:DataGridTemplateColumn>                
+                    </telerik:DataGridTemplateColumn.HeaderStyle>                    
+                </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
         <Grid Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Right">
