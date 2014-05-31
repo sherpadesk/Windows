@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>SherpaDesk_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>SherpaDesk_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -20,6 +20,7 @@
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
     <DontImportPostSharp>True</DontImportPostSharp>
     <AppxBundle>Auto</AppxBundle>
+    <PackageCertificateThumbprint>43CDB07A3DCA43D0CE6F0C32BAE4A2821857B610</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -245,6 +246,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
+    <None Include="SherpaDesk_StoreKey.pfx" />
     <None Include="SherpaDesk_TemporaryKey.pfx" />
     <None Include="Telerik\Core\Telerik.Core.pri" />
     <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid.pri" />
@@ -296,6 +298,7 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\WideLogo.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Telerik\Core\Telerik.Core.dll" />
     <Content Include="Telerik\Core\Telerik.Core.XML" />
     <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.dll" />
