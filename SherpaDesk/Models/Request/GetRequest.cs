@@ -21,7 +21,7 @@ namespace SherpaDesk.Models.Request
 
         public HttpContent GetContent()
         {
-            throw new System.NotImplementedException("GET request cannot has any http content.");
+            throw new System.NotImplementedException("GET request does not support content.");
         }
     }
 }

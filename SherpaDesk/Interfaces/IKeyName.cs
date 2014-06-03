@@ -1,4 +1,5 @@
-﻿namespace SherpaDesk.Common
+﻿using System;
+namespace SherpaDesk.Common
 {
     public interface  IKeyName
     {

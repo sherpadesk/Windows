@@ -15,7 +15,7 @@ namespace SherpaDesk.Common
     public static class ComboBoxExtensions
     {
         public const string NONE = "None";
-        public static void AutoComplete(this ComboBox comboBox, TextChangedEventHandler textChangedEventHandler)
+        public static void AutoComplete(this ComboBox comboBox, TextChangedEventHandler textChangedEventHandler, Action<IKeyName> selectedFunc = null)
         {
             var grid = comboBox.ParentGrid();
             if (grid == null) return;
@@ -42,7 +42,13 @@ namespace SherpaDesk.Common
             {
                 var tb = e.AddedItems.FirstOrDefault() as IKeyName;
                 if (tb != null)
+                {
                     searchBox.Tag = tb.Key;
+                    if (selectedFunc != null)
+                    {
+                        selectedFunc(tb);
+                    }
+                }
             };
             searchBox.Margin = new Thickness(comboBox.Margin.Left, comboBox.Margin.Top, comboBox.Margin.Right, comboBox.Margin.Bottom);
 
@@ -169,6 +175,10 @@ namespace SherpaDesk.Common
             }
         }
 
+        public static void SetDefaultValue(this ComboBox comboBox)
+        {
+            comboBox.SelectedIndex = comboBox.Items.Count > 0 ? 0 : -1;
+        }
         public static void SetSelectedValueByName(this ComboBox comboBox, object value)
         {
             if (value == null)

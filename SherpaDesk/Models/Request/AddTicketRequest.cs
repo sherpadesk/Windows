@@ -12,7 +12,7 @@ namespace SherpaDesk.Models.Request
         internal const string ERROR_EMPTY_ACCOUNT_ID = "Please select a Account.#AccountList";
         internal const string ERROR_EMPTY_CLASS_ID = "Please select a Class.#ClassList";
         internal const string ERROR_EMPTY_SUBJECT = "Please enter a Subject.#SubjectTextbox";
-        
+
         [DataMember(Name = "status"), Details]
         public string Status { get; set; }
 
@@ -38,5 +38,39 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "tech_id"), Details]
         [IntRequired(ErrorMessage = ERROR_EMPTY_TECHNICIAN_ID)]
         public int TechnicianId { get; set; }
+
+        //[DataMember(Name = "technicians"), Details]
+        //public AssigmentUser[] Technicians { get; set; }
     }
+
+    //[DataContract]
+    //public class AssigmentUser : ObjectBase
+    //{
+    //    public AssigmentUser(int userId)
+    //    {
+    //        this.UserId = userId.ToString();
+    //    }
+
+    //    public AssigmentUser(int userId, bool alt_tech)
+    //    {
+    //        this.UserId = userId.ToString();
+    //        if (alt_tech)
+    //            this.Primary = bool.TrueString;
+    //    }
+
+    //    [DataMember(Name = "user_id"), Details]
+    //    public string UserId { get; set; }
+
+    //    [DataMember(Name = "user_fullname"), Details]
+    //    public string UserName { get; set;}
+
+    //    [DataMember(Name = "is_primary"), Details]
+    //    public string Primary { get; set; }
+
+    //    [DataMember(Name = "start_date"), Details]
+    //    protected string _startDate;
+
+    //    [DataMember(Name = "stop_date"), Details]
+    //    protected string _stopDate;
+    //}
 }

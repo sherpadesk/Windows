@@ -11,6 +11,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
 namespace SherpaDesk
@@ -79,6 +80,8 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            SelectedAlternateTechnicianList.Items.Clear();
+
             using (var connector = new Connector())
             {
                 // users
@@ -122,11 +125,22 @@ namespace SherpaDesk
                         resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
                         NameResponse.Empty,
                         new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                    AlternateTechnicianList.SelectionChanged += (s, a) =>
+                    {
+                        var selectedItem = a.AddedItems.FirstOrDefault() as ComboBoxItem;
+                        if (selectedItem != null && (int)selectedItem.Tag > 0)
+                        {
+                            SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = selectedItem.Content, Tag = selectedItem.Tag });
+                        }
+                    };
                 }
                 else
                 {
                     TechnicianList.AutoComplete(this.SearchTechnicians);
-                    AlternateTechnicianList.AutoComplete(this.SearchTechnicians);
+                    AlternateTechnicianList.AutoComplete(this.SearchTechnicians, x =>
+                    {
+                        SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = x.Name, Tag = x.Key });
+                    });
                 }
 
                 // accounts
@@ -173,6 +187,20 @@ namespace SherpaDesk
                     this.HandleError(resultAddTicket);
                     return;
                 }
+                foreach (var item in SelectedAlternateTechnicianList.Items)
+                {
+                    if (((CheckBox)item).IsChecked ?? false)
+                    {
+                        var attachAltTechResult = await connector.Action<AttachAltTechRequest>(x => x.Tickets,
+                            new AttachAltTechRequest(resultAddTicket.Result.TicketKey, (int)((CheckBox)item).Tag));
+
+                        if (attachAltTechResult.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(attachAltTechResult);
+                            return;
+                        }
+                    }
+                }
                 if (_attachment.Count > 0)
                 {
                     using (FileRequest fileRequest = new FileRequest("?ticket=" + resultAddTicket.Result.TicketKey))
@@ -191,8 +219,17 @@ namespace SherpaDesk
                 }
                 // if all okay to clear form
 
-                _attachment.Clear();
                 DescritionTextbox.Text = SubjectTextbox.Text = string.Empty;
+
+                EndUserList.SetDefaultValue();
+                AccountList.SetDefaultValue();
+                ClassList.SetDefaultValue();
+                AccountList.SetDefaultValue();
+                TechnicianList.SetDefaultValue();
+                AlternateTechnicianList.SetDefaultValue();
+
+                SelectedAlternateTechnicianList.Items.Clear();
+                _attachment.Clear();
 
                 var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
                 var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
