@@ -53,7 +53,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    TechnicianList.AutoComplete(this.SearchTechnicians);
+                    TechnicianList.AutoComplete(x => x.Search(false));
                 }
 
                 var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
@@ -68,12 +68,6 @@ namespace SherpaDesk
 
             }
         }
-
-        private async void SearchTechnicians(object obj, TextChangedEventArgs args)
-        {
-            await ((RadAutoCompleteBox)obj).Search(false);
-        }
-
 
         private async void SubmitTransferButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {

@@ -2,9 +2,8 @@
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
-using System;
 using System.Linq;
-using Windows.UI.Popups;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -43,6 +42,8 @@ namespace SherpaDesk
 
             AppSettings.Current.Beta = ModeBox.IsChecked ?? false;
 
+            this.StartProgress();
+
             using (var connector = new Connector())
             {
                 // authentication
@@ -73,6 +74,8 @@ namespace SherpaDesk
                     this.HandleError(resultOrg);
                     return;
                 }
+
+                this.StopProgress();
 
                 var orgList = resultOrg.Result.ToList();
 
@@ -119,5 +122,26 @@ namespace SherpaDesk
                     break;
             }
         }
+
+        private CoreCursor _cursor;
+
+        public void StartProgress()
+        {
+            progressRing.IsActive = true;
+            _cursor = Window.Current.CoreWindow.PointerCursor.Type != Windows.UI.Core.CoreCursorType.Wait ?
+                Window.Current.CoreWindow.PointerCursor :
+                new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
+            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 2);
+            Window.Current.CoreWindow.IsInputEnabled = false;
+        }
+
+        public void StopProgress()
+        {
+            progressRing.IsActive = false;
+            Window.Current.CoreWindow.PointerCursor = _cursor ?? new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
+            Window.Current.CoreWindow.IsInputEnabled = true;
+        }
+
+
     }
 }

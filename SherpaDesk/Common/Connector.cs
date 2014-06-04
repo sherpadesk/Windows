@@ -2,16 +2,11 @@
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.ExceptionServices;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 
 namespace SherpaDesk.Common

@@ -67,17 +67,6 @@ namespace SherpaDesk
             this.SetMe(this.AlternateTechnicianList);
         }
 
-
-        private async void SearchUsers(object obj, TextChangedEventArgs args)
-        {
-            await ((RadAutoCompleteBox)obj).Search(false);
-        }
-
-        private async void SearchTechnicians(object obj, TextChangedEventArgs args)
-        {
-            await ((RadAutoCompleteBox)obj).Search(false);
-        }
-
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             SelectedAlternateTechnicianList.Items.Clear();
@@ -111,7 +100,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    EndUserList.AutoComplete(this.SearchUsers);
+                    EndUserList.AutoComplete(x => x.Search(false));
                 }
 
                 if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
@@ -136,11 +125,10 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    TechnicianList.AutoComplete(this.SearchTechnicians);
-                    AlternateTechnicianList.AutoComplete(this.SearchTechnicians, x =>
-                    {
-                        SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = x.Name, Tag = x.Key });
-                    });
+                    TechnicianList.AutoComplete(x => x.Search(false));
+                    AlternateTechnicianList.AutoComplete(
+                        x => x.Search(false), 
+                        y => SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = y.Name, Tag = y.Key }));
                 }
 
                 // accounts

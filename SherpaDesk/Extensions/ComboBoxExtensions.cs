@@ -9,13 +9,15 @@ using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 namespace SherpaDesk.Common
 {
     public static class ComboBoxExtensions
     {
         public const string NONE = "None";
-        public static void AutoComplete(this ComboBox comboBox, TextChangedEventHandler textChangedEventHandler, Action<IKeyName> selectedFunc = null)
+
+        public static void AutoComplete(this ComboBox comboBox, Func<RadAutoCompleteBox, Task> searchFunc, Action<IKeyName> selectedFunc = null)
         {
             var grid = comboBox.ParentGrid();
             if (grid == null) return;
@@ -33,23 +35,29 @@ namespace SherpaDesk.Common
                 FilterComparisonMode = System.StringComparison.CurrentCultureIgnoreCase,
                 FilterMode = AutoCompleteBoxFilterMode.Contains,
                 FilterDelay = TimeSpan.FromSeconds(1),
+                FilterStartThreshold = 2,
                 IsDropDownOpen = true,
+                AutosuggestFirstItem = false,
+                CompositeMode = Windows.UI.Xaml.Media.ElementCompositeMode.SourceOver,
                 Visibility = Visibility.Visible
             };
             searchBox.ItemTemplate = (DataTemplate)((ResourceDictionary)App.Current.Resources["CommonResources"])["AutoCompleteItemTemplate"];
-            searchBox.TextChanged += textChangedEventHandler;
-            searchBox.SelectionChanged += (object sender, SelectionChangedEventArgs e) =>
-            {
-                var tb = e.AddedItems.FirstOrDefault() as IKeyName;
-                if (tb != null)
+            searchBox.TextChanged += async (object obj, TextChangedEventArgs args) =>
                 {
-                    searchBox.Tag = tb.Key;
-                    if (selectedFunc != null)
+                    await searchFunc((RadAutoCompleteBox)obj);
+                };
+            searchBox.SelectionChanged += (object sender, SelectionChangedEventArgs e) =>
+                {
+                    var tb = e.AddedItems.FirstOrDefault() as IKeyName;
+                    if (tb != null)
                     {
-                        selectedFunc(tb);
+                        searchBox.Tag = tb.Key;
+                        if (selectedFunc != null)
+                        {
+                            selectedFunc(tb);
+                        }
                     }
-                }
-            };
+                };
             searchBox.Margin = new Thickness(comboBox.Margin.Left, comboBox.Margin.Top, comboBox.Margin.Right, comboBox.Margin.Bottom);
 
             Grid.SetRow(searchBox, Grid.GetRow(comboBox));
@@ -65,13 +73,12 @@ namespace SherpaDesk.Common
             //};
         }
 
-
         public async static Task Search(this RadAutoCompleteBox searchBox, bool tech)
         {
             using (var connector = new Connector())
             {
                 searchBox.FilterMemberPath = "Name";
-                if (searchBox.Text.Length > 1)
+                if (searchBox.Text.Trim().Length > 2)
                 {
                     var result = await connector.Func<SearchRequest, UserResponse[]>(x => tech ? x.Technicians : x.Users,
                         tech ? ((SearchRequest)new TechniciansRequest() { Query = searchBox.Text }) : new UserSearchRequest { Query = searchBox.Text });
@@ -86,7 +93,6 @@ namespace SherpaDesk.Common
                     }
                 }
             }
-
         }
 
         public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)

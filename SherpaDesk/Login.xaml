@@ -8,7 +8,9 @@
     xmlns:xtk="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d">
     <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF004174">
-
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
+        </StackPanel>
         <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="606">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

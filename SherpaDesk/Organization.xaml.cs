@@ -20,10 +20,12 @@ namespace SherpaDesk
     public sealed partial class Organization : Page
     {
         private IList<OrganizationResponse> _organizationList = null;
+        private IList<InstanceResponse> _instanceList = null;
         public Organization()
         {
             this.InitializeComponent();
             _organizationList = new List<OrganizationResponse>();
+            _instanceList = new List<InstanceResponse>();
         }
 
         /// <summary>
@@ -71,17 +73,38 @@ namespace SherpaDesk
         private void SelectOrgButton_Click(object sender, RoutedEventArgs e)
         {
             var orgKey = OrganizationList.GetSelectedValue<string>();
-            var instKey = InstanceList.GetSelectedValue<string>();
-            if (!string.IsNullOrEmpty(orgKey) && !string.IsNullOrEmpty(instKey))
+            if (!string.IsNullOrEmpty(orgKey))
             {
-                AppSettings.Current.AddOrganization(
-                        orgKey,
-                        OrganizationList.GetSelectedText(),
-                        instKey,
-                        InstanceList.GetSelectedText(),
-                        _organizationList.IsSingle());
+                string instKey = string.Empty, instName = string.Empty;
+                if (InstanceList.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
+                {
+                    var instance = _instanceList.FirstOrDefault();
+                    if (instance != null)
+                    {
+                        instKey = instance.Key;
+                        instName = instance.Name;
+                    }
+                }
+                else
+                {
+                    instKey = InstanceList.GetSelectedValue<string>();
+                    instName = InstanceList.GetSelectedText();
+                }
+                if (!string.IsNullOrEmpty(instKey))
+                {
+                    AppSettings.Current.AddOrganization(
+                            orgKey,
+                            OrganizationList.GetSelectedText(),
+                            instKey,
+                            instName,
+                            _organizationList.IsSingle());
 
-                this.Frame.Navigate(typeof(MainPage));
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    App.ShowErrorMessage("No selected instance", eErrorType.Error);
+                }
             }
             else
             {
@@ -97,8 +120,17 @@ namespace SherpaDesk
                 var org = _organizationList.FirstOrDefault(x => x.Key == orgKey);
                 if (org != null)
                 {
-                    InstanceList.FillData(org.Instances.ToList());
-                    InstanceList.SelectedIndex = 0;
+                    _instanceList = org.Instances.ToList();
+                    if (_instanceList.Count > 1)
+                    {
+                        InstanceListText.Visibility = InstanceList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        InstanceList.FillData(_instanceList);
+                        InstanceList.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        InstanceListText.Visibility = InstanceList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    }
                 }
             }
         }
