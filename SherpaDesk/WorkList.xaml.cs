@@ -22,6 +22,15 @@ namespace SherpaDesk
         {
             this.InitializeComponent();
             this.Model.DataLoading += UpdatedPage;
+            var viewModel = this.DataContext as WorkListPageViewModel;
+            viewModel.CommandExecuted += viewModel_CommandExecuted;
+        }
+
+        void viewModel_CommandExecuted(object sender, EventArgs e)
+        {
+            DetailsFrame.Navigated -= ChildPage_Navigated;
+            DetailsFrame.Navigated += ChildPage_Navigated;
+            DetailsFrame.Navigate(typeof(TicketDetails), sender.ToString());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -180,5 +189,9 @@ namespace SherpaDesk
             }
         }
 
+        private void GridCheckbox_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

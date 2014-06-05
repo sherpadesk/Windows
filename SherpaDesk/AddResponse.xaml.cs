@@ -112,7 +112,7 @@ namespace SherpaDesk
             }
             else
             {
-                filepickButton.Content = "Select Files";
+                filepickButton.Content = "Attach Files";
             }
         }
 

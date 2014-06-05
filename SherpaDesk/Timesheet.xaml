@@ -145,7 +145,7 @@
                     <TextBlock HorizontalAlignment="left" Grid.Row="8" Margin="10,10,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top" FontSize="24" />
                     <TextBox x:Name="NoteTextBox" Margin="0,5,0,0" HorizontalAlignment="Stretch" Height="100" InputScope="NumberFullWidth" Grid.Row="8" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" />
 
-                    <Button Content="Save Time" Grid.Column="0" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.ColumnSpan="3" Grid.Row="9" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Background="#FF2F9129" Click="Button_Click" />
+                    <Button Content="Save Time" Grid.Column="0" HorizontalAlignment="Left" Margin="0,14,0,0" Padding="0,0,0,3" Grid.ColumnSpan="3" Grid.Row="9" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Background="#FF2F9129" Click="Button_Click" />
                 </Grid>
             </Grid>
             <Grid x:Name="TimesheetGrids" Visibility="Collapsed" Grid.Column="4" Margin="0,-15,0,15">

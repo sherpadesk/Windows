@@ -114,9 +114,9 @@
             </ComboBox>
             <Controls:WatermarkTextBox Name="CommentsTextbox" WatermarkText="Comments" FontSize="25" TextWrapping="Wrap" Grid.Row="3" Grid.ColumnSpan="11" Height="200" ScrollViewer.VerticalScrollMode="Auto" HorizontalAlignment="Stretch" AcceptsReturn="True" />
 
-            <Button x:Name="filepickButton" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Content="Select Files" Height="50" Margin="0,0,0,0" Grid.Row="5" FontSize="24" Tapped="filepickButton_Tapped" />
+            <Button x:Name="filepickButton" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Content="Attach Files" Height="50" Margin="0,0,0,0" Grid.Row="5" Padding="0,0,0,3" FontSize="24" Tapped="filepickButton_Tapped" />
 
-            <Button x:Name="SaveButton" Content="Add Response" Grid.Row="7" FontSize="30" Grid.ColumnSpan="3" Background="#FF2F9129" Tapped="SaveButton_Tapped" />
+            <Button x:Name="SaveButton" Content="Add Response" Grid.Row="7" FontSize="30" Grid.ColumnSpan="3" Background="#FF2F9129" Padding="15,0,15,3" Tapped="SaveButton_Tapped" />
             <Button x:Name="SaveAndReopenButton" Content="Save &amp; ReOpen ticket" Grid.Row="7" FontSize="30" Grid.ColumnSpan="4" Background="#FF2F9129" Tapped="SaveAndReopenButton_Click" Visibility="Collapsed" />
             <CheckBox Name="HoldBox" Content="Place on Hold" FontSize="30" Padding="5,-8,0,0" Margin="0,3,0,0" Grid.Row="5" HorizontalAlignment="Right" Grid.ColumnSpan="3" Grid.Column="4" />
             <Button Name="SaveDoNotReopenLink" Content="Save but Do Not ReOpen" FontSize="30" Grid.Row="7" Grid.ColumnSpan="4" Grid.Column="0" Tapped="SaveDoNotReopenLink_Click" Margin="0,65,-3,-65" Visibility="Collapsed" />

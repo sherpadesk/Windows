@@ -139,7 +139,7 @@
                 <TextBlock x:Name="ErrorHours" Grid.Column="9" HorizontalAlignment="Left" Margin="0 -50 0 0" Grid.Row="1" Height="50" VerticalAlignment="Top"/>
                 <CheckBox Name="BillableBox" Content="Billable" Padding="2,-1,0,0" HorizontalAlignment="Left" Margin="0,0,0,4" Grid.Row="1" Grid.Column="11" VerticalAlignment="Center" FontSize="20" IsChecked="True"/>
             </Grid>
-            <Button Content="Save My Time" Margin="7,20,-3,0" Grid.Column="0" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Top" Height="70" Grid.RowSpan="2" FontSize="36" Background="#FF2F9129" Click="Button_Click"/>
+            <Button Content="Save My Time" Margin="7,20,-3,0" Padding="0,0,0,4" Grid.Column="0" HorizontalAlignment="Stretch" Grid.Row="7" VerticalAlignment="Top" Height="70" Grid.RowSpan="2" FontSize="36" Background="#FF2F9129" Click="Button_Click"/>
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
