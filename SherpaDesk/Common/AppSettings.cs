@@ -34,6 +34,7 @@ namespace SherpaDesk.Common
         private const string INSTANCE_NAME_SETTING = "InstanceNameSettings";
         private const string SINGLE_SETTING = "SingleSettings";
         private const string BETA_SETTING = "BetaSettings";
+        private const string DEFAULT_TASK_TYPE_SETTING = "DefaultTaskTypeSettings";
 
         public string ApiToken
         {
@@ -178,6 +179,18 @@ namespace SherpaDesk.Common
             }
         }
 
+        public int DefaultTaskType
+        {
+            get
+            {
+                return GetValueOrDefault<int>(DEFAULT_TASK_TYPE_SETTING, 0);
+            }
+            set
+            {
+                AddOrUpdateValue(DEFAULT_TASK_TYPE_SETTING, value);
+                Save();
+            }
+        }
         public bool Beta
         {
             get

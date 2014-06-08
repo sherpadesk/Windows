@@ -84,11 +84,11 @@ namespace SherpaDesk.Common
             }
         }
 
-        public static string FullName(string firstName, string lastName, string email = null)
+        public static string FullName(string firstName, string lastName, string email, bool withEmail = false)
         {
             if (string.IsNullOrWhiteSpace(firstName + lastName))
                 return email;
-            else if (string.IsNullOrWhiteSpace(email))
+            else if (!withEmail)
                 return string.Format("{1}, {0}", firstName, lastName).Trim(',');
             else
                 return string.Format("{1}, {0} ({2})", firstName, lastName, email);

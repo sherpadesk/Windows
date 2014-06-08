@@ -84,10 +84,7 @@
             <Button x:Name="SaveButton" Content="Create Ticket" HorizontalAlignment="Stretch" Grid.Column="0" FontSize="30" Margin="-3,0,-3,0" Padding="0,0,0,3" VerticalAlignment="Stretch" Grid.Row="7" Background="#FF2F9129" Tapped="SaveButton_Tapped" />
 
             <TextBlock HorizontalAlignment="right" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="EndUserList" Grid.Column="3" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                <ComboBoxItem />
-                <ComboBoxItem Name="EndUserMe" />
-                <ComboBoxItem Content="Make Me the User" Name="MakeMe" Foreground="#FF0B0078"/>
+            <ComboBox x:Name="EndUserList" Grid.Column="3" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="EndUserList_SelectionChanged">
             </ComboBox>
             <HyperlinkButton x:Name="EndUserMeLink" Content="Me" Grid.Row="0" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
@@ -106,7 +103,7 @@
             <HyperlinkButton x:Name="TechnicianMeLink" Content="Me" Grid.Row="3" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="TechnicianMeLink_Click"/>
 
             <TextBlock HorizontalAlignment="right" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-            <ComboBox x:Name="AlternateTechnicianList" Grid.Column="3" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+            <ComboBox x:Name="AlternateTechnicianList" Grid.Column="3" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AlternateTechnicianList_SelectionChanged">
             </ComboBox>
             <HyperlinkButton x:Name="AlternateTechMeLink" Content="Me" Grid.Row="4" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
 

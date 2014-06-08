@@ -48,7 +48,7 @@ namespace SherpaDesk
                 if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
                 {
                     TechnicianList.FillData(
-                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
+                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
                         new NameResponse { Id = -1, Name = "Let the system choose." });
                 }
                 else

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Linq;
-using SherpaDesk.Common;
+﻿using SherpaDesk.Common;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Collections;
-using System.Collections.Generic;
-using Telerik.UI.Xaml.Controls.Input.Calendar.Commands;
-using Telerik.UI.Xaml.Controls.Input.Calendar;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using Telerik.UI.Xaml.Controls.Input;
 
 namespace SherpaDesk
 {
@@ -66,42 +61,138 @@ namespace SherpaDesk
 
             using (var connector = new Connector())
             {
-                // types
-                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    x => x.TaskTypes,
-                    new TaskTypeRequest());
-                if (resultTaskType.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultTaskType);
-                    return;
-                }
-                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
-
                 // technician
-                var resultUsers = await connector.Func<UserResponse[]>(x => x.Users);
-                if (resultUsers.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultUsers);
-                    return;
-                }
-                TechnicianList.FillData(
-                    resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                    new NameResponse
-                    {
-                        Id = AppSettings.Current.UserId,
-                        Name = Constants.TECHNICIAN_ME
-                    });
+                var resultTechnicians = await connector.Func<UserResponse[]>(x => x.Technicians);
 
-                // projects
-                var resultProjects = await connector.Func<ProjectResponse[]>(x => x.Projects);
-                if (resultProjects.Status != eResponseStatus.Success)
+                if (resultTechnicians.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultProjects);
+                    this.HandleError(resultTechnicians);
                     return;
                 }
-                ProjectList.FillData(resultProjects.Result.AsEnumerable());
+
+                TechnicianList.FillData(
+                    resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
             }
         }
+
+
+        private async void TechnicianList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = e.AddedItems.FirstOrDefault() as ComboBoxItem;
+            if (item != null)
+            {
+                using (var connector = new Connector())
+                {
+                    // accounts
+                    var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts, new AccountSearchRequest
+                    {
+                        UserId = (int)item.Tag,
+                        PageCount = SearchRequest.MAX_PAGE_COUNT
+                    });
+
+                    if (resultAccounts.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultAccounts);
+                        return;
+                    }
+
+                    AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                }
+            }
+        }
+
+        private async void AccountList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = e.AddedItems.FirstOrDefault() as ComboBoxItem;
+            if (item != null)
+            {
+                using (var connector = new Connector())
+                {
+                    // accounts
+                    var resultProjects = await connector.Func<ProjectRequest, ProjectResponse[]>(x => x.Projects,
+                        new ProjectRequest { AccountId = (int)item.Tag });
+
+                    if (resultProjects.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultProjects);
+                        return;
+                    }
+
+                    if (resultProjects.Result.Length > 0)
+                    {
+                        ProjectLabel.Visibility = ProjectList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        ProjectList.FillData(resultProjects.Result.AsEnumerable());
+                    }
+                    else
+                    {
+                        ProjectLabel.Visibility = ProjectList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+                        var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                            x => x.TaskTypes, new TaskTypeRequest { AccountId = (int)item.Tag });
+
+                        if (resultTaskType.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultTaskType);
+                            return;
+                        }
+
+                        TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+
+                        if (AppSettings.Current.DefaultTaskType != 0)
+                        {
+                            TaskTypeList.SetSelectedValue(AppSettings.Current.DefaultTaskType);
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void ProjectList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = e.AddedItems.FirstOrDefault() as ComboBoxItem;
+            if (item != null)
+            {
+                using (var connector = new Connector())
+                {
+                    // types
+                    TaskTypeRequest request = new TaskTypeRequest();
+                    int projectId = (int)item.Tag;
+                    if (projectId > 0)
+                    {
+                        request.ProjectId = projectId;
+                    }
+                    else
+                    {
+                        request.AccountId = AccountList.GetSelectedValue<int>(-1);
+                    }
+
+                    var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                        x => x.TaskTypes, request);
+
+                    if (resultTaskType.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultTaskType);
+                        return;
+                    }
+
+                    TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+
+                    if (AppSettings.Current.DefaultTaskType != 0)
+                    {
+                        TaskTypeList.SetSelectedValue(AppSettings.Current.DefaultTaskType);
+                    }
+
+                    //TaskTypeList.Items.Add(new ComboBoxItem
+                    //{
+                    //    Tag = Constants.INITIAL_ID,
+                    //    Content = Constants.ADD_NEW_TASK_TYPE,
+                    //    Foreground = new SolidColorBrush(Helper.HexStringToColor(Constants.CLICKABLE_COLOR))
+                    //});
+                }
+            }
+        }
+
 
         private void DateField_ValueChanged(object sender, EventArgs e)
         {
@@ -148,16 +239,16 @@ namespace SherpaDesk
             var hours = decimal.Zero;
             decimal.TryParse(HoursTextBox.Text, out hours);
             var date = DateField.Value ?? DateTime.Now;
-
+            var taskType = TaskTypeList.GetSelectedValue<int>();
             using (var connector = new Connector())
             {
                 var result = await connector.Action<AddTimeRequest>(
                             x => x.Time,
                             new AddTimeRequest
                             {
-                                AccountId = -1,
+                                AccountId = AccountList.GetSelectedValue<int>(-1),
                                 ProjectId = ProjectList.GetSelectedValue<int>(-1),
-                                TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
+                                TaskTypeId = taskType,
                                 TechnicianId = TechnicianList.GetSelectedValue<int>(),
                                 Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                                 Hours = hours,
@@ -171,7 +262,9 @@ namespace SherpaDesk
                     return;
                 }
             }
-            TaskTypeList.SelectedIndex = -1;
+
+            AppSettings.Current.DefaultTaskType = taskType;
+                    
             NoteTextBox.Text = string.Empty;
             HoursTextBox.Text = "0.00";
 
@@ -193,7 +286,7 @@ namespace SherpaDesk
             TicketTimeGrid.ItemsSource = this.Model.TicketTimeList;
             TicketTimeGrid.UpdateLayout();
             TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = this.Model.VisibleTicketTime;
-            
+
             if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
             {
                 TimesheetGrids.Visibility = Visibility.Visible;

@@ -13,5 +13,8 @@ namespace SherpaDesk.Models.Request
 
         [DataMember(Name = "project"), Details]
         public int ProjectId { get; set; }
+
+        [DataMember(Name = "account"), Details]
+        public int AccountId { get; set; }
     }
 }

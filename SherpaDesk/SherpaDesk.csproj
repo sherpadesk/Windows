@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\IValidatableObject.cs" />
     <Compile Include="Models\CustomCellTapCommand.cs" />
     <Compile Include="Models\Request\AttachAltTechRequest.cs" />
+    <Compile Include="Models\Request\ProjectSearchRequest.cs" />
     <Compile Include="Models\Request\TechniciansRequest.cs" />
     <Compile Include="Models\Request\TransferRequest.cs" />
     <Compile Include="Models\Response\ActivityResponse.cs" />

@@ -26,7 +26,7 @@ namespace SherpaDesk.Models.Response
         {
             get
             {
-                return Helper.FullName(this.FirstName, this.LastName, this.Email);
+                return Helper.FullName(this.FirstName, this.LastName, this.Email, true);
             }
         }
     }

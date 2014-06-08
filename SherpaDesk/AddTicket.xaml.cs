@@ -74,7 +74,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 // users
-                var resultUsers = await connector.Func<UserSearchRequest, UserResponse[]>(x => x.Users, new UserSearchRequest());
+                var resultUsers = await connector.Func<UserResponse[]>(x => x.Users);
 
                 if (resultUsers.Status != eResponseStatus.Success)
                 {
@@ -83,7 +83,7 @@ namespace SherpaDesk
                 }
 
                 // technicians
-                var resultTechnicians = await connector.Func<TechniciansRequest, UserResponse[]>(x => x.Technicians, new TechniciansRequest());
+                var resultTechnicians = await connector.Func<UserResponse[]>(x => x.Technicians);
 
                 if (resultTechnicians.Status != eResponseStatus.Success)
                 {
@@ -100,51 +100,35 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    EndUserList.AutoComplete(x => x.Search(false));
+                    EndUserList.AutoComplete(
+                        x => x.Search(false),
+                        k => this.EndUserList_SelectionChanged(
+                            this.EndUserList,
+                            new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem() { Tag = k.Key, Content = k.Name } }).ToList())));
                 }
 
-                //if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
-                //{
-                TechnicianList.FillData(
-                    resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                    new NameResponse { Id = -1, Name = "Let the system choose." },
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
-
-                AlternateTechnicianList.FillData(
-                    resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                    NameResponse.Empty,
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
-
-                AlternateTechnicianList.SelectionChanged += (s, a) =>
+                if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
                 {
-                    var selectedItem = a.AddedItems.FirstOrDefault() as ComboBoxItem;
-                    if (selectedItem != null && (int)selectedItem.Tag > 0)
-                    {
-                        if (!SelectedAlternateTechnicianList.Items.Any(x => ((int)((CheckBox)x).Tag == (int)selectedItem.Tag)))
-                        {
-                            SelectedAlternateTechnicianList.Items.Insert(0, this.CreateCheckBox(selectedItem));
-                        }
-                    }
-                };
-                //}
-                //else
-                //{
-                //    TechnicianList.AutoComplete(x => x.Search(false));
-                //    AlternateTechnicianList.AutoComplete(
-                //        x => x.Search(false), 
-                //        y => SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = y.Name, Tag = y.Key }));
-                //}
+                    TechnicianList.FillData(
+                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                        new NameResponse { Id = -1, Name = "Let the system choose." },
+                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
-                // accounts
-                var resultAccounts = await connector.Func<AccountResponse[]>(x => x.Accounts);
+                    AlternateTechnicianList.FillData(
+                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                        NameResponse.Empty,
+                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
-                if (resultAccounts.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultAccounts);
-                    return;
                 }
-
-                AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                else
+                {
+                    TechnicianList.AutoComplete(x => x.Search(false));
+                    AlternateTechnicianList.AutoComplete(
+                        x => x.Search(false),
+                        k => this.AlternateTechnicianList_SelectionChanged(
+                            this.AlternateTechnicianList,
+                            new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem { Tag = k.Key, Content = k.Name } }).ToList())));
+                }
 
                 var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
 
@@ -155,6 +139,40 @@ namespace SherpaDesk
                 }
 
                 ClassList.FillData(resultClasses.Result.AsEnumerable());
+            }
+        }
+
+        private async void EndUserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = e.AddedItems.FirstOrDefault() as ComboBoxItem;
+            if (selectedItem != null && (int)selectedItem.Tag > 0)
+            {
+                using (var connector = new Connector())
+                {
+                    // accounts
+                    var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
+                        new AccountSearchRequest { UserId = (int)selectedItem.Tag, PageCount = SearchRequest.MAX_PAGE_COUNT });
+
+                    if (resultAccounts.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultAccounts);
+                        return;
+                    }
+
+                    AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                }
+            }
+        }
+
+        private void AlternateTechnicianList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = e.AddedItems.FirstOrDefault() as ComboBoxItem;
+            if (selectedItem != null && (int)selectedItem.Tag > 0)
+            {
+                if (!SelectedAlternateTechnicianList.Items.Any(x => ((int)((CheckBox)x).Tag == (int)selectedItem.Tag)))
+                {
+                    SelectedAlternateTechnicianList.Items.Insert(0, this.CreateCheckBox(selectedItem));
+                }
             }
         }
 

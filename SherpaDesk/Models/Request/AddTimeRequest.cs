@@ -43,7 +43,7 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "tech_id"), Details]
         public int TechnicianId { get; set; }
 
-        [DataMember(Name = "start_date", EmitDefaultValue = false)]
+        [DataMember(Name = "date", EmitDefaultValue = false)]
         protected string _date;
 
         [Details]
