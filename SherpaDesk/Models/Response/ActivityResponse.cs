@@ -8,10 +8,10 @@ namespace SherpaDesk.Models.Response
     public class ActivityResponse : NameResponse
     {
         [DataMember(Name = "ticket_id"), Details]
-        public int TicketId { get; set; }
+        public string TicketId { get; set; }
 
         [DataMember(Name = "user_id"), Details]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [DataMember(Name = "friendly_id"), Details]
         public string FriendlyId { get; set; }

@@ -103,33 +103,37 @@ namespace SherpaDesk
                     EndUserList.AutoComplete(x => x.Search(false));
                 }
 
-                if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
-                {
-                    TechnicianList.FillData(
-                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                        new NameResponse { Id = -1, Name = "Let the system choose." },
-                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                //if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
+                //{
+                TechnicianList.FillData(
+                    resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
+                    new NameResponse { Id = -1, Name = "Let the system choose." },
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
 
-                    AlternateTechnicianList.FillData(
-                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
-                        NameResponse.Empty,
-                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
-                    AlternateTechnicianList.SelectionChanged += (s, a) =>
-                    {
-                        var selectedItem = a.AddedItems.FirstOrDefault() as ComboBoxItem;
-                        if (selectedItem != null && (int)selectedItem.Tag > 0)
-                        {
-                            SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = selectedItem.Content, Tag = selectedItem.Tag });
-                        }
-                    };
-                }
-                else
+                AlternateTechnicianList.FillData(
+                    resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email) }),
+                    NameResponse.Empty,
+                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+
+                AlternateTechnicianList.SelectionChanged += (s, a) =>
                 {
-                    TechnicianList.AutoComplete(x => x.Search(false));
-                    AlternateTechnicianList.AutoComplete(
-                        x => x.Search(false), 
-                        y => SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = y.Name, Tag = y.Key }));
-                }
+                    var selectedItem = a.AddedItems.FirstOrDefault() as ComboBoxItem;
+                    if (selectedItem != null && (int)selectedItem.Tag > 0)
+                    {
+                        if (!SelectedAlternateTechnicianList.Items.Any(x => ((int)((CheckBox)x).Tag == (int)selectedItem.Tag)))
+                        {
+                            SelectedAlternateTechnicianList.Items.Insert(0, this.CreateCheckBox(selectedItem));
+                        }
+                    }
+                };
+                //}
+                //else
+                //{
+                //    TechnicianList.AutoComplete(x => x.Search(false));
+                //    AlternateTechnicianList.AutoComplete(
+                //        x => x.Search(false), 
+                //        y => SelectedAlternateTechnicianList.Items.Insert(0, new CheckBox { IsChecked = true, Content = y.Name, Tag = y.Key }));
+                //}
 
                 // accounts
                 var resultAccounts = await connector.Func<AccountResponse[]>(x => x.Accounts);
@@ -151,6 +155,24 @@ namespace SherpaDesk
                 }
 
                 ClassList.FillData(resultClasses.Result.AsEnumerable());
+            }
+        }
+
+        private CheckBox CreateCheckBox(ComboBoxItem selectedItem)
+        {
+            CheckBox result = new CheckBox { IsChecked = true, Content = selectedItem.Content, Tag = selectedItem.Tag };
+            result.Unchecked += CheckBox_UnChecked;
+            return result;
+        }
+
+        private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < SelectedAlternateTechnicianList.Items.Count; i++)
+            {
+                if ((int)((CheckBox)SelectedAlternateTechnicianList.Items[i]).Tag == (int)((CheckBox)sender).Tag)
+                {
+                    SelectedAlternateTechnicianList.Items.RemoveAt(i);
+                }
             }
         }
 

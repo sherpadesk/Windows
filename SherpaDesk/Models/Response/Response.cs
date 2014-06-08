@@ -47,7 +47,12 @@ namespace SherpaDesk.Models.Response
                     {
                         this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        this.Status = eResponseStatus.Error;
+                        this.Messages.Add(e.Message);
+                        this.Messages.Add(e.ToString());
+                    }
                 }
             }
         }
