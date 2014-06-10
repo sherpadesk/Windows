@@ -76,6 +76,9 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "class_name"), Details]
         public string ClassName { get; set; }
 
+        [DataMember(Name = "tech_id"), Details]
+        public int? TechnicianId { get; set; }
+
         [OnDeserialized]
         protected void OnDeserialized(StreamingContext context)
         {

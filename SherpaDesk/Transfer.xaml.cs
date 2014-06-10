@@ -19,6 +19,7 @@ namespace SherpaDesk
     public sealed partial class Transfer : SherpaDesk.Common.LayoutAwarePage, IChildPage
     {
         private string _ticketKey;
+        private int _techId;
 
         public event EventHandler UpdatePage;
 
@@ -29,7 +30,9 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _ticketKey = (string)e.Parameter;
+            _ticketKey = ((KeyValuePair<string, int>)e.Parameter).Key;
+            _techId = ((KeyValuePair<string, int>)e.Parameter).Value;
+            
             base.OnNavigatedTo(e);
         }
 
@@ -45,11 +48,13 @@ namespace SherpaDesk
                     return;
                 }
 
-                if (resultTechnicians.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
+                if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
                 {
                     TechnicianList.FillData(
                         resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
                         new NameResponse { Id = -1, Name = "Let the system choose." });
+
+                    TechnicianList.SetSelectedValue(_techId);
                 }
                 else
                 {
@@ -78,7 +83,7 @@ namespace SherpaDesk
                     Note = DescritionTextbox.Text,
                     KeepAttached = KeepMeCheckBox.IsChecked ?? false,
                     ClassId = TransferToClassCheckBox.IsChecked ?? false ? ClassList.GetSelectedValue<int>() : 0,
-                    TechnicianId = TransferToTechCheckBox.IsChecked ?? false ? TechnicianList.GetSelectedValue<int>() : 0
+                    TechnicianId = TechnicianList.GetSelectedValue<int>(AppSettings.Current.UserId)
                 });
 
                 if (transferResult.Status != eResponseStatus.Success)

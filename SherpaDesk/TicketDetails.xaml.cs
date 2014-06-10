@@ -23,6 +23,7 @@ namespace SherpaDesk
     public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage, IChildPage
     {
         private string _ticketKey;
+        private int _techId;
 
         public event EventHandler UpdatePage;
 
@@ -51,6 +52,8 @@ namespace SherpaDesk
                 var ticket = resultTicket.Result;
 
                 AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+                _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
 
                 SubjectLabel.Text = ticket.Subject;
                 EndUserLabel.Text = ticket.UserFullName;
@@ -145,7 +148,7 @@ namespace SherpaDesk
         {
             ResponseFrame.Navigated -= ChildPage_Navigated;
             ResponseFrame.Navigated += ChildPage_Navigated;
-            ResponseFrame.Navigate(typeof(Transfer), _ticketKey);
+            ResponseFrame.Navigate(typeof(Transfer), new KeyValuePair<string, int>(_ticketKey, _techId));
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)

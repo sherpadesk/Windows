@@ -40,12 +40,16 @@ namespace SherpaDesk.Models.Response
             var jsonResponseSerializer = new DataContractJsonSerializer(typeof(T));
             using (var responseStream = await content.ReadAsStreamAsync())
             {
-                responseStream.Position = 0;
-                if (responseStream.Length > 0)
+                if (responseStream.CanRead && responseStream.Length > 0)
                 {
                     try
                     {
-                        this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
+                        string firstSymbol = char.ConvertFromUtf32(responseStream.ReadByte());
+                        if (firstSymbol == "{" || firstSymbol == "[" || firstSymbol == " ")
+                        {
+                            responseStream.Position = 0;
+                            this.Result = jsonResponseSerializer.ReadObject(responseStream) as T;
+                        }
                     }
                     catch (Exception e)
                     {
