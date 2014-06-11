@@ -53,9 +53,11 @@
         <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1140"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Create Ticket" FontWeight="Normal"/>
+            <HyperlinkButton x:Name="AddUserLink" Content="Add User" Grid.Row="0" Grid.Column="1" Padding="0,0,0,0" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Bottom" FontSize="24" Foreground="White" Height="51" FontWeight="Normal" Width="140" Click="AddUserLink_Click" />
         </Grid>
         <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="Transparent">
             <Grid.RowDefinitions>
@@ -76,7 +78,6 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
             <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="50" Grid.Row="0" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="24" Width="450" />
@@ -91,7 +92,6 @@
             <TextBlock HorizontalAlignment="right" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
             <ComboBox x:Name="AccountList" Grid.Column="3" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
-            <CheckBox Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
 
             <TextBlock Grid.Column="2" HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Class" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
             <ComboBox Name="ClassList" Grid.Column="3" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">

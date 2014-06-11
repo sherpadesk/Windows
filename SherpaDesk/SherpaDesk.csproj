@@ -110,6 +110,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\IChildPage.cs" />
     <Compile Include="Interfaces\IValidatableObject.cs" />
+    <Compile Include="InviteUser.xaml.cs">
+      <DependentUpon>InviteUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomCellTapCommand.cs" />
     <Compile Include="Models\Request\AttachAltTechRequest.cs" />
     <Compile Include="Models\Request\ProjectSearchRequest.cs" />
@@ -316,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="InviteUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Transfer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -479,6 +486,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PopupHelpers.Lib">
+      <HintPath>..\packages\PopupHelpers.Lib.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Core, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Telerik\Core\Telerik.Core.dll</HintPath>
