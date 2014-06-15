@@ -68,9 +68,8 @@ namespace SherpaDesk
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.pageRoot.HandleError(new Response<string> { Status = eResponseStatus.Error, Messages = (new string[1] { "Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error Error " }).ToList() });
-//            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.NewMessages);
-//            scrollViewer.ChangeView(0, new double?(), new float?());
+            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.NewMessages);
+            scrollViewer.ChangeView(0, new double?(), new float?());
         }
 
         private void OpenTicketsTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
