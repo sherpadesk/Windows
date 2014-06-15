@@ -108,6 +108,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Error.xaml.cs">
+      <DependentUpon>Error.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IChildPage.cs" />
     <Compile Include="Interfaces\IValidatableObject.cs" />
     <Compile Include="InviteUser.xaml.cs">
@@ -285,6 +288,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\arrow.gif" />
+    <Content Include="Assets\Close.png" />
     <Content Include="Assets\Images\BadgeLogo.png" />
     <Content Include="Assets\Images\Bluesquare150x150Logo.png" />
     <Content Include="Assets\Images\Bluesquare24x24Logo.png" />
@@ -319,6 +323,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Error.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InviteUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

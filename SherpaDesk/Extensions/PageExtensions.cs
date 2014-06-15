@@ -100,13 +100,11 @@ namespace SherpaDesk.Common
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                App.ShowErrorMessage(response.Message, eErrorType.FailedOperation);
+                App.ShowErrorMessage(response, eErrorType.FailedOperation);
             }
             else if (response.Status == eResponseStatus.Error)
             {
-                //TODO: show the complex dialog with internal error message and descriptions from response.Messagess
-                // It can has a possibility to send response object by email
-                App.ShowErrorMessage(response.Message, eErrorType.InternalError);
+                App.ShowErrorMessage(response, eErrorType.InternalError);
             }
         }
 

@@ -121,6 +121,7 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 bool statusUpdated = false;
+                int? postId = null;
                 decimal hours;
                 decimal.TryParse(HoursTextBox.Text, out hours);
                 if (hours > decimal.Zero)
@@ -198,7 +199,7 @@ namespace SherpaDesk
                 }
                 if (_attachment.Count > 0)
                 {
-                    using (FileRequest fileRequest = new FileRequest("?ticket=" + _ticketKey))
+                    using (FileRequest fileRequest = new FileRequest(_ticketKey))
                     {
                         foreach (var file in _attachment)
                         {

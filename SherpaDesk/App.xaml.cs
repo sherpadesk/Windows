@@ -44,6 +44,13 @@ namespace SherpaDesk
                 catch (UnauthorizedAccessException) { }
             });
         }
+
+        public static async void ShowErrorMessage(Response response, eErrorType title)
+        {
+            var flyout = new Error.Flyout(response, title);
+            await flyout.ShowAsync();
+        }
+
         public static async Task<bool> ConfirmMessage()
         {
             MessageDialog dialog = new MessageDialog("Are you sure?");

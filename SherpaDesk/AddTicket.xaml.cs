@@ -229,7 +229,10 @@ namespace SherpaDesk
                 }
                 if (_attachment.Count > 0)
                 {
-                    using (FileRequest fileRequest = new FileRequest("?ticket=" + resultAddTicket.Result.TicketKey))
+                    int? postId = null;
+                    if (resultAddTicket.Result.Posts != null && resultAddTicket.Result.Posts.Length > 0)
+                        postId = resultAddTicket.Result.Posts[0].PostId;
+                    using (FileRequest fileRequest = FileRequest.Create(resultAddTicket.Result.TicketKey, postId))
                     {
                         foreach (var file in _attachment)
                         {

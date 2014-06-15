@@ -7,6 +7,9 @@ namespace SherpaDesk.Models.Response
     [DataContract]
     public class NoteResponse : ObjectBase
     {
+        [DataMember(Name = "id"), Details]
+        public int PostId { get; set; }
+
         [DataMember(Name = "ticket_key"), Details]
         public string TicketKey { get; set; }
 

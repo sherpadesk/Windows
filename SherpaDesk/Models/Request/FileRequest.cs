@@ -17,10 +17,28 @@ namespace SherpaDesk.Models.Request
         private MultipartFormDataContent _fileContent;
         private ByteArrayContent _streamContent;
 
-        public FileRequest(string path)
+        public static FileRequest Create(string ticketKey, int? postId)
+        {
+            if (postId.HasValue)
+            {
+                return new FileRequest(ticketKey, postId.Value);
+            }
+            else
+            {
+                return new FileRequest(ticketKey);
+            }
+        }
+
+        public FileRequest(string ticketKey)
         {
             _fileContent = new MultipartFormDataContent();
-            this.Path = path;
+            this.Path = string.Format("?ticket={0}", ticketKey);
+        }
+
+        public FileRequest(string ticketKey, int postId)
+        {
+            _fileContent = new MultipartFormDataContent();
+            this.Path = string.Format("?ticket={0}&post_id={1}", ticketKey, postId);
         }
 
         [Details]

@@ -14,9 +14,9 @@
     d:DesignHeight="500"
     d:DesignWidth="400" 
     BorderBrush="LightBlue" 
-    BorderThickness="1">
+    BorderThickness="1" Margin="0,-2,0,2">
 
-    <Grid Background="#FF0055A0">
+    <Grid Background="#FF0055A0" >
         <Grid Background="Transparent" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
