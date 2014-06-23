@@ -31,7 +31,7 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "account"), Details]
         public int AccountId { get; set; }
 
-        [IntRequired(ErrorMessage = ERROR_EMPTY_LOCATION_ID)]
+        //[IntRequired(ErrorMessage = ERROR_EMPTY_LOCATION_ID)]
         [DataMember(Name = "location"), Details]
         public int LocationId { get; set; }
 

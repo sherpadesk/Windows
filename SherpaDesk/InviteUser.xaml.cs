@@ -70,7 +70,7 @@ namespace SherpaDesk
         {
             public event EventHandler<UserResponse> Created;
 
-            public Flyout(int accountId, int locationId = -1)
+            public Flyout(int accountId, int locationId = 0)
             {
                 this.AccountId = accountId;
                 this.LocationId = locationId;
