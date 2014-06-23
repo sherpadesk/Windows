@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    VerticalAlignment="Top"
+    VerticalAlignment="Center"
 	HorizontalAlignment="Center"
     d:DesignHeight="100"
     d:DesignWidth="680">
@@ -22,8 +22,8 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <TextBlock Name="TitleText" Text="Internal Error" FontSize="30" Foreground="Red" VerticalAlignment="Bottom" Padding="30 0 30 0" Grid.Column="0"></TextBlock>
-            <TextBlock Name="MessageText" Text="Error Context" FontSize="20" TextWrapping="WrapWholeWords" Height="80" Foreground="#666452" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"></TextBlock>
-            <Button Name="SendReport" Content="Send Error Report" FontSize="16" BorderThickness="1" BorderBrush="Gray" Padding="10 0 10 0" Margin="0 0 0 0" Foreground="#633c16" Background="#f9d08b" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Click="SendReport_Click"/>
+            <TextBlock Name="MessageText" Text="Error Context" FontSize="20" TextWrapping="WrapWholeWords" Height="70" Foreground="#666452" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"></TextBlock>
+            <Button Name="SendReport" Content="Send Error Report" ToolTipService.ToolTip="Send Report to support team" FontSize="16" BorderThickness="1" BorderBrush="Gray" Padding="10 0 10 0" Margin="0 0 0 0" Foreground="#633c16" Background="#f9d08b" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Click="SendReport_Click"/>
             <Button Name="CloseError" ToolTipService.ToolTip="Close this notification" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseError_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="Assets/Close.png"/>

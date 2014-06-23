@@ -104,7 +104,7 @@ namespace SherpaDesk
                         throw new InternalException("User not found", eErrorType.InvalidOutputData);
 
                     var user = resultUser.Result.First();
-
+                    
                     AppSettings.Current.AddUser(
                         user.Id.IsNull("Invalid user identifier"),
                         user.FirstName,

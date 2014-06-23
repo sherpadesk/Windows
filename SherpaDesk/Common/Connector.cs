@@ -114,14 +114,26 @@ namespace SherpaDesk.Common
                 }
                 else
                 {
-                    result = result.Fail(response.ReasonPhrase, response.ToString(), response.RequestMessage != null ? response.RequestMessage.ToString() : string.Empty);
+                    string resp_message = string.Empty;
+                    if (response.Content != null)
+                    {
+                        resp_message = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        resp_message = response.ToString();
+                    }
+                    if (response.RequestMessage != null)
+                        result = result.Fail(response.ReasonPhrase, resp_message, response.RequestMessage.ToString());
+                    else
+                        result = result.Fail(response.ReasonPhrase, resp_message);
                 }
             }
             catch (Exception ex)
             {
                 string message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
 #if DEBUG
-                result = result.Error(ex.Message, ex.ToString(), request.ToString()); 
+                result = result.Error(ex.Message, ex.ToString(), request.ToString());
 #else
                 result = result.Error(ERROR_INVALID_REQUEST, ex.Message, ex.ToString(), request.ToString());
 #endif
@@ -133,7 +145,7 @@ namespace SherpaDesk.Common
         {
             if (_httpClient != null)
                 _httpClient.Dispose();
-            
+
             App.ExternalAction(x => x.StopProgress());
         }
 

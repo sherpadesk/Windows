@@ -1,23 +1,13 @@
-﻿using SherpaDesk.Models;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Models;
 using SherpaDesk.Models.Response;
 using SocialEbola.Lib.PopupHelpers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Globalization;
+using System.Text;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using SherpaDesk.Common;
-
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace SherpaDesk
 {
@@ -37,27 +27,37 @@ namespace SherpaDesk
 
         public void Opened()
         {
-
+            TitleText.Text = _flyout.Title.Details();
+            MessageText.Text = _flyout.Message;
+            SendReport.Visibility = _flyout.CanSendReport ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public void SetParent(PopupHelper parent)
         {
             _flyout = (Flyout)parent;
-            TitleText.Text = _flyout.Title.Details();
-            MessageText.Text = _flyout.Response.Message;
-            SendReport.Visibility = _flyout.Title != eErrorType.FailedOperation && _flyout.Title != eErrorType.Warning ?
-                Visibility.Visible : Visibility.Collapsed;
         }
 
         public class Flyout : PopupHelper<Error>
         {
-            public eErrorType Title { get; private set; }
-            public Response Response { get; private set; }
+            private Response _response;
 
-            public Flyout(Response response, eErrorType title)
+            public bool CanSendReport { get; private set; }
+
+            public eErrorType Title { get; private set; }
+
+            public string Message { get; private set; }
+
+            public Flyout(string message, eErrorType title)
             {
                 this.Title = title;
-                this.Response = response;
+                this.CanSendReport = title != eErrorType.InvalidInputData && title != eErrorType.Warning;
+                this.Message = message;
+            }
+
+            public Flyout(Response response, eErrorType title)
+                : this(response.Message, title)
+            {
+                this._response = response;
             }
             public override PopupSettings Settings
             {
@@ -67,6 +67,51 @@ namespace SherpaDesk
                 }
             }
 
+            public string GetReportText()
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(Environment.NewLine);
+
+                sb.Append(Environment.NewLine);
+
+                sb.Append(" ----------------------------- User Details ----------------------------- ");
+
+                sb.Append(Environment.NewLine);
+
+                sb.AppendFormat("User: {0}{1}", 
+                    Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName, AppSettings.Current.Email, true),
+                    Environment.NewLine);
+                
+                sb.AppendFormat("Organization: {0}{1}", 
+                    AppSettings.Current.Single ? AppSettings.Current.OrganizationName : AppSettings.Current.OrganizationName + " - " + AppSettings.Current.InstanceName,
+                    Environment.NewLine);
+
+                sb.AppendFormat("Date: {0}{1}",
+                    DateTime.Now.ToString(CultureInfo.CurrentUICulture),
+                    Environment.NewLine);
+
+                sb.Append(Environment.NewLine);
+
+                sb.Append(" ----------------------------- Error Details ----------------------------- ");
+
+                sb.Append(Environment.NewLine);
+
+                if (_response != null)
+                {
+                    foreach (var msg in _response.Messages)
+                    {
+                        sb.Append(msg);
+                        sb.Append(Environment.NewLine);
+                    }
+                }
+                else
+                {
+                    sb.Append(this.Message);
+                    sb.Append(Environment.NewLine);
+                }
+                return sb.ToString();
+            }
 
         }
 
@@ -75,9 +120,15 @@ namespace SherpaDesk
             await _flyout.CloseAsync();
         }
 
-        private void SendReport_Click(object sender, RoutedEventArgs e)
+        private async void SendReport_Click(object sender, RoutedEventArgs e)
         {
+            var mailto = new Uri(string.Format("mailto:?to={0}&subject=The Error Report from SherpaDesk App&body={1}", 
+                AppSettings.Current.SupportEmail,
+                Uri.EscapeDataString(_flyout.GetReportText())));
+            
+            await Launcher.LaunchUriAsync(mailto);
 
+            await _flyout.CloseAsync();
         }
     }
 }

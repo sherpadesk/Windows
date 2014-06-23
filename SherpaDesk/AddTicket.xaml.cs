@@ -5,6 +5,7 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Telerik.UI.Xaml.Controls.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -272,8 +273,31 @@ namespace SherpaDesk
 
         private async void AddUserLink_Click(object sender, RoutedEventArgs e)
         {
-            var flyout = new InviteUser.Flyout();
+            var flyout = new InviteUser.Flyout(AccountList.GetSelectedValue<int>());
+            flyout.Created += flyout_Created;
             await flyout.ShowAsync();
+        }
+
+        private void flyout_Created(object sender, UserResponse e)
+        {
+            if (EndUserList.Visibility == Visibility.Visible)
+            {
+                EndUserList.Items.Add(new ComboBoxItem
+                {
+                    Tag = e.Id,
+                    Content = e.FullName
+                });
+                EndUserList.SetSelectedValue(e.Id);
+            }
+            else
+            {
+                var textBox = EndUserList.ParentGrid().FindName(EndUserList.Name + "_Text") as RadAutoCompleteBox;
+                if (textBox != null && textBox.Tag != null)
+                {
+                    textBox.Tag = e.Id;
+                    textBox.Text = e.FullName;
+                }
+            }
         }
     }
 }

@@ -34,15 +34,18 @@ namespace SherpaDesk
 
         public static async void ShowErrorMessage(string message, eErrorType title)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                try
-                {
-                    var md = new MessageDialog(message, title.Details());
-                    await md.ShowAsync();
-                }
-                catch (UnauthorizedAccessException) { }
-            });
+            var flyout = new Error.Flyout(message, title);
+            await flyout.ShowAsync();
+
+            //await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            //{
+            //    try
+            //    {
+            //        var md = new MessageDialog(message, title.Details());
+            //        await md.ShowAsync();
+            //    }
+            //    catch (UnauthorizedAccessException) { }
+            //});
         }
 
         public static async void ShowErrorMessage(Response response, eErrorType title)

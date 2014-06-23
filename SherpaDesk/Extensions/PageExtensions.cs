@@ -19,7 +19,7 @@ namespace SherpaDesk.Common
     {
         private const string TOOL_TIP_NAME = "ToolTip";
 
-        public static void HandleError(this Page page, Response response)
+        public static void HandleError(this UserControl page, Response response)
         {
             if (response.Status == eResponseStatus.Invalid)
             {
@@ -61,7 +61,7 @@ namespace SherpaDesk.Common
                             toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
                             toolTip.FontSize = 16;
                             toolTip.Height = control.Height - 10;
-                            toolTip.Width = control.Width;
+                            toolTip.Width = control.Width - 10;
                             toolTip.PlacementTarget = control;
                             var grid = control.ParentGrid();
                             if (grid == null)

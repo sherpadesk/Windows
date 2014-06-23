@@ -176,7 +176,10 @@ namespace SherpaDesk
                     if (WaitingBox.IsChecked ?? false)
                     {
                         var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
-                            new WaitingOnPostRequest(_ticketKey) { Note = CommentsTextbox.Text });
+                            new WaitingOnPostRequest(_ticketKey)
+                            {
+                                Note = CommentsTextbox.Text
+                            });
 
                         if (resultWait.Status != eResponseStatus.Success)
                         {
@@ -185,21 +188,23 @@ namespace SherpaDesk
                     }
                     else if (hours == decimal.Zero && !statusUpdated)
                     {
-                        var resultNote = await connector.Action<AddNoteRequest>(x => x.Posts, new AddNoteRequest
-                        {
-                            TicketKey = _ticketKey,
-                            Note = CommentsTextbox.Text
-                        });
+                        var resultNote = await connector.Func<AddNoteRequest, NoteResponse>(x => x.Posts, 
+                            new AddNoteRequest
+                            {
+                                TicketKey = _ticketKey,
+                                Note = CommentsTextbox.Text
+                            });
                         if (resultNote.Status != eResponseStatus.Success)
                         {
                             this.HandleError(resultNote);
                             return;
                         }
+                        postId = resultNote.Result.PostId;
                     }
                 }
                 if (_attachment.Count > 0)
                 {
-                    using (FileRequest fileRequest = new FileRequest(_ticketKey))
+                    using (FileRequest fileRequest = FileRequest.Create(_ticketKey, postId))
                     {
                         foreach (var file in _attachment)
                         {

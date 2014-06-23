@@ -35,6 +35,15 @@ namespace SherpaDesk.Common
         private const string SINGLE_SETTING = "SingleSettings";
         private const string BETA_SETTING = "BetaSettings";
         private const string DEFAULT_TASK_TYPE_SETTING = "DefaultTaskTypeSettings";
+        private const string SUPPORT_EMAIL_SETTINGS = "microsoft@sherpadesk.com";
+
+        public string SupportEmail
+        {
+            get
+            {
+                return SUPPORT_EMAIL_SETTINGS;
+            }
+        }
 
         public string ApiToken
         {
