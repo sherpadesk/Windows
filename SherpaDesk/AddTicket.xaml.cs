@@ -62,6 +62,18 @@ namespace SherpaDesk
                         k => this.EndUserList_SelectionChanged(
                             this.EndUserList,
                             new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem() { Tag = k.Key, Content = k.Name } }).ToList())));
+
+                    // accounts
+                    var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
+                        new AccountSearchRequest { UserId = AppSettings.Current.UserId, PageCount = SearchRequest.MAX_PAGE_COUNT });
+
+                    if (resultAccounts.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultAccounts);
+                        return;
+                    }
+
+                    AccountList.FillData(resultAccounts.Result.AsEnumerable());
                 }
 
                 if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)

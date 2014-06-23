@@ -124,9 +124,9 @@ namespace SherpaDesk.Common
                         resp_message = response.ToString();
                     }
                     if (response.RequestMessage != null)
-                        result = result.Fail(response.ReasonPhrase, resp_message, response.RequestMessage.ToString());
+                        result = result.Fail(response.ReasonPhrase, resp_message, response.RequestMessage.ToString(), request.ToString());
                     else
-                        result = result.Fail(response.ReasonPhrase, resp_message);
+                        result = result.Fail(response.ReasonPhrase, resp_message, request.ToString());
                 }
             }
             catch (Exception ex)

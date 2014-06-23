@@ -32,20 +32,23 @@ namespace SherpaDesk
     {
         private const string APPLICATION_FRAME = "appFrame";
 
+        public static async void ShowStandartMessage(string message, eErrorType title)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var md = new MessageDialog(message, title.Details());
+                    await md.ShowAsync();
+                }
+                catch (UnauthorizedAccessException) { }
+            });
+        }
+
         public static async void ShowErrorMessage(string message, eErrorType title)
         {
             var flyout = new Error.Flyout(message, title);
             await flyout.ShowAsync();
-
-            //await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            //{
-            //    try
-            //    {
-            //        var md = new MessageDialog(message, title.Details());
-            //        await md.ShowAsync();
-            //    }
-            //    catch (UnauthorizedAccessException) { }
-            //});
         }
 
         public static async void ShowErrorMessage(Response response, eErrorType title)

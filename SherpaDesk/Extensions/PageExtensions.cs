@@ -61,7 +61,7 @@ namespace SherpaDesk.Common
                             toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
                             toolTip.FontSize = 16;
                             toolTip.Height = control.Height - 10;
-                            toolTip.Width = control.Width - 10;
+                            toolTip.Width = control.Width - 40;
                             toolTip.PlacementTarget = control;
                             var grid = control.ParentGrid();
                             if (grid == null)

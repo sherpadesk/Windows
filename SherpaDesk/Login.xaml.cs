@@ -2,8 +2,10 @@
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using System;
 using System.Linq;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -58,6 +60,7 @@ namespace SherpaDesk
                 if (resultLogin.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultLogin);
+                    this.StopProgress();
                     return;
                 }
 
@@ -69,33 +72,34 @@ namespace SherpaDesk
                 var resultOrg = await connector.Func<OrganizationResponse[]>(
                         x => x.Organizations);
 
+                this.StopProgress();
+
                 if (resultOrg.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultOrg);
-                    return;
-                }
-
-                this.StopProgress();
-
-                var orgList = resultOrg.Result.ToList();
-
-                if (orgList.IsSingle())
-                {
-                    var org = orgList.First();
-                    var instance = org.Instances.First();
-                    AppSettings.Current.AddOrganization(
-                        org.Key.IsNull("Invalid Organiation Key"),
-                        org.Name,
-                        instance.Key.IsNull("Invalid Instance Key"),
-                        instance.Name,
-                        true);
-
-                    // redirect to main page
-                    this.Frame.Navigate(typeof(MainPage));
                 }
                 else
                 {
-                    this.Frame.Navigate(typeof(Organization));
+                    var orgList = resultOrg.Result.ToList();
+
+                    if (orgList.IsSingle())
+                    {
+                        var org = orgList.First();
+                        var instance = org.Instances.First();
+                        AppSettings.Current.AddOrganization(
+                            org.Key.IsNull("Invalid Organiation Key"),
+                            org.Name,
+                            instance.Key.IsNull("Invalid Instance Key"),
+                            instance.Name,
+                            true);
+
+                        // redirect to main page
+                        this.Frame.Navigate(typeof(MainPage));
+                    }
+                    else
+                    {
+                        this.Frame.Navigate(typeof(Organization));
+                    }
                 }
             }
         }

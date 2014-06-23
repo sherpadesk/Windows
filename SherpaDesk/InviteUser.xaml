@@ -10,9 +10,9 @@
     VerticalAlignment="Top"
 	HorizontalAlignment="Right"
     Height="600"
-	Width="400"
+	Width="460"
     d:DesignHeight="600"
-    d:DesignWidth="400" 
+    d:DesignWidth="460" 
     BorderBrush="LightBlue" 
     BorderThickness="1" Margin="0,-2,0,2">
 
@@ -34,11 +34,11 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="New User" Margin="10,10,10,0" VerticalAlignment="Center" FontSize="26"/>
             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="First Name" Margin="10,10,10,0" VerticalAlignment="Bottom" FontSize="20"/>
-            <Controls:WatermarkTextBox x:Name="FirstNameTextbox" HorizontalAlignment="Center" WatermarkText="User First Name" Height="50" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="10, 5, 10, 5" />
+            <Controls:WatermarkTextBox x:Name="FirstNameTextbox" HorizontalAlignment="Center" WatermarkText="User First Name" Height="50" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="30, 5, 10, 5" />
             <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="Last Name" Margin="10,10,10,0" VerticalAlignment="Bottom" FontSize="20"/>
-            <Controls:WatermarkTextBox x:Name="LastNameTextbox" HorizontalAlignment="Center" WatermarkText="User Last Name" Height="50" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="10, 5, 10, 5" />
+            <Controls:WatermarkTextBox x:Name="LastNameTextbox" HorizontalAlignment="Center" WatermarkText="User Last Name" Height="50" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="30, 5, 10, 5" />
             <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="Email" Margin="10,10,10,0" VerticalAlignment="Bottom" FontSize="20" />
-            <Controls:WatermarkTextBox x:Name="EmailTextbox" HorizontalAlignment="Center" WatermarkText="Email Address" Height="50" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="10, 5, 10, 5" />
+            <Controls:WatermarkTextBox x:Name="EmailTextbox" HorizontalAlignment="Center" WatermarkText="Email Address" Height="50" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="20" Width="380" Margin="30, 5, 10, 5" />
             <Button x:Name="InviteButton" Content="Submit" HorizontalAlignment="Center" Grid.Column="0" FontSize="24" Width="180" Margin="0,5,0,5" VerticalAlignment="Stretch" Grid.Row="7" Background="#FF2F9129" Click="InviteButton_Click" />
             <HyperlinkButton Name="CancelButton" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,5" Grid.Row="7" VerticalAlignment="Center" FontSize="24" Foreground="LightGray" Click="CancelButton_Click"/>
         </Grid>
