@@ -352,8 +352,15 @@
     <MainPackageIdentityName>bigWebApps.SherpaDesk</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>SherpaDesk</ReservedName>
+      <ReservedName>SherpaDesk Support &amp; Help Desk</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/577070f5-244f-4a66-9db3-e3156c8b598d" />
+  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/577070f5-244f-4a66-9db3-e3156c8b598d">
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>1.0.5.17</PackageMaxArchitectureVersion>
+    </PackageInfo>
+  </PackageInfoList>
 </StoreAssociation>

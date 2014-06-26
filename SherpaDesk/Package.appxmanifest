@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="bigWebApps.SherpaDesk" Publisher="CN=5160B5FA-3DD8-48CA-8B28-C013BDEBF078" Version="1.0.6.24" />
+  <Identity Name="bigWebApps.SherpaDesk" Publisher="CN=5160B5FA-3DD8-48CA-8B28-C013BDEBF078" Version="1.0.6.26" />
   <Properties>
-    <DisplayName>SherpaDesk Support &amp; HelpDesk</DisplayName>
+    <DisplayName>SherpaDesk</DisplayName>
     <PublisherDisplayName>bigWebApps</PublisherDisplayName>
     <Logo>Assets\Images\StoreLogo.png</Logo>
   </Properties>
