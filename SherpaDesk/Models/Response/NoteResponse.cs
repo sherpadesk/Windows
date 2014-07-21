@@ -69,6 +69,12 @@ namespace SherpaDesk.Models.Response
             if (DateTime.TryParse(this._responseDate, out date))
                 this.ResponseDate = date.ToLocalTime();
         }
+
+        //		[
+        //  {\"id\":20971,\"ticket_key\":\"cpszh2\",\"user_id\":7512,\"user_email\":\"alexey.gavrilov@micajah.com\",\"user_firstname\":\"Alexey\",\"user_lastname\":\"Gavrilov\",\"record_date\":\"2014-07-21T17:47:00.0000000\",\"log_type\":\"Response\",\"note\":\"test 2\",\"ticket_time_id\":0,\"sent_to\":\"\",\"is_waiting\":null,\"sla_used\":0},
+        //  {\"id\":20970,\"ticket_key\":\"cpszh2\",\"user_id\":7512,\"user_email\":\"alexey.gavrilov@micajah.com\",\"user_firstname\":\"Alexey\",\"user_lastname\":\"Gavrilov\",\"record_date\":\"2014-07-21T17:43:00.0000000\",\"log_type\":\"Response\",\"note\":\"test response\",\"ticket_time_id\":0,\"sent_to\":\"\",\"is_waiting\":null,\"sla_used\":0},
+        //  {\"id\":20901,\"ticket_key\":\"cpszh2\",\"user_id\":7512,\"user_email\":\"alexey.gavrilov@micajah.com\",\"user_firstname\":\"Alexey\",\"user_lastname\":\"Gavrilov\",\"record_date\":\"2014-06-15T12:03:00.0000000\",\"log_type\":\"Initial Post\",\"note\":\"test 15<br><br>Following file was  uploaded: .\",\"ticket_time_id\":0,\"sent_to\":\"\",\"is_waiting\":null,\"sla_used\":0}]"	string
+
     }
 
 }

@@ -188,7 +188,7 @@ namespace SherpaDesk
                     }
                     else if (hours == decimal.Zero && !statusUpdated)
                     {
-                        var resultNote = await connector.Func<AddNoteRequest, NoteResponse>(x => x.Posts, 
+                        var resultNote = await connector.Func<AddNoteRequest, NoteResponse[]>(x => x.Posts, 
                             new AddNoteRequest
                             {
                                 TicketKey = _ticketKey,
@@ -199,7 +199,7 @@ namespace SherpaDesk
                             this.HandleError(resultNote);
                             return;
                         }
-                        postId = resultNote.Result.PostId;
+                        postId = resultNote.Result.First().PostId;
                     }
                 }
                 if (_attachment.Count > 0)
