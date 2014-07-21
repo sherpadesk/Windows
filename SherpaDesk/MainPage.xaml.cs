@@ -111,13 +111,13 @@ namespace SherpaDesk
                         user.LastName,
                         user.Role.IsNull("Invalid role"));
 
-                    this.LoginNameButton.Content = string.Format("{0} {1}", user.FirstName, user.LastName);
-//                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
-                    OrgName.Text = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
-                    this.Avatar.Source = new BitmapImage(
-                        new Uri(string.Format(AVATAR_URL_FORMAT,
-                            Helper.GetMD5(user.Email)),
-                            UriKind.Absolute));
+//                    this.LoginNameButton.Content = string.Format("{0} {1}", user.FirstName, user.LastName);
+////                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
+//                    OrgName.Text = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
+//                    this.Avatar.Source = new BitmapImage(
+//                        new Uri(string.Format(AVATAR_URL_FORMAT,
+//                            Helper.GetMD5(user.Email)),
+//                            UriKind.Absolute));
 
                     this.MainFrame.Navigate(typeof(Info));
                 }

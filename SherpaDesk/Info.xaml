@@ -272,138 +272,18 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <ScrollViewer x:Name="scrollViewer"
-						  VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-						  VerticalScrollBarVisibility="Disabled"
-						  VerticalScrollMode="Disabled"
-						  HorizontalScrollMode="Enabled"
-						  HorizontalScrollBarVisibility="Auto"
-						  BringIntoViewOnFocusChange="False">
-        <Grid Background="Transparent">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="1000"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="0" Grid.Column="3" Background="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <telerik:RadCustomHubTile x:Name="NewMessagesTile" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Tapped="NewMessagesTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="NewMessagesCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="New Messages" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="OpenTicketsTile" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Tapped="OpenTicketsTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="OpenTicketsCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="Open Tickets" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="OpenAsEndUserTile" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="OpenAsEndUserTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="OpenAsEndUserCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="Open As End User" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="OnHoldTile" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Tapped="OnHoldTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="OnHoldCount" Text="0" HorizontalAlignment="Center" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="On Hold" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="WaitingTile" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Height="150" Margin="0,25,0,0" VerticalAlignment="Top" Width="210" Tapped="WaitingTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock x:Name="WaitingCount" HorizontalAlignment="Center" Text="0" FontSize="82.667" FontWeight="SemiLight"/>
-                            <TextBlock Text="Awaiting Response" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-
-                <ListView x:Name="ActivityList" Visibility="Collapsed" ItemContainerStyle="{StaticResource GridViewItemStyle1}" Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Top" Margin="0,199,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollMode="Auto" Width="500" Height="515" SelectionMode="None" Background="#FF0C3772">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="{Binding UserName}" FontSize="20" FontWeight="Bold" />
-                                <TextBlock Text="{Binding Title}" FontSize="16" Grid.Row="1"/>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Note}" Width="480" FontSize="16" Grid.Row="2"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <telerik:RadCustomHubTile x:Name="AddTimeTile" Grid.Row="0" Grid.Column="8" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTimeTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                            <TextBlock Text="Add Time" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="AddTicketTile" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Left" Height="150" Margin="0,200,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="AddTicketTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="+" FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                            <TextBlock Text="Create Ticket" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <telerik:RadCustomHubTile x:Name="TimesheetTile" Grid.Row="1" Grid.Column="8" HorizontalAlignment="Left" Height="150" Margin="0,30,0,0" VerticalAlignment="Top" Width="210" Background="#FFC15B00" Tapped="TimesheetTile_Tapped">
-                    <telerik:RadCustomHubTile.FrontContent>
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text=" " FontSize="82.667" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                            <TextBlock Text="Timesheet" FontSize="20" Margin="0,-12,0,4"/>
-                        </StackPanel>
-                    </telerik:RadCustomHubTile.FrontContent>
-                </telerik:RadCustomHubTile>
-                <ListView Grid.Column="4" HorizontalAlignment="Left" Height="100" Margin="93,306,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
-
-            </Grid>
-            <Frame x:Name="LeftFrame" VerticalAlignment="Top" Grid.Column="1" Margin="30,0,0,30" />
-            <Frame x:Name="RightFrame" VerticalAlignment="Top" Grid.Column="5" Margin="30,0,0,30" />
-        </Grid>
-    </ScrollViewer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto" MinWidth="500" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Image VerticalAlignment="Stretch" Grid.Column="1" Source="Assets/Images/main-background.png" Stretch="UniformToFill"/>
+        <Frame x:Name="LeftFrame" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,0,0" />
+        <Frame x:Name="ActivityFrame" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" />
+        <Frame x:Name="RightFrame" VerticalAlignment="Top" Grid.Column="3" Margin="0,0,0,0" />
+    </Grid>
     <VisualStateManager.VisualStateGroups>
 
         <!-- Visual states reflect the application's view state -->

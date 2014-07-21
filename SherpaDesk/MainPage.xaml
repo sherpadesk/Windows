@@ -6,50 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
     mc:Ignorable="d" Loaded="Page_Loaded">
-
-    <Grid Name="LayoutRoot" Background="#FF004174">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
-        </StackPanel>
-        <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Grid.ColumnSpan="3" Canvas.ZIndex="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black">
-            <Image x:Name="ImageFull" Stretch="None" Grid.ColumnSpan="3" Margin="5,5,5,5" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
-        </StackPanel>
-        <Image HorizontalAlignment="Left" Height="152" Margin="15,5,0,0" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Width="512" Source="Assets/StoreLogo.png" />
-        <Frame x:Name="MainFrame" HorizontalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalAlignment="Top" />
-        <TextBlock Name="BuildNumber"></TextBlock>
-        <Grid Grid.Row="0" Grid.Column="0"  HorizontalAlignment="right" Margin="0,0,50,0">
+    <ScrollViewer x:Name="scrollViewer"
+						  VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+						  VerticalScrollBarVisibility="Disabled"
+						  VerticalScrollMode="Disabled"
+						  HorizontalScrollMode="Enabled"
+						  HorizontalScrollBarVisibility="Auto"
+						  BringIntoViewOnFocusChange="False">
+        <Grid Name="LayoutRoot" Background="#ebebeb">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Margin="0,3,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <TextBlock x:Name="OrgName" Grid.Column="2" FontSize="18" Margin="0,3,0,0" VerticalAlignment="Center" />
-        </Grid>        
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="right" Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="LoginNameButton" Grid.Column="1" Content="" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF004174" BorderBrush="#FF004174" FontWeight="Normal">
-                <Button.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem x:Name="MyProfileMenu" Text="My Profile" Click="MyProfileMenu_Click" Visibility="Collapsed" />
-                        <MenuFlyoutItem x:Name="LogOutMenu" Text="Log Out" Click="LogOutMenu_Click" />
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-            <Image x:Name="Avatar" Source="https://www.gravatar.com/avatar/93097425c5522cfc4372c53896a962b2?s=40" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Top"/>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FF040029" Margin="0,0,0,0" Height="200" Width="200" BorderBrush="#FF627CC2" />
+            </StackPanel>
+            <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Grid.ColumnSpan="3" Canvas.ZIndex="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black">
+                <Image x:Name="ImageFull" Stretch="None" Grid.ColumnSpan="3" Margin="5,5,5,5" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
+            </StackPanel>
+            <Frame x:Name="MainFrame" />
+            <TextBlock Name="BuildNumber"></TextBlock>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Page>
