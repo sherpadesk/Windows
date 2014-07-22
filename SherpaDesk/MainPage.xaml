@@ -21,13 +21,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="0" Canvas.ZIndex="1000" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FF040029" Margin="0,0,0,0" Height="200" Width="200" BorderBrush="#FF627CC2" />
             </StackPanel>
-            <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Grid.ColumnSpan="3" Canvas.ZIndex="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black">
-                <Image x:Name="ImageFull" Stretch="None" Grid.ColumnSpan="3" Margin="5,5,5,5" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
+            <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Canvas.ZIndex="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black">
+                <Image x:Name="ImageFull" Stretch="None" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
             </StackPanel>
-            <Frame x:Name="MainFrame" />
+            <Frame x:Name="MainFrame" Canvas.ZIndex="11" />
             <TextBlock Name="BuildNumber"></TextBlock>
         </Grid>
     </ScrollViewer>

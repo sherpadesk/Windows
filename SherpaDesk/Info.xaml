@@ -279,10 +279,42 @@
             <ColumnDefinition Width="auto" MinWidth="500" />
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <Image VerticalAlignment="Stretch" Grid.Column="1" Source="Assets/Images/main-background.png" Stretch="UniformToFill"/>
+        <Image VerticalAlignment="Stretch" Grid.Column="1" Canvas.ZIndex="-1" Source="Assets/Images/main-background.png" Stretch="UniformToFill"/>
         <Frame x:Name="LeftFrame" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,0,0" />
         <Frame x:Name="ActivityFrame" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" />
         <Frame x:Name="RightFrame" VerticalAlignment="Top" Grid.Column="3" Margin="0,0,0,0" />
+        <Grid Grid.Column="1" VerticalAlignment="Stretch" Canvas.ZIndex="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <telerik:RadCustomHubTile Grid.Column="0" HorizontalAlignment="Right" Height="150" VerticalAlignment="Bottom" Width="150" Background="#CCE9EDEF">
+                <telerik:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <TextBlock Text="+Time" FontSize="29" Margin="0,0,10,10" Foreground="#FF7395A4" FontWeight="Bold"/>
+                    </StackPanel>
+                </telerik:RadCustomHubTile.FrontContent>
+            </telerik:RadCustomHubTile>
+            <telerik:RadCustomHubTile Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Height="150" Margin="20,20,5,20" VerticalAlignment="Center" Width="150" Background="#CCE9EDEF">
+                <telerik:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <TextBlock Text="+Ticket" FontSize="29" Margin="0,0,10,10" Foreground="#FF7395A4" FontWeight="Bold"/>
+                    </StackPanel>
+                </telerik:RadCustomHubTile.FrontContent>
+            </telerik:RadCustomHubTile>
+            <telerik:RadCustomHubTile Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Height="150" VerticalAlignment="Top" Width="150" Background="#CCE9EDEF">
+                <telerik:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <TextBlock Text="Messages" FontSize="29" Margin="0,0,10,10" Foreground="#FF7395A4" FontWeight="Bold"/>
+                    </StackPanel>
+                </telerik:RadCustomHubTile.FrontContent>
+            </telerik:RadCustomHubTile>
+        </Grid>
     </Grid>
     <VisualStateManager.VisualStateGroups>
 
