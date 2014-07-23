@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Linq;
+using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Response;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -19,6 +11,36 @@ namespace SherpaDesk
         public Activity()
         {
             this.InitializeComponent();
+        }
+
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var connector = new Connector())
+            {
+                var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);
+                if (resultActivities.Status != eResponseStatus.Success)
+                {
+                    this.pageRoot.HandleError(resultActivities);
+                    return;
+                }
+                var dataSource = resultActivities.Result.Select(x => new
+                {
+                    UserName = x.UserName,
+                    Title = x.Title,
+                    Note = Helper.HtmlToString(x.Note)
+                }).ToList();
+
+                if (dataSource.Count > 0)
+                {
+                    ActivityList.ItemsSource = dataSource;
+                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
+
+            }
         }
     }
 }

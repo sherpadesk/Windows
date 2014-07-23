@@ -22,42 +22,17 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                //var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
-                //    x => x.Tickets, new KeyRequest("counts"));
-                //if (resultCounts.Status != eResponseStatus.Success)
-                //{
-                //    this.pageRoot.HandleError(resultCounts);
-                //    return;
-                //}
+                var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
+                    x => x.Tickets, new KeyRequest("counts"));
+                if (resultCounts.Status != eResponseStatus.Success)
+                {
+                    this.pageRoot.HandleError(resultCounts);
+                    return;
+                }
 
-                ////NewMessagesCount.Text = resultCounts.Result.NewMessages.ToString();
-                ////OpenTicketsCount.Text = resultCounts.Result.OpenAsTech.ToString();
-                ////OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
-                ////OnHoldCount.Text = resultCounts.Result.OnHold.ToString();
-                ////WaitingCount.Text = resultCounts.Result.Waiting.ToString();
-
-                //var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);
-                //if (resultActivities.Status != eResponseStatus.Success)
-                //{
-                //    this.pageRoot.HandleError(resultActivities);
-                //    return;
-                //}
-                //var dataSource = resultActivities.Result.Select(x => new
-                //{
-                //    UserName = x.UserName,
-                //    Title = x.Title,
-                //    Note = Helper.HtmlToString(x.Note)
-                //}).ToList();
-
-                //if (dataSource.Count > 0)
-                //{
-                //    //ActivityList.ItemsSource = dataSource;
-                //    //ActivityList.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                //}
-                //else
-                //{
-                //    //ActivityList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                //}
+                OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
+                OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
+                OpenAsAltTechCount.Text = resultCounts.Result.OpenAsAltTech.ToString();
             }
         }
 

@@ -14,7 +14,7 @@
 						  HorizontalScrollMode="Enabled"
 						  HorizontalScrollBarVisibility="Auto"
 						  BringIntoViewOnFocusChange="False">
-        <Grid Name="LayoutRoot" Background="#ebebeb">
+        <Grid Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
