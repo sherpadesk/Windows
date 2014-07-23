@@ -31,16 +31,14 @@
             <model:TimesheetViewModel x:Key="Model" x:Name="Model" />
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="240"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,0,0,30" Style="{StaticResource PageHeaderTextStyle}" Text="Timesheet" FontWeight="Normal"/>
+            <TextBlock x:Name="pageTitle" Foreground="#86abb6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,30,80,20" FontSize="45" Text="Timesheet" FontWeight="Normal"/>
         </Grid>
         <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="Transparent">
             <Grid.RowDefinitions>
