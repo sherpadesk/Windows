@@ -26,6 +26,7 @@ namespace SherpaDesk
                 var dataSource = resultActivities.Result.Select(x => new
                 {
                     UserName = x.UserName,
+                    Date = x.DaysOld,
                     Title = x.Title,
                     Note = Helper.HtmlToString(x.Note)
                 }).ToList();

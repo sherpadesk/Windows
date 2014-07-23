@@ -63,7 +63,7 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="30" FontSize="180" Height="auto" HorizontalAlignment="Center" />
+                        <TextBlock Name="OpenCount" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
                         <TextBlock Text="Open Tickets" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                         <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
                         <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">

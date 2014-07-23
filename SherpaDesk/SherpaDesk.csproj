@@ -299,6 +299,7 @@
     <Content Include="Assets\Images\Bluesquare30x30Logo.png" />
     <Content Include="Assets\Images\Bluesquare310x310Logo.png" />
     <Content Include="Assets\Images\Bluesquare70x70Logo.png" />
+    <Content Include="Assets\Images\face55x55.png" />
     <Content Include="Assets\Images\home-line-devider.png" />
     <Content Include="Assets\Images\main-background.png" />
     <Content Include="Assets\Images\Splash screen 620x300.scale-100.png" />
