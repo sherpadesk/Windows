@@ -69,7 +69,7 @@
                         <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition />                                
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
@@ -77,30 +77,67 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Name="OpenAsEndUserCount" Text="0" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Name="OpenAsTechCount" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" Margin="0,1,0,53" Grid.RowSpan="2" />
+                            <TextBlock Name="OpenAsTechCount" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
                             <TextBlock Name="OpenAsAltTechCount" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Text="As User" Margin="5,0,0,4" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="As Tech" Margin="5,0,0,4" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Alt Tech" Margin="5,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Text="As User" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Text="As Tech" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Text="Alt Tech" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
                         </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="20,20,20,20" Height="auto">
+                        <Grid Height="auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="1" Text="Hours" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Text="Expenses" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="3" Text="Tickets" FontSize="25" HorizontalAlignment="Center" />
+                        </Grid>
+                        <ListView x:Name="MainRepeater" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="760">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="Sherpa" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="1" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="2" Text="2" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Text="3" FontSize="25" HorizontalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </Grid>
             </Grid>
-            <telerik:RadCustomHubTile Grid.Column="0" HorizontalAlignment="Right" Margin="0,100,5,5" Height="150" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF">
+            <telerik:RadCustomHubTile x:Name="TimeButton" Grid.Column="0" HorizontalAlignment="Right" Margin="0,100,5,5" Height="150" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF" Tapped="TimeButton_Tapped">
                 <telerik:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <TextBlock Text="+Time" FontSize="28" Margin="0,0,10,0" Foreground="#FF7395A4" FontWeight="Bold"/>
                     </StackPanel>
                 </telerik:RadCustomHubTile.FrontContent>
             </telerik:RadCustomHubTile>
-            <telerik:RadCustomHubTile Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Height="150" Margin="0,25,5,5" Width="150" Background="#D8E9EDEF">
+            <telerik:RadCustomHubTile x:Name="TicketButton" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Height="150" Margin="0,25,5,5" Width="150" Background="#D8E9EDEF">
                 <telerik:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <TextBlock Text="+Ticket" FontSize="28" Margin="0,0,10,0" Foreground="#FF7395A4" FontWeight="Bold"/>
                     </StackPanel>
                 </telerik:RadCustomHubTile.FrontContent>
             </telerik:RadCustomHubTile>
-            <telerik:RadCustomHubTile Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Height="150" Margin="0,25,5,5" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF">
+            <telerik:RadCustomHubTile x:Name="MessagesButton" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Height="150" Margin="0,25,5,5" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF">
                 <telerik:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <TextBlock Text="Messages" FontSize="28" Margin="0,0,10,0" Foreground="#FF7395A4" FontWeight="Bold"/>

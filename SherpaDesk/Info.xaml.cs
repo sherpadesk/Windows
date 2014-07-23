@@ -20,6 +20,14 @@ namespace SherpaDesk
 
         public async void RefreshData()
         {
+            // Need to replace with data
+            MainRepeater.Items.Add(1);
+            MainRepeater.Items.Add(1);
+            MainRepeater.Items.Add(1);
+            MainRepeater.Items.Add(1);
+            MainRepeater.Items.Add(1);
+            MainRepeater.Items.Add(1);
+
             using (var connector = new Connector())
             {
                 var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
@@ -40,7 +48,6 @@ namespace SherpaDesk
         {
 
             this.ActivityFrame.Navigate(typeof(Activity));
-            this.LeftFrame.Navigate(typeof(Timesheet));
             this.RightFrame.Navigate(typeof(WorkList), eWorkListType.Open);
             this.RefreshData();
         }
@@ -112,6 +119,11 @@ namespace SherpaDesk
         void TimeSheetClicked(object sender, EventArgs e)
         {
 //            scrollViewer.ChangeView(20000, new double?(), new float?());
+        }
+
+        private void TimeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            this.LeftFrame.Navigate(typeof(Timesheet));
         }
     }
 }
