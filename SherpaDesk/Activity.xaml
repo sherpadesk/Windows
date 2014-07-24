@@ -48,7 +48,8 @@
                         
                         <Image VerticalAlignment="Stretch"  HorizontalAlignment="Left"
                                Source="Assets/Images/face55x55.png"
-                               Grid.Column="0" 
+                               Grid.Column="0"
+                               Margin="0,0,10,0"
                                Grid.Row="0" />
                         
                         <TextBlock Text="{Binding UserName}" 
