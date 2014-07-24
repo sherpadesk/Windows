@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SherpaDesk.Models.Request
 {
     [DataContract]
-    public abstract class SearchRequest : GetRequest
+    public class SearchRequest : GetRequest
     {
         public const int DEFAULT_PAGE_COUNT = 10;
         public const int DEFAULT_PAGE_INDEX = 0;
@@ -18,6 +18,12 @@ namespace SherpaDesk.Models.Request
         {
             this.PageCount = DEFAULT_PAGE_COUNT;
             //this.PageIndex = DEFAULT_PAGE_INDEX;
+        }
+
+        public SearchRequest(string query)
+            : this()
+        {
+            this.Query = query;
         }
 
         [DataMember(Name = "query"), Details]

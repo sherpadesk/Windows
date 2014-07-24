@@ -95,11 +95,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="1" Foreground="White" Text="Hours" FontSize="25" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="2" Foreground="White" Text="Expenses" FontSize="25" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="3" Foreground="White" Text="Tickets" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Foreground="White" Text="Hours" FontSize="22" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Foreground="White" Text="Expenses" FontSize="22" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="3" Foreground="White" Text="Tickets" FontSize="22" HorizontalAlignment="Center" />
                         </Grid>
-                        <ListView x:Name="MainRepeater" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
+                        <ListView x:Name="StatInfoList" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Width="760">
@@ -112,10 +112,10 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="Sherpa" Foreground="White" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="1" Foreground="White" Text="1" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="2" Foreground="White" Text="2" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="3" Foreground="White" Text="3" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding AccountName}" Foreground="White" FontSize="22" HorizontalAlignment="Left" />
+                                        <TextBlock Text="{Binding UninvoicedTimes}" Grid.Column="1" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding UnInvoicedExpenses}" Grid.Column="2" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding OpenTickets}" Grid.Column="3" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

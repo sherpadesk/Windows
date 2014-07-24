@@ -26,8 +26,8 @@
                     Visibility="Collapsed" 
                     VerticalAlignment="Top" 
                     SelectionMode="None" 
-                    Background="White"
-                    Margin="0,0,0,20" 
+                    Background="Transparent"
+                    Margin="0,0,20,0" 
                     Grid.Column="0" 
                     Grid.Row="1" 
                     ScrollViewer.VerticalScrollBarVisibility="Visible" 
@@ -85,7 +85,7 @@
                                    Grid.Column="0"
                                    Grid.ColumnSpan="3"/>
 
-                        <Line Stroke="LightGray" 
+                        <Line Stroke="Gray" 
                               X1="0" 
                               Y1="0" 
                               X2="450" 
