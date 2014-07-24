@@ -196,24 +196,24 @@ namespace SherpaDesk
 
         private void DateField_ValueChanged(object sender, EventArgs e)
         {
-            if (DateField.Value.HasValue)
-            {
-                TimesheetCalendar.SelectionChanged -= TimesheetCalendar_SelectionChanged;
-                var selectedDate = DateField.Value.Value;
-                DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd");
-                TimesheetCalendar.SelectedDateRange = new CalendarDateRange(selectedDate, selectedDate);
-                TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
-                FillTimesheetGrid(selectedDate);
-            }
+            //if (DateField.Value.HasValue)
+            //{
+            //    TimesheetCalendar.SelectionChanged -= TimesheetCalendar_SelectionChanged;
+            //    var selectedDate = DateField.Value.Value;
+            //    DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd");
+            //    TimesheetCalendar.SelectedDateRange = new CalendarDateRange(selectedDate, selectedDate);
+            //    TimesheetCalendar.SelectionChanged += TimesheetCalendar_SelectionChanged;
+            //    FillTimesheetGrid(selectedDate);
+            //}
         }
 
         private void TimesheetCalendar_SelectionChanged(object sender, EventArgs e)
         {
-            DateField.ValueChanged -= DateField_ValueChanged;
+            //DateField.ValueChanged -= DateField_ValueChanged;
             var selectedDate = TimesheetCalendar.SelectedDateRange.Value.StartDate.Date;
-            DateField.Value = selectedDate;
+            //DateField.Value = selectedDate;
             DateLabel.Text = selectedDate.ToString("MMMM dd, yyyy - dddd");
-            DateField.ValueChanged += DateField_ValueChanged;
+            //DateField.ValueChanged += DateField_ValueChanged;
             FillTimesheetGrid(selectedDate);
         }
 
@@ -238,7 +238,8 @@ namespace SherpaDesk
         {
             var hours = decimal.Zero;
             decimal.TryParse(HoursTextBox.Text, out hours);
-            var date = DateField.Value ?? DateTime.Now;
+//            var date = DateField.Value ?? DateTime.Now;
+            var date = DateTime.Now;
             var taskType = TaskTypeList.GetSelectedValue<int>();
             using (var connector = new Connector())
             {

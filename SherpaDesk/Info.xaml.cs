@@ -59,6 +59,7 @@ namespace SherpaDesk
 
             this.ActivityFrame.Navigate(typeof(Activity));
             this.RightFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+            this.LeftFrame.Navigate(typeof(Timesheet));
             this.RefreshData();
         }
 
