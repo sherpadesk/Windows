@@ -28,7 +28,7 @@
         <Image VerticalAlignment="Stretch" Grid.Column="1" Canvas.ZIndex="-1" Source="Assets/Images/main-background.png" Stretch="UniformToFill"/>
         <Frame x:Name="LeftFrame" VerticalAlignment="Top" Grid.Column="0" Margin="0,0,0,0" />
         <Frame x:Name="ActivityFrame" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" />
-        <Frame x:Name="RightFrame" VerticalAlignment="Top" Grid.Column="3" Margin="0,0,0,0" />
+        <Frame x:Name="RightFrame" VerticalAlignment="Top" Grid.Column="3" Margin="50,0,0,0" />
         <Grid Grid.Column="1" Canvas.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190" />

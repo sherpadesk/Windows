@@ -15,22 +15,19 @@
     </Page.Resources>
     <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="pageTitle" 
-                   Style="{StaticResource PageHeaderTextStyle}"
-                   VerticalAlignment="Bottom" 
+                   VerticalAlignment="Top" Margin="40,30,20,20" FontSize="40" Foreground="#86abb6"
                    Text="SherpaDesk Activity" 
-                   FontWeight="Normal" 
-                   HorizontalAlignment="Center"
-                   Grid.Column="0" />
+                   FontWeight="Normal" Grid.Column="0" />
         <ListView x:Name="ActivityList" 
                     Visibility="Collapsed" 
                     VerticalAlignment="Top" 
                     SelectionMode="None" 
                     Background="Transparent"
-                    Margin="0,0,0,0" 
+                    Margin="0,0,0,20" 
                     Grid.Column="0" 
                     Grid.Row="1" 
                     ScrollViewer.VerticalScrollBarVisibility="Visible" 

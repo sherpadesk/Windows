@@ -42,7 +42,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,30,20,20" FontSize="45" Foreground="#86abb6" Grid.ColumnSpan="3" Text="Open Tickets" FontWeight="Normal" />
+            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,30,20,20" FontSize="40" Foreground="#86abb6" Grid.ColumnSpan="3" Text="Open Tickets" FontWeight="Normal" />
             <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
             <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
                 <Button.Flyout>
