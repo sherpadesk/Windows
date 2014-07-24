@@ -27,7 +27,7 @@ namespace SherpaDesk
             MainRepeater.Items.Add(1);
             MainRepeater.Items.Add(1);
             MainRepeater.Items.Add(1);
-
+            this.LeftFrame.Navigate(typeof(Timesheet));
             using (var connector = new Connector())
             {
                 var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
