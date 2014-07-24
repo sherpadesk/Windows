@@ -63,8 +63,8 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="OpenCount" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
-                        <TextBlock Text="Open Tickets" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
+                        <TextBlock Text="Open Tickets" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                         <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
                         <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
@@ -76,12 +76,12 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Name="OpenAsEndUserCount" Text="0" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Name="OpenAsTechCount" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Name="OpenAsAltTechCount" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Text="As User" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="As Tech" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Alt Tech" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Name="OpenAsEndUserCount" Foreground="White" Text="0" FontSize="45" HorizontalAlignment="Right" />
+                            <TextBlock Name="OpenAsTechCount" Foreground="White" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
+                            <TextBlock Name="OpenAsAltTechCount" Foreground="White" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
+                            <TextBlock Text="As User" Foreground="White" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Text="As Tech" Foreground="White" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
+                            <TextBlock Text="Alt Tech" Foreground="White" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1" Margin="20,20,20,20" Height="auto">
@@ -95,9 +95,9 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="1" Text="Hours" FontSize="25" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="2" Text="Expenses" FontSize="25" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="3" Text="Tickets" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Foreground="White" Text="Hours" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Foreground="White" Text="Expenses" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="3" Foreground="White" Text="Tickets" FontSize="25" HorizontalAlignment="Center" />
                         </Grid>
                         <ListView x:Name="MainRepeater" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
                             <ListView.ItemTemplate>
@@ -112,10 +112,10 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="Sherpa" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="1" Text="1" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="2" Text="2" FontSize="25" HorizontalAlignment="Center" />
-                                        <TextBlock Grid.Column="3" Text="3" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Text="Sherpa" Foreground="White" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Foreground="White" Text="1" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="2" Foreground="White" Text="2" FontSize="25" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Foreground="White" Text="3" FontSize="25" HorizontalAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

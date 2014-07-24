@@ -5,7 +5,7 @@
     xmlns:local="using:SherpaDesk"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d" Loaded="Page_Loaded" RequestedTheme="Light">
     <ScrollViewer x:Name="scrollViewer"
 						  VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch"
@@ -14,7 +14,7 @@
 						  HorizontalScrollMode="Enabled"
 						  HorizontalScrollBarVisibility="Auto"
 						  BringIntoViewOnFocusChange="False">
-        <Grid Name="LayoutRoot" Background="White">
+        <Grid Name="LayoutRoot" Background="#ebebeb">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
