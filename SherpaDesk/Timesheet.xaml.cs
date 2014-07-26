@@ -310,5 +310,29 @@ namespace SherpaDesk
         }
         #endregion
 
+        private void SubmitButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void SubmitButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
+
+        private void CancelButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {            
+            ((TextBlock)sender).Opacity = 0.6;
+        }
+
+        private void CancelButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((TextBlock)sender).Opacity = 1;
+        }
     }
 }

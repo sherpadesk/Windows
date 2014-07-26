@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:telerikCalendar ="using:Telerik.UI.Xaml.Controls.Input.Calendar"
     xmlns:model="using:SherpaDesk.Models"
-    xmlns:local="using:SherpaDesk.Common">
+    xmlns:local="using:SherpaDesk.Common" x:Name="TimesheetResources">
 
     <local:CellModelToTimeLogConverter x:Key="timeLogConverter" />
 
@@ -13,6 +13,20 @@
             <TextBlock Text="{Binding Label}" Foreground="#FF767676" FontSize="13.333" VerticalAlignment="Bottom" Margin="6,0,0,4" />
         </Grid>
     </DataTemplate>
+
+    <Style x:Key="SubmitButtonStyle" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Image Source="Assets/Images/button.png" Stretch="Fill" />
+                        <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 FontFamily="Segoe UI" FontSize="24"/>
+                    </Grid>                  
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <local:CustomStyleSelector x:Key="selector" EventTemplate="{StaticResource template}" />
 </ResourceDictionary>

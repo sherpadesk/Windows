@@ -51,7 +51,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="50,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -147,11 +147,13 @@
                     <TextBlock HorizontalAlignment="Right" Foreground="#8eb1bb" Grid.Row="9" Margin="10,5,0,5" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Center" FontSize="18" />
                     <TextBox x:Name="NoteTextBox" Margin="0,0,0,0" HorizontalAlignment="Stretch" Height="100" InputScope="NumberFullWidth" Grid.Row="9" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" />
 
-                    <Button Content="Save Time" Grid.Column="2" Foreground="White" HorizontalAlignment="Left" Margin="-3,14,0,0" Padding="0,0,0,0" Grid.Row="10" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Click="Button_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="Assets/Images/button.png" />
-                        </Button.Background>
-                    </Button>
+                    <Button x:Name="SubmitButton" Style="{StaticResource SubmitButtonStyle}" Content="Save Time" Grid.Column="2" Foreground="White" HorizontalAlignment="Left" Margin="-3,14,0,0" Padding="0,0,0,0" Grid.Row="10" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Click="Button_Click" PointerEntered="SubmitButton_PointerEntered" PointerExited="SubmitButton_PointerExited" />
+                    <TextBlock Text="or" Grid.Column="2" Grid.Row="10" Grid.RowSpan="2" FontSize="24" VerticalAlignment="Center" Foreground="#85778f" Margin="215,15,0,0" />
+                    <TextBlock x:Name="CancelButton" Grid.Column="2" Grid.Row="10" Grid.RowSpan="2" FontSize="24" VerticalAlignment="Center" Foreground="#85778f" Margin="250,15,147,0" Tapped="CancelButton_Tapped" PointerEntered="CancelButton_PointerEntered" PointerExited="CancelButton_PointerExited">
+                        <Underline>
+                            Cancel
+                        </Underline>
+                    </TextBlock>
                 </Grid>
             </Grid>
             <Grid x:Name="TimesheetGrids" Visibility="Collapsed" Grid.Column="4" Margin="0,-15,0,15">
