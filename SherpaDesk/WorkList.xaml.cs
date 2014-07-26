@@ -21,16 +21,13 @@ namespace SherpaDesk
         public WorkList()
         {
             this.InitializeComponent();
-            this.Model.DataLoading += UpdatedPage;
-            var viewModel = this.DataContext as WorkListPageViewModel;
-            viewModel.CommandExecuted += viewModel_CommandExecuted;
         }
 
         void viewModel_CommandExecuted(object sender, EventArgs e)
         {
-            DetailsFrame.Navigated -= ChildPage_Navigated;
-            DetailsFrame.Navigated += ChildPage_Navigated;
-            DetailsFrame.Navigate(typeof(TicketDetails), sender.ToString());
+            //DetailsFrame.Navigated -= ChildPage_Navigated;
+            //DetailsFrame.Navigated += ChildPage_Navigated;
+            //DetailsFrame.Navigate(typeof(TicketDetails), sender.ToString());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -62,6 +59,10 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Model.DataLoading += UpdatedPage;
+            var viewModel = this.DataContext as WorkListPageViewModel;
+            viewModel.CommandExecuted += viewModel_CommandExecuted;
+
             await Load();
         }
 
@@ -123,9 +124,9 @@ namespace SherpaDesk
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
         {
-            DetailsFrame.Navigated -= ChildPage_Navigated;
-            DetailsFrame.Navigated += ChildPage_Navigated;
-            DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
+            //DetailsFrame.Navigated -= ChildPage_Navigated;
+            //DetailsFrame.Navigated += ChildPage_Navigated;
+            //DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)

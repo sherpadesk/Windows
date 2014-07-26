@@ -16,8 +16,20 @@
     mc:Ignorable="d" Loaded="pageRoot_Loaded" Margin="0,-1,0,1">
 
     <Page.Resources>
-        <x:String x:Key="AppName">SherpaDesk</x:String>
         <model:WorkListViewModel x:Key="Model" x:Name="Model" />
+        <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="#FF8EB0BA" />
+            <!--<Setter Property="FontWeight" Value="Bold"/>-->
+        </Style>
+        <Style x:Key="WorkListCellTextStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0 20 0 20" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
     </Page.Resources>
     <Page.DataContext>
         <local:WorkListPageViewModel/>
@@ -34,15 +46,22 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*"/>
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />
-        <Grid Grid.Column="1">
+        <TextBlock x:Name="pageTitle" 
+                   Grid.Column="0" 
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Margin="0,30,20,20" 
+                   Text="Open Tickets"
+                   Style="{StaticResource PageHeaderTextStyle}" />
+
+        <!--<Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />-->
+
+        <!--<Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="pageTitle" Grid.Column="0" VerticalAlignment="Top" Margin="0,30,20,20" FontSize="40" Foreground="#86abb6" Grid.ColumnSpan="3" Text="Open Tickets" FontWeight="Normal" />
             <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
             <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
                 <Button.Flyout>
@@ -52,155 +71,83 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-        </Grid>
-        <telerik:RadDataGrid x:Name="ItemsGrid" ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" Height="500" ScrollViewer.VerticalScrollMode="Auto" UserGroupMode="Disabled" Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" UserColumnReorderMode="None" UserFilterMode="Enabled" UserSortMode="Single" GridLinesVisibility="Horizontal" BorderBrush="#FF006AC1" SelectionMode="None" SelectionUnit="Row"
-                              SelectionChanged="ItemsGrid_SelectionChanged">
+        </Grid>-->
+
+        <telerik:RadDataGrid x:Name="ItemsGrid" 
+                             ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
+                             Height="500" 
+                             UserGroupMode="Disabled" 
+                             AutoGenerateColumns="False" 
+                             UserColumnReorderMode="None" 
+                             UserFilterMode="Enabled" 
+                             UserSortMode="Single" 
+                             GridLinesVisibility="None" 
+                             BorderBrush="Transparent" 
+                             SelectionMode="None" 
+                             SelectionUnit="Row"
+                             Margin="0 20 0 0"
+                             Background="Transparent"
+                             RowBackground="White"
+                             AlternateRowBackground="White"
+                             Grid.Column="1" 
+                             Grid.Row="0" 
+                             ScrollViewer.VerticalScrollMode="Auto" 
+                             SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Commands>
                 <local:CustomCellTapCommand />
             </telerik:RadDataGrid.Commands>
             <telerik:RadDataGrid.Columns>
-                <telerik:DataGridTemplateColumn Width="50" SizeMode="Auto" >
-                    <telerik:DataGridTemplateColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTemplateColumn.HeaderStyle>
-                    <telerik:DataGridTemplateColumn.Header>
-                        <Grid HorizontalAlignment="Stretch">
-                            <CheckBox x:Name="HeaderGridCheckbox" Visibility="Visible" HorizontalAlignment="Left" Checked="HeaderGridCheckbox_Checked" Unchecked="HeaderGridCheckbox_Unchecked" />
-                        </Grid>
-                    </telerik:DataGridTemplateColumn.Header>
+                <telerik:DataGridTextColumn Header="Tkt#" 
+                                            SizeMode="Auto" 
+                                            PropertyName="TicketNumber" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="Subject" 
+                                            SizeMode="Fixed" 
+                                            Width="300" 
+                                            Header="Subject" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="UserFullName" 
+                                            SizeMode="Auto" 
+                                            Header="End User" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="TechnicianFullName" 
+                                            SizeMode="Auto" 
+                                            Header="Tech Name" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="AccountName" 
+                                            SizeMode="Auto" 
+                                            Header="Account" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="ClassName" 
+                                            SizeMode="Auto" 
+                                            Header="Class" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTextColumn PropertyName="DaysOld" 
+                                            SizeMode="Auto" 
+                                            Header="Days Old" 
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                </telerik:DataGridTextColumn>
+                <telerik:DataGridTemplateColumn Header="Status" 
+                                                SizeMode="Auto" 
+                                                HeaderStyle="{StaticResource WorkListHeaderTextStyle}">
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="GridCheckbox" IsChecked="{Binding IsChecked, Mode=TwoWay}" Tag="{Binding TicketId}" Margin="8,0,0,0" HorizontalAlignment="Left" Tapped="GridCheckbox_Tapped" />
+                            <TextBlock Text="{Binding Status}" Style="{StaticResource WorkListCellTextStyle}" />
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
-                </telerik:DataGridTemplateColumn>
-                <telerik:DataGridTextColumn Header="Tkt#" SizeMode="Auto" PropertyName="TicketNumber">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="Subject" SizeMode="Fixed" Width="300" Header="Subject">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="Margin" Value="8,3,3,3" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="TextWrapping" Value="Wrap" />
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="UserFullName" SizeMode="Auto" Header="End User">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="TechnicianFullName" SizeMode="Auto" Header="Tech Name">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="AccountName" SizeMode="Auto" Header="Account">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="ClassName" SizeMode="Auto" Header="Class">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="DaysOld" SizeMode="Auto" Header="Days Old">
-                    <telerik:DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTextColumn.HeaderStyle>
-                    <telerik:DataGridTextColumn.CellContentStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </telerik:DataGridTextColumn.CellContentStyle>
-                </telerik:DataGridTextColumn>
-                <telerik:DataGridTemplateColumn Header="Status" SizeMode="Auto">
-                    <telerik:DataGridTemplateColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTemplateColumn.HeaderStyle>
-                    <telerik:DataGridTemplateColumn.CellContentTemplate>
-                        <DataTemplate>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Status}" FontWeight="Bold" />
-                        </DataTemplate>
-                    </telerik:DataGridTemplateColumn.CellContentTemplate>
-                </telerik:DataGridTemplateColumn>
-                <telerik:DataGridTemplateColumn SizeMode="Auto">
-                    <telerik:DataGridTemplateColumn.HeaderStyle>
-                        <Style TargetType="gridPrimitives:DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF006AC1"/>
-                            <Setter Property="FontSize" Value="20" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </telerik:DataGridTemplateColumn.HeaderStyle>                    
                 </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
