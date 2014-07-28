@@ -294,6 +294,7 @@
   <ItemGroup>
     <Content Include="Assets\arrow.gif" />
     <Content Include="Assets\Close.png" />
+    <Content Include="Assets\Images\activity-line.png" />
     <Content Include="Assets\Images\BadgeLogo.png" />
     <Content Include="Assets\Images\Bluesquare150x150Logo.png" />
     <Content Include="Assets\Images\Bluesquare24x24Logo.png" />
