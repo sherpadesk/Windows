@@ -14,7 +14,7 @@ namespace SherpaDesk
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {
+        {    
             using (var connector = new Connector())
             {
                 var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);

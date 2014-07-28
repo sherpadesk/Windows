@@ -11,65 +11,44 @@
     mc:Ignorable="d" 
     Width="500"
     Loaded="pageRoot_Loaded">
-    <common:LayoutAwarePage.Resources>
-        <Style x:Key="ActivityListStyle" TargetType="ListView">
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="TabNavigation" Value="Once"/>
-            <Setter Property="IsSwipeEnabled" Value="True"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled"/>
-            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
-            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
-            <Setter Property="ItemContainerTransitions">
-                <Setter.Value>
-                    <TransitionCollection>
-                        <AddDeleteThemeTransition/>
-                        <ContentThemeTransition/>
-                        <ReorderThemeTransition/>
-                        <EntranceThemeTransition IsStaggeringEnabled="False"/>
-                    </TransitionCollection>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
+    <Page.Resources>
+        <Style x:Key="LvItemStyle" TargetType="ListViewItem">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListView">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="1" 
-                                Background="{TemplateBinding Background}">
-                            <ScrollViewer x:Name="ScrollViewer" 
-                                          AutomationProperties.AccessibilityView="Raw" 
-                                          BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" 
-                                          HorizontalScrollMode="Disabled" 
-                                          HorizontalScrollBarVisibility="Disabled" 
-                                          VerticalScrollBarVisibility="Auto" 
-                                          VerticalScrollMode="Auto" 
-                                          IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
-                                          IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" 
-                                          IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" 
-                                          IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
-                                          IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" 
-                                          TabNavigation="{TemplateBinding TabNavigation}" 
-                                          ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                                <ItemsPresenter FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}" Padding="{TemplateBinding Padding}"/>
-                            </ScrollViewer>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border x:Name="border" Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="LightBlue" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="SkyBlue" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-    </common:LayoutAwarePage.Resources>
+    </Page.Resources>
     <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -85,26 +64,17 @@
                     Visibility="Collapsed" 
                     VerticalAlignment="Top" 
                     SelectionMode="None"
-                    Background="White"
+                    Background="White"                    
                     Margin="0,14,20,0" 
+                    ItemContainerStyle="{StaticResource LvItemStyle}"
                     Grid.Column="0" 
                     Grid.Row="1">
-            <!--Style="{StaticResource ListViewScrollViewerStyle}">-->
-            <ListView.Resources>
-                <Style TargetType="ScrollBar">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="#E0E0E0" />
-                </Style>
-            </ListView.Resources>
-            <ListView.Style>
-                <StaticResource ResourceKey="ActivityListStyle"/>
-            </ListView.Style>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="450">
+                    <Grid Width="410" Margin="20,10,20,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="55" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -130,7 +100,7 @@
 
                         <TextBlock Text="{Binding Date}" 
                                    FontSize="12" 
-                                   Foreground="#FF8FB1BB" 
+                                   Foreground="#FF8FB1BB"                                   
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Top"
                                    Grid.Row="0" 
@@ -158,7 +128,7 @@
                               Y1="0" 
                               X2="450" 
                               Y2="0" 
-                              Margin="0,5,0,10"
+                              Margin="0,0,0,0"
                               Grid.Row="2" 
                               Grid.Column="0" 
                               Grid.ColumnSpan="3" />
@@ -166,5 +136,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+    </Grid>    
 </common:LayoutAwarePage>
