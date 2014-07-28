@@ -892,10 +892,18 @@
 
     <Style x:Key="VerticalScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
-        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
         <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+    </Style>
+
+    <Style x:Key="ListViewScrollViewerStyle" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0" />
     </Style>
 
     <!-- Page layout roots typically use entrance animations and a theme-appropriate background color -->
