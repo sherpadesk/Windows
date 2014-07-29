@@ -65,7 +65,7 @@
                     VerticalAlignment="Top" 
                     SelectionMode="None"
                     Background="White"                    
-                    Margin="0,14,20,0" 
+                    Margin="0,0,20,0" 
                     ItemContainerStyle="{StaticResource LvItemStyle}"
                     Grid.Column="0" 
                     Grid.Row="1">

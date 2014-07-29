@@ -48,14 +48,76 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="pageTitle" 
-                   Grid.Column="0" 
-                   Grid.Row="0"
-                   Grid.RowSpan="2"
-                   Margin="0,30,20,20" 
-                   Text="Open Tickets"
+        <Grid Grid.RowSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="pageTitle"                   
+                   Margin="20,30,20,20" 
+                   Text="Open Tickets"                   
                    Style="{StaticResource PageHeaderTextStyle}" />
-
+            <telerikPrimitives:RadCustomHubTile x:Name="OpenTicketsButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="OpenTicketsCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Open Tickets" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
+                        </Grid>
+                    </StackPanel>
+                </telerikPrimitives:RadCustomHubTile.FrontContent>
+            </telerikPrimitives:RadCustomHubTile>
+            <telerikPrimitives:RadCustomHubTile x:Name="AsEndUserButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="AsEndUserCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="As End User" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
+                        </Grid>
+                    </StackPanel>
+                </telerikPrimitives:RadCustomHubTile.FrontContent>
+            </telerikPrimitives:RadCustomHubTile>
+            <telerikPrimitives:RadCustomHubTile x:Name="OnHoldButton" Grid.Row="3" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="OnHoldCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="On Hold" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
+                        </Grid>
+                    </StackPanel>
+                </telerikPrimitives:RadCustomHubTile.FrontContent>
+            </telerikPrimitives:RadCustomHubTile>
+            <telerikPrimitives:RadCustomHubTile x:Name="FollowUpDatesButton" Grid.Row="4" HorizontalAlignment="Center" Margin="0,0,0,0" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile.FrontContent>
+                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="FollowUpDatesCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock Text="Follow Up Dates" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
+                        </Grid>
+                    </StackPanel>
+                </telerikPrimitives:RadCustomHubTile.FrontContent>
+            </telerikPrimitives:RadCustomHubTile>
+        </Grid>
+        
         <!--<Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />-->
 
         <!--<Grid Grid.Column="1">
