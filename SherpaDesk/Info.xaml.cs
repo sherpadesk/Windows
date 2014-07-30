@@ -29,6 +29,7 @@ namespace SherpaDesk
                     this.pageRoot.HandleError(resultCounts);
                     return;
                 }
+                
                 OpenCount.Text = resultCounts.Result.AllOpen.ToString();
                 OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
                 OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();

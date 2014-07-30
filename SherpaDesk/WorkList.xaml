@@ -19,17 +19,19 @@
         <model:WorkListViewModel x:Key="Model" x:Name="Model" />
         <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontSize" Value="20" />
             <Setter Property="Foreground" Value="#FF8EB0BA" />
-            <!--<Setter Property="FontWeight" Value="Bold"/>-->
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
         <Style x:Key="WorkListCellTextStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="0 20 0 20" />
-            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#9F9F9F" />
         </Style>
-
+        <Style x:Key="WorkListCellDecorationStyle" TargetType="Rectangle">
+            <!--<Setter Property="Fill" Value="White" />-->
+        </Style>
     </Page.Resources>
     <Page.DataContext>
         <local:WorkListPageViewModel/>
@@ -60,7 +62,7 @@
                    Margin="20,30,20,20" 
                    Text="Open Tickets"                   
                    Style="{StaticResource PageHeaderTextStyle}" />
-            <telerikPrimitives:RadCustomHubTile x:Name="OpenTicketsButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+            <telerikPrimitives:RadCustomHubTile x:Name="OpenTicketsButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd" Tapped="OpenTicketsButton_Tapped">
                 <telerikPrimitives:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                         <Grid>
@@ -74,7 +76,7 @@
                     </StackPanel>
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="AsEndUserButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+            <telerikPrimitives:RadCustomHubTile x:Name="AsEndUserButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd" Tapped="AsEndUserButton_Tapped">
                 <telerikPrimitives:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                         <Grid>
@@ -82,13 +84,13 @@
                                 <RowDefinition Height="80" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="AsEndUserCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock x:Name="AsEndUserCount" Text="0" HorizontalAlignment="Center" Margin="93,2,93,37" FontSize="82.667" FontWeight="SemiLight" Grid.RowSpan="2"/>
                             <TextBlock Text="As End User" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
                         </Grid>
                     </StackPanel>
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="OnHoldButton" Grid.Row="3" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+            <telerikPrimitives:RadCustomHubTile x:Name="OnHoldButton" Grid.Row="3" HorizontalAlignment="Center" Margin="0,0,0,20" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd" Tapped="OnHoldButton_Tapped">
                 <telerikPrimitives:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                         <Grid>
@@ -102,7 +104,7 @@
                     </StackPanel>
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="FollowUpDatesButton" Grid.Row="4" HorizontalAlignment="Center" Margin="0,0,0,0" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd">
+            <telerikPrimitives:RadCustomHubTile x:Name="FollowUpDatesButton" Grid.Row="4" HorizontalAlignment="Center" Margin="0,0,0,0" Height="120" VerticalAlignment="Top" Width="230" Background="#96c8dd" Tapped="FollowUpDatesButton_Tapped">
                 <telerikPrimitives:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                         <Grid>
@@ -110,14 +112,14 @@
                                 <RowDefinition Height="80" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="FollowUpDatesCount" Text="0" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
+                            <TextBlock x:Name="FollowUpDatesCount" Text="" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="82.667" FontWeight="SemiLight"/>
                             <TextBlock Text="Follow Up Dates" FontSize="20" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,5"/>
                         </Grid>
                     </StackPanel>
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-        
+
         <!--<Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />-->
 
         <!--<Grid Grid.Column="1">
@@ -135,24 +137,28 @@
             </Button>
         </Grid>-->
 
+        <!--Height="750"-->
         <telerik:RadDataGrid x:Name="ItemsGrid" 
                              ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
-                             Height="500" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 
                              UserColumnReorderMode="None" 
-                             UserFilterMode="Enabled" 
+                             UserFilterMode="Disabled" 
                              UserSortMode="Single" 
-                             GridLinesVisibility="None" 
-                             BorderBrush="Transparent" 
+                             BorderThickness="0"
+                             BorderBrush="Transparent"
+                             GridLinesVisibility="Horizontal" 
+                             GridLinesBrush="Transparent"
+                             GridLinesThickness="19"
                              SelectionMode="None" 
                              SelectionUnit="Row"
-                             Margin="0 20 0 0"
+                             Margin="0 30 0 0"
                              Background="Transparent"
                              RowBackground="White"
-                             AlternateRowBackground="White"
+                             AlternateRowBackground="Transparent"
+                             RowHeight="65"
                              Grid.Column="1" 
-                             Grid.Row="0" 
+                             Grid.Row="0"
                              ScrollViewer.VerticalScrollMode="Auto" 
                              SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Commands>
@@ -163,48 +169,56 @@
                                             SizeMode="Auto" 
                                             PropertyName="TicketNumber" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
-                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}" >
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="Subject" 
                                             SizeMode="Fixed" 
                                             Width="300" 
                                             Header="Subject" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="UserFullName" 
                                             SizeMode="Auto" 
                                             Header="End User" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="TechnicianFullName" 
                                             SizeMode="Auto" 
                                             Header="Tech Name" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="AccountName" 
                                             SizeMode="Auto" 
                                             Header="Account" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="ClassName" 
                                             SizeMode="Auto" 
                                             Header="Class" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="DaysOld" 
                                             SizeMode="Auto" 
                                             Header="Days Old" 
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTemplateColumn Header="Status" 
                                                 SizeMode="Auto" 
-                                                HeaderStyle="{StaticResource WorkListHeaderTextStyle}">
+                                                HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                                CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}">
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Status}" Style="{StaticResource WorkListCellTextStyle}" />
@@ -218,9 +232,9 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="0" Content="&lt; Prev" Margin="0,5,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PagePrev_Click">
+            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="0" Content="Load 10 Back" Margin="0,5,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="#96B2BE" Background="Transparent" BorderBrush="#96B2BE" FontWeight="Normal" Click="PagePrev_Click">
             </Button>
-            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Next &gt;" Margin="5,5,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal" Click="PageNext_Click">
+            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Load 10 More" Margin="5,5,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="#96B2BE" Background="Transparent" BorderBrush="Transparent" FontWeight="Normal" Click="PageNext_Click">
             </Button>
         </Grid>
         <VisualStateManager.VisualStateGroups>

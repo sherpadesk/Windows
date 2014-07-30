@@ -63,6 +63,7 @@ namespace SherpaDesk
             var viewModel = this.DataContext as WorkListPageViewModel;
             viewModel.CommandExecuted += viewModel_CommandExecuted;
 
+            await LoadStatInfo();
             await Load();
         }
 
@@ -151,6 +152,25 @@ namespace SherpaDesk
             this.Model.PagePrev();
         }
 
+        public async Task LoadStatInfo()
+        {
+            using (var connector = new Connector())
+            {
+                var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
+                    x => x.Tickets, new KeyRequest("counts"));
+                if (resultCounts.Status != eResponseStatus.Success)
+                {
+                    this.pageRoot.HandleError(resultCounts);
+                    return;
+                }
+
+                OpenTicketsCount.Text = resultCounts.Result.AllOpen > 0 ? resultCounts.Result.AllOpen.ToString() : string.Empty;
+                AsEndUserCount.Text = resultCounts.Result.OpenAsUser > 0 ? resultCounts.Result.OpenAsUser.ToString() : string.Empty;
+                OnHoldCount.Text = resultCounts.Result.OnHold > 0 ? resultCounts.Result.OnHold.ToString() : string.Empty; 
+
+            }
+        }
+
         public async Task Load()
         {
             using (var connector = new Connector())
@@ -193,6 +213,30 @@ namespace SherpaDesk
         private void GridCheckbox_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private async void OpenTicketsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            _workType = eWorkListType.Open;
+            await Load();
+        }
+
+        private async void AsEndUserButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            _workType = eWorkListType.OpenAsEndUser;
+            await Load();
+        }
+
+        private async void OnHoldButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            _workType = eWorkListType.OnHold;
+            await Load();
+        }
+
+        private async void FollowUpDatesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            _workType = eWorkListType.NewMessages;
+            await Load();
         }
     }
 }
