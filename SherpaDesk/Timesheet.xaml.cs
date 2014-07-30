@@ -238,7 +238,7 @@ namespace SherpaDesk
         {
             var hours = decimal.Zero;
             decimal.TryParse(HoursTextBox.Text, out hours);
-//            var date = DateField.Value ?? DateTime.Now;
+            //            var date = DateField.Value ?? DateTime.Now;
             var date = DateTime.Now;
             var taskType = TaskTypeList.GetSelectedValue<int>();
             using (var connector = new Connector())
@@ -265,7 +265,7 @@ namespace SherpaDesk
             }
 
             AppSettings.Current.DefaultTaskType = taskType;
-                    
+
             NoteTextBox.Text = string.Empty;
             HoursTextBox.Text = "0.00";
 
@@ -280,24 +280,25 @@ namespace SherpaDesk
         private void FillTimesheetGrid(DateTime date)
         {
             this.Model.CurrentDate = date;
-            NonTicketsGrid.ItemsSource = this.Model.NonTicketsList;
-            NonTicketsGrid.UpdateLayout();
-            NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = this.Model.VisibleNonTickets;
+            this.TimeLogsFrame.Navigate(typeof(TimeLogs));
+            //NonTicketsGrid.ItemsSource = this.Model.NonTicketsList;
+            //NonTicketsGrid.UpdateLayout();
+            //NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = this.Model.VisibleNonTickets;
 
-            TicketTimeGrid.ItemsSource = this.Model.TicketTimeList;
-            TicketTimeGrid.UpdateLayout();
-            TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = this.Model.VisibleTicketTime;
+            //TicketTimeGrid.ItemsSource = this.Model.TicketTimeList;
+            //TicketTimeGrid.UpdateLayout();
+            //TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = this.Model.VisibleTicketTime;
 
-            if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
-            {
-                TimesheetGrids.Visibility = Visibility.Visible;
-                if (MoveScrollToRight != null)
-                {
-                    MoveScrollToRight(this, new EventArgs());
-                }
-            }
-            else
-                TimesheetGrids.Visibility = Visibility.Collapsed;
+            //if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
+            //{
+            //    TimesheetGrids.Visibility = Visibility.Visible;
+            //    if (MoveScrollToRight != null)
+            //    {
+            //        MoveScrollToRight(this, new EventArgs());
+            //    }
+            //}
+            //else
+            //    TimesheetGrids.Visibility = Visibility.Collapsed;
         }
 
         private void CalculateHours()
@@ -326,7 +327,7 @@ namespace SherpaDesk
         }
 
         private void CancelButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {            
+        {
             ((TextBlock)sender).Opacity = 0.6;
         }
 

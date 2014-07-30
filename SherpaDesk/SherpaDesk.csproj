@@ -108,6 +108,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TimeLogs.xaml.cs">
+      <DependentUpon>TimeLogs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Activity.xaml.cs">
       <DependentUpon>Activity.xaml</DependentUpon>
     </Compile>
@@ -333,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="TimeLogs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Activity.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
