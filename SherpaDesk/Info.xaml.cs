@@ -60,7 +60,7 @@ namespace SherpaDesk
 
             this.ActivityFrame.Navigate(typeof(Activity));
             this.RightFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-            this.LeftFrame.Navigate(typeof(Timesheet));
+            this.LeftFrame.Navigate(typeof(AddTicket));
             this.RefreshData();
         }
 
@@ -136,6 +136,11 @@ namespace SherpaDesk
         private void TimeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             this.LeftFrame.Navigate(typeof(Timesheet));
+        }
+
+        private void TicketButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

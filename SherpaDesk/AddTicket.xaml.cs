@@ -311,5 +311,15 @@ namespace SherpaDesk
                 }
             }
         }
+
+        private void SaveButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void SaveButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
     }
 }

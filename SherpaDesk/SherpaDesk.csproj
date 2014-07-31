@@ -295,8 +295,10 @@
     <None Include="Telerik\Primitives\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\arrow-right.png" />
     <Content Include="Assets\arrow.gif" />
     <Content Include="Assets\Close.png" />
+    <Content Include="Assets\green-button.png" />
     <Content Include="Assets\Images\activity-line.png" />
     <Content Include="Assets\Images\BadgeLogo.png" />
     <Content Include="Assets\Images\Bluesquare150x150Logo.png" />

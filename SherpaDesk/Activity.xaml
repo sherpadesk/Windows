@@ -115,8 +115,9 @@
                                    Grid.Column="2" />
 
                         <TextBlock Text="{Binding Note}" 
-                                   Width="480" 
+                                   Width="410" 
                                    FontSize="14" 
+                                   TextWrapping="Wrap"
                                    Foreground="#FF656565" 
                                    Margin="0, 10, 0, 5"
                                    Grid.Row="1" 
