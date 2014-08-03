@@ -140,7 +140,7 @@ namespace SherpaDesk
 
         private void TicketButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            this.LeftFrame.Navigate(typeof(AddTicket));
         }
     }
 }

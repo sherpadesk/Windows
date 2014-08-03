@@ -58,47 +58,42 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
-                <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="50" Grid.Row="0" Grid.Column="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="24" Width="450" />
-                <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" Margin="0,0,0,15" WatermarkText="Details..." Grid.Row="1" Grid.RowSpan="6" TextWrapping="Wrap" Grid.Column="0" Text="" VerticalAlignment="Stretch" FontSize="24" Width="450" />
+                <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="40" Grid.Row="0" Grid.Column="3" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"  FontSize="24" Width="450" BorderBrush="#FFCDCDCD" BorderThickness="2" Padding="0,0,0,3" PlaceholderText="qwdqwd" />
+                <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Column="3" WatermarkText="Details..." Grid.Row="1" Grid.RowSpan="4" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" FontSize="24" Width="450" BorderBrush="#FFCDCDCD" BorderThickness="2" />
 
-                <Button x:Name="SaveButton" Width="395" Height="62" Style="{StaticResource SubmitButtonStyle}" Content="Create Ticket" HorizontalAlignment="Stretch" Grid.Column="0" VerticalAlignment="Stretch" Grid.Row="7" Foreground="White" Tapped="SaveButton_Tapped" PointerEntered="SaveButton_PointerEntered" PointerExited="SaveButton_PointerExited" FontWeight="Normal" />
+                <Button x:Name="SaveButton" Width="395" Height="62" Style="{StaticResource SubmitButtonStyle}" Content="Create Ticket" HorizontalAlignment="Stretch" Grid.Column="3" VerticalAlignment="Stretch" Grid.Row="8" Foreground="White" Tapped="SaveButton_Tapped" PointerEntered="SaveButton_PointerEntered" PointerExited="SaveButton_PointerExited" FontWeight="Normal" />
 
-                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox x:Name="EndUserList" Grid.Column="3" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="EndUserList_SelectionChanged">
+                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="0" TextWrapping="Wrap" Text="End User" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="EndUserList" Grid.Column="1" Grid.Row="0" FontSize="24" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="EndUserList_SelectionChanged" BorderBrush="#FFCDCDCD">
                 </ComboBox>
-                <HyperlinkButton x:Name="EndUserMeLink" Foreground="#625e55" Content="Me" Grid.Row="0" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Height="51" FontWeight="Normal" Click="EndUserMeLink_Click"/>
+                <HyperlinkButton x:Name="EndUserMeLink" Foreground="#625e55" Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
-                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox x:Name="AccountList" Grid.Column="3" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
-                </ComboBox>
-
-                <TextBlock Grid.Column="2" Foreground="#625e55" HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Class*" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox Name="ClassList" Grid.Column="3" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="AccountList" Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
                 </ComboBox>
 
-                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox x:Name="TechnicianList" Grid.Column="3" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
+                <TextBlock Grid.Column="0" Foreground="#625e55" HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Class*" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
+                <ComboBox Name="ClassList" Grid.Column="1" Grid.Row="2" FontSize="24" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
                 </ComboBox>
-                <HyperlinkButton x:Name="TechnicianMeLink" Foreground="#625e55" Content="Me" Grid.Row="3" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Height="51" FontWeight="Normal" Click="TechnicianMeLink_Click"/>
 
-                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <ComboBox x:Name="AlternateTechnicianList" Grid.Column="3" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="450" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AlternateTechnicianList_SelectionChanged">
+                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="3" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="TechnicianList" Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
                 </ComboBox>
-                <HyperlinkButton x:Name="AlternateTechMeLink" Foreground="#625e55" Content="Me" Grid.Row="4" Grid.Column="4" Padding="0" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="24" Height="51" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
+                <HyperlinkButton x:Name="TechnicianMeLink" Foreground="#625e55" Content="Me" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="TechnicianMeLink_Click"/>
 
-                <ScrollViewer HorizontalAlignment="Left" Grid.Column="3" Grid.ColumnSpan="3" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="5" Grid.RowSpan="2" Height="100" VerticalAlignment="Top" Width="auto">
+                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="4" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="AlternateTechnicianList" Grid.Column="1" Grid.Row="4" FontSize="24" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AlternateTechnicianList_SelectionChanged" BorderBrush="#FFCDCDCD">
+                </ComboBox>
+                <HyperlinkButton x:Name="AlternateTechMeLink" Foreground="#625e55" Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,80,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
+
+                <ScrollViewer HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="5" Grid.RowSpan="2" Height="100" VerticalAlignment="Top" Width="auto">
                     <ListView x:Name="SelectedAlternateTechnicianList" Grid.Column="3" Margin="0,0,0,0" Grid.Row="5" Grid.RowSpan="3" VerticalAlignment="Top" FontSize="18" HorizontalAlignment="Left" Width="450" SelectionMode="None">
                     </ListView>
                 </ScrollViewer>
 
-                <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap" Text="Files" Margin="10,4,10,0" VerticalAlignment="Top" FontSize="36"/>
-                <Button x:Name="filepickButton" Foreground="#625e55" Content="Attach Files" Grid.Column="3" Height="auto" HorizontalAlignment="Stretch" Padding="0,5,0,8" Margin="-3,0,-3,0" Grid.Row="7" VerticalAlignment="Top" FontSize="24" Click="filepickButton_Click" />
-                <ScrollViewer HorizontalAlignment="Left" Grid.Column="3" Grid.ColumnSpan="3" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Row="8" Height="auto" VerticalAlignment="Top" Width="auto">
-                    <TextBlock x:Name="SelectedFilesList" Width="450" HorizontalAlignment="Left" Height="auto" Margin="0,0,0,0" Grid.Row="8" TextWrapping="WrapWholeWords" FontSize="20" VerticalAlignment="Top"/>
-                </ScrollViewer>
+                <Button x:Name="filepickButton" Foreground="#625e55" Content="File Upload" Height="40" Grid.Column="3" HorizontalAlignment="Stretch" Padding="0,0,10,0" Margin="0,20" Grid.Row="6" VerticalAlignment="Top" FontSize="18" Click="filepickButton_Click" Background="{x:Null}" FontWeight="Normal" BorderBrush="#FF777777" BorderThickness="2" HorizontalContentAlignment="Right" />
             </Grid>
         </Grid>
     </Grid>
