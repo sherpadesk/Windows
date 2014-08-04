@@ -11,6 +11,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace SherpaDesk
 {
@@ -283,35 +284,6 @@ namespace SherpaDesk
             }
         }
 
-        private async void AddUserLink_Click(object sender, RoutedEventArgs e)
-        {
-            var flyout = new InviteUser.Flyout(AccountList.GetSelectedValue<int>());
-            flyout.Created += flyout_Created;
-            await flyout.ShowAsync();
-        }
-
-        private void flyout_Created(object sender, UserResponse e)
-        {
-            if (EndUserList.Visibility == Visibility.Visible)
-            {
-                EndUserList.Items.Add(new ComboBoxItem
-                {
-                    Tag = e.Id,
-                    Content = e.FullName
-                });
-                EndUserList.SetSelectedValue(e.Id);
-            }
-            else
-            {
-                var textBox = EndUserList.ParentGrid().FindName(EndUserList.Name + "_Text") as RadAutoCompleteBox;
-                if (textBox != null && textBox.Tag != null)
-                {
-                    textBox.Tag = e.Id;
-                    textBox.Text = e.FullName;
-                }
-            }
-        }
-
         private void SaveButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             ((Button)sender).Opacity = 0.9;
@@ -320,6 +292,36 @@ namespace SherpaDesk
         private void SaveButton_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ((Button)sender).Opacity = 1;
+        }
+
+        private void CreateUserButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void CreateUserButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
+
+        private void CreateUserButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;            
+        }
+
+        private void AddUserLink_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void AddUserArrow_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((Image)sender).Opacity = 0.7;
+        }
+
+        private void AddUserArrow_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((Image)sender).Opacity = 1;
         }
     }
 }
