@@ -62,7 +62,7 @@
 
     <!--Selection-->
     <SolidColorBrush x:Key="TelerikGridSelectedBorderBrush" Color="{StaticResource TelerikSelectedColor}"/>
-    <SolidColorBrush x:Key="TelerikGridSelectedBackgroundBrush" Color="#14000000"/>
+    <SolidColorBrush x:Key="TelerikGridSelectedBackgroundBrush" Color="Red"/>
 
     <!--PointerOver-->
     <SolidColorBrush x:Key="TelerikGridPointerOverBackgroundBrush" Color="#14000000"/>

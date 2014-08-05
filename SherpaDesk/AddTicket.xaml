@@ -4,7 +4,7 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d" Loaded="pageRoot_Loaded" RequestedTheme="Light">
 
-    <common:LayoutAwarePage.Resources>   
+    <common:LayoutAwarePage.Resources>
         <x:String x:Key="AppName">My Application</x:String>
         <Style x:Key="SubmitButtonStyle" TargetType="Button">
             <Setter Property="Template">
@@ -101,8 +101,8 @@
                     <Button x:Name="filepickButton" Foreground="#625e55" Content="File Upload" Height="40" Grid.Column="3" HorizontalAlignment="Stretch" Padding="0,0,10,0" Margin="0,20" Grid.Row="6" VerticalAlignment="Top" FontSize="18" Click="filepickButton_Click" Background="{x:Null}" FontWeight="Normal" BorderBrush="#FF777777" BorderThickness="2" HorizontalContentAlignment="Right" />
                 </Grid>
             </Grid>
-        </Grid>
-        <Grid x:Name="NewUserGrid" Width="600" Grid.Column="1">
+        </Grid >
+        <Grid x:Name="NewUserGrid" Width="600" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -110,6 +110,22 @@
             </Grid.RowDefinitions>
             <TextBlock Foreground="#86abb6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,50,30" FontSize="40" Text="New User" FontWeight="Normal"/>
             <Button x:Name="CreateUserButton" Width="280" Height="40" Style="{StaticResource SubmitButtonStyle}" Content="Submit" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="2" Foreground="White" FontWeight="Normal" PointerEntered="CreateUserButton_PointerEntered" PointerExited="CreateUserButton_PointerExited" Tapped="CreateUserButton_Tapped" />
+            <Grid Grid.Row="1" Margin="20,0,50,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="First Name" FontSize="24" Margin="0,0,0,10" Foreground="#86abb6" />
+                <TextBlock Text="Last Name" Grid.Row="2" Margin="0,0,0,10"  FontSize="24" Foreground="#86abb6" />
+                <TextBlock Text="Email" FontSize="24" Margin="0,0,0,10"  Grid.Row="4" Foreground="#86abb6" />
+                <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+                <TextBox Grid.Row="3" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+                <TextBox Grid.Row="5" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+            </Grid>
         </Grid>
     </Grid>
 </common:LayoutAwarePage>

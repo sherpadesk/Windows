@@ -21,7 +21,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Foreground" Value="#FF8EB0BA" />
-            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="Margin" Value="0,0,0,16" />
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
         <Style x:Key="WorkListCellTextStyle" TargetType="TextBlock">
@@ -31,8 +31,18 @@
             <Setter Property="Foreground" Value="#9F9F9F" />
         </Style>
         <Style x:Key="WorkListCellDecorationStyle" TargetType="Rectangle">
-            <Setter Property="Margin" Value="0 -8 0 0" />
+            <Setter Property="Margin" Value="0,-8,0,0" />
         </Style>
+
+        <Style TargetType="gridPrimitives:SelectionRegionBorderControl">
+            <Setter Property="Background" Value="#EBEBEB" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="gridPrimitives:DataGridCurrencyControl">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+
     </Page.Resources>
     <Page.DataContext>
         <local:WorkListPageViewModel/>
@@ -42,7 +52,7 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="Transparent" RequestedTheme="Light">
+    <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="Transparent" RequestedTheme="Light" Margin="0,0,50,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -121,14 +131,11 @@
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
 
-        <Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />
-
-
         <!--<telerik:RadDataGrid.Commands>
             <local:CustomCellTapCommand />
         </telerik:RadDataGrid.Commands>-->
 
-        <telerik:RadDataGrid x:Name="ItemsGrid" 
+        <telerik:RadDataGrid x:Name="ItemsGrid" RequestedTheme="Light" 
                              ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 
@@ -136,7 +143,7 @@
                              UserFilterMode="Enabled" 
                              UserSortMode="Single" 
                              UserEditMode="None"
-                             SelectionMode="None"
+                             SelectionMode="Single"
                              SelectionUnit="Row"
                              BorderThickness="0"
                              Background="Transparent"
@@ -145,12 +152,11 @@
                              GridLinesBrush="Transparent"
                              GridLinesThickness="19"
                              Height="Auto"
-                             RowHeight="65"
-                             Margin="0 15 0 0"
+                             Margin="15,15,0,0"
                              IncrementalLoadingMode="Explicit"
                              Grid.Column="1" 
                              Grid.Row="0"
-                             ScrollViewer.VerticalScrollMode="Auto">
+                             ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Resources>
                 <Style TargetType="gridPrimitives:DataGridHoverControl">
                     <Setter Property="Background" Value="Transparent"/>
@@ -203,10 +209,10 @@
                                             CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
-                <telerik:DataGridTextColumn PropertyName="DaysOld" 
+                <telerik:DataGridTextColumn PropertyName="DaysOld"                                               
                                             SizeMode="Auto" 
-                                            Header="Days Old" 
-                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                            Header="Days Old"                                             
+                                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}"                                            
                                             CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
                                             CellContentStyle="{StaticResource WorkListCellTextStyle}">
                 </telerik:DataGridTextColumn>
@@ -216,7 +222,9 @@
                                                 CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}">
                     <telerik:DataGridTemplateColumn.CellContentTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Status}" Style="{StaticResource WorkListCellTextStyle}" />
+                            <Grid Height="50">
+                                <TextBlock Text="{Binding Status}" VerticalAlignment="Center" Style="{StaticResource WorkListCellTextStyle}" />
+                            </Grid>
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>

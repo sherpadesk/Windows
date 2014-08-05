@@ -125,9 +125,9 @@ namespace SherpaDesk
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
         {
-            DetailsFrame.Navigated -= ChildPage_Navigated;
-            DetailsFrame.Navigated += ChildPage_Navigated;
-            DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
+            //DetailsFrame.Navigated -= ChildPage_Navigated;
+            //DetailsFrame.Navigated += ChildPage_Navigated;
+            //DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -237,6 +237,10 @@ namespace SherpaDesk
         {
             _workType = eWorkListType.NewMessages;
             await Load();
+        }
+
+        private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
+        {
         }
     }
 }

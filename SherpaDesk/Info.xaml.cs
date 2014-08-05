@@ -57,10 +57,9 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-
             this.ActivityFrame.Navigate(typeof(Activity));
             this.RightFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-            this.LeftFrame.Navigate(typeof(AddTicket));
+//            this.LeftFrame.Navigate(typeof(AddTicket));
             this.RefreshData();
         }
 
