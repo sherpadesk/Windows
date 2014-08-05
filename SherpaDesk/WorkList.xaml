@@ -21,7 +21,8 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Foreground" Value="#FF8EB0BA" />
-            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
         <Style x:Key="WorkListCellTextStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -30,7 +31,7 @@
             <Setter Property="Foreground" Value="#9F9F9F" />
         </Style>
         <Style x:Key="WorkListCellDecorationStyle" TargetType="Rectangle">
-            <!--<Setter Property="Fill" Value="White" />-->
+            <Setter Property="Margin" Value="0 -8 0 0" />
         </Style>
     </Page.Resources>
     <Page.DataContext>
@@ -120,50 +121,44 @@
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
 
-        <!--<Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />-->
+        <Frame x:Name="DetailsFrame" Grid.RowSpan="3" Grid.Column="0" Margin="0,0,0,0" />
 
-        <!--<Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Image Source="Assets/arrow.gif" Grid.Column="0" Width="11" Height="13" Margin="18,235,0,0" HorizontalAlignment="Left" />
-            <Button x:Name="ActionButton" Grid.Column="0" Content="Selected" Margin="35,235,0,0" FontSize="20" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="White" Background="#FF4E7492" BorderBrush="#FF004174" FontWeight="Normal">
-                <Button.Flyout>
-                    <MenuFlyout Placement="Right">
-                        <MenuFlyoutItem x:Name="ConfirmMenu" Text="Confirm" Tapped="ConfirmMenu_Tapped" Visibility="Collapsed" />
-                        <MenuFlyoutItem x:Name="CloseMenu" Text="Close" Tapped="CloseMenu_Tapped" />
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-        </Grid>-->
 
-        <!--Height="750"-->
+        <!--<telerik:RadDataGrid.Commands>
+            <local:CustomCellTapCommand />
+        </telerik:RadDataGrid.Commands>-->
+
         <telerik:RadDataGrid x:Name="ItemsGrid" 
                              ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 
                              UserColumnReorderMode="None" 
-                             UserFilterMode="Disabled" 
+                             UserFilterMode="Enabled" 
                              UserSortMode="Single" 
+                             UserEditMode="None"
+                             SelectionMode="None"
+                             SelectionUnit="Row"
                              BorderThickness="0"
-                             BorderBrush="Transparent"
+                             Background="Transparent"
+                             RowBackground="White"
                              GridLinesVisibility="Horizontal" 
                              GridLinesBrush="Transparent"
                              GridLinesThickness="19"
-                             SelectionMode="None" 
-                             SelectionUnit="Row"
-                             Margin="0 30 0 0"
-                             Background="Transparent"
-                             RowBackground="White"
-                             AlternateRowBackground="Transparent"
+                             Height="Auto"
                              RowHeight="65"
+                             Margin="0 15 0 0"
+                             IncrementalLoadingMode="Explicit"
                              Grid.Column="1" 
                              Grid.Row="0"
-                             ScrollViewer.VerticalScrollMode="Auto" 
-                             SelectionChanged="ItemsGrid_SelectionChanged">
-            <telerik:RadDataGrid.Commands>
-                <local:CustomCellTapCommand />
-            </telerik:RadDataGrid.Commands>
+                             ScrollViewer.VerticalScrollMode="Auto">
+            <telerik:RadDataGrid.Resources>
+                <Style TargetType="gridPrimitives:DataGridHoverControl">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style TargetType="gridPrimitives:DataGridEditRow">
+                    <Setter Property="Background" Value="Transparent" />
+                </Style>
+            </telerik:RadDataGrid.Resources>
             <telerik:RadDataGrid.Columns>
                 <telerik:DataGridTextColumn Header="Tkt#" 
                                             SizeMode="Auto" 
@@ -232,10 +227,6 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PagePrev" IsEnabled="{Binding PagePrevEnabled, Source={StaticResource Model}}" Grid.Column="0" Content="Load 10 Back" Margin="0,5,0,0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="#96B2BE" Background="Transparent" BorderBrush="#96B2BE" FontWeight="Normal" Click="PagePrev_Click">
-            </Button>
-            <Button x:Name="PageNext" IsEnabled="{Binding PageNextEnabled, Source={StaticResource Model}}" Grid.Column="1" Content="Load 10 More" Margin="5,5,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0" Foreground="#96B2BE" Background="Transparent" BorderBrush="Transparent" FontWeight="Normal" Click="PageNext_Click">
-            </Button>
         </Grid>
         <VisualStateManager.VisualStateGroups>
 

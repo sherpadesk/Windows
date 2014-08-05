@@ -72,17 +72,17 @@ namespace SherpaDesk
             await Load();
         }
 
-        private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
-        {
-            foreach (var ticket in e.AddedItems)
-            {
-                ((TicketSearchResponse)ticket).IsChecked = true;
-            }
-            foreach (var ticket in e.RemovedItems)
-            {
-                ((TicketSearchResponse)ticket).IsChecked = false;
-            }
-        }
+        //private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
+        //{
+        //    foreach (var ticket in e.AddedItems)
+        //    {
+        //        ((TicketSearchResponse)ticket).IsChecked = true;
+        //    }
+        //    foreach (var ticket in e.RemovedItems)
+        //    {
+        //        ((TicketSearchResponse)ticket).IsChecked = false;
+        //    }
+        //}
 
         private async void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
@@ -125,9 +125,9 @@ namespace SherpaDesk
 
         private void GridTicketId_Click(object sender, RoutedEventArgs e)
         {
-            //DetailsFrame.Navigated -= ChildPage_Navigated;
-            //DetailsFrame.Navigated += ChildPage_Navigated;
-            //DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
+            DetailsFrame.Navigated -= ChildPage_Navigated;
+            DetailsFrame.Navigated += ChildPage_Navigated;
+            DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
         }
 
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -205,7 +205,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.Model.Data = new ObservableCollection<TicketSearchResponse>(result.Result.ToList());
+                    this.Model.Data = new WorkListViewData(result.Result.ToList());
                 }
             }
         }

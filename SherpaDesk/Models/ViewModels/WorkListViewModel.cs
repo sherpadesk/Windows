@@ -6,15 +6,52 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.UI.Xaml.Data;
 
 namespace SherpaDesk.Models
 {
+    public class WorkListViewData : ObservableCollection<TicketSearchResponse>, ISupportIncrementalLoading
+    {
+        public event EventHandler LoadNext;
+
+        public WorkListViewData()
+        {
+        }
+
+        public WorkListViewData(IEnumerable<TicketSearchResponse> data)
+            : base(data)
+        {
+        }
+
+        public bool HasMoreItems
+        {
+            get { return this.Count >= SearchRequest.DEFAULT_PAGE_COUNT; }
+        }
+
+        private async Task<LoadMoreItemsResult> LoadNextPage()
+        {
+            return await Task.Run(() =>
+            {
+                if (this.LoadNext != null)
+                    this.LoadNext(this, EventArgs.Empty);
+                return new LoadMoreItemsResult { Count = (uint)this.Count };
+            });
+        }
+
+        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+        {
+            return AsyncInfo.Run(c => LoadNextPage());
+        }
+    }
+
     public class WorkListViewModel : INotifyPropertyChanged
     {
         private int _pageIndex;
-        private ObservableCollection<TicketSearchResponse> _data;
+        private WorkListViewData _data;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler DataLoading;
@@ -25,7 +62,7 @@ namespace SherpaDesk.Models
             this._data = null;
         }
 
-        public ObservableCollection<TicketSearchResponse> Data
+        public WorkListViewData Data
         {
             get
             {
@@ -34,6 +71,9 @@ namespace SherpaDesk.Models
             set
             {
                 _data = value;
+                
+                //_data.LoadNext += (s, e) => PageNext();
+
                 if (this.PropertyChanged != null)
                 {
                     this.PropertyChanged(this,
@@ -73,11 +113,11 @@ namespace SherpaDesk.Models
         public void PageNext()
         {
             _pageIndex++;
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this,
-                      new PropertyChangedEventArgs("PageIndex"));
-            }
+            //if (this.PropertyChanged != null)
+            //{
+            //    this.PropertyChanged(this,
+            //          new PropertyChangedEventArgs("PageIndex"));
+            //}
             if (this.DataLoading != null)
             {
                 this.DataLoading(this, EventArgs.Empty);
