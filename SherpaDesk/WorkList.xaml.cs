@@ -205,7 +205,9 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.Model.Data = new WorkListViewData(result.Result.ToList());
+                    var list = result.Result.ToList();          
+                    ItemsGrid.Visibility = list.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+                    this.Model.Data = new WorkListViewData(list);
                 }
             }
         }

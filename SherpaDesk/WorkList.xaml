@@ -193,7 +193,7 @@
             <local:CustomCellTapCommand />
         </telerik:RadDataGrid.Commands>-->
 
-        <telerik:RadDataGrid x:Name="ItemsGrid" RequestedTheme="Light" 
+        <telerik:RadDataGrid x:Name="ItemsGrid" RequestedTheme="Light" Visibility="Collapsed"
                              ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 
