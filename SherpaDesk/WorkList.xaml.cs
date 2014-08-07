@@ -205,9 +205,14 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    var list = result.Result.ToList();          
-                    ItemsGrid.Visibility = list.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
-                    this.Model.Data = new WorkListViewData(list);
+                    Style style = Resources["WorkListPaging"] as Style;
+                    style.Setters.Clear();
+                    var list = result.Result.ToList();
+                    if (list.Count == 0)
+                    {
+                        style.Setters.Add(new Setter(Grid.VisibilityProperty, Visibility.Collapsed));
+                    }
+                    this.Model.Data = new WorkListViewData(result.Result.ToList());
                 }
             }
         }

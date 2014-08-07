@@ -18,6 +18,8 @@
 
     <Page.Resources>
         <model:WorkListViewModel x:Key="Model" x:Name="Model" />
+        <Style x:Key="WorkListPaging" TargetType="Grid" />
+
         <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="20" />
@@ -30,6 +32,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="#9F9F9F" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="WorkListCellDecorationStyle" TargetType="Rectangle">
             <Setter Property="Margin" Value="0,-8,0,0" />
@@ -45,42 +48,43 @@
         </Style>
 
         <Style TargetType="gridPrimitives:DataGridLoadDataControl">
-            <Setter Property="Background" Value="{ThemeResource TelerikGridSelectedBackgroundBrush}"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Background" Value="#EBEBEB"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="gridPrimitives:DataGridLoadDataControl">
-                        <Grid HorizontalAlignment="Stretch" Background="#EBEBEB">
-                            <primitivesCommon:InlineButton x:Name="PART_LoadButton" HorizontalAlignment="Right">
-                                <primitivesCommon:InlineButton.Content>
-                                    <StackPanel HorizontalAlignment="Right">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="Load 25 More" Margin="30,0,0,0" VerticalAlignment="Center" Foreground="#86abb6" FontSize="20" />
-                                            <Image Grid.Column="2" Source="Assets/pageNext.png" Margin="10,0,30,0" />
-                                        </Grid>                                        
-                                    </StackPanel>
-                                </primitivesCommon:InlineButton.Content>
-                                <primitivesCommon:InlineButton.Style>
-                                    <Style TargetType="primitivesCommon:InlineButton">
-
-                                        <Setter Property="Background" Value="#EBEBEB"/>
-                                        <Setter Property="BorderThickness" Value="0 0 0 0"/>
-                                        <Setter Property="HorizontalAlignment" Value="Left"/>
-                                        <Setter Property="VerticalAlignment" Value="Stretch"/>
-                                        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
-                                        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
-                                        <Setter Property="Height" Value="50"/>
-                                        <Setter Property="Margin" Value="0 0 0 0"/>
-                                        <Setter Property="Padding" Value="0 0 0 0"/>
-                                        <Setter Property="PointerOverBackgroundBrush" Value="#EBEBEB"/>
-                                        <Setter Property="PressedBackgroundBrush" Value="#f4f4f4"/>
-                                    </Style>
-                                </primitivesCommon:InlineButton.Style>
-                            </primitivesCommon:InlineButton>
+                        <Grid>
+                            <Grid HorizontalAlignment="Stretch" Background="#EBEBEB">
+                                <primitivesCommon:InlineButton x:Name="PART_LoadButton" HorizontalAlignment="Right">
+                                    <primitivesCommon:InlineButton.Content>
+                                        <StackPanel HorizontalAlignment="Right" Margin="0,10,0,0">
+                                            <Grid Style="{StaticResource WorkListPaging}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="Load 25 More" Margin="30,0,0,0" VerticalAlignment="Center" Foreground="#86abb6" FontSize="20" />
+                                                <Image Grid.Column="2" Source="Assets/pageNext.png" Margin="10,0,30,0" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </primitivesCommon:InlineButton.Content>
+                                    <primitivesCommon:InlineButton.Style>
+                                        <Style TargetType="primitivesCommon:InlineButton">
+                                            <Setter Property="Background" Value="#EBEBEB"/>
+                                            <Setter Property="BorderThickness" Value="0 0 0 0"/>
+                                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                                            <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                            <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+                                            <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
+                                            <Setter Property="Height" Value="70"/>
+                                            <Setter Property="Margin" Value="0 0 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                            <Setter Property="PointerOverBackgroundBrush" Value="#EBEBEB"/>
+                                            <Setter Property="PressedBackgroundBrush" Value="#f4f4f4"/>
+                                        </Style>
+                                    </primitivesCommon:InlineButton.Style>
+                                </primitivesCommon:InlineButton>
+                            </Grid>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -188,12 +192,7 @@
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-
-        <!--<telerik:RadDataGrid.Commands>
-            <local:CustomCellTapCommand />
-        </telerik:RadDataGrid.Commands>-->
-
-        <telerik:RadDataGrid x:Name="ItemsGrid" RequestedTheme="Light" Visibility="Collapsed"
+        <telerik:RadDataGrid x:Name="ItemsGrid" RequestedTheme="Light" 
                              ItemsSource="{Binding Data, Source={StaticResource Model}, UpdateSourceTrigger=PropertyChanged}" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 
@@ -209,7 +208,7 @@
                              GridLinesVisibility="Horizontal" 
                              GridLinesBrush="Transparent"
                              GridLinesThickness="19"
-                             Height="Auto"
+                             Height="auto"
                              Margin="15,15,0,0"
                              IncrementalLoadingMode="Explicit"
                              Grid.Column="1" 
