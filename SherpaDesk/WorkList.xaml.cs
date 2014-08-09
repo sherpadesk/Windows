@@ -206,12 +206,15 @@ namespace SherpaDesk
                 else
                 {
                     Style style = Resources["WorkListPaging"] as Style;
-                    style.Setters.Clear();
                     var list = result.Result.ToList();
-                    if (list.Count == 0)
-                    {
-                        style.Setters.Add(new Setter(Grid.VisibilityProperty, Visibility.Collapsed));
-                    }
+                    //if (list.Count == 0)
+                    //{
+                    //    style.SetValue(Grid.VisibilityProperty, Visibility.Collapsed);
+                    //}
+                    //else
+                    //{
+                    //    style.SetValue(Grid.VisibilityProperty, Visibility.Visible);
+                    //}
                     this.Model.Data = new WorkListViewData(result.Result.ToList());
                 }
             }
