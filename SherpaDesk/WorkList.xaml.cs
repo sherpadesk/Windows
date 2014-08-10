@@ -123,13 +123,6 @@ namespace SherpaDesk
             }
         }
 
-        private void GridTicketId_Click(object sender, RoutedEventArgs e)
-        {
-            //DetailsFrame.Navigated -= ChildPage_Navigated;
-            //DetailsFrame.Navigated += ChildPage_Navigated;
-            //DetailsFrame.Navigate(typeof(TicketDetails), ((Button)sender).Tag.ToString());
-        }
-
         private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             this.Model.SelectAll(true);
@@ -251,6 +244,8 @@ namespace SherpaDesk
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
         {
+            this.pageRoot.MainPage(page =>
+                page.WorkDetailsFrame.Navigate(typeof(TicketDetails), ((TicketSearchResponse)e.AddedItems.First()).TicketKey));
         }
     }
 }

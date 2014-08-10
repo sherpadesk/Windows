@@ -103,6 +103,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -213,7 +214,8 @@
                              IncrementalLoadingMode="Explicit"
                              Grid.Column="1" 
                              Grid.Row="0"
-                             ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="ItemsGrid_SelectionChanged">
+                             ScrollViewer.VerticalScrollMode="Auto" 
+                             SelectionChanged="ItemsGrid_SelectionChanged">
             <telerik:RadDataGrid.Resources>
                 <Style TargetType="gridPrimitives:DataGridHoverControl">
                     <Setter Property="Background" Value="Transparent"/>
@@ -287,12 +289,6 @@
                 </telerik:DataGridTemplateColumn>
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
-        <Grid Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Right">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

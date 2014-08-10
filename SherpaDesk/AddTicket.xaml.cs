@@ -274,11 +274,11 @@ namespace SherpaDesk
                 SelectedAlternateTechnicianList.Items.Clear();
                 _attachment.Clear();
 
-                var scrollViewer = (ScrollViewer)((Frame)this.pageRoot.Parent).FindName("scrollViewer");
-                var leftFrame = (Frame)((Frame)this.pageRoot.Parent).FindName("LeftFrame");
-
-                leftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-                scrollViewer.ChangeView(0, new double?(), new float?());
+                this.MainPage(page =>
+                {
+                    page.WorkListFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+                    page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO, null, null);
+                });
 
                 App.ExternalAction(x => x.UpdateInfo());
             }

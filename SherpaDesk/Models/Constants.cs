@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SherpaDesk.Models
 {
     public static class Constants
@@ -15,5 +10,8 @@ namespace SherpaDesk.Models
         public const string USER_ME = "Make Me the User";
         public const string CLICKABLE_COLOR = "FF00A10A";
         public const int INITIAL_ID = 0;
+        public const int WIDTH_TIMESHEET = 1310;
+        public const int WIDTH_INFO = 1820;
+        public const int WIDTH_WORKLIST = 1420;
     }
 }

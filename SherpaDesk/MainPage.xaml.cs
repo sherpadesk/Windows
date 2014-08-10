@@ -2,23 +2,13 @@
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -30,6 +20,12 @@ namespace SherpaDesk
 
         private CoreCursor _cursor;
 
+        public ScrollViewer ScrollViewer { get { return scrollViewer; } }
+
+        public Frame WorkDetailsFrame { get { return workDetailsFrame; } }
+
+        public Frame WorkListFrame { get { return workListFrame; } }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -37,7 +33,7 @@ namespace SherpaDesk
 
         private void MyProfileMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.MainFrame.Navigate(typeof(UpdateProfile));
+            this.infoFrame.Navigate(typeof(UpdateProfile));
         }
 
         public void ShowFullScreenImage(BitmapImage image)
@@ -63,12 +59,12 @@ namespace SherpaDesk
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
-        public void UpdateInfo()
+        public async void UpdateInfo()
         {
-            Info info = this.MainFrame.Content as Info;
+            Info info = this.infoFrame.Content as Info;
             if (info != null)
             {
-                info.RefreshData();
+                await info.RefreshData();
             }
         }
 
@@ -104,22 +100,24 @@ namespace SherpaDesk
                         throw new InternalException("User not found", eErrorType.InvalidOutputData);
 
                     var user = resultUser.Result.First();
-                    
+
                     AppSettings.Current.AddUser(
                         user.Id.IsNull("Invalid user identifier"),
                         user.FirstName,
                         user.LastName,
                         user.Role.IsNull("Invalid role"));
 
-//                    this.LoginNameButton.Content = string.Format("{0} {1}", user.FirstName, user.LastName);
-////                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
-//                    OrgName.Text = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
-//                    this.Avatar.Source = new BitmapImage(
-//                        new Uri(string.Format(AVATAR_URL_FORMAT,
-//                            Helper.GetMD5(user.Email)),
-//                            UriKind.Absolute));
+                    //                    this.LoginNameButton.Content = string.Format("{0} {1}", user.FirstName, user.LastName);
+                    ////                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
+                    //                    OrgName.Text = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
+                    //                    this.Avatar.Source = new BitmapImage(
+                    //                        new Uri(string.Format(AVATAR_URL_FORMAT,
+                    //                            Helper.GetMD5(user.Email)),
+                    //                            UriKind.Absolute));
 
-                    this.MainFrame.Navigate(typeof(Info));
+                    this.timesheetFrame.Navigate(typeof(Timesheet));
+                    this.workListFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+                    this.infoFrame.Navigate(typeof(Info));
                 }
                 else
                 {
@@ -136,6 +134,8 @@ namespace SherpaDesk
             BuildNumber.Visibility = Visibility.Collapsed;
 #endif
         }
+
+
 
         private void FullscreenPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {

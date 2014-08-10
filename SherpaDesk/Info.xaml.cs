@@ -4,6 +4,7 @@ using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,7 +19,7 @@ namespace SherpaDesk
         }
 
 
-        public async void RefreshData()
+        public async Task RefreshData()
         {
             using (var connector = new Connector())
             {
@@ -55,66 +56,63 @@ namespace SherpaDesk
             }
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             this.ActivityFrame.Navigate(typeof(Activity));
-            this.RightFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-//            this.LeftFrame.Navigate(typeof(AddTicket));
-            this.RefreshData();
+            await this.RefreshData();
+            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET, null, null));
+        }
+
+        private void OpenWorkList(eWorkListType type)
+        {
+            this.MainPage(page =>
+            {
+                page.WorkListFrame.Navigate(typeof(WorkList), type);
+                page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO, null, null);
+            });
         }
 
         private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.NewMessages);
-            //            scrollViewer.ChangeView(0, new double?(), new float?());
+            OpenWorkList(eWorkListType.NewMessages);
         }
 
         private void OpenTicketsTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.Open);
-            //            scrollViewer.ChangeView(0, new double?(), new float?());
+            OpenWorkList(eWorkListType.Open);
         }
 
         private void OpenAsEndUserTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.OpenAsEndUser);
-            //            scrollViewer.ChangeView(0, new double?(), new float?());
+            OpenWorkList(eWorkListType.OpenAsEndUser);
         }
 
         private void OnHoldTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.OnHold);
-            //            scrollViewer.ChangeView(0, new double?(), new float?());
+            OpenWorkList(eWorkListType.OnHold);
         }
-
-        //private void FollowUpDatesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        //{
-        //    this.LeftFrame.Navigate(typeof(FollowUpDates));
-        //    scrollViewer.ChangeView(0, new double?(), new float?());
-        //}
 
         private void WaitingTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(WorkList), eWorkListType.AwaitingResponse);
-            //            scrollViewer.ChangeView(0, new double?(), new float?());
+            OpenWorkList(eWorkListType.AwaitingResponse);
         }
 
         private void AddTicketTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.RightFrame.Navigate(typeof(AddTicket));
+            //this.RightFrame.Navigate(typeof(AddTicket));
             //            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
 
         private void AddTimeTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.RightFrame.Navigate(typeof(AddTime));
+            //this.RightFrame.Navigate(typeof(AddTime));
             //            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
 
         private void TimesheetTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.RightFrame.Loaded += RightFrame_Loaded;
-            this.RightFrame.Navigate(typeof(Timesheet));
+            //this.RightFrame.Loaded += RightFrame_Loaded;
+            //this.RightFrame.Navigate(typeof(Timesheet));
             //            scrollViewer.ChangeView(20000, new double?(), new float?());
         }
 
@@ -124,7 +122,7 @@ namespace SherpaDesk
             {
                 ((Timesheet)((ContentControl)sender).Content).MoveScrollToRight += TimeSheetClicked;
             }
-            this.RightFrame.Loaded -= RightFrame_Loaded;
+            //this.RightFrame.Loaded -= RightFrame_Loaded;
         }
 
         void TimeSheetClicked(object sender, EventArgs e)
@@ -134,12 +132,12 @@ namespace SherpaDesk
 
         private void TimeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(Timesheet));
+            //this.LeftFrame.Navigate(typeof(Timesheet));
         }
 
         private void TicketButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.LeftFrame.Navigate(typeof(AddTicket));
+            //this.LeftFrame.Navigate(typeof(AddTicket));
         }
     }
 }

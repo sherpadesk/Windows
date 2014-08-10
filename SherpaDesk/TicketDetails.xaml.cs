@@ -100,6 +100,7 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadPage();
+            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO + Constants.WIDTH_WORKLIST, null, null));
         }
 
         private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -147,7 +148,7 @@ namespace SherpaDesk
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            App.ExternalAction(x => 
+            App.ExternalAction(x =>
                 x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
     }

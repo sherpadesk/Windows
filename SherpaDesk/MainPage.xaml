@@ -12,8 +12,7 @@
 						  VerticalScrollBarVisibility="Disabled"
 						  VerticalScrollMode="Disabled"
 						  HorizontalScrollMode="Enabled"
-						  HorizontalScrollBarVisibility="Auto"
-						  BringIntoViewOnFocusChange="False">
+						  HorizontalScrollBarVisibility="Auto">
         <Grid Name="LayoutRoot" Background="#EBEBEB">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -24,10 +23,26 @@
             <StackPanel Grid.Row="0" Canvas.ZIndex="1000" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FF040029" Margin="0,0,0,0" Height="200" Width="200" BorderBrush="#FF627CC2" />
             </StackPanel>
-            <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Canvas.ZIndex="10" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black">
+            <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Canvas.ZIndex="10" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black" Margin="683,388,683,380">
                 <Image x:Name="ImageFull" Stretch="None" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
             </StackPanel>
-            <Frame x:Name="MainFrame" Canvas.ZIndex="11" />
+
+            <Grid Canvas.ZIndex="11">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Frame x:Name="timesheetFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="0" />
+                <Frame x:Name="infoFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="1" />
+                <Frame x:Name="workListFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="2" />
+                <Frame x:Name="workDetailsFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="3" />
+            </Grid>
+
             <TextBlock Name="BuildNumber"></TextBlock>
         </Grid>
     </ScrollViewer>
