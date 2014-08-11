@@ -26,6 +26,8 @@ namespace SherpaDesk
 
         public Frame WorkListFrame { get { return workListFrame; } }
 
+        public Frame TimeSheetFrame { get { return timesheetFrame; } }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -115,7 +117,7 @@ namespace SherpaDesk
                     //                            Helper.GetMD5(user.Email)),
                     //                            UriKind.Absolute));
 
-                    this.timesheetFrame.Navigate(typeof(Timesheet));
+                    //                    this.timesheetFrame.Navigate(typeof(Timesheet));
                     this.workListFrame.Navigate(typeof(WorkList), eWorkListType.Open);
                     this.infoFrame.Navigate(typeof(Info));
                 }

@@ -45,14 +45,14 @@ namespace SherpaDesk
                 }
                 var ticket = resultTicket.Result;
 
-                AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+//                AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
                 _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
 
-                SubjectLabel.Text = ticket.Subject;
-                EndUserLabel.Text = ticket.UserFullName;
-                InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
-                WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
+                //SubjectLabel.Text = ticket.Subject;
+                //EndUserLabel.Text = ticket.UserFullName;
+                //InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
+                //WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
 
                 var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
 
@@ -63,12 +63,12 @@ namespace SherpaDesk
                 }
                 if (resultFiles.Result != null && resultFiles.Result.Length > 0)
                 {
-                    AttachedView.ItemsSource = resultFiles.Result.Select(file => new AttachmentModel
-                    {
-                        FileName = file.Name,
-                        Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
-                    }).ToList();
-                    FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    //AttachedView.ItemsSource = resultFiles.Result.Select(file => new AttachmentModel
+                    //{
+                    //    FileName = file.Name,
+                    //    Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
+                    //}).ToList();
+                    //FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
                 await FillResponses();
             }
@@ -92,22 +92,22 @@ namespace SherpaDesk
                     x.NoteType,
                     NoteText = Helper.HtmlToString(x.NoteText)
                 }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
-                TicketDetailsList.ItemsSource = null; // For Visual Effect
-                TicketDetailsList.ItemsSource = resultView;
+                //TicketDetailsList.ItemsSource = null; // For Visual Effect
+                //TicketDetailsList.ItemsSource = resultView;
             }
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadPage();
-            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO + Constants.WIDTH_WORKLIST, null, null));
+            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null));
         }
 
         private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ResponseFrame.Navigated -= ChildPage_Navigated;
-            ResponseFrame.Navigated += ChildPage_Navigated;
-            ResponseFrame.Navigate(typeof(AddResponse), _ticketKey);
+            //ResponseFrame.Navigated -= ChildPage_Navigated;
+            //ResponseFrame.Navigated += ChildPage_Navigated;
+            //ResponseFrame.Navigate(typeof(AddResponse), _ticketKey);
         }
 
         protected async override void UpdatedPage(object sender, EventArgs e)
@@ -141,15 +141,15 @@ namespace SherpaDesk
 
         private void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ResponseFrame.Navigated -= ChildPage_Navigated;
-            ResponseFrame.Navigated += ChildPage_Navigated;
-            ResponseFrame.Navigate(typeof(Transfer), new KeyValuePair<string, int>(_ticketKey, _techId));
+            //ResponseFrame.Navigated -= ChildPage_Navigated;
+            //ResponseFrame.Navigated += ChildPage_Navigated;
+            //ResponseFrame.Navigate(typeof(Transfer), new KeyValuePair<string, int>(_ticketKey, _techId));
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            App.ExternalAction(x =>
-                x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
+            //App.ExternalAction(x =>
+            //    x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
     }
 }

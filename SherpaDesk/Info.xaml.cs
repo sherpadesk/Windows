@@ -60,7 +60,7 @@ namespace SherpaDesk
         {
             this.ActivityFrame.Navigate(typeof(Activity));
             await this.RefreshData();
-            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET, null, null));
+            //this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET, null, null));
         }
 
         private void OpenWorkList(eWorkListType type)
@@ -97,47 +97,22 @@ namespace SherpaDesk
             OpenWorkList(eWorkListType.AwaitingResponse);
         }
 
-        private void AddTicketTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            //this.RightFrame.Navigate(typeof(AddTicket));
-            //            scrollViewer.ChangeView(20000, new double?(), new float?());
-        }
-
-        private void AddTimeTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            //this.RightFrame.Navigate(typeof(AddTime));
-            //            scrollViewer.ChangeView(20000, new double?(), new float?());
-        }
-
-        private void TimesheetTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            //this.RightFrame.Loaded += RightFrame_Loaded;
-            //this.RightFrame.Navigate(typeof(Timesheet));
-            //            scrollViewer.ChangeView(20000, new double?(), new float?());
-        }
-
-        void RightFrame_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (((ContentControl)sender).Content is Timesheet)
-            {
-                ((Timesheet)((ContentControl)sender).Content).MoveScrollToRight += TimeSheetClicked;
-            }
-            //this.RightFrame.Loaded -= RightFrame_Loaded;
-        }
-
-        void TimeSheetClicked(object sender, EventArgs e)
-        {
-            //            scrollViewer.ChangeView(20000, new double?(), new float?());
-        }
-
         private void TimeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //this.LeftFrame.Navigate(typeof(Timesheet));
+            this.MainPage(page =>
+            {
+                page.TimeSheetFrame.Navigate(typeof(Timesheet));
+                page.ScrollViewer.ChangeView(0, null, null);
+            });
         }
 
         private void TicketButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //this.LeftFrame.Navigate(typeof(AddTicket));
+            this.MainPage(page =>
+            {
+                page.TimeSheetFrame.Navigate(typeof(AddTicket));
+                page.ScrollViewer.ChangeView(0, null, null);
+            });
         }
     }
 }

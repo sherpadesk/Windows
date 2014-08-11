@@ -13,5 +13,6 @@ namespace SherpaDesk.Models
         public const int WIDTH_TIMESHEET = 1310;
         public const int WIDTH_INFO = 1820;
         public const int WIDTH_WORKLIST = 1420;
+        public const int WIDTH_MAX_RIGHT = 500000;
     }
 }
