@@ -108,6 +108,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\ViewModels\ChartDataModel.cs" />
     <Compile Include="TimeLogs.xaml.cs">
       <DependentUpon>TimeLogs.xaml</DependentUpon>
     </Compile>
@@ -316,6 +317,7 @@
     <Content Include="Assets\Images\square310x310Logo.png" />
     <Content Include="Assets\Images\Square70x70Logo.png" />
     <Content Include="Assets\Images\StoreLogo.png" />
+    <Content Include="Assets\Images\ticket-details-avatar.png" />
     <Content Include="Assets\Images\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\LogoBig.scale-100.png" />
@@ -525,6 +527,9 @@
     <Reference Include="Telerik.Core, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Telerik\Core\Telerik.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Chart">
+      <HintPath>Telerik\Chart\Telerik.UI.Xaml.Chart.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.UI.Xaml.Grid, Version=2014.1.221.45, Culture=neutral, PublicKeyToken=54096b0481e00341, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

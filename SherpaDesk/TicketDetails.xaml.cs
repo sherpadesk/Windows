@@ -78,6 +78,11 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
+                var chartData = new List<ChartDataModel>();
+                chartData.Add(new ChartDataModel { Value = 25});
+                chartData.Add(new ChartDataModel { Value = 75});
+                detailsChart.Series[0].ItemsSource = chartData;
+
                 var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
                 if (resultNotes.Status != eResponseStatus.Success)
                 {

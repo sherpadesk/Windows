@@ -245,7 +245,10 @@ namespace SherpaDesk
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
         {
             this.pageRoot.MainPage(page =>
-                page.WorkDetailsFrame.Navigate(typeof(TicketDetails), ((TicketSearchResponse)e.AddedItems.First()).TicketKey));
+            {
+                page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                page.WorkDetailsFrame.Navigate(typeof(TicketDetails), ((TicketSearchResponse)e.AddedItems.First()).TicketKey);
+            });
         }
     }
 }

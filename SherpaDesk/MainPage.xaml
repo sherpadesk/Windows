@@ -41,7 +41,7 @@
                     <Frame x:Name="timesheetFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="0" />
                     <Frame x:Name="infoFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="1" />
                     <Frame x:Name="workListFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="2" />
-                    <Frame x:Name="workDetailsFrame" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="3" />
+                    <Frame x:Name="workDetailsFrame" Visibility="Collapsed" Background="White" Canvas.ZIndex="11" VerticalAlignment="Stretch" Grid.Column="3" />
                 </Grid>
 
                 <TextBlock Name="BuildNumber"></TextBlock>
