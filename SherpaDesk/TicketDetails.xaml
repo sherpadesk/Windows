@@ -90,7 +90,7 @@
 			Margin="20,30,20,20" 
 			Text="Ticket Details"                   
 			Style="{StaticResource PageHeaderTextStyle}" />
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition />
@@ -160,10 +160,10 @@
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" Margin="20,0,0,0" Width="auto" MaxWidth="2000">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="20,0,50,0" Width="auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
-                <RowDefinition />
+                <RowDefinition Height="auto" />
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -173,7 +173,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock FontSize="60" Text="2068" Foreground="#8b8b8b" Margin="0,0,30,0" />
-                <TextBlock FontSize="60" Grid.Column="1" Text="Name of Current Ticket" Foreground="#8b8b8b" />
+                <Grid Grid.Column="1" Width="1200">
+                    <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
+                        <TextBlock FontSize="60" TextWrapping="Wrap" Margin="0,0,0,0" Text="Access is denied. You do not have" Foreground="#8b8b8b" />
+                    </ScrollViewer>
+                </Grid>
             </Grid>
             <Grid Grid.Row="1" Margin="0,30,0,0">
                 <Grid.ColumnDefinitions>
@@ -199,13 +203,22 @@
                         <TextBlock Grid.Column="1" Text="16 hours ago" Foreground="#777777" FontSize="18" />
                     </Grid>
                 </Grid>
-                <Chart:RadPieChart x:Name="detailsChart" Palette="{StaticResource CustomPalette}" Grid.Column="2" VerticalAlignment="Center" Width="200" Height="200" HorizontalAlignment="Left">
-                    <Chart:DoughnutSeries ShowLabels="False">
-                        <Chart:DoughnutSeries.ValueBinding>
-                            <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
-                        </Chart:DoughnutSeries.ValueBinding>
-                    </Chart:DoughnutSeries>
-                </Chart:RadPieChart>
+                <Grid x:Name="ChartGrid" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
+                    <Chart:RadPieChart x:Name="detailsChart" Palette="{StaticResource CustomPalette}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="200">
+                        <Chart:DoughnutSeries ShowLabels="False">
+                            <Chart:DoughnutSeries.ValueBinding>
+                                <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
+                            </Chart:DoughnutSeries.ValueBinding>
+                        </Chart:DoughnutSeries>
+                    </Chart:RadPieChart>
+                    <TextBlock Text="75%" Foreground="#a6a6a6" FontSize="30" HorizontalAlignment="Center" Margin="0,-20,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Complete" Foreground="#c1c1c1" FontSize="18" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0,30,0,0" Width="1000" HorizontalAlignment="Left">
+                <ScrollViewer Height="200" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                    <TextBlock FontSize="20" Margin="0,0,20,0" Foreground="#5b5b5b" TextWrapping="Wrap" Text="Tellus lorem tristique taciti ad curae; erat natoque felis purus varius pharetra porttitor habitasse volutpat fusce sagittis. Diam diam magna mauris penatibus ipsum lorem dignissim hendrerit Congue vestibulum massa rutrum vivamus aptent nisi tincidunt sagittis felis ridiculus adipiscing Tellus lorem tristique taciti ad curae; erat natoque felis purus varius pharetra porttitor habitasse volutpat fusce sagittis. Diam diam magna mauris penatibus ipsum lorem dignissim hendrerit Congue vestibulum massa rutrum vivamus aptent nisi tincidunt sagittis felis ridiculus adipiscing" />
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

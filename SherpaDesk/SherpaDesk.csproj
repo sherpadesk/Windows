@@ -266,6 +266,15 @@
     <None Include="packages.config" />
     <None Include="SherpaDesk_StoreKey.pfx" />
     <None Include="SherpaDesk_TemporaryKey.pfx" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart.pri" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\Generic.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesLight.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\Generic.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xbf" />
+    <None Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xbf" />
     <None Include="Telerik\Core\Telerik.Core.pri" />
     <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid.pri" />
     <None Include="Telerik\Grid\Telerik.UI.Xaml.Grid\Themes\Generic.xbf" />
@@ -328,6 +337,8 @@
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\WideLogo.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Telerik\Chart\Telerik.UI.Xaml.Chart.dll" />
+    <Content Include="Telerik\Chart\Telerik.UI.Xaml.Chart.XML" />
     <Content Include="Telerik\Core\Telerik.Core.dll" />
     <Content Include="Telerik\Core\Telerik.Core.XML" />
     <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.dll" />
@@ -342,6 +353,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeColorsLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Telerik\Chart\Telerik.UI.Xaml.Primitives\Themes\ThemeResourcesLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TimeLogs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

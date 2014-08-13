@@ -82,7 +82,7 @@ namespace SherpaDesk
                 chartData.Add(new ChartDataModel { Value = 25});
                 chartData.Add(new ChartDataModel { Value = 75});
                 detailsChart.Series[0].ItemsSource = chartData;
-
+                ChartGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
                 if (resultNotes.Status != eResponseStatus.Success)
                 {
