@@ -310,6 +310,7 @@
     <Content Include="Assets\Close.png" />
     <Content Include="Assets\green-button.png" />
     <Content Include="Assets\Images\activity-line.png" />
+    <Content Include="Assets\Images\attach-button.png" />
     <Content Include="Assets\Images\BadgeLogo.png" />
     <Content Include="Assets\Images\Bluesquare150x150Logo.png" />
     <Content Include="Assets\Images\Bluesquare24x24Logo.png" />
@@ -327,6 +328,7 @@
     <Content Include="Assets\Images\Square70x70Logo.png" />
     <Content Include="Assets\Images\StoreLogo.png" />
     <Content Include="Assets\Images\ticket-details-avatar.png" />
+    <Content Include="Assets\Images\ticket-details-comments-avatar.png" />
     <Content Include="Assets\Images\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\LogoBig.scale-100.png" />

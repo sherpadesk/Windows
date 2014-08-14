@@ -156,5 +156,15 @@ namespace SherpaDesk
             //App.ExternalAction(x =>
             //    x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
         }
+
+        private void ReplyGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ReplyGrid.Background.Opacity = 0.9;
+        }
+
+        private void ReplyGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ReplyGrid.Background.Opacity = 1;
+        }
     }
 }
