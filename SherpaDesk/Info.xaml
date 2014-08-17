@@ -41,83 +41,103 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid Width="800" Height="500" HorizontalAlignment="Left" Margin="30,100,30,30" VerticalAlignment="Top">
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#72585858"/>
-                            <GradientStop Color="#19040040" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="100" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Grid Width="auto" HorizontalAlignment="Center">
+                    <Button HorizontalAlignment="Right" Style="{StaticResource TextButtonStyle}" Width="330" Margin="0,0,120,0" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyout.MenuFlyoutPresenterStyle>
+                                    <Style TargetType="MenuFlyoutPresenter">
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Margin" Value="0,-15,0,0"/>
+                                    </Style>
+                                </MenuFlyout.MenuFlyoutPresenterStyle>
+                                <MenuFlyoutItem x:Name="SherpaDeskLink" Text="Visit SherpaDesk.com" Tapped="SherpaDeskLink_Tapped" />
+                                <MenuFlyoutItem x:Name="LogOutMenu" Text="Logout" Tapped="LogOutMenu_Tapped" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Grid Width="800" Height="500" Grid.Row="1" HorizontalAlignment="Left" Margin="30,0,30,30" VerticalAlignment="Top">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#72585858"/>
+                                <GradientStop Color="#19040040" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
-                        <TextBlock Text="Open Tickets" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
-                        <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Name="OpenAsEndUserCount" Foreground="White" Text="0" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Name="OpenAsTechCount" Foreground="White" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Name="OpenAsAltTechCount" Foreground="White" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
-                            <TextBlock Text="As User" Foreground="White" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="As Tech" Foreground="White" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
-                            <TextBlock Text="Alt Tech" Foreground="White" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="20,20,20,20" Height="auto">
-                        <Grid Height="auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <Grid Width="auto" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="1" Foreground="White" Text="Hours" FontSize="22" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="2" Foreground="White" Text="Expenses" FontSize="22" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="3" Foreground="White" Text="Tickets" FontSize="22" HorizontalAlignment="Center" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
+                            <TextBlock Text="Open Tickets" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
+                            <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Name="OpenAsEndUserCount" Foreground="White" Text="0" FontSize="45" HorizontalAlignment="Right" />
+                                <TextBlock Name="OpenAsTechCount" Foreground="White" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
+                                <TextBlock Name="OpenAsAltTechCount" Foreground="White" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
+                                <TextBlock Text="As User" Foreground="White" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
+                                <TextBlock Text="As Tech" Foreground="White" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
+                                <TextBlock Text="Alt Tech" Foreground="White" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />
+                            </Grid>
                         </Grid>
-                        <ListView x:Name="StatInfoList" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Width="760">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding AccountName}" Foreground="White" FontSize="22" HorizontalAlignment="Left" />
-                                        <TextBlock Text="{Binding UninvoicedTimes}" Grid.Column="1" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
-                                        <TextBlock Text="{Binding UnInvoicedExpenses}" Grid.Column="2" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
-                                        <TextBlock Text="{Binding OpenTickets}" Grid.Column="3" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <Grid Grid.Row="1" Margin="20,20,20,20" Height="auto">
+                            <Grid Height="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="1" Foreground="White" Text="Hours" FontSize="22" HorizontalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Foreground="White" Text="Expenses" FontSize="22" HorizontalAlignment="Center" />
+                                <TextBlock Grid.Column="3" Foreground="White" Text="Tickets" FontSize="22" HorizontalAlignment="Center" />
+                            </Grid>
+                            <ListView x:Name="StatInfoList" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Margin="0,40,0,0" SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="760">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding AccountName}" Foreground="White" FontSize="22" HorizontalAlignment="Left" />
+                                            <TextBlock Text="{Binding UninvoicedTimes}" Grid.Column="1" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding UnInvoicedExpenses}" Grid.Column="2" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding OpenTickets}" Grid.Column="3" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

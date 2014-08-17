@@ -114,5 +114,26 @@ namespace SherpaDesk
                 page.ScrollViewer.ChangeView(0, null, null);
             });
         }
+
+        private void LogOutMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            //if (AppSettings.Current.Single)
+            //{
+            //    //if (await App.ConfirmMessage())
+            //    //{
+            //        AppSettings.Current.Clear();
+            //        this.Frame.Navigate(typeof(Login));
+            //    //}
+            //}
+            //else
+            //{
+            //    this.Frame.Navigate(typeof(Organization));
+            //}
+        }
+
+        private void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com"));
+        }
     }
 }
