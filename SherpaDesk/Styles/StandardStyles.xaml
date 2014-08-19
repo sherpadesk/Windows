@@ -30,6 +30,24 @@
 
     <!-- RichTextBlock styles -->
 
+    <Style TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid x:Name="RootElement">
+                        <Border x:Name="Border" BorderBrush="#FFDEDEDE" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="5" Opacity="1">
+                            <Grid>
+                                <Border x:Name="MouseOverBorder" BorderBrush="Transparent" BorderThickness="1">
+                                    <ScrollViewer x:Name="ContentElement" BorderThickness="0" IsTabStop="False" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Padding="{TemplateBinding Padding}"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="BasicRichTextStyle" TargetType="RichTextBlock">
         <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}"/>
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
@@ -226,7 +244,7 @@
     </Style>
 
     <!-- Button styles -->
-    
+
     <!--
         TextButtonStyle is used to style a Button using subheader-styled text with no other adornment.  There
         are two styles that are based on TextButtonStyle (TextPrimaryButtonStyle and TextSecondaryButtonStyle)

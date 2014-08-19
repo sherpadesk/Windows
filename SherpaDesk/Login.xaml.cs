@@ -146,6 +146,29 @@ namespace SherpaDesk
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
+        private void RegisterButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com/start-your-climb/"));            
+        }
 
+        private void SignInButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void SignInButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
+
+        private void RegisterButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void RegisterButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
     }
 }

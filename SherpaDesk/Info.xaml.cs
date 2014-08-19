@@ -117,18 +117,7 @@ namespace SherpaDesk
 
         private void LogOutMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //if (AppSettings.Current.Single)
-            //{
-            //    //if (await App.ConfirmMessage())
-            //    //{
-            //        AppSettings.Current.Clear();
-            //        this.Frame.Navigate(typeof(Login));
-            //    //}
-            //}
-            //else
-            //{
-            //    this.Frame.Navigate(typeof(Organization));
-            //}
+            App.LogOut();
         }
 
         private void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

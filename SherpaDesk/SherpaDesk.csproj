@@ -320,6 +320,7 @@
     <Content Include="Assets\Images\button.png" />
     <Content Include="Assets\Images\face55x55.png" />
     <Content Include="Assets\Images\home-line-devider.png" />
+    <Content Include="Assets\Images\login-background.png" />
     <Content Include="Assets\Images\main-background.png" />
     <Content Include="Assets\Images\main-logo-small.png" />
     <Content Include="Assets\Images\Splash screen 620x300.scale-100.png" />
@@ -341,7 +342,9 @@
     <Content Include="Assets\WideLogo.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Telerik\Chart\Telerik.UI.Xaml.Chart.dll" />
-    <Content Include="Telerik\Chart\Telerik.UI.Xaml.Chart.XML" />
+    <Content Include="Telerik\Chart\Telerik.UI.Xaml.Chart.XML">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Telerik\Core\Telerik.Core.dll" />
     <Content Include="Telerik\Core\Telerik.Core.XML" />
     <Content Include="Telerik\Grid\Telerik.UI.Xaml.Grid.dll" />

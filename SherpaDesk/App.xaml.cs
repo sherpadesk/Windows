@@ -44,6 +44,18 @@ namespace SherpaDesk
                 catch (UnauthorizedAccessException) { }
             });
         }
+        public static async void LogOut()
+        {
+            if (await App.ConfirmMessage())
+            {
+                AppSettings.Current.Clear();
+                Frame rootFrame = Window.Current.Content as Frame;
+                if (rootFrame != null)
+                {
+                    rootFrame.Navigate(typeof(Login));
+                }
+            }
+        }
 
         public static async void ShowErrorMessage(string message, eErrorType title)
         {
