@@ -72,9 +72,19 @@ namespace SherpaDesk.Models
                 if (this.PropertyChanged != null)
                 {
                     this.PropertyChanged(this, new PropertyChangedEventArgs("TimeLogList"));
+                    this.PropertyChanged(this, new PropertyChangedEventArgs("FullList"));
                     this.PropertyChanged(this, new PropertyChangedEventArgs("NonTicketsList"));
                     this.PropertyChanged(this, new PropertyChangedEventArgs("TicketTimeList"));
                 }
+            }
+        }
+
+        public ObservableCollection<TimeResponse> FullList
+        {
+            get
+            {
+                return new ObservableCollection<TimeResponse>(_timeLogList
+                    .Where(x => x.Date.Date == _currentDate.Date));
             }
         }
 

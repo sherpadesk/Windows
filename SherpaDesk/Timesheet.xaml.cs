@@ -14,8 +14,6 @@ namespace SherpaDesk
 {
     public sealed partial class Timesheet : SherpaDesk.Common.LayoutAwarePage
     {
-        public event EventHandler MoveScrollToRight;
-
         public Timesheet()
         {
             this.InitializeComponent();
@@ -280,25 +278,11 @@ namespace SherpaDesk
         private void FillTimesheetGrid(DateTime date)
         {
             this.Model.CurrentDate = date;
-            this.TimeLogsFrame.Navigate(typeof(TimeLogs));
-            //NonTicketsGrid.ItemsSource = this.Model.NonTicketsList;
-            //NonTicketsGrid.UpdateLayout();
-            //NonTicketsLabel.Visibility = NonTicketsGrid.Visibility = this.Model.VisibleNonTickets;
-
-            //TicketTimeGrid.ItemsSource = this.Model.TicketTimeList;
-            //TicketTimeGrid.UpdateLayout();
-            //TicketTimeLabel.Visibility = TicketTimeGrid.Visibility = this.Model.VisibleTicketTime;
-
-            //if ((this.Model.VisibleNonTickets & this.Model.VisibleTicketTime) == Windows.UI.Xaml.Visibility.Visible)
-            //{
-            //    TimesheetGrids.Visibility = Visibility.Visible;
-            //    if (MoveScrollToRight != null)
-            //    {
-            //        MoveScrollToRight(this, new EventArgs());
-            //    }
-            //}
-            //else
-            //    TimesheetGrids.Visibility = Visibility.Collapsed;
+            this.TimeLogsFrame.Navigate(typeof(TimeLogs), this.Model.FullList);
+            this.MainPage(page =>
+            {
+                page.ScrollViewer.ChangeView(0, null, null);
+            });
         }
 
         private void CalculateHours()

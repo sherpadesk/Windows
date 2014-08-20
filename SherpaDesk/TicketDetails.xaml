@@ -161,7 +161,7 @@
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-        <Grid Visibility="Collapsed" Grid.Column="1" Grid.Row="1" Margin="20,0,50,0" Width="auto">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="20,0,50,0" Width="auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
