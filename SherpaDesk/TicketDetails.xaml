@@ -173,10 +173,10 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock FontSize="60" Text="2068" Foreground="#8b8b8b" Margin="0,0,30,0" />
+                <TextBlock x:Name="TicketNumber"  FontSize="60" Foreground="#8b8b8b" Margin="0,0,30,0" />
                 <Grid Grid.Column="1" MaxWidth="1200">
                     <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
-                        <TextBlock FontSize="60" TextWrapping="Wrap" Margin="0,0,0,0" Text="Access is denied. You do not have" Foreground="#8b8b8b" />
+                        <TextBlock x:Name="SubjectLabel" FontSize="60" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#8b8b8b" />
                     </ScrollViewer>
                 </Grid>
             </Grid>
@@ -193,7 +193,7 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Shiva Carter" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
+                    <TextBlock x:Name="EndUserLabel" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
                     <TextBlock Grid.Row="1" Text="SherpaDesk Support | Atlanta" Foreground="#898989" FontSize="20" />
                     <Grid Grid.Row="2" Margin="0,20,0,0">
                         <Grid.ColumnDefinitions>
@@ -201,7 +201,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Initial Post" Foreground="#4a4a4a" FontSize="18" Margin="0,0,5,0" />
-                        <TextBlock Grid.Column="1" Text="16 hours ago" Foreground="#777777" FontSize="18" />
+                        <TextBlock x:Name="СreatedTime" Grid.Column="1" Foreground="#777777" FontSize="18" />
                     </Grid>
                 </Grid>
                 <Grid x:Name="ChartGrid" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
@@ -218,7 +218,7 @@
             </Grid>
             <Grid Grid.Row="2" Margin="0,30,0,0" Width="1000" HorizontalAlignment="Left">
                 <ScrollViewer Height="200" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                    <TextBlock FontSize="20" Margin="0,0,20,0" Foreground="#5b5b5b" TextWrapping="Wrap" Text="Tellus lorem tristique taciti ad curae; erat natoque felis purus varius pharetra porttitor habitasse volutpat fusce sagittis. Diam diam magna mauris penatibus ipsum lorem dignissim hendrerit Congue vestibulum massa rutrum vivamus aptent nisi tincidunt sagittis felis ridiculus adipiscing Tellus lorem tristique taciti ad curae; erat natoque felis purus varius pharetra porttitor habitasse volutpat fusce sagittis. Diam diam magna mauris penatibus ipsum lorem dignissim hendrerit Congue vestibulum massa rutrum vivamus aptent nisi tincidunt sagittis felis ridiculus adipiscing" />
+                    <TextBlock x:Name="TicketDescription" FontSize="20" Margin="0,0,20,0" Foreground="#5b5b5b" TextWrapping="Wrap" />
                 </ScrollViewer>
             </Grid>
         </Grid>

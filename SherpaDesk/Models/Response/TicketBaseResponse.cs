@@ -16,6 +16,15 @@ namespace SherpaDesk.Models.Response
         [Details, IgnoreDataMember]
         public DateTime СreatedTime { get; set; }
 
+        public string СreatedTimeText
+        {
+            get
+            {
+                var days = (DateTime.Now - СreatedTime).DaysAgo();
+                return !string.IsNullOrEmpty(days) ? string.Format("{0} old", days) : string.Empty;
+            }
+        }
+
         [DataMember(Name = "number"), Details]
         public int TicketNumber { get; set; }
 

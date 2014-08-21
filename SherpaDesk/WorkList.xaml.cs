@@ -93,7 +93,7 @@ namespace SherpaDesk
 
         private async void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            if (!this.Model.Data.Any(x=>x.IsChecked))
+            if (!this.Model.Data.Any(x => x.IsChecked))
             {
                 App.ShowErrorMessage("No Items selected", eErrorType.Warning);
                 return;
@@ -159,7 +159,7 @@ namespace SherpaDesk
 
                 OpenTicketsCount.Text = resultCounts.Result.AllOpen > 0 ? resultCounts.Result.AllOpen.ToString() : string.Empty;
                 AsEndUserCount.Text = resultCounts.Result.OpenAsUser > 0 ? resultCounts.Result.OpenAsUser.ToString() : string.Empty;
-                OnHoldCount.Text = resultCounts.Result.OnHold > 0 ? resultCounts.Result.OnHold.ToString() : string.Empty; 
+                OnHoldCount.Text = resultCounts.Result.OnHold > 0 ? resultCounts.Result.OnHold.ToString() : string.Empty;
 
             }
         }
@@ -247,6 +247,7 @@ namespace SherpaDesk
             this.pageRoot.MainPage(page =>
             {
                 page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null);
                 page.WorkDetailsFrame.Navigate(typeof(TicketDetails), ((TicketSearchResponse)e.AddedItems.First()).TicketKey);
             });
         }

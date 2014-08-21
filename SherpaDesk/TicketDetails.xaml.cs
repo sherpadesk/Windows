@@ -44,15 +44,14 @@ namespace SherpaDesk
                     return;
                 }
                 var ticket = resultTicket.Result;
-
-//                AddResponseButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
-
+                
                 _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
 
-                //SubjectLabel.Text = ticket.Subject;
-                //EndUserLabel.Text = ticket.UserFullName;
-                //InitialPostLabel.Text = Helper.HtmlToString(ticket.InitialPost);
-                //WorkpadLabel.Text = Helper.HtmlToString(ticket.Workpad);
+                TicketNumber.Text = ticket.TicketNumber.ToString();
+                SubjectLabel.Text = ticket.Subject;
+                EndUserLabel.Text = ticket.UserFullName;
+                TicketDescription.Text = Helper.HtmlToString(ticket.InitialPost);
+                СreatedTime.Text = ticket.СreatedTimeText;                
 
                 var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
 
@@ -105,7 +104,6 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadPage();
-            this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null));
         }
 
         private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)

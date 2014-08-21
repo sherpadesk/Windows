@@ -9,7 +9,6 @@ using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using System.Threading.Tasks;
 
 namespace SherpaDesk.Common
 {
@@ -31,12 +30,13 @@ namespace SherpaDesk.Common
                 Width = comboBox.ActualWidth,
                 Height = comboBox.ActualHeight,
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
-                FontSize = 24,
+                FontSize = 18,
                 FilterComparisonMode = System.StringComparison.CurrentCultureIgnoreCase,
                 FilterMode = AutoCompleteBoxFilterMode.Contains,
                 FilterDelay = TimeSpan.FromSeconds(1),
                 FilterStartThreshold = 2,
                 IsDropDownOpen = true,
+                BorderBrush = comboBox.BorderBrush,
                 AutosuggestFirstItem = false,
                 CompositeMode = Windows.UI.Xaml.Media.ElementCompositeMode.SourceOver,
                 Visibility = Visibility.Visible
@@ -59,6 +59,7 @@ namespace SherpaDesk.Common
                     }
                 };
             searchBox.Margin = new Thickness(comboBox.Margin.Left, comboBox.Margin.Top, comboBox.Margin.Right, comboBox.Margin.Bottom);
+            searchBox.Padding = new Thickness(8, 5, 0, 0);
 
             Grid.SetRow(searchBox, Grid.GetRow(comboBox));
             Grid.SetColumn(searchBox, Grid.GetColumn(comboBox));
