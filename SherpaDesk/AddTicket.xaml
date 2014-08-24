@@ -65,10 +65,14 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.Column="3" BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="40" VerticalAlignment="Top" Margin="0,0,0,2">
-                        <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="40" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" FontSize="18" Width="450" BorderThickness="0" Padding="4,7,0,0" />
+                        <Grid>
+                            <Controls:WatermarkTextBox x:Name="SubjectTextbox" HorizontalAlignment="Center" WatermarkText="Subject" Height="40" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" FontSize="18" Width="450" BorderThickness="0" Padding="4,7,0,0" />
+                        </Grid>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" BorderThickness="2" Grid.RowSpan="4" BorderBrush="#e1e1e1" CornerRadius="5" VerticalAlignment="Stretch" Margin="0,16,0,2">
-                        <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" WatermarkText="Details..." TextWrapping="Wrap" Height="207" FontSize="18" Width="450" />
+                        <Grid>
+                            <Controls:WatermarkTextBox x:Name="DescritionTextbox" AcceptsReturn="True" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" WatermarkText="Details..." TextWrapping="Wrap" Height="207" FontSize="18" Width="450" />
+                        </Grid>
                     </Border>
                     <Button x:Name="SaveButton" Width="300" Height="40" Style="{StaticResource SubmitButtonStyle}" Content="Create Ticket" HorizontalAlignment="Stretch" Grid.Column="3" VerticalAlignment="Stretch" Grid.Row="8" Foreground="White" Tapped="SaveButton_Tapped" PointerEntered="SaveButton_PointerEntered" PointerExited="SaveButton_PointerExited" FontWeight="Normal" />
 
@@ -115,6 +119,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
+                    <TextBlock Grid.Column="3" x:Name="SelectedFilesList" Grid.Row="6" Grid.RowSpan="2" VerticalAlignment="Top" MaxHeight="80" Margin="0,65,0,10" Width="450" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto" FontSize="14" TextWrapping="Wrap" />
                 </Grid>
             </Grid>
         </Grid >

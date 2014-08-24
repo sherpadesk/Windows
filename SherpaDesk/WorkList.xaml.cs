@@ -173,7 +173,7 @@ namespace SherpaDesk
                 {
                     case eWorkListType.Open:
                         request.Status = eTicketStatus.Open;
-                        request.Role = eRoles.Technician;
+                        //request.Role = eRoles.Technician;
                         break;
                     case eWorkListType.OnHold:
                         request.Status = eTicketStatus.OnHold;

@@ -124,18 +124,18 @@ namespace SherpaDesk
             _attachment.Clear();
             if (files != null && files.Count > 0)
             {
-                //SelectedFilesList.Text = "Picked photos: ";
-                //List<string> fileNames = new List<string>();
-                //foreach (var file in files)
-                //{
-                //    fileNames.Add(file.Name);
-                //    _attachment.Add(file);
-                //}
-                //SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+                SelectedFilesList.Text = "Picked photos: ";
+                List<string> fileNames = new List<string>();
+                foreach (var file in files)
+                {
+                    fileNames.Add(file.Name);
+                    _attachment.Add(file);
+                }
+                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
             }
             else
             {
-                //SelectedFilesList.Text = string.Empty;
+                SelectedFilesList.Text = string.Empty;
             }
         }
 

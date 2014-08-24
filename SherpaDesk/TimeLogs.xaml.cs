@@ -21,9 +21,14 @@ namespace SherpaDesk
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             list = (ObservableCollection<TimeResponse>)e.Parameter;
+            UpdateGrid(list);
+            base.OnNavigatedTo(e);
+        }
+
+        public void UpdateGrid(ObservableCollection<TimeResponse> list)
+        {
             TicketTimeGrid.ItemsSource = list;
             TicketTimeGrid.UpdateLayout();
-            base.OnNavigatedTo(e);
         }
     }
 }

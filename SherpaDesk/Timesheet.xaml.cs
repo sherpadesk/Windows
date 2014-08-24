@@ -50,7 +50,7 @@ namespace SherpaDesk
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            var date = DateTime.Now;
+            var date = Model.CurrentDate = DateTime.Now;
             StartTimePicker.Value = EndTimePicker.Value = date;
             StartTimeLabel.Text = EndTimeLabel.Text = date.ToString("t");
             DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
@@ -227,17 +227,10 @@ namespace SherpaDesk
             CalculateHours();
         }
 
-        private void TimeTicketId_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-
-        }
-
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var hours = decimal.Zero;
             decimal.TryParse(HoursTextBox.Text, out hours);
-            //            var date = DateField.Value ?? DateTime.Now;
-            var date = DateTime.Now;
             var taskType = TaskTypeList.GetSelectedValue<int>();
             using (var connector = new Connector())
             {
@@ -252,7 +245,7 @@ namespace SherpaDesk
                                 Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                                 Hours = hours,
                                 Note = NoteTextBox.Text,
-                                Date = date
+                                Date = Model.CurrentDate
                             });
 
                 if (result.Status != eResponseStatus.Success)
@@ -269,7 +262,7 @@ namespace SherpaDesk
 
             await TimesheetLoad(this, new TimesheetEventArgs(this.Model));
 
-            this.FillTimesheetGrid(date);
+            this.FillTimesheetGrid(Model.CurrentDate);
         }
         #endregion
 
@@ -278,11 +271,14 @@ namespace SherpaDesk
         private void FillTimesheetGrid(DateTime date)
         {
             this.Model.CurrentDate = date;
-            this.TimeLogsFrame.Navigate(typeof(TimeLogs), this.Model.FullList);
-            this.MainPage(page =>
+            if (TimeLogsFrame.Content == null)
             {
-                page.ScrollViewer.ChangeView(0, null, null);
-            });
+                this.TimeLogsFrame.Navigate(typeof(TimeLogs), this.Model.FullList);
+            }
+            else
+            {
+                ((TimeLogs)TimeLogsFrame.Content).UpdateGrid(this.Model.FullList);
+            }
         }
 
         private void CalculateHours()
