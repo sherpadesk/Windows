@@ -96,8 +96,7 @@ namespace SherpaDesk
                     x.NoteType,
                     NoteText = Helper.HtmlToString(x.NoteText)
                 }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
-                //TicketDetailsList.ItemsSource = null; // For Visual Effect
-                //TicketDetailsList.ItemsSource = resultView;
+                TicketDetailsList.ItemsSource = resultView;
             }
         }
 

@@ -294,83 +294,35 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" Height="400" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid Margin="0,20,20,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="800" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="Assets/Images/ticket-details-comments-avatar.png" />
-                            <Grid Grid.Column="1" Margin="20,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Miley Cyrus" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
-                                <TextBlock Text="5 hours ago" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
-                                <TextBlock HorizontalAlignment="Stretch" FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut" TextWrapping="Wrap" Grid.Row="2" />
-                            </Grid>
-                        </Grid>
-                        <Grid Margin="0,20,0,0" Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="800" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="Assets/Images/ticket-details-comments-avatar.png" />
-                            <Grid Grid.Column="1" Margin="20,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Miley Cyrus" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
-                                <TextBlock Text="5 hours ago" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
-                                <TextBlock HorizontalAlignment="Stretch" FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut" TextWrapping="Wrap" Grid.Row="2" />
-                            </Grid>
-                        </Grid>
-                        <Grid Margin="0,20,0,0" Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="800" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="Assets/Images/ticket-details-comments-avatar.png" />
-                            <Grid Grid.Column="1" Margin="20,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Miley Cyrus" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
-                                <TextBlock Text="5 hours ago" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
-                                <TextBlock HorizontalAlignment="Stretch" FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut" TextWrapping="Wrap" Grid.Row="2" />
-                            </Grid>
-                        </Grid>
-                        <Grid Margin="0,20,0,0" Grid.Row="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="800" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="Assets/Images/ticket-details-comments-avatar.png" />
-                            <Grid Grid.Column="1" Margin="20,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Miley Cyrus" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
-                                <TextBlock Text="5 hours ago" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
-                                <TextBlock HorizontalAlignment="Stretch" FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut" TextWrapping="Wrap" Grid.Row="2" />
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" Height="400" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <GridView x:Name="TicketDetailsList" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsTapEnabled="False" SelectionMode="None">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,20,20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="800" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="Assets/Images/ticket-details-comments-avatar.png" VerticalAlignment="Top" />
+                                    <Grid Grid.Column="1" Margin="20,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding FullName}" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
+                                        <TextBlock Text="{Binding ResponseDateText}" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
+                                        <TextBlock HorizontalAlignment="Stretch" FontSize="16" Foreground="#5b5b5b" Text="{Binding NoteText}" TextWrapping="Wrap" Grid.Row="2" />
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </ScrollViewer>
             </Grid>
         </Grid>
