@@ -62,12 +62,11 @@ namespace SherpaDesk
                 }
                 if (resultFiles.Result != null && resultFiles.Result.Length > 0)
                 {
-                    //AttachedView.ItemsSource = resultFiles.Result.Select(file => new AttachmentModel
-                    //{
-                    //    FileName = file.Name,
-                    //    Image = new BitmapImage(new Uri(file.Url, UriKind.Absolute))
-                    //}).ToList();
-                    //FilesLabel.Visibility = AttachedView.Visibility = AttachedPages.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    AttachmentsList.ItemsSource = resultFiles.Result.Select(file => new AttachmentModel
+                    {
+                        FileName = file.Name,
+                        ImageUrl = file.Url
+                    }).ToList();
                 }
                 await FillResponses();
             }

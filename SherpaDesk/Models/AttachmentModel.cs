@@ -12,5 +12,7 @@ namespace SherpaDesk.Models
         public string FileName { get; set; }
 
         public BitmapImage Image { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
