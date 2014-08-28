@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
@@ -44,6 +45,9 @@ namespace SherpaDesk.Models.Response
                 {
                     try
                     {
+                        StreamReader sr = new StreamReader(responseStream);
+                        var re = sr.ReadToEnd();
+                        responseStream.Position = 0;
                         string firstSymbol = char.ConvertFromUtf32(responseStream.ReadByte());
                         if (firstSymbol == "{" || firstSymbol == "[" || firstSymbol == " ")
                         {

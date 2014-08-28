@@ -287,6 +287,17 @@
                         </DataTemplate>
                     </telerik:DataGridTemplateColumn.CellContentTemplate>
                 </telerik:DataGridTemplateColumn>
+                <telerik:DataGridTemplateColumn Width="30"
+                                                SizeMode="Fixed" 
+                                                HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
+                                                CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}">
+                    <telerik:DataGridTemplateColumn.CellContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </telerik:DataGridTemplateColumn.CellContentTemplate>
+                </telerik:DataGridTemplateColumn>                
             </telerik:RadDataGrid.Columns>
         </telerik:RadDataGrid>
         <VisualStateManager.VisualStateGroups>

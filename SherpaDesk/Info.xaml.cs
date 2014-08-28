@@ -102,6 +102,7 @@ namespace SherpaDesk
             this.MainPage(page =>
             {
                 page.TimeSheetFrame.Navigate(typeof(Timesheet));
+                page.TimeSheetFrame.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 page.ScrollViewer.ChangeView(0, null, null);
             });
         }
@@ -111,6 +112,7 @@ namespace SherpaDesk
             this.MainPage(page =>
             {
                 page.TimeSheetFrame.Navigate(typeof(AddTicket));
+                page.TimeSheetFrame.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 page.ScrollViewer.ChangeView(0, null, null);
             });
         }

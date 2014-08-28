@@ -26,7 +26,7 @@ namespace SherpaDesk.Models.Response
         }
 
         [DataMember(Name = "number"), Details]
-        public int TicketNumber { get; set; }
+        public int? TicketNumber { get; set; }
 
         [DataMember(Name = "prefix"), Details]
         public string Prefix { get; set; }
@@ -47,7 +47,7 @@ namespace SherpaDesk.Models.Response
         public string UserEmail { get; set; }
 
         [DataMember(Name = "account_id"), Details]
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
 
         [DataMember(Name = "account_name"), Details]
         public string AccountName { get; set; }
@@ -80,7 +80,7 @@ namespace SherpaDesk.Models.Response
         public string CreationCategoryName { get; set; }
 
         [DataMember(Name = "class_id"), Details]
-        public int ClassId { get; set; }
+        public int? ClassId { get; set; }
 
         [DataMember(Name = "class_name"), Details]
         public string ClassName { get; set; }

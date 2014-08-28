@@ -93,7 +93,7 @@
 			Style="{StaticResource PageHeaderTextStyle}" />
         <TextBlock Grid.Column="3"
 			Margin="55,30,20,20"
-                   x:Name="AttachmentsTitle"
+            x:Name="AttachmentsTitle" Visibility="Collapsed"
 			Text="Attachments"                   
 			Style="{StaticResource PageHeaderTextStyle}" />        
         <Grid Grid.Row="1">

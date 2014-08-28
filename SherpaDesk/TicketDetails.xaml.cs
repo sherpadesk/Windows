@@ -72,6 +72,11 @@ namespace SherpaDesk
                         FileName = file.Name,
                         ImageUrl = file.Url
                     }).ToList();
+                    GridAttachments.Visibility = AttachmentsTitle.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    GridAttachments.Visibility = AttachmentsTitle.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
                 await FillResponses();
             }

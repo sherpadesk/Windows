@@ -303,7 +303,10 @@ namespace SherpaDesk
 
         private void CancelButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            this.MainPage(page =>
+            {
+                page.TimeSheetFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            });
         }
 
         private void CancelButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
