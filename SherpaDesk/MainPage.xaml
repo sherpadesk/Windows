@@ -10,6 +10,9 @@
         <StackPanel Grid.Row="0" Canvas.ZIndex="1000" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ProgressRing Name="progressRing" Foreground="#FF040029" Margin="0,0,0,0" Height="200" Width="200" BorderBrush="#FF627CC2" />
         </StackPanel>
+        <StackPanel x:Name="FullscreenPanel" Visibility="Collapsed" Canvas.ZIndex="50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Tapped="FullscreenPanel_Tapped" Background="#AAAAAA">
+            <Image x:Name="ImageFull" Stretch="Uniform" Width="1200" Height="700" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.ZIndex="10" />
+        </StackPanel>
         <ScrollViewer x:Name="scrollViewer"
 						  VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch"
@@ -24,10 +27,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="FullscreenPanel" Grid.Row="0" Visibility="Collapsed" Canvas.ZIndex="10" VerticalAlignment="Center" HorizontalAlignment="Center" Tapped="FullscreenPanel_Tapped" Background="Black" Margin="683,388,683,380">
-                    <Image x:Name="ImageFull" Stretch="None" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="10" />
-                </StackPanel>
-
                 <Grid Canvas.ZIndex="11">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />

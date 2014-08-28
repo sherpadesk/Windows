@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace SherpaDesk
@@ -38,7 +39,7 @@ namespace SherpaDesk
             this.infoFrame.Navigate(typeof(UpdateProfile));
         }
 
-        public void ShowFullScreenImage(BitmapImage image)
+        public void ShowFullScreenImage(ImageSource image)
         {
             ImageFull.Source = image;
             FullscreenPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;

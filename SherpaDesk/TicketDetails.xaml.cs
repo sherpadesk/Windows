@@ -51,7 +51,12 @@ namespace SherpaDesk
                 SubjectLabel.Text = ticket.Subject;
                 EndUserLabel.Text = ticket.UserFullName;
                 TicketDescription.Text = Helper.HtmlToString(ticket.InitialPost);
-                СreatedTime.Text = ticket.СreatedTimeText;                
+                СreatedTime.Text = ticket.СreatedTimeText;
+
+                TicketNumberTransfer.Text = ticket.TicketNumber.ToString();
+                SubjectLabelTransfer.Text = ticket.Subject;
+                EndUserLabelTransfer.Text = ticket.UserFullName;
+                СreatedTimeTransfer.Text = ticket.СreatedTimeText;
 
                 var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
 
@@ -80,6 +85,8 @@ namespace SherpaDesk
                 chartData.Add(new ChartDataModel { Value = 25});
                 chartData.Add(new ChartDataModel { Value = 75});
                 detailsChart.Series[0].ItemsSource = chartData;
+                detailsChartTransfer.Series[0].ItemsSource = chartData;
+                ChartGridTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 ChartGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
                 if (resultNotes.Status != eResponseStatus.Success)
@@ -102,13 +109,6 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadPage();
-        }
-
-        private void AddResponseButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //ResponseFrame.Navigated -= ChildPage_Navigated;
-            //ResponseFrame.Navigated += ChildPage_Navigated;
-            //ResponseFrame.Navigate(typeof(AddResponse), _ticketKey);
         }
 
         protected async override void UpdatedPage(object sender, EventArgs e)
@@ -140,17 +140,10 @@ namespace SherpaDesk
             }
         }
 
-        private void TransferMenu_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //ResponseFrame.Navigated -= ChildPage_Navigated;
-            //ResponseFrame.Navigated += ChildPage_Navigated;
-            //ResponseFrame.Navigate(typeof(Transfer), new KeyValuePair<string, int>(_ticketKey, _techId));
-        }
-
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //App.ExternalAction(x =>
-            //    x.ShowFullScreenImage(((AttachmentModel)AttachedView.SelectedItem).Image));
+            App.ExternalAction(x =>
+                x.ShowFullScreenImage(((Image)sender).Source));
         }
 
         private void ReplyGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -161,6 +154,17 @@ namespace SherpaDesk
         private void ReplyGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ReplyGrid.Background.Opacity = 1;
+        }
+
+        private void TransferButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            AttachmentsTitle.Visibility =
+                GridTicketDetails.Visibility = 
+                GridAddResponse.Visibility = 
+                GridAttachments.Visibility = 
+                Windows.UI.Xaml.Visibility.Collapsed;
+
+            GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }
