@@ -44,7 +44,7 @@ namespace SherpaDesk
                     return;
                 }
                 var ticket = resultTicket.Result;
-                
+
                 _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
 
                 TicketNumber.Text = ticket.TicketNumber.ToString();
@@ -87,8 +87,8 @@ namespace SherpaDesk
             using (var connector = new Connector())
             {
                 var chartData = new List<ChartDataModel>();
-                chartData.Add(new ChartDataModel { Value = 25});
-                chartData.Add(new ChartDataModel { Value = 75});
+                chartData.Add(new ChartDataModel { Value = 25 });
+                chartData.Add(new ChartDataModel { Value = 75 });
                 detailsChart.Series[0].ItemsSource = chartData;
                 detailsChartTransfer.Series[0].ItemsSource = chartData;
                 ChartGridTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -161,15 +161,50 @@ namespace SherpaDesk
             ReplyGrid.Background.Opacity = 1;
         }
 
+        private void SaveTransferButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
+
+        private void SaveTransferButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
         private void TransferButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            AttachmentsTitle.Visibility =
-                GridTicketDetails.Visibility = 
-                GridAddResponse.Visibility = 
-                GridAttachments.Visibility = 
-                Windows.UI.Xaml.Visibility.Collapsed;
+            GridTicketDetails.Visibility =
+            GridAddResponse.Visibility =
+            Windows.UI.Xaml.Visibility.Collapsed;
 
             GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void CancelTransferButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            GridTicketDetails.Visibility =
+            GridAddResponse.Visibility =
+            Windows.UI.Xaml.Visibility.Visible;
+
+            GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void CancelTransferButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((TextBlock)sender).Opacity = 0.6;
+        }
+
+        private void CancelTransferButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((TextBlock)sender).Opacity = 1;
+        }
+
+        private void SaveTransferButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            GridTicketDetails.Visibility =
+            GridAddResponse.Visibility =
+            Windows.UI.Xaml.Visibility.Visible;
+
+            GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

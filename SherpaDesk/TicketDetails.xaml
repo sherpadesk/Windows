@@ -20,6 +20,19 @@
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
     <common:LayoutAwarePage.Resources>
+        <Style x:Key="SubmitButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Image Source="Assets/green-button.png" Stretch="Fill" />
+                            <TextBlock Text="{TemplateBinding Content}" Padding="0,0,0,2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 FontFamily="Segoe UI" FontSize="21"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
         <Chart:ChartPalette x:Key="CustomPalette">
@@ -166,7 +179,7 @@
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetails" Margin="20,0,50,0" Width="auto">
+        <Grid Grid.Column="1" Grid.Row="1" Visibility="Visible" x:Name="GridTicketDetails" Margin="20,0,50,0" Width="auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -227,7 +240,7 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Grid Grid.Column="2" Grid.Row="1" x:Name="GridAddResponse" Margin="0,0,50,0" Width="auto">
+        <Grid Grid.Column="2" Grid.Row="1" Visibility="Visible" x:Name="GridAddResponse" Margin="0,0,50,0" Width="auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -348,12 +361,12 @@
             </ScrollViewer>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetailsTransfer" Visibility="Collapsed" Margin="20,0,50,0" Width="auto">
+        <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetailsTransfer" Visibility="Collapsed" Margin="20,0,50,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -400,6 +413,94 @@
                         </Chart:DoughnutSeries>
                     </Chart:RadPieChart>
                     <TextBlock Text="75%" Foreground="#a6a6a6" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0,30,0,0">
+                <Grid VerticalAlignment="Top" Width="auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox />
+                    <TextBlock Text="Remove me after transfer" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                    <CheckBox Grid.Row="1" Margin="0,20,0,0" />
+                    <TextBlock Grid.Row="1" Text="Keep the current priority for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                    <CheckBox Grid.Column="2" />
+                    <TextBlock Grid.Column="2" Text="Keep me attached to this tickets" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                    <CheckBox Grid.Column="2" Grid.Row="1" Margin="0,20,0,0" />
+                    <TextBlock Grid.Column="2" Grid.Row="1" Text="Keep the current level for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="4" Margin="0,30,0,0">
+                <Grid VerticalAlignment="Top" Width="1000">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle HorizontalAlignment="Center" Height="2" Width="950" Margin="0,0,0,30" VerticalAlignment="Stretch" Fill="#FFDADADA" />                    
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0" />
+                        <TextBlock Text="Remove me after transfer" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+                        <ComboBox Grid.Column="1" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#b9b9b9" Padding="10,-3,0,0">
+                            <ComboBoxItem Content="Let the System Choose" IsSelected="True" />
+                        </ComboBox>
+                        <TextBlock Grid.Column="2" Text="(Make Me an Alternate)" FontSize="20" Foreground="#b9b9b9" Margin="0,5,10,0" />
+                        <CheckBox Grid.Column="3" />
+
+                        <CheckBox Grid.Row="2" />
+                        <TextBlock Grid.Row="2" Text="Transfer to Class" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+                        <ComboBox Grid.Column="1" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#b9b9b9" Padding="10,-3,0,0">
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,30,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="100" Margin="0,0,0,30">
+                            <Grid>
+                                <Controls:WatermarkTextBox x:Name="NotesTextbox" AcceptsReturn="True" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" WatermarkText="Notes" TextWrapping="Wrap" Height="auto" FontSize="18" />
+                            </Grid>
+                        </Border>
+                        <Grid Grid.Row="1" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="SaveTransferButton" Width="250" Height="60" Tapped="SaveTransferButton_Tapped" Style="{StaticResource SubmitButtonStyle}" Content="Transfer" Foreground="White" PointerEntered="SaveTransferButton_PointerEntered" PointerExited="SaveTransferButton_PointerExited" FontWeight="Normal" />
+                            <TextBlock Text="or" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="10,0,100,0" VerticalAlignment="Center" Foreground="#85778f" />
+                            <TextBlock x:Name="CancelButton" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="20,3,0,0" VerticalAlignment="Center" Foreground="#85778f" Tapped="CancelTransferButton_Tapped" PointerEntered="CancelTransferButton_PointerEntered" PointerExited="CancelTransferButton_PointerExited">
+                <Underline>
+                   Cancel
+                </Underline>
+                            </TextBlock>
+
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

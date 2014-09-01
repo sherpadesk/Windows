@@ -306,7 +306,7 @@ namespace SherpaDesk
 
         private void CreateUserButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;            
+            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void AddUserLink_Tapped(object sender, TappedRoutedEventArgs e)
@@ -322,6 +322,21 @@ namespace SherpaDesk
         private void AddUserArrow_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ((Image)sender).Opacity = 1;
+        }
+
+        private void CancelButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void CancelButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((TextBlock)sender).Opacity = 0.6;
+        }
+
+        private void CancelButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((TextBlock)sender).Opacity = 1;
         }
     }
 }

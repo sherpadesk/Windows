@@ -128,9 +128,16 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <TextBlock Foreground="#86abb6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,50,30" FontSize="40" Text="New User" FontWeight="Normal"/>
             <Button x:Name="CreateUserButton" Width="280" Height="40" Style="{StaticResource SubmitButtonStyle}" Content="Submit" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="2" Foreground="White" FontWeight="Normal" PointerEntered="CreateUserButton_PointerEntered" PointerExited="CreateUserButton_PointerExited" Tapped="CreateUserButton_Tapped" />
+            <TextBlock Text="or" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" FontSize="24" Margin="0,10,90,0" VerticalAlignment="Center" Foreground="#85778f" />
+            <TextBlock x:Name="CancelButton" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" FontSize="24" Margin="20,10,0,0" VerticalAlignment="Center" Foreground="#85778f" Tapped="CancelButton_Tapped" PointerEntered="CancelButton_PointerEntered" PointerExited="CancelButton_PointerExited">
+                <Underline>
+                   Cancel
+                </Underline>
+            </TextBlock>
             <Grid Grid.Row="1" Margin="20,0,50,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
