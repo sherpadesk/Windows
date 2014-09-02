@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -18,12 +20,14 @@ namespace SherpaDesk
     {
         private string _ticketKey;
         private int _techId;
+        private IList<StorageFile> _attachment = null;
 
         public event EventHandler UpdatePage;
 
         public TicketDetails()
         {
             this.InitializeComponent();
+            _attachment = new List<StorageFile>();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -205,6 +209,33 @@ namespace SherpaDesk
             Windows.UI.Xaml.Visibility.Visible;
 
             GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private async void attachButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+            var files = await openPicker.PickMultipleFilesAsync();
+            _attachment.Clear();
+            if (files != null && files.Count > 0)
+            {
+//                SelectedFilesList.Text = "Picked photos: ";
+                List<string> fileNames = new List<string>();
+                foreach (var file in files)
+                {
+                    fileNames.Add(file.Name);
+                    _attachment.Add(file);
+                }
+//                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+            }
+            else
+            {
+//                SelectedFilesList.Text = string.Empty;
+            }
         }
     }
 }

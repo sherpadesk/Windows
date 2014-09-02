@@ -304,9 +304,29 @@ namespace SherpaDesk
             ((Button)sender).Opacity = 1;
         }
 
-        private void CreateUserButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void CreateUserButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            using (var connector = new Connector())
+            {
+                var resultAddUser = await connector.Func<AddUserRequest, UserResponse>(
+                    x => x.Users, new AddUserRequest
+                    {
+                        LastName = LastNameTextbox.Text,
+                        FirstName = FirstNameTextbox.Text,
+                        Email = EmailTextbox.Text,
+                        AccountId = AccountList.GetSelectedValue<int>(),
+                        LocationId = 0
+                    });
+                if (resultAddUser.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultAddUser);
+                }
+                else
+                {
+                    NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    App.ShowStandartMessage("A user account was created", eErrorType.NoTitle);
+                }
+            }
         }
 
         private void AddUserLink_Tapped(object sender, TappedRoutedEventArgs e)

@@ -150,9 +150,9 @@
                 <TextBlock Text="First Name" FontSize="24" Margin="0,0,0,10" Foreground="#86abb6" />
                 <TextBlock Text="Last Name" Grid.Row="2" Margin="0,0,0,10"  FontSize="24" Foreground="#86abb6" />
                 <TextBlock Text="Email" FontSize="24" Margin="0,0,0,10"  Grid.Row="4" Foreground="#86abb6" />
-                <TextBox Grid.Row="1" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
-                <TextBox Grid.Row="3" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
-                <TextBox Grid.Row="5" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+                <TextBox x:Name="FirstNameTextbox" Grid.Row="1" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+                <TextBox x:Name="LastNameTextbox" Grid.Row="3" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
+                <TextBox x:Name="EmailTextbox" Grid.Row="5" FontSize="18" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,40" BorderBrush="{x:Null}" />
             </Grid>
         </Grid>
     </Grid>

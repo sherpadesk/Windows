@@ -305,7 +305,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Image Source="Assets/Images/attach-button.png" />
+                    <Image x:Name="attachButton" Source="Assets/Images/attach-button.png" Tapped="attachButton_Tapped"  />
                     <Grid x:Name="ReplyGrid" Grid.Column="1" Width="150" Height="60" Background="#FF92C74F" VerticalAlignment="Top" Margin="20,0,0,0" PointerEntered="ReplyGrid_PointerEntered" PointerExited="ReplyGrid_PointerExited">
                         <TextBlock Text="Reply" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20" />
                     </Grid>
@@ -464,7 +464,7 @@
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Row="0" />
-                        <TextBlock Text="Remove me after transfer" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+                        <TextBlock Text="Transfer to Technician" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
                         <ComboBox Grid.Column="1" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#b9b9b9" Padding="10,-3,0,0">
                             <ComboBoxItem Content="Let the System Choose" IsSelected="True" />
                         </ComboBox>

@@ -19,6 +19,9 @@ namespace SherpaDesk.Models
         InternalError,
 
         [Details("Warning")]
-        Warning
+        Warning,
+
+        [Details("")]
+        NoTitle
     }
 }
