@@ -62,7 +62,11 @@ namespace SherpaDesk
             this.Model.DataLoading += UpdatedPage;
             var viewModel = this.DataContext as WorkListPageViewModel;
             viewModel.CommandExecuted += viewModel_CommandExecuted;
+            FullUpdate();
+        }
 
+        public async void FullUpdate()
+        {
             await LoadStatInfo();
             await Load();
         }

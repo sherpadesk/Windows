@@ -37,7 +37,7 @@ namespace SherpaDesk
         }
 
         private async Task LoadPage()
-        {
+        {           
             using (var connector = new Connector())
             {
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
@@ -118,35 +118,92 @@ namespace SherpaDesk
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadPage();
+            using (var connector = new Connector())
+            {
+                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                    x => x.TaskTypes,
+                    new TaskTypeRequest());
+
+                if (resultTaskType.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+            }
+        }
+
+        public async Task PostResponse()
+        {
+            using (var connector = new Connector())
+            {
+                int? postId = null;
+                decimal hours;
+                decimal.TryParse(HoursTextBox.Text, out hours);
+                if (hours > decimal.Zero)
+                {
+                    var resultAddTime = await connector.Action<AddTimeRequest>(
+                        x => x.Time,
+                        new AddTimeRequest
+                        {
+                            TicketKey = _ticketKey,
+                            AccountId = -1,
+                            ProjectId = -1,
+                            TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
+                            TechnicianId = AppSettings.Current.UserId,
+                            Billable = Billable.SelectedIndex == 0 ? true : false,
+                            Hours = hours,
+                            Note = CommentsTextbox.Text,
+                            Date = DateTime.Now
+                        });
+                    if (resultAddTime.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultAddTime);
+                        return;
+                    }
+                }
+                else
+                {
+                    var resultNote = await connector.Func<AddNoteRequest, NoteResponse[]>(x => x.Posts,
+                        new AddNoteRequest
+                        {
+                            TicketKey = _ticketKey,
+                            Note = CommentsTextbox.Text
+                        });
+                    if (resultNote.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultNote);
+                        return;
+                    }
+                    postId = resultNote.Result.First().PostId;
+                }
+
+                if (_attachment.Count > 0)
+                {
+                    using (FileRequest fileRequest = FileRequest.Create(_ticketKey, postId))
+                    {
+                        foreach (var file in _attachment)
+                        {
+                            await fileRequest.Add(file);
+                        }
+                        var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
+                        if (resultUploadFile.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultUploadFile);
+                            return;
+                        }
+                    }
+                }
+                StartTimePicker.Value = EndTimePicker.Value = new DateTime?();
+                HoursTextBox.Text = "0.00";
+                CommentsTextbox.Text = string.Empty;
+                await LoadPage();
+            }
         }
 
         protected async override void UpdatedPage(object sender, EventArgs e)
         {
             await LoadPage();
-        }
-
-        private async void CloseMenu_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (await App.ConfirmMessage())
-            {
-                using (var connector = new Connector())
-                {
-                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                            new CloseTicketRequest(_ticketKey));
-
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                }
-                ((Frame)this.Parent).Navigate(typeof(Empty));
-                if (this.UpdatePage != null)
-                {
-                    this.UpdatePage(this, EventArgs.Empty);
-                }
-                App.ExternalAction(x => x.UpdateInfo());
-            }
         }
 
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
@@ -202,6 +259,25 @@ namespace SherpaDesk
             ((TextBlock)sender).Opacity = 1;
         }
 
+        private void StartTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateHours();
+        }
+
+        private void EndTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateHours();
+        }
+
+        private void CalculateHours()
+        {
+            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
+            {
+                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            }
+        }
+
         private void SaveTransferButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             GridTicketDetails.Visibility =
@@ -223,19 +299,72 @@ namespace SherpaDesk
             _attachment.Clear();
             if (files != null && files.Count > 0)
             {
-//                SelectedFilesList.Text = "Picked photos: ";
+                //                SelectedFilesList.Text = "Picked photos: ";
                 List<string> fileNames = new List<string>();
                 foreach (var file in files)
                 {
                     fileNames.Add(file.Name);
                     _attachment.Add(file);
                 }
-//                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+                //                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
             }
             else
             {
-//                SelectedFilesList.Text = string.Empty;
+                //                SelectedFilesList.Text = string.Empty;
             }
+        }
+
+        private async void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (await App.ConfirmMessage())
+            {
+                using (var connector = new Connector())
+                {
+                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                            new CloseTicketRequest(_ticketKey));
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
+                }
+
+                this.pageRoot.MainPage(page =>
+                {
+                    page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    ((WorkList)page.WorkListFrame.Content).FullUpdate();
+                });
+            }
+        }
+
+        private async void DeleteButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (await App.ConfirmMessage())
+            {
+                using (var connector = new Connector())
+                {
+                    var result = await connector.Action<DeleteRequest>(x => x.Tickets,
+                            new DeleteRequest(_ticketKey));
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
+                }
+
+                this.pageRoot.MainPage(page =>
+                {
+                    page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    ((WorkList)page.WorkListFrame.Content).FullUpdate();
+                });
+            }
+        }
+
+        private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await PostResponse();
         }
     }
 }

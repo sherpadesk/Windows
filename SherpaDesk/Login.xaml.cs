@@ -59,6 +59,7 @@ namespace SherpaDesk
 
                 if (resultLogin.Status != eResponseStatus.Success)
                 {
+                    //                    App.ShowStandartMessage(resultLogin.Message, eErrorType.Warning);
                     this.HandleError(resultLogin);
                     this.StopProgress();
                     return;

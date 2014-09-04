@@ -95,16 +95,16 @@ namespace SherpaDesk.Common
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))
                 {
-                    App.ShowErrorMessage(messageWithoutControl, eErrorType.InvalidInputData);
+                    App.ShowStandartMessage(messageWithoutControl, eErrorType.InvalidInputData);
                 }
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                App.ShowErrorMessage(response, eErrorType.FailedOperation);
+                App.ShowStandartMessage(response.Message, eErrorType.Warning);
             }
             else if (response.Status == eResponseStatus.Error)
             {
-                App.ShowErrorMessage(response, eErrorType.InternalError);
+                App.ShowStandartMessage(response.Message, eErrorType.Warning);
             }
         }
 
