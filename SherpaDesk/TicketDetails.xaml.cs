@@ -37,7 +37,7 @@ namespace SherpaDesk
         }
 
         private async Task LoadPage()
-        {           
+        {
             using (var connector = new Connector())
             {
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
@@ -61,6 +61,32 @@ namespace SherpaDesk
                 SubjectLabelTransfer.Text = ticket.Subject;
                 EndUserLabelTransfer.Text = ticket.UserFullName;
                 СreatedTimeTransfer.Text = ticket.СreatedTimeText;
+
+                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
+                if (resultClasses.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultClasses);
+                    return;
+                }
+                ClassList.FillData(resultClasses.Result.AsEnumerable());
+
+                var resultTechnicians = await connector.Func<UserResponse[]>(x => x.Technicians);
+
+                if (resultTechnicians.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTechnicians);
+                    return;
+                }
+                if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
+                {
+                    TechnicianList.FillData(
+                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                        new NameResponse { Id = -1, Name = "Let the system choose." });
+                }
+                else
+                {
+                    TechnicianList.AutoComplete(x => x.Search(false));
+                }
 
                 var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
 
@@ -299,18 +325,18 @@ namespace SherpaDesk
             _attachment.Clear();
             if (files != null && files.Count > 0)
             {
-                //                SelectedFilesList.Text = "Picked photos: ";
+                SelectedFilesList.Text = "Picked photos: ";
                 List<string> fileNames = new List<string>();
                 foreach (var file in files)
                 {
                     fileNames.Add(file.Name);
                     _attachment.Add(file);
                 }
-                //                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
             }
             else
             {
-                //                SelectedFilesList.Text = string.Empty;
+                SelectedFilesList.Text = string.Empty;
             }
         }
 
@@ -365,6 +391,16 @@ namespace SherpaDesk
         private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await PostResponse();
+        }
+
+        private void ClassCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ClassList.IsEnabled = ClassCheckBox.IsChecked.Value;
+        }
+
+        private void TechnicianCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            TechnicianList.IsEnabled = TechnicianCheckbox.IsChecked.Value;
         }
     }
 }

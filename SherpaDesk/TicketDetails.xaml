@@ -108,7 +108,7 @@
 			Margin="55,30,20,20"
             x:Name="AttachmentsTitle" Visibility="Collapsed"
 			Text="Attachments"                   
-			Style="{StaticResource PageHeaderTextStyle}" />        
+			Style="{StaticResource PageHeaderTextStyle}" />
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -304,9 +304,13 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="attachButton" Source="Assets/Images/attach-button.png" Tapped="attachButton_Tapped"  />
-                    <Grid x:Name="ReplyGrid" Grid.Column="1" Width="150" Height="60" Background="#FF92C74F" VerticalAlignment="Top" Margin="20,0,0,0" PointerEntered="ReplyGrid_PointerEntered" PointerExited="ReplyGrid_PointerExited" Tapped="ReplyGrid_Tapped">
+                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,20,0" ScrollViewer.VerticalScrollMode="Auto" Height="70">
+                        <TextBlock x:Name="SelectedFilesList" FontSize="16" Margin="0,0,10,0" TextWrapping="Wrap" Width="500" />
+                    </ScrollViewer>
+                    <Image Grid.Column="1" x:Name="attachButton" Source="Assets/Images/attach-button.png" Tapped="attachButton_Tapped"  />
+                    <Grid x:Name="ReplyGrid" Grid.Column="2" Width="150" Height="60" Background="#FF92C74F" VerticalAlignment="Top" Margin="20,0,0,0" PointerEntered="ReplyGrid_PointerEntered" PointerExited="ReplyGrid_PointerExited" Tapped="ReplyGrid_Tapped">
                         <TextBlock Text="Reply" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20" />
                     </Grid>
                 </Grid>
@@ -450,7 +454,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Rectangle HorizontalAlignment="Center" Height="2" Width="950" Margin="0,0,0,30" VerticalAlignment="Stretch" Fill="#FFDADADA" />                    
+                    <Rectangle HorizontalAlignment="Center" Height="2" Width="950" Margin="0,0,0,30" VerticalAlignment="Stretch" Fill="#FFDADADA" />
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
@@ -463,17 +467,14 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <CheckBox Grid.Row="0" />
+                        <CheckBox Grid.Row="0" x:Name="TechnicianCheckbox" Unchecked="TechnicianCheckbox_Checked" Checked="TechnicianCheckbox_Checked" />
                         <TextBlock Text="Transfer to Technician" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-                        <ComboBox Grid.Column="1" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#b9b9b9" Padding="10,-3,0,0">
-                            <ComboBoxItem Content="Let the System Choose" IsSelected="True" />
-                        </ComboBox>
+                        <ComboBox Grid.Column="1" IsEnabled="False" MinWidth="243" x:Name="TechnicianList" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" Padding="10,-3,0,0" />
                         <TextBlock Grid.Column="2" Text="(Make Me an Alternate)" FontSize="20" Foreground="#b9b9b9" Margin="0,5,10,0" />
                         <CheckBox Grid.Column="3" />
-
-                        <CheckBox Grid.Row="2" />
+                        <CheckBox x:Name="ClassCheckBox" Grid.Row="2" Unchecked="ClassCheckBox_Checked" Checked="ClassCheckBox_Checked"  />
                         <TextBlock Grid.Row="2" Text="Transfer to Class" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-                        <ComboBox Grid.Column="1" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#b9b9b9" Padding="10,-3,0,0">
+                        <ComboBox Grid.Column="1" x:Name="ClassList" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" IsEnabled="False" Padding="10,-3,0,0">
                         </ComboBox>
                     </Grid>
                     <Grid Grid.Row="2" Margin="0,30,0,0">
