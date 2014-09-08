@@ -88,6 +88,12 @@ namespace SherpaDesk.Models.Response
         [DataMember(Name = "tech_id"), Details]
         public int? TechnicianId { get; set; }
 
+        [DataMember(Name = "total_hours"), Details]
+        public decimal? TotalHours { get; set; }
+
+        [DataMember(Name = "estimated_time"), Details]
+        public decimal? EstimatedTime { get; set; }
+
         [OnDeserialized]
         protected void OnDeserialized(StreamingContext context)
         {

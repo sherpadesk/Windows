@@ -230,8 +230,8 @@
                             </Chart:DoughnutSeries.ValueBinding>
                         </Chart:DoughnutSeries>
                     </Chart:RadPieChart>
-                    <TextBlock Text="75%" Foreground="#a6a6a6" FontSize="30" HorizontalAlignment="Center" Margin="0,-20,0,0" VerticalAlignment="Center" />
-                    <TextBlock Text="Complete" Foreground="#c1c1c1" FontSize="18" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="PercentageCompleteLabel" Foreground="#a6a6a6" FontSize="30" HorizontalAlignment="Center" Margin="0,-20,0,0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="CompleteLabel" Text="Complete" Foreground="#c1c1c1" FontSize="18" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Center" />
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Margin="0,30,0,0" Width="1000" HorizontalAlignment="Left">
@@ -416,7 +416,7 @@
                             </Chart:DoughnutSeries.ValueBinding>
                         </Chart:DoughnutSeries>
                     </Chart:RadPieChart>
-                    <TextBlock Text="75%" Foreground="#a6a6a6" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="PercentageCompleteTransferLabel" Foreground="#a6a6a6" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" />
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Margin="0,30,0,0">

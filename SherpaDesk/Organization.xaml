@@ -7,9 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xtk="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
-    <Grid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="#FF004174">
-
-        <Grid Style="{StaticResource LayoutRootStyle}" Background="#FF004174" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="660">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Canvas.ZIndex="1000" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
+        </StackPanel>
+        <Image VerticalAlignment="Stretch" Grid.Column="1" Canvas.ZIndex="-1" Source="Assets/Images/login-background.png" Stretch="UniformToFill"/>
+        <Grid Style="{StaticResource LayoutRootStyle}" Margin="0,70,0,0" Background="Transparent" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -19,18 +22,31 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Image Height="219" Grid.Row="0" VerticalAlignment="Top" Width="705" Source="Assets/StoreLogo.png" />
-            <TextBlock VerticalAlignment="Bottom" FontSize="40" Grid.Row="1" Margin="45,10,0,0" Text="Select Organization"/>
-            <ComboBox Name="OrganizationList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="2" VerticalAlignment="Top" FontSize="36" Width="619" SelectionChanged="OrganizationList_SelectionChanged"/>
-            <TextBlock Name="InstanceListText" VerticalAlignment="Bottom" FontSize="40" Grid.Row="3" Margin="45,10,0,0" Text="Select Instance"/>
-            <ComboBox Name="InstanceList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="4" VerticalAlignment="Top" FontSize="36" Width="619"/>
-            <Button x:Name="SelectOrgButton" Content="Continue" HorizontalAlignment="Center" Grid.Row="5" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" Click="SelectOrgButton_Click" FontSize="36" Background="#FF57AE57" />
-            <Button x:Name="LogoffButton" Content="Logoff" HorizontalAlignment="Center" Grid.Row="6" Margin="0,10,0,0" VerticalAlignment="Center" Width="625" Height="66" FontSize="36" Background="Gray" Click="LogoffButton_Click" />
+
+            <Grid Height="100" Grid.Row="1" Margin="0,200,0,0">
+                <ComboBox Name="OrganizationList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="2" VerticalAlignment="Top" FontSize="36" Width="619" SelectionChanged="OrganizationList_SelectionChanged"/>
+            </Grid>
+            <Grid Height="100" Grid.Row="2" Margin="0,20,0,0">
+                <ComboBox Name="InstanceList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="4" VerticalAlignment="Top" FontSize="36" Width="619"/>
+            </Grid>
+            <Button x:Name="SelectOrgButton" Content="Continue" Grid.Row="3" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited" Tapped="SelectOrgButton_Tapped">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="15" Background="White" BorderBrush="#ccc" BorderThickness="0,1,1,0" >
+                                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="LogoffButton" Grid.Row="4" BorderThickness="0" Content="or logoff" Tapped="LogoffButton_Click" Margin="0,20,0,0" FontWeight="Normal" Foreground="White" Padding="0,8,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited" />
         </Grid>
-        <HyperlinkButton Content="http://app.sherpadesk.com" NavigateUri="http://app.sherpadesk.com" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" Margin="659,190,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Popup/>
     </Grid>
 </Page>

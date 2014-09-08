@@ -70,7 +70,28 @@ namespace SherpaDesk
             OrganizationList.SelectedIndex = 0;
         }
 
-        private void SelectOrgButton_Click(object sender, RoutedEventArgs e)
+        private void OrganizationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var orgKey = OrganizationList.GetSelectedValue<string>();
+            if (!string.IsNullOrEmpty(orgKey))
+            {
+                var org = _organizationList.FirstOrDefault(x => x.Key == orgKey);
+                if (org != null)
+                {
+                    _instanceList = org.Instances.ToList();
+                    InstanceList.FillData(_instanceList);
+                    InstanceList.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void LogoffButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppSettings.Current.Clear();
+            this.Frame.Navigate(typeof(Login));
+        }
+
+        private void SelectOrgButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             var orgKey = OrganizationList.GetSelectedValue<string>();
             if (!string.IsNullOrEmpty(orgKey))
@@ -112,35 +133,24 @@ namespace SherpaDesk
             }
         }
 
-        private void OrganizationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SignInButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            var orgKey = OrganizationList.GetSelectedValue<string>();
-            if (!string.IsNullOrEmpty(orgKey))
-            {
-                var org = _organizationList.FirstOrDefault(x => x.Key == orgKey);
-                if (org != null)
-                {
-                    _instanceList = org.Instances.ToList();
-                    if (_instanceList.Count > 1)
-                    {
-                        InstanceListText.Visibility = InstanceList.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                        InstanceList.FillData(_instanceList);
-                        InstanceList.SelectedIndex = 0;
-                    }
-                    else
-                    {
-                        InstanceListText.Visibility = InstanceList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    }
-                }
-            }
+            ((Button)sender).Opacity = 0.9;
         }
 
-        private void LogoffButton_Click(object sender, RoutedEventArgs e)
+        private void SignInButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            AppSettings.Current.Clear();
-            this.Frame.Navigate(typeof(Login));
+            ((Button)sender).Opacity = 1;
         }
 
+        private void RegisterButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 0.9;
+        }
 
+        private void RegisterButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ((Button)sender).Opacity = 1;
+        }
     }
 }

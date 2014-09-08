@@ -49,6 +49,23 @@ namespace SherpaDesk
                 }
                 var ticket = resultTicket.Result;
 
+                if (ticket.EstimatedTime.HasValue && ticket.EstimatedTime.Value > 0 && ticket.TotalHours.HasValue)
+                {
+                    var percentageComplete = Math.Round(100 * ticket.TotalHours.Value / ticket.EstimatedTime.Value);
+                    var chartData = new List<ChartDataModel>();
+                    chartData.Add(new ChartDataModel { Value = Convert.ToDouble(100 - percentageComplete) });
+                    chartData.Add(new ChartDataModel { Value = Convert.ToDouble(percentageComplete) });
+                    detailsChart.Series[0].ItemsSource = chartData;
+                    detailsChartTransfer.Series[0].ItemsSource = chartData;
+                    PercentageCompleteTransferLabel.Text = PercentageCompleteLabel.Text = string.Format("{0}%", percentageComplete.ToString());
+                    CompleteLabel.Visibility = detailsChart.Visibility = detailsChartTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    CompleteLabel.Visibility = detailsChart.Visibility = detailsChartTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    PercentageCompleteTransferLabel.Text = PercentageCompleteLabel.Text = string.Empty;
+                }
+
                 _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
 
                 TicketNumber.Text = ticket.TicketNumber.ToString();
@@ -116,11 +133,6 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
-                var chartData = new List<ChartDataModel>();
-                chartData.Add(new ChartDataModel { Value = 25 });
-                chartData.Add(new ChartDataModel { Value = 75 });
-                detailsChart.Series[0].ItemsSource = chartData;
-                detailsChartTransfer.Series[0].ItemsSource = chartData;
                 ChartGridTransfer.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 ChartGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
