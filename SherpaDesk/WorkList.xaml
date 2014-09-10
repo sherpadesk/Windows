@@ -13,11 +13,12 @@
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"    
     xmlns:primitivesCommon="using:Telerik.UI.Xaml.Controls.Primitives.Common"
     xmlns:telerikPrimitives="using:Telerik.UI.Xaml.Controls.Primitives"
-    xmlns:telerikPagination="using:Telerik.UI.Xaml.Controls.Primitives.Pagination"    
+    xmlns:telerikPagination="using:Telerik.UI.Xaml.Controls.Primitives.Pagination"
+    xmlns:viewModels="using:SherpaDesk.Models.ViewModels"
     mc:Ignorable="d" Loaded="pageRoot_Loaded" Margin="0,-1,0,1">
 
     <Page.Resources>
-        <model:WorkListViewModel x:Key="Model" x:Name="Model" />
+        <viewModels:WorkListViewModel x:Key="Model" x:Name="Model" />
         <Style x:Key="WorkListPaging" TargetType="Grid" />
 
         <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
@@ -92,7 +93,7 @@
         </Style>
     </Page.Resources>
     <Page.DataContext>
-        <local:WorkListPageViewModel/>
+        <viewModels:WorkListPageViewModel/>
     </Page.DataContext>
     <!--
         This grid acts as a root panel for the page that defines two rows:

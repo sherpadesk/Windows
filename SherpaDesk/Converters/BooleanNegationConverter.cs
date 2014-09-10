@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Converters
 {
     /// <summary>
     /// Value converter that translates true to false and vice versa.

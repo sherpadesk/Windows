@@ -1,6 +1,7 @@
 ﻿using SherpaDesk.Common;
 using System;
 using System.Runtime.Serialization;
+using SherpaDesk.Extensions;
 
 namespace SherpaDesk.Models.Response
 {

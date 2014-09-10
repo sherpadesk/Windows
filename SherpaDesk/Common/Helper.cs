@@ -1,13 +1,13 @@
-﻿using SherpaDesk.Models.Request;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
 using Windows.UI;
+using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Common
 {
@@ -15,8 +15,8 @@ namespace SherpaDesk.Common
     {
         public static Color HexStringToColor(string hexColor)
         {
-            Color color = new Color();
-            string hc = ExtractHexDigits(hexColor);
+            var color = new Color();
+            var hc = ExtractHexDigits(hexColor);
             if (hc.Length != 8)
             {
                 return color;
@@ -47,36 +47,25 @@ namespace SherpaDesk.Common
             // remove any characters that are not digits (like #)
             var isHexDigit
                 = new Regex("[abcdefABCDEF\\d]+");
-            string newnum = "";
-            foreach (char c in input)
-            {
-                if (isHexDigit.IsMatch(c.ToString()))
-                {
-                    newnum += c.ToString();
-                }
-            }
-            return newnum;
+            return input.Where(c => isHexDigit.IsMatch(c.ToString())).Aggregate("", (current, c) => current + c.ToString());
         }
 
         public static string GetMD5(string str)
         {
-            string dataHash = string.Empty;
-            string hashType = "MD5";
+            const string hashType = "MD5";
             try
             {
-                HashAlgorithmProvider Algorithm = HashAlgorithmProvider.OpenAlgorithm(hashType);
-                IBuffer vector = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
-                IBuffer digest = Algorithm.HashData(vector);
+                var Algorithm = HashAlgorithmProvider.OpenAlgorithm(hashType);
+                var vector = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+                var digest = Algorithm.HashData(vector);
                 if (digest.Length != Algorithm.HashLength)
                 {
-                    throw new System.InvalidOperationException(
+                    throw new InvalidOperationException(
                       "HashAlgorithmProvider failed to generate a hash of proper length!");
                 }
-                else
-                {
-                    dataHash = CryptographicBuffer.EncodeToHexString(digest);//Encoding it to a Hex String 
-                    return dataHash;
-                }
+                string dataHash = CryptographicBuffer.EncodeToHexString(digest);
+                return dataHash;
+
             }
             catch
             {
@@ -88,54 +77,45 @@ namespace SherpaDesk.Common
         {
             if (string.IsNullOrWhiteSpace(firstName + lastName))
                 return email;
-            else if (!withEmail)
-                return string.Format("{1}, {0}", firstName, lastName).Trim(',');
-            else
-                return string.Format("{1}, {0} ({2})", firstName, lastName, email);
+            return !withEmail ? string.Format("{1}, {0}", firstName, lastName).Trim(',') : string.Format("{1}, {0} ({2})", firstName, lastName, email);
         }
 
         public static string GetUrlParams<TRequest>(TRequest request) where TRequest : IRequestType
         {
-            string result = string.Empty;
+            var result = string.Empty;
 
-            if (!request.IsEmpty)
+            if (request.IsEmpty) return result;
+            var type = typeof(TRequest);
+
+            foreach (var method in from method in type.GetRuntimeMethods() 
+                                   let onSerializing = method.GetCustomAttribute<OnSerializingAttribute>() 
+                                   where onSerializing != null 
+                                   select method)
             {
-                var type = typeof(TRequest);
-                foreach (var method in type.GetRuntimeMethods())
-                {
-                    var onSerializing = method.GetCustomAttribute<OnSerializingAttribute>();
-                    if (onSerializing != null)
-                    {
-                        method.Invoke(request, new object[1] { null });
-                    }
-                }
-                foreach (var prop in type.GetRuntimeProperties())
-                {
-                    var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
-                    if (dataMember != null)
-                    {
-                        object val = prop.GetValue(request);
-                        if (!IsDefault(val, prop.PropertyType))
-                        {
-                            result += string.Format("{0}={1}&", dataMember.Name, val);
-                        }
-                    }
-                }
-                foreach (var field in type.GetRuntimeFields())
-                {
-                    var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
-                    if (dataMember != null)
-                    {
-                        object val = field.GetValue(request);
-                        if (!IsDefault(val, field.FieldType))
-                        {
-                            result += string.Format("{0}={1}&", dataMember.Name, val);
-                        }
-                    }
-                }
-                if (!string.IsNullOrEmpty(result))
-                    result = "?" + result.TrimEnd('&');
+                method.Invoke(request, new object[] { null });
             }
+            foreach (var prop in type.GetRuntimeProperties())
+            {
+                var dataMember = prop.GetCustomAttribute<DataMemberAttribute>();
+                if (dataMember == null) continue;
+                var val = prop.GetValue(request);
+                if (!IsDefault(val, prop.PropertyType))
+                {
+                    result += string.Format("{0}={1}&", dataMember.Name, val);
+                }
+            }
+            foreach (var field in type.GetRuntimeFields())
+            {
+                var dataMember = field.GetCustomAttribute<DataMemberAttribute>();
+                if (dataMember == null) continue;
+                var val = field.GetValue(request);
+                if (!IsDefault(val, field.FieldType))
+                {
+                    result += string.Format("{0}={1}&", dataMember.Name, val);
+                }
+            }
+            if (!string.IsNullOrEmpty(result))
+                result = "?" + result.TrimEnd('&');
             return result;
         }
 
@@ -149,18 +129,15 @@ namespace SherpaDesk.Common
 
             if (type.ContainsGenericParameters) return false;
 
-            if (type.IsPrimitive || !type.IsNotPublic)
+            if (!type.IsPrimitive && type.IsNotPublic) return false;
+            try
             {
-                try
-                {
-                    return Activator.CreateInstance(objectType).Equals(objectValue);
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                return Activator.CreateInstance(objectType).Equals(objectValue);
             }
-            else return false;
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public static string HtmlToString(string html)

@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Extensions;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using SherpaDesk.Models.ViewModels;
 
 namespace SherpaDesk
 {

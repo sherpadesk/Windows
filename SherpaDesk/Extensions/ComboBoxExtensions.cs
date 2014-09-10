@@ -1,16 +1,17 @@
-﻿using SherpaDesk.Models;
-using SherpaDesk.Models.Request;
-using SherpaDesk.Models.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using SherpaDesk.Common;
+using SherpaDesk.Interfaces;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
+using Telerik.UI.Xaml.Controls.Input;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Extensions
 {
     public static class ComboBoxExtensions
     {
@@ -29,9 +30,9 @@ namespace SherpaDesk.Common
                 Watermark = "Search",
                 Width = comboBox.ActualWidth,
                 Height = comboBox.ActualHeight,
-                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Left,
                 FontSize = 18,
-                FilterComparisonMode = System.StringComparison.CurrentCultureIgnoreCase,
+                FilterComparisonMode = StringComparison.CurrentCultureIgnoreCase,
                 FilterMode = AutoCompleteBoxFilterMode.Contains,
                 FilterDelay = TimeSpan.FromSeconds(1),
                 FilterStartThreshold = 2,
@@ -39,14 +40,16 @@ namespace SherpaDesk.Common
                 BorderBrush = comboBox.BorderBrush,
                 AutosuggestFirstItem = false,
                 CompositeMode = Windows.UI.Xaml.Media.ElementCompositeMode.SourceOver,
-                Visibility = Visibility.Visible
+                Visibility = Visibility.Visible,
+                ItemTemplate =
+                    (DataTemplate)
+                        ((ResourceDictionary)Application.Current.Resources["CommonResources"])["AutoCompleteItemTemplate"]
             };
-            searchBox.ItemTemplate = (DataTemplate)((ResourceDictionary)App.Current.Resources["CommonResources"])["AutoCompleteItemTemplate"];
-            searchBox.TextChanged += async (object obj, TextChangedEventArgs args) =>
+            searchBox.TextChanged += async (obj, args) =>
                 {
                     await searchFunc((RadAutoCompleteBox)obj);
                 };
-            searchBox.SelectionChanged += (object sender, SelectionChangedEventArgs e) =>
+            searchBox.SelectionChanged += (sender, e) =>
                 {
                     var tb = e.AddedItems.FirstOrDefault() as IKeyName;
                     if (tb != null)
@@ -82,7 +85,7 @@ namespace SherpaDesk.Common
                 if (searchBox.Text.Trim().Length > 2)
                 {
                     var result = await connector.Func<SearchRequest, UserResponse[]>(x => tech ? x.Technicians : x.Users,
-                        tech ? ((SearchRequest)new TechniciansRequest() { Query = searchBox.Text }) : new UserSearchRequest { Query = searchBox.Text });
+                        tech ? ((SearchRequest)new TechniciansRequest { Query = searchBox.Text }) : new UserSearchRequest { Query = searchBox.Text });
 
                     if (result.Status != eResponseStatus.Success)
                     {
@@ -98,18 +101,10 @@ namespace SherpaDesk.Common
 
         public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
         {
-            comboBox.Items.Clear();
-            foreach (var kv in args)
+            if (comboBox.Items != null)
             {
-                comboBox.Items.Add(new ComboBoxItem
-                {
-                    Tag = kv.Key,
-                    Content = kv.Name
-                });
-            }
-            foreach (var kv in list)
-            {
-                if (!args.Any(x => x.Key == kv.Key))
+                comboBox.Items.Clear();
+                foreach (var kv in args)
                 {
                     comboBox.Items.Add(new ComboBoxItem
                     {
@@ -117,14 +112,25 @@ namespace SherpaDesk.Common
                         Content = kv.Name
                     });
                 }
-            }
-            if (comboBox.Items.Count == 0)
-            {
-                comboBox.Items.Add(new ComboBoxItem
+                foreach (var kv in list)
                 {
-                    Tag = 0,
-                    Content = NONE
-                });
+                    if (args.All(x => x.Key != kv.Key))
+                    {
+                        comboBox.Items.Add(new ComboBoxItem
+                        {
+                            Tag = kv.Key,
+                            Content = kv.Name
+                        });
+                    }
+                }
+                if (comboBox.Items.Count == 0)
+                {
+                    comboBox.Items.Add(new ComboBoxItem
+                    {
+                        Tag = 0,
+                        Content = NONE
+                    });
+                }
             }
             comboBox.SelectedIndex = 0;
         }
@@ -133,44 +139,42 @@ namespace SherpaDesk.Common
         {
             if (comboBox.Visibility == Visibility.Visible)
             {
-                if (comboBox.SelectedIndex > -1)
-                {
-                    var item = comboBox.Items[comboBox.SelectedIndex];
-                    if (item is ComboBoxItem)
-                    {
-                        return (T)((ComboBoxItem)item).Tag;
-                    }
-                }
+                if (comboBox.SelectedIndex <= -1) return defaultValue;
+
+                if (comboBox.Items == null) return defaultValue;
+
+                var item = comboBox.Items[comboBox.SelectedIndex];
+
+                var comboBoxItem = item as ComboBoxItem;
+
+                return comboBoxItem != null ? (T)comboBoxItem.Tag : defaultValue;
             }
-            else
-            {
-                var textBox = comboBox.ParentGrid().FindName(comboBox.Name + "_Text") as RadAutoCompleteBox;
-                if (textBox != null && textBox.Tag != null)
-                {
-                    return (T)textBox.Tag;
-                }
-            }
-            return defaultValue;
+
+            var textBox = comboBox.ParentGrid().FindName(comboBox.Name + "_Text") as RadAutoCompleteBox;
+
+            return textBox != null && textBox.Tag != null ? (T)textBox.Tag : defaultValue;
         }
 
         public static string GetSelectedText(this ComboBox comboBox)
         {
-            if (comboBox.SelectedIndex > -1)
-            {
-                var item = comboBox.Items[comboBox.SelectedIndex];
-                if (item is ComboBoxItem)
-                {
-                    return (string)((ComboBoxItem)item).Content;
-                }
-            }
-            return string.Empty;
+            if (comboBox.SelectedIndex <= -1) return string.Empty;
+
+            if (comboBox.Items == null) return string.Empty;
+
+            var item = comboBox.Items[comboBox.SelectedIndex];
+
+            var comboBoxItem = item as ComboBoxItem;
+
+            return comboBoxItem != null ? (string)comboBoxItem.Content : string.Empty;
         }
 
         public static void SetSelectedValue(this ComboBox comboBox, object value)
         {
-            if (value == null)
-                return;
-            int index = 0;
+            if (value == null) return;
+            var index = 0;
+
+            if (comboBox.Items == null) return;
+
             foreach (var item in comboBox.Items)
             {
                 if (item is ComboBoxItem && value.Equals(((ComboBoxItem)item).Tag))
@@ -184,22 +188,25 @@ namespace SherpaDesk.Common
 
         public static void SetDefaultValue(this ComboBox comboBox)
         {
-            comboBox.SelectedIndex = comboBox.Items.Count > 0 ? 0 : -1;
+            if (comboBox != null) comboBox.SelectedIndex = comboBox.Items != null && comboBox.Items.Count > 0 ? 0 : -1;
         }
+
         public static void SetSelectedValueByName(this ComboBox comboBox, object value)
         {
-            if (value == null)
-                return;
-            int index = 0;
-            foreach (var item in comboBox.Items)
-            {
-                if (item is ComboBoxItem && value.Equals(((ComboBoxItem)item).Content))
+            if (value == null) return;
+
+            var index = 0;
+
+            if (comboBox.Items != null)
+                foreach (var item in comboBox.Items)
                 {
-                    comboBox.SelectedIndex = index;
-                    return;
+                    if (item is ComboBoxItem && value.Equals(((ComboBoxItem)item).Content))
+                    {
+                        comboBox.SelectedIndex = index;
+                        return;
+                    }
+                    index++;
                 }
-                index++;
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using SherpaDesk.Models;
-using System.Net.Http;
+﻿using System.Net.Http;
+using SherpaDesk.Models;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Interfaces
 {
     public interface IRequestType
     {

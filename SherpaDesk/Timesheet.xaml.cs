@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Extensions;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using SherpaDesk.Models.ViewModels;
 using Telerik.UI.Xaml.Controls.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

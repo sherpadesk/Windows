@@ -1,13 +1,11 @@
-﻿using SherpaDesk.Models.Response;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Telerik.UI.Xaml.Controls.Input;
+using System.Linq;
 using Windows.UI.Xaml;
+using SherpaDesk.Models.Response;
 
-namespace SherpaDesk.Models
+namespace SherpaDesk.Models.ViewModels
 {
     public class TimesheetViewModel : INotifyPropertyChanged
     {

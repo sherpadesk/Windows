@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -28,9 +27,9 @@ namespace SherpaDesk.Models
 
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
-            var type = this.GetType();
+            var type = GetType();
 
             result.AppendFormat(TEMPLATE_START_TEXT, type.Name, Environment.NewLine);
 
@@ -48,21 +47,17 @@ namespace SherpaDesk.Models
                 }
                 else
                 {
-                    if (!prop.PropertyType.Equals(typeof(string))
+                    if (prop.PropertyType != typeof(string)
                         && (prop.PropertyType.IsArray
-                        || prop.PropertyType.GetTypeInfo().ImplementedInterfaces.Any(i => typeof(IEnumerable).Equals(i))))
+                        || prop.PropertyType.GetTypeInfo().ImplementedInterfaces.Any(i => typeof(IEnumerable) == i)))
                     {
-                        IEnumerable list = prop.GetValue(this, null) as IEnumerable;
+                        var list = prop.GetValue(this, null) as IEnumerable;
 
                         if (list != null)
                         {
-                            IList<string> parameters = new List<string>();
-                            foreach (object obj in list)
-                            {
-                                parameters.Add(
-                                    string.Format(TEMPLATE_ARRAY_ITEM_TEXT,
-                                        obj != null ? obj.ToString() : NULL));
-                            }
+                            var parameters = (from object obj in list 
+                                                            select string.Format(TEMPLATE_ARRAY_ITEM_TEXT, obj != null ? obj.ToString() : NULL))
+                                                        .ToList();
                             result.AppendFormat(TEMPLATE_PROPERTY_TEXT,
                                prop.Name,
                                string.Concat(
@@ -114,7 +109,7 @@ namespace SherpaDesk.Models
         }
         public DetailsAttribute(string text)
         {
-            this.Text = text;
+            Text = text;
 
         }
     }

@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Models.Request
 {

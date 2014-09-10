@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SherpaDesk.Common
 {
@@ -12,13 +8,10 @@ namespace SherpaDesk.Common
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is Int32)
-                if ((int)value == 0)
-                    return new ValidationResult(this.ErrorMessage);
-                else
-                    return ValidationResult.Success;
-            else
+            if (!(value is Int32)) 
                 return base.IsValid(value, validationContext);
+            
+            return (int)value == 0 ? new ValidationResult(ErrorMessage) : ValidationResult.Success;
         }
     }
 }

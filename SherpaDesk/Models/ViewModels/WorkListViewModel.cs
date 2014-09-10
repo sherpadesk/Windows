@@ -1,18 +1,15 @@
-﻿using SherpaDesk.Common;
-using SherpaDesk.Models.Request;
-using SherpaDesk.Models.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
+using SherpaDesk.Models.Request;
+using SherpaDesk.Models.Response;
 
-namespace SherpaDesk.Models
+namespace SherpaDesk.Models.ViewModels
 {
     public class WorkListViewData : ObservableCollection<TicketSearchResponse>, ISupportIncrementalLoading
     {
@@ -106,7 +103,7 @@ namespace SherpaDesk.Models
         {
             get
             {
-                return _data != null ? _data.Count >= SearchRequest.DEFAULT_PAGE_COUNT : false;
+                return _data != null && _data.Count >= SearchRequest.DEFAULT_PAGE_COUNT;
             }
         }
 
@@ -143,18 +140,18 @@ namespace SherpaDesk.Models
 
         public void SelectAll(bool @checked)
         {
-            for (var i = 0; i < _data.Count; i++)
+            foreach (TicketSearchResponse item in _data)
             {
-                _data[i].IsChecked = @checked;
+                item.IsChecked = @checked;
             }
         }
 
         public void SelectOne(bool @checked, int ticketId)
         {
-            for (var i = 0; i < _data.Count; i++)
+            foreach (TicketSearchResponse item in _data)
             {
-                if (_data[i].TicketId == ticketId)
-                    _data[i].IsChecked = @checked;
+                if (item.TicketId == ticketId)
+                    item.IsChecked = @checked;
             }
         }
     }

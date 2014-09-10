@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace SherpaDesk.Models
+namespace SherpaDesk.Models.ViewModels
 {
     public class CalendarCell : INotifyPropertyChanged
     {

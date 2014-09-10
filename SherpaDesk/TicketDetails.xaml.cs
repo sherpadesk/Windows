@@ -1,4 +1,6 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Extensions;
+using SherpaDesk.Interfaces;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
@@ -13,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using SherpaDesk.Models.ViewModels;
 
 namespace SherpaDesk
 {

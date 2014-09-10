@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Extensions
 {
     public static class UIElementExtensions
     {
@@ -10,18 +10,19 @@ namespace SherpaDesk.Common
         {
             if (element.Parent == null)
                 return null;
-            if (element.Parent is Grid)
-                return (Grid)element.Parent;
-            else
-                return element.ParentGrid();
+            var grid = element.Parent as Grid;
+            if (grid != null)
+                return grid;
+            return element.ParentGrid();
         }
 
         public static void MainPage(this FrameworkElement element, Action<MainPage> found)
         {
             if (element == null)
                 return;
-            if (element is MainPage)
-                found((MainPage)element);
+            var page = element as MainPage;
+            if (page != null)
+                found(page);
             else
                 (element.Parent as FrameworkElement).MainPage(found);
         }

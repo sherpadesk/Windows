@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Models.Request
 {

@@ -10,10 +10,7 @@
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:Input="using:Telerik.UI.Xaml.Controls.Input"
-    xmlns:localDateTime="using:Telerik.UI.Xaml.Controls.Input.DateTimePickers"    
-    >
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Non-brush values that vary across themes -->
 
@@ -41,7 +38,7 @@
                         <Border x:Name="Border" BorderBrush="#FFDEDEDE" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="5" Opacity="1">
                             <Grid>
                                 <Border x:Name="MouseOverBorder" BorderBrush="Transparent" BorderThickness="1">
-                                    <ScrollViewer x:Name="ContentElement" BorderThickness="0" IsTabStop="False" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Padding="{TemplateBinding Padding}"/>
+                                    <ScrollViewer x:Name="ContentElement" BorderThickness="0" IsTabStop="False" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Padding="{TemplateBinding Padding}"/>
                                 </Border>
                             </Grid>
                         </Border>
@@ -469,8 +466,7 @@
 								TextAlignment="Center"
 								Width="88"
 								MaxHeight="32"
-								TextTrimming="WordEllipsis"
-								Style="{StaticResource BasicTextStyle}"/>
+                                Style="{StaticResource BasicTextStyle}"/>
                         </StackPanel>
                         <Rectangle
 							x:Name="FocusVisualWhite"
@@ -899,17 +895,17 @@
     <Style x:Key="HorizontalScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
-        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled" />
-        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
-        <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+        <Setter Property="HorizontalScrollMode" Value="Enabled" />
+        <Setter Property="VerticalScrollMode" Value="Disabled" />
+        <Setter Property="ZoomMode" Value="Disabled" />
     </Style>
 
     <Style x:Key="VerticalScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
-        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
-        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
-        <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+        <Setter Property="HorizontalScrollMode" Value="Disabled" />
+        <Setter Property="VerticalScrollMode" Value="Enabled" />
+        <Setter Property="ZoomMode" Value="Disabled" />
     </Style>
 
     <Style x:Key="ListViewScrollViewerStyle" TargetType="ListView">
@@ -1055,15 +1051,20 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource ComboBoxHeaderForegroundThemeBrush}" FontWeight="{ThemeResource ComboBoxHeaderThemeFontWeight}" FlowDirection="{TemplateBinding FlowDirection}" Margin="{ThemeResource ComboBoxHeaderThemeMargin}" Visibility="Collapsed"/>
-                        <Border x:Name="Background" BorderBrush="#e1e1e1" CornerRadius="5" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.Row="1"/>
-                        <Rectangle x:Name="PressedBackground" Fill="{ThemeResource ComboBoxPressedHighlightThemeBrush}" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1"/>
-                        <Border x:Name="HighlightBackground" BorderBrush="{ThemeResource ComboBoxFocusedBorderThemeBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{ThemeResource ComboBoxFocusedBackgroundThemeBrush}" Grid.ColumnSpan="2" Opacity="0" Grid.Row="1"/>
-                        <Rectangle x:Name="Highlight" Fill="{ThemeResource ComboBoxSelectedBackgroundThemeBrush}" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1"/>
-                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <Border x:Name="Background" BorderBrush="#e1e1e1" CornerRadius="5" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2"
+                                Grid.Column="0" Grid.Row="1"/>
+                        <Rectangle x:Name="PressedBackground" Fill="{ThemeResource ComboBoxPressedHighlightThemeBrush}" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1"
+                                   Grid.Column="0" />
+                        <Border x:Name="HighlightBackground" BorderBrush="{ThemeResource ComboBoxFocusedBorderThemeBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{ThemeResource ComboBoxFocusedBackgroundThemeBrush}" Grid.ColumnSpan="2"
+                                Grid.Column="0" Opacity="0" Grid.Row="1"/>
+                        <Rectangle x:Name="Highlight" Fill="{ThemeResource ComboBoxSelectedBackgroundThemeBrush}" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1"
+                                   Grid.Column="0" />
+                        <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1"
+                                          Grid.Column="0" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <TextBlock x:Name="PlaceholderTextBlock" Foreground="{ThemeResource ComboBoxPlaceholderTextForegroundThemeBrush}" FontWeight="{ThemeResource ComboBoxPlaceholderTextThemeFontWeight}" Text="{TemplateBinding PlaceholderText}"/>
                         </ContentPresenter>
                         <TextBlock x:Name="DropDownGlyph" AutomationProperties.AccessibilityView="Raw" Grid.Column="1" Foreground="{ThemeResource ComboBoxArrowForegroundThemeBrush}" FontWeight="Bold" FontSize="{ThemeResource ComboBoxArrowThemeFontSize}" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="0,0,6,4" Grid.Row="1" Text="&#xE011;" VerticalAlignment="Center"/>
-                        <Popup x:Name="Popup">
+                        <Popup Grid.Row="0" Grid.Column="0" x:Name="Popup">
                             <Border x:Name="PopupBorder" BorderBrush="#FFDEDEDE" CornerRadius="5" BorderThickness="1" Background="{ThemeResource ComboBoxPopupBackgroundThemeBrush}" HorizontalAlignment="Stretch">
                                 <ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" Foreground="{ThemeResource ComboBoxPopupForegroundThemeBrush}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" MinWidth="{ThemeResource ComboBoxPopupThemeMinWidth}" VerticalSnapPointsType="OptionalSingle" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" VerticalSnapPointsAlignment="Near" ZoomMode="Disabled">
                                     <ItemsPresenter/>

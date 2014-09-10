@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Models.Request
 {

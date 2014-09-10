@@ -1,6 +1,7 @@
 ﻿using SherpaDesk.Common;
 using System.Net.Http;
 using System.Runtime.Serialization;
+using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Models.Request
 {

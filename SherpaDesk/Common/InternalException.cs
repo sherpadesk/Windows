@@ -1,4 +1,5 @@
-﻿using SherpaDesk.Models;
+﻿using SherpaDesk.Extensions;
+using SherpaDesk.Models;
 using System;
 
 namespace SherpaDesk.Common
@@ -10,7 +11,7 @@ namespace SherpaDesk.Common
         public InternalException(string message, eErrorType title)
             : base(message)
         {
-            this.Title = title.Details();
+            Title = title.Details();
         }
     }
 }

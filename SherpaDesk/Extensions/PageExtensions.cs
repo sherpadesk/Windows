@@ -1,19 +1,14 @@
-﻿using SherpaDesk.Models;
-using SherpaDesk.Models.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using SherpaDesk.Common;
+using SherpaDesk.Models;
+using SherpaDesk.Models.Response;
 
-
-namespace SherpaDesk.Common
+namespace SherpaDesk.Extensions
 {
     public static class PageExtensions
     {
@@ -46,24 +41,26 @@ namespace SherpaDesk.Common
                 }
                 foreach (var kv in controls)
                 {
-                    FrameworkElement control = page.FindName(kv.Key) as FrameworkElement;
+                    var control = page.FindName(kv.Key) as FrameworkElement;
                     if (control != null)
                     {
 
-                        ToolTip toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
+                        var toolTip = page.FindName(kv.Key + TOOL_TIP_NAME) as ToolTip;
+                        var grid = control.ParentGrid();
                         if (toolTip == null)
                         {
-                            toolTip = new ToolTip();
-                            toolTip.Name = kv.Key + TOOL_TIP_NAME;
-                            toolTip.Content = kv.Value;
-                            toolTip.Foreground = new SolidColorBrush(Colors.Black);
-                            toolTip.BorderThickness = new Thickness(0, 0, 0, 0);
-                            toolTip.Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108));
-                            toolTip.FontSize = 16;
-                            toolTip.Height = control.Height - 10;
-                            toolTip.Width = control.Width - 40;
-                            toolTip.PlacementTarget = control;
-                            var grid = control.ParentGrid();
+                            toolTip = new ToolTip
+                            {
+                                Name = kv.Key + TOOL_TIP_NAME,
+                                Content = kv.Value,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                BorderThickness = new Thickness(0, 0, 0, 0),
+                                Background = new SolidColorBrush(Color.FromArgb(230, 242, 108, 108)),
+                                FontSize = 16,
+                                Height = control.Height - 10,
+                                Width = control.Width - 40,
+                                PlacementTarget = control
+                            };
                             if (grid == null)
                                 ToolTipService.SetToolTip(control, toolTip);
                             else
@@ -79,18 +76,19 @@ namespace SherpaDesk.Common
                             toolTip.Content = kv.Value;
                         }
                         toolTip.Visibility = Visibility.Visible;
-                        var closing = new RoutedEventHandler((object sender, RoutedEventArgs e) =>
+                        var closing = new RoutedEventHandler((sender, e) =>
                         {
                             toolTip.Visibility = Visibility.Collapsed;
                         });
                         control.Unloaded += closing;
                         control.GotFocus += closing;
-                        toolTip.PointerPressed += new PointerEventHandler((object sender, PointerRoutedEventArgs e) =>
+                        toolTip.PointerPressed += (sender, e) =>
                         {
                             toolTip.Visibility = Visibility.Collapsed;
-                            if (control is Control)
-                                ((Control)control).Focus(FocusState.Pointer);
-                        });
+                            var control1 = control as Control;
+                            if (control1 != null)
+                                control1.Focus(FocusState.Pointer);
+                        };
                     }
                 }
                 if (!string.IsNullOrEmpty(messageWithoutControl))

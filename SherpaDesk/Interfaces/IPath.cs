@@ -1,5 +1,5 @@
 ﻿
-namespace SherpaDesk.Common
+namespace SherpaDesk.Interfaces
 {
     public interface IPath
     {

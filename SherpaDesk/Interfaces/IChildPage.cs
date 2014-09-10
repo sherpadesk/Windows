@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SherpaDesk
+namespace SherpaDesk.Interfaces
 {
     public interface IChildPage
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SherpaDesk
+namespace SherpaDesk.Interfaces
 {
     public interface IValidatableObject
     {

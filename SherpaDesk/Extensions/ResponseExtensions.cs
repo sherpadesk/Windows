@@ -1,14 +1,14 @@
-﻿using SherpaDesk.Models;
+﻿using System.Collections.Generic;
 using System.Linq;
+using SherpaDesk.Models;
 using SherpaDesk.Models.Response;
-using System.Collections.Generic;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Extensions
 {
     public static class ResponseExtensions
     {
         public static TResponse Invalid<TResponse>(this TResponse response, params string[] messages)
-            where TResponse : SherpaDesk.Models.Response.Response
+            where TResponse : Response
         {
             response.Status = eResponseStatus.Invalid;
 
@@ -19,7 +19,7 @@ namespace SherpaDesk.Common
         }
 
         public static TResponse Fail<TResponse>(this TResponse response, params string[] messages)
-            where TResponse : SherpaDesk.Models.Response.Response
+            where TResponse : Response
         {
             response.Status = eResponseStatus.Fail;
 
@@ -31,7 +31,7 @@ namespace SherpaDesk.Common
 
 
         public static TResponse Error<TResponse>(this TResponse response, params string[] messages)
-            where TResponse : SherpaDesk.Models.Response.Response
+            where TResponse : Response
         {
             response.Status = eResponseStatus.Error;
 
@@ -43,8 +43,8 @@ namespace SherpaDesk.Common
 
         public static bool IsSingle(this IEnumerable<OrganizationResponse> list)
         {
-            return list.Count() == 1 && list.First().Instances.Count() == 1;
+            var organizationResponses = list as IList<OrganizationResponse> ?? list.ToList();
+            return organizationResponses.Count() == 1 && organizationResponses.First().Instances.Count() == 1;
         }
-
     }
 }

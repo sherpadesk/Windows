@@ -15,6 +15,7 @@
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives"        
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:SherpaDesk.Models.ViewModels"
     mc:Ignorable="d" Loaded="pageRoot_Loaded">
 
     <Page.Resources>
@@ -34,7 +35,7 @@
         <Frame x:Name="TimeLogsFrame" VerticalAlignment="Stretch" Margin="0,0,0,0" />
         <Grid Style="{StaticResource LayoutRootStyle}" Grid.Column="1" Background="White" VerticalAlignment="Stretch">
             <Grid.Resources>
-                <model:TimesheetViewModel x:Key="Model" x:Name="Model" />
+                <viewModels:TimesheetViewModel x:Key="Model" x:Name="Model" />
             </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

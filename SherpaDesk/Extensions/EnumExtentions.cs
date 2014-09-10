@@ -1,10 +1,10 @@
-﻿using SherpaDesk.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SherpaDesk.Models;
 
-namespace SherpaDesk.Common
+namespace SherpaDesk.Extensions
 {
     public static class EnumExtentions
     {
@@ -15,11 +15,11 @@ namespace SherpaDesk.Common
 
         public static String Details(this Enum item)
         {
-            String result = item.ToString();
+            var result = item.ToString();
 
-            Type type = item.GetType();
+            var type = item.GetType();
 
-            FieldInfo memInfo = type.GetRuntimeField(item.ToString());
+            var memInfo = type.GetRuntimeField(item.ToString());
 
             if (memInfo != null)
             {
@@ -27,7 +27,7 @@ namespace SherpaDesk.Common
 
                 if (attrs != null && attrs.Length > 0)
                 {
-                    result = ((DetailsAttribute) attrs[0]).Text;
+                    result = attrs[0].Text;
                 }
             }
 
@@ -36,14 +36,7 @@ namespace SherpaDesk.Common
 
         public static List<T> GetAllItems<T>() where T : struct
         {
-            var result = new List<T>();
-
-            foreach (T item in Enum.GetValues(typeof (T)))
-            {
-                result.Add(item);
-            }
-
-            return result;
+            return Enum.GetValues(typeof (T)).Cast<T>().ToList();
         }
     }
 }
