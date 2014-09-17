@@ -31,7 +31,7 @@ namespace SherpaDesk
                     this.pageRoot.HandleError(resultCounts);
                     return;
                 }
-                
+
                 OpenCount.Text = resultCounts.Result.AllOpen.ToString();
                 OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
                 OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
@@ -126,6 +126,14 @@ namespace SherpaDesk
         private void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com"));
+        }
+
+        private void MessagesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            this.MainPage(page =>
+            {
+                page.ScrollViewer.ChangeView(100000, null, null);
+            });
         }
     }
 }

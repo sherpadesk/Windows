@@ -24,6 +24,7 @@ namespace SherpaDesk
         private string _ticketKey;
         private int _techId;
         private IList<StorageFile> _attachment = null;
+        private byte confirmType = 0;
 
         public event EventHandler UpdatePage;
 
@@ -355,52 +356,40 @@ namespace SherpaDesk
             }
         }
 
-        private async void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ShowConfirm()
         {
-            if (await App.ConfirmMessage())
+            if (confirmType == 1)
             {
-                using (var connector = new Connector())
-                {
-                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                            new CloseTicketRequest(_ticketKey));
-
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                }
-
-                this.pageRoot.MainPage(page =>
-                {
-                    page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    ((WorkList)page.WorkListFrame.Content).FullUpdate();
-                });
+                ConfirmMessage.Text = "Are you sure you want to close this ticket?";
+                ConfirmYesLabel.Text = "Yes, Close It";
             }
+            else
+            {
+                ConfirmMessage.Text = "Are you sure you want to delete this ticket?";
+                ConfirmYesLabel.Text = "Yes, Delete It";
+            }
+            grid.IsHitTestVisible = false;
+            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
-        private async void DeleteButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void HideConfirm()
         {
-            if (await App.ConfirmMessage())
-            {
-                using (var connector = new Connector())
-                {
-                    var result = await connector.Action<DeleteRequest>(x => x.Tickets,
-                            new DeleteRequest(_ticketKey));
+            grid.IsHitTestVisible = true;
+            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
 
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                }
+        private void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            confirmType = 1;
+            ShowConfirm();
+        }
 
-                this.pageRoot.MainPage(page =>
-                {
-                    page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    ((WorkList)page.WorkListFrame.Content).FullUpdate();
-                });
-            }
+        private void DeleteButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            confirmType = 2;
+            ShowConfirm();
         }
 
         private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -416,6 +405,66 @@ namespace SherpaDesk
         private void TechnicianCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             TechnicianList.IsEnabled = TechnicianCheckbox.IsChecked.Value;
+        }
+
+        private async void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideConfirm();
+            using (var connector = new Connector())
+            {
+                if (confirmType == 1)
+                {
+                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                            new CloseTicketRequest(_ticketKey));
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
+                }
+                else
+                {
+                    var result = await connector.Action<DeleteRequest>(x => x.Tickets,
+                            new DeleteRequest(_ticketKey));
+
+                    if (result.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(result);
+                        return;
+                    }
+                }
+            }
+            this.pageRoot.MainPage(page =>
+            {
+                page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                ((WorkList)page.WorkListFrame.Content).FullUpdate();
+            });
+        }
+
+        private void ConfirmNo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideConfirm();
+        }
+
+        private void ConfirmYes_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmYes.Background.Opacity = 0.9;
+        }
+
+        private void ConfirmYes_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmYes.Background.Opacity = 1;
+        }
+
+        private void ConfirmNo_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmNo.Background.Opacity = 0.9;
+        }
+
+        private void ConfirmNo_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmNo.Background.Opacity = 1;
         }
     }
 }
