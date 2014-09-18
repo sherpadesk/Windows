@@ -72,11 +72,32 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="ConfirmMessage" Grid.ColumnSpan="2" Padding="0,30,0,0" Foreground="Black" HorizontalAlignment="Center" FontSize="30" />
+                <TextBlock x:Name="ConfirmMessage" Grid.ColumnSpan="2" Padding="0,30,0,0" Foreground="#5f5f5f" HorizontalAlignment="Center" FontSize="30" />
                 <Border x:Name="ConfirmYes" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="1" Background="#cdcdcd" Width="200" Margin="0,0,20,0" Height="60" HorizontalAlignment="Right" Tapped="ConfirmYes_Tapped" PointerEntered="ConfirmYes_PointerEntered" PointerExited="ConfirmYes_PointerExited">
                     <TextBlock x:Name="ConfirmYesLabel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
                 </Border>
                 <Border x:Name="ConfirmNo" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="1" Grid.Column="1" Background="#96c9de" Margin="20,0,0,0" Width="200" Height="60" HorizontalAlignment="Left" Tapped="ConfirmNo_Tapped" PointerExited="ConfirmNo_PointerExited" PointerEntered="ConfirmNo_PointerEntered">
+                    <TextBlock Text="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                </Border>
+            </Grid>
+        </Border>
+        <Border x:Name="PlaceOnHoldPanel" CornerRadius="10,10,10,10" Canvas.ZIndex="10" HorizontalAlignment="Left" Visibility="Collapsed" Margin="200,0,0,200" Width="800" Height="400" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="2" Text="Place This Ticket On Hold" Padding="0,30,0,0" Foreground="#5f5f5f" HorizontalAlignment="Center" FontSize="30" />
+                <TextBox Name="OnHoldTextbox" FontSize="25" Margin="50,20,50,20" TextWrapping="Wrap" Grid.Row="1" Height="200" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollMode="Auto" HorizontalAlignment="Stretch" AcceptsReturn="True" />
+                <Border x:Name="ConfirmYesOnHold" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="2" Background="#96c9de" Width="200" Margin="0,0,20,0" Height="60" HorizontalAlignment="Right" PointerEntered="ConfirmYesOnHold_PointerEntered" PointerExited="ConfirmYesOnHold_PointerExited" Tapped="ConfirmYesOnHold_Tapped">
+                    <TextBlock Text="Place on Hold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                </Border>
+                <Border x:Name="ConfirmNoOnHold" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="2" Grid.Column="1" Background="#cdcdcd" Margin="20,0,0,0" Width="200" Height="60" HorizontalAlignment="Left" PointerEntered="ConfirmNoOnHold_PointerEntered" PointerExited="ConfirmNoOnHold_PointerExited" Tapped="ConfirmNoOnHold_Tapped">
                     <TextBlock Text="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
                 </Border>
             </Grid>
@@ -139,7 +160,7 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <telerikPrimitives:RadCustomHubTile x:Name="PlaceOnHoldButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile x:Name="PlaceOnHoldButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="PlaceOnHoldButton_Tapped">
                     <telerikPrimitives:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                             <Grid>

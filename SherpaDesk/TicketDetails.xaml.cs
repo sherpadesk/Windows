@@ -380,6 +380,21 @@ namespace SherpaDesk
             BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
+        private void ShowOnHold()
+        {
+            OnHoldTextbox.Text = string.Empty;
+            grid.IsHitTestVisible = false;
+            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void HideOnHold()
+        {
+            grid.IsHitTestVisible = true;
+            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
         private void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             confirmType = 1;
@@ -465,6 +480,42 @@ namespace SherpaDesk
         private void ConfirmNo_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ConfirmNo.Background.Opacity = 1;
+        }
+
+        private void ConfirmNoOnHold_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmNoOnHold.Background.Opacity = 0.9;
+        }
+
+        private void ConfirmNoOnHold_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmNoOnHold.Background.Opacity = 1;
+        }
+
+        private void ConfirmYesOnHold_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmYesOnHold.Background.Opacity = 0.9;
+        }
+
+        private void ConfirmYesOnHold_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ConfirmYesOnHold.Background.Opacity = 1;
+        }
+
+        private void ConfirmYesOnHold_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            //OnHoldTextbox.Text
+            HideOnHold();
+        }
+
+        private void ConfirmNoOnHold_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideOnHold();
+        }
+
+        private void PlaceOnHoldButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ShowOnHold();
         }
     }
 }
