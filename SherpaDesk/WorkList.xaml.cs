@@ -3,178 +3,35 @@ using SherpaDesk.Extensions;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Threading.Tasks;
+using Telerik.Core.Data;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
-using SherpaDesk.Models.ViewModels;
 
 namespace SherpaDesk
 {
     public sealed partial class WorkList : SherpaDesk.Common.LayoutAwarePage
     {
-        private eWorkListType _workType;
+        private eWorkListType _workType = eWorkListType.Open;
+
+        private IncrementalLoadingCollection<TicketSearchResponse> _data;
+
+        private uint _pageSize = SearchRequest.DEFAULT_PAGE_COUNT;
+
+        private uint _pageIndex = SearchRequest.DEFAULT_PAGE_INDEX;
 
         public WorkList()
         {
             this.InitializeComponent();
         }
 
-        void viewModel_CommandExecuted(object sender, EventArgs e)
-        {
-            //DetailsFrame.Navigated -= ChildPage_Navigated;
-            //DetailsFrame.Navigated += ChildPage_Navigated;
-            //DetailsFrame.Navigate(typeof(TicketDetails), sender.ToString());
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (e.Parameter != null)
-            {
-                _workType = (eWorkListType)e.Parameter;
-                switch (_workType)
-                {
-                    case eWorkListType.Open:
-                        pageTitle.Text = "Open Tickets";
-                        break;
-                    case eWorkListType.OnHold:
-                        pageTitle.Text = "On Hold";
-                        break;
-                    case eWorkListType.NewMessages:
-                        pageTitle.Text = "New Messages";
-                        break;
-                    case eWorkListType.OpenAsEndUser:
-                        pageTitle.Text = "Open As End User";
-                        break;
-                    case eWorkListType.AwaitingResponse:
-                        pageTitle.Text = "Awaiting Response";
-                        break;
-                }
-            }
-            base.OnNavigatedTo(e);
-        }
-
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Model.DataLoading += UpdatedPage;
-            var viewModel = this.DataContext as WorkListPageViewModel;
-            viewModel.CommandExecuted += viewModel_CommandExecuted;
-            FullUpdate();
-        }
-
-        public async void FullUpdate()
-        {
-            await LoadStatInfo();
-            await Load();
-        }
-
-        protected async override void UpdatedPage(object sender, EventArgs e)
-        {
-            await Load();
-        }
-
-        //private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)
-        //{
-        //    foreach (var ticket in e.AddedItems)
-        //    {
-        //        ((TicketSearchResponse)ticket).IsChecked = true;
-        //    }
-        //    foreach (var ticket in e.RemovedItems)
-        //    {
-        //        ((TicketSearchResponse)ticket).IsChecked = false;
-        //    }
-        //}
-
-        private async void ConfirmMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            if (await App.ConfirmMessage())
-            {
-            }
-        }
-
-        private async void CloseMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            if (!this.Model.Data.Any(x => x.IsChecked))
-            {
-                App.ShowErrorMessage("No Items selected", eErrorType.Warning);
-                return;
-            }
-            if (await App.ConfirmMessage())
-            {
-                using (var connector = new Connector())
-                {
-                    foreach (var ticket in this.Model.Data.ToList())
-                    {
-                        if (ticket.IsChecked)
-                        {
-                            var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                                    new CloseTicketRequest(ticket.TicketKey));
-
-                            if (result.Status != eResponseStatus.Success)
-                            {
-                                this.HandleError(result);
-                                return;
-                            }
-                        }
-                    }
-                }
-                await this.Load();
-
-                App.ExternalAction(x => x.UpdateInfo());
-            }
-        }
-
-        private void HeaderGridCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            this.Model.SelectAll(true);
-            ItemsGrid.SelectAll();
-        }
-
-        private void HeaderGridCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            this.Model.SelectAll(false);
-            ItemsGrid.SelectedItems.Clear();
-        }
-
-        private void PageNext_Click(object sender, RoutedEventArgs e)
-        {
-            this.Model.PageNext();
-        }
-
-        private void PagePrev_Click(object sender, RoutedEventArgs e)
-        {
-            this.Model.PagePrev();
-        }
-
-        public async Task LoadStatInfo()
+        private async Task<IList<TicketSearchResponse>> Load()
         {
             using (var connector = new Connector())
             {
-                var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
-                    x => x.Tickets, new KeyRequest("counts"));
-                if (resultCounts.Status != eResponseStatus.Success)
-                {
-                    this.pageRoot.HandleError(resultCounts);
-                    return;
-                }
-
-                OpenTicketsCount.Text = resultCounts.Result.AllOpen > 0 ? resultCounts.Result.AllOpen.ToString() : string.Empty;
-                AsEndUserCount.Text = resultCounts.Result.OpenAsUser > 0 ? resultCounts.Result.OpenAsUser.ToString() : string.Empty;
-                OnHoldCount.Text = resultCounts.Result.OnHold > 0 ? resultCounts.Result.OnHold.ToString() : string.Empty;
-
-            }
-        }
-
-        public async Task Load()
-        {
-            using (var connector = new Connector())
-            {
-                TicketSearchRequest request = new TicketSearchRequest { PageIndex = this.Model.PageIndex };
+                TicketSearchRequest request = new TicketSearchRequest { PageIndex = (int)_pageIndex, PageCount = (int)_pageSize };
                 switch (_workType)
                 {
                     case eWorkListType.Open:
@@ -201,51 +58,129 @@ namespace SherpaDesk
                 if (result.Status != eResponseStatus.Success)
                 {
                     this.HandleError(result);
+                    return new TicketSearchResponse[0].ToList();
                 }
                 else
                 {
-                    Style style = Resources["WorkListPaging"] as Style;
-                    var list = result.Result.ToList();
-                    //if (list.Count == 0)
-                    //{
-                    //    style.SetValue(Grid.VisibilityProperty, Visibility.Collapsed);
-                    //}
-                    //else
-                    //{
-                    //    style.SetValue(Grid.VisibilityProperty, Visibility.Visible);
-                    //}
-                    this.Model.Data = new WorkListViewData(result.Result.ToList());
+                    var list = result.Result;
+
+                    _pageIndex++;
+
+                    return list.ToList();
                 }
+            }
+
+        }
+
+        public async Task LoadStatInfo()
+        {
+            using (var connector = new Connector())
+            {
+                var resultCounts = await connector.Func<KeyRequest, TicketCountsResponse>(
+                    x => x.Tickets, new KeyRequest("counts"));
+                if (resultCounts.Status != eResponseStatus.Success)
+                {
+                    this.pageRoot.HandleError(resultCounts);
+                    return;
+                }
+
+                OpenTicketsCount.Text = resultCounts.Result.AllOpen > 0 ? resultCounts.Result.AllOpen.ToString() : string.Empty;
+                AsEndUserCount.Text = resultCounts.Result.OpenAsUser > 0 ? resultCounts.Result.OpenAsUser.ToString() : string.Empty;
+                OnHoldCount.Text = resultCounts.Result.OnHold > 0 ? resultCounts.Result.OnHold.ToString() : string.Empty;
+
             }
         }
 
-        private void GridCheckbox_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void FillData(eWorkListType workType)
         {
-            e.Handled = true;
+            _pageIndex = SearchRequest.DEFAULT_PAGE_INDEX;
+
+            _workType = workType;
+
+            switch (_workType)
+            {
+                case eWorkListType.Open:
+                    pageTitle.Text = "Open Tickets";
+                    break;
+                case eWorkListType.OnHold:
+                    pageTitle.Text = "On Hold";
+                    break;
+                case eWorkListType.NewMessages:
+                    pageTitle.Text = "New Messages";
+                    break;
+                case eWorkListType.OpenAsEndUser:
+                    pageTitle.Text = "Open As End User";
+                    break;
+                case eWorkListType.AwaitingResponse:
+                    pageTitle.Text = "Awaiting Response";
+                    break;
+            }
+            _data = new IncrementalLoadingCollection<TicketSearchResponse>(async count =>
+            {
+                try
+                {
+                    return await Load();
+                }
+                catch
+                {
+                    return Enumerable.Empty<TicketSearchResponse>();
+                }
+            }) { BatchSize = _pageSize };
+
+            try
+            {
+                var result = await Load();
+
+                foreach (var item in result)
+                {
+                    _data.Add(item);
+                }
+            }
+            catch
+            {
+            }
+
+            ItemsGrid.ItemsSource = _data;
         }
 
-        private async void OpenTicketsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        public void FullUpdate()
         {
-            _workType = eWorkListType.Open;
-            await Load();
+            FillData(_workType);
         }
 
-        private async void AsEndUserButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _workType = eWorkListType.OpenAsEndUser;
-            await Load();
+            if (e.Parameter != null)
+            {
+                FillData((eWorkListType)e.Parameter);
+            }
+            base.OnNavigatedTo(e);
         }
 
-        private async void OnHoldButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            _workType = eWorkListType.OnHold;
-            await Load();
+            LoadStatInfo();
         }
 
-        private async void FollowUpDatesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+
+        private void OpenTicketsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            _workType = eWorkListType.NewMessages;
-            await Load();
+            FillData(eWorkListType.Open);
+        }
+
+        private void AsEndUserButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            FillData(eWorkListType.OpenAsEndUser);
+        }
+
+        private void OnHoldButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            FillData(eWorkListType.OnHold);
+        }
+
+        private void FollowUpDatesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            FillData(eWorkListType.NewMessages);
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)

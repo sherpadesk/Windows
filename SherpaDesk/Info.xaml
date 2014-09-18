@@ -80,7 +80,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" />
+                            <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" Tapped="OpenCount_Tapped"  />
                             <TextBlock Text="Open Tickets" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                             <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
                             <Grid Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
@@ -93,9 +93,9 @@
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Name="OpenAsEndUserCount" Foreground="White" Text="0" FontSize="45" HorizontalAlignment="Right" />
-                                <TextBlock Name="OpenAsTechCount" Foreground="White" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" />
-                                <TextBlock Name="OpenAsAltTechCount" Foreground="White" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" />
+                                <TextBlock Name="OpenAsEndUserCount" Foreground="White" Text="0" FontSize="45" HorizontalAlignment="Right" Tapped="OpenAsEndUserCount_Tapped" />
+                                <TextBlock Name="OpenAsTechCount" Foreground="White" Text="0" Grid.Row="1" FontSize="45" HorizontalAlignment="Right" Tapped="OpenAsTechCount_Tapped" />
+                                <TextBlock Name="OpenAsAltTechCount" Foreground="White" Text="0" Grid.Row="2" FontSize="45" HorizontalAlignment="Right" Tapped="OpenAsAltTechCount_Tapped" />
                                 <TextBlock Text="As User" Foreground="White" Margin="10,0,0,5" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" />
                                 <TextBlock Text="As Tech" Foreground="White" Margin="10,0,0,5" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" />
                                 <TextBlock Text="Alt Tech" Foreground="White" Margin="10,0,0,4" Grid.Column="1" Grid.Row="2" FontSize="30" VerticalAlignment="Bottom" />

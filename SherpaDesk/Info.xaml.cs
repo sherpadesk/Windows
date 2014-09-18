@@ -6,9 +6,7 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace SherpaDesk
 {
@@ -61,7 +59,6 @@ namespace SherpaDesk
         {
             this.ActivityFrame.Navigate(typeof(Activity));
             await this.RefreshData();
-            //this.MainPage(page => page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET, null, null));
         }
 
         private void OpenWorkList(eWorkListType type)
@@ -71,31 +68,6 @@ namespace SherpaDesk
                 page.WorkListFrame.Navigate(typeof(WorkList), type);
                 page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO, null, null);
             });
-        }
-
-        private void NewMessagesTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            OpenWorkList(eWorkListType.NewMessages);
-        }
-
-        private void OpenTicketsTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            OpenWorkList(eWorkListType.Open);
-        }
-
-        private void OpenAsEndUserTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            OpenWorkList(eWorkListType.OpenAsEndUser);
-        }
-
-        private void OnHoldTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            OpenWorkList(eWorkListType.OnHold);
-        }
-
-        private void WaitingTile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            OpenWorkList(eWorkListType.AwaitingResponse);
         }
 
         private void TimeButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -126,6 +98,26 @@ namespace SherpaDesk
         private void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com"));
+        }
+
+        private void OpenCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            OpenWorkList(eWorkListType.Open);
+        }
+
+        private void OpenAsEndUserCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            OpenWorkList(eWorkListType.OpenAsEndUser);
+        }
+
+        private void OpenAsTechCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            OpenWorkList(eWorkListType.Open);
+        }
+
+        private void OpenAsAltTechCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            OpenWorkList(eWorkListType.Open);
         }
     }
 }
