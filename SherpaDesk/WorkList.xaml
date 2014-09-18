@@ -207,10 +207,11 @@
                              GridLinesVisibility="Horizontal" 
                              GridLinesBrush="Transparent"
                              GridLinesThickness="19"
-                             Margin="15,13,0,318"
+                             Margin="15,13,0,0"
                              IncrementalLoadingMode="Explicit"
                              Grid.Column="1" 
                              Grid.Row="0"
+                             Height="700"
                              ScrollViewer.VerticalScrollMode="Auto" 
                              SelectionChanged="ItemsGrid_SelectionChanged" Grid.RowSpan="2">
             <telerik:RadDataGrid.Resources>
