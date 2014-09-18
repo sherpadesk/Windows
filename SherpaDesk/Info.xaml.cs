@@ -29,7 +29,7 @@ namespace SherpaDesk
                     this.pageRoot.HandleError(resultCounts);
                     return;
                 }
-                
+
                 OpenCount.Text = resultCounts.Result.AllOpen.ToString();
                 OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
                 OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
@@ -118,6 +118,14 @@ namespace SherpaDesk
         private void OpenAsAltTechCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             OpenWorkList(eWorkListType.Open);
+        }
+
+        private void MessagesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            this.MainPage(page =>
+            {
+                page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null);
+            });
         }
     }
 }

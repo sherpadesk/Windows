@@ -60,264 +60,318 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="White" RequestedTheme="Light" Margin="0,0,50,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <VisualStateManager.VisualStateGroups>
+    <Grid>
+        <StackPanel x:Name="BlackScreen" Width="auto" Height="auto" Canvas.ZIndex="9" Background="#7F000000" Visibility="Collapsed" />
+        <Border x:Name="ConfirmPanel" CornerRadius="10,10,10,10" Canvas.ZIndex="10" HorizontalAlignment="Left" Visibility="Collapsed" Margin="200,0,0,200" Width="640" Height="200" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ConfirmMessage" Grid.ColumnSpan="2" Padding="0,30,0,0" Foreground="Black" HorizontalAlignment="Center" FontSize="30" />
+                <Border x:Name="ConfirmYes" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="1" Background="#cdcdcd" Width="200" Margin="0,0,20,0" Height="60" HorizontalAlignment="Right" Tapped="ConfirmYes_Tapped" PointerEntered="ConfirmYes_PointerEntered" PointerExited="ConfirmYes_PointerExited">
+                    <TextBlock x:Name="ConfirmYesLabel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                </Border>
+                <Border x:Name="ConfirmNo" CornerRadius="10,10,10,10" Padding="0,3,0,0" Grid.Row="1" Grid.Column="1" Background="#96c9de" Margin="20,0,0,0" Width="200" Height="60" HorizontalAlignment="Left" Tapped="ConfirmNo_Tapped" PointerExited="ConfirmNo_PointerExited" PointerEntered="ConfirmNo_PointerEntered">
+                    <TextBlock Text="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                </Border>
+            </Grid>
+        </Border>
+        <Grid x:Name="grid" Style="{StaticResource LayoutRootStyle}" Background="White" RequestedTheme="Light" Margin="0,0,50,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <VisualStateManager.VisualStateGroups>
 
-            <!-- Visual states reflect the application's view state -->
-            <VisualStateGroup x:Name="ApplicationViewStates">
-                <VisualState x:Name="FullScreenLandscape"/>
-                <VisualState x:Name="Filled"/>
+                <!-- Visual states reflect the application's view state -->
+                <VisualStateGroup x:Name="ApplicationViewStates">
+                    <VisualState x:Name="FullScreenLandscape"/>
+                    <VisualState x:Name="Filled"/>
 
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
-                <VisualState x:Name="FullScreenPortrait">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
+                    <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                    <VisualState x:Name="FullScreenPortrait">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
 
-                <!-- The back button and title have different styles when snapped -->
-                <VisualState x:Name="Snapped">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <TextBlock x:Name="pageTitle"                   
+                    <!-- The back button and title have different styles when snapped -->
+                    <VisualState x:Name="Snapped">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <TextBlock x:Name="pageTitle"                   
 			Margin="20,30,20,20" 
 			Text="Ticket Details"                   
 			Style="{StaticResource PageHeaderTextStyle}" />
-        <TextBlock Grid.Column="3"
+            <TextBlock Grid.Column="3"
 			Margin="55,30,20,20"
             x:Name="AttachmentsTitle" Visibility="Collapsed"
 			Text="Attachments"                   
 			Style="{StaticResource PageHeaderTextStyle}" />
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <telerikPrimitives:RadCustomHubTile x:Name="PlaceOnHoldButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
-                <telerikPrimitives:RadCustomHubTile.FrontContent>
-                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Place On Hold" FontSize="20" HorizontalAlignment="Right" Margin="0,70,10,5"/>
-                        </Grid>
-                    </StackPanel>
-                </telerikPrimitives:RadCustomHubTile.FrontContent>
-            </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="PickupButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
-                <telerikPrimitives:RadCustomHubTile.FrontContent>
-                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Pickup" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
-                        </Grid>
-                    </StackPanel>
-                </telerikPrimitives:RadCustomHubTile.FrontContent>
-            </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="TransferButton" Tapped="TransferButton_Tapped" Grid.Row="3" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
-                <telerikPrimitives:RadCustomHubTile.FrontContent>
-                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Transfer" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
-                        </Grid>
-                    </StackPanel>
-                </telerikPrimitives:RadCustomHubTile.FrontContent>
-            </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="CloseButton" Grid.Row="4" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="CloseButton_Tapped">
-                <telerikPrimitives:RadCustomHubTile.FrontContent>
-                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Close" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
-                        </Grid>
-                    </StackPanel>
-                </telerikPrimitives:RadCustomHubTile.FrontContent>
-            </telerikPrimitives:RadCustomHubTile>
-            <telerikPrimitives:RadCustomHubTile x:Name="DeleteButton" Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="DeleteButton_Tapped">
-                <telerikPrimitives:RadCustomHubTile.FrontContent>
-                    <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Delete" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
-                        </Grid>
-                    </StackPanel>
-                </telerikPrimitives:RadCustomHubTile.FrontContent>
-            </telerikPrimitives:RadCustomHubTile>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" Visibility="Visible" x:Name="GridTicketDetails" Margin="20,0,50,0" Width="auto">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="TicketNumber"  FontSize="60" Foreground="#8b8b8b" Margin="0,0,30,0" />
-                <Grid Grid.Column="1" MaxWidth="1200">
-                    <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
-                        <TextBlock x:Name="SubjectLabel" FontSize="60" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#8b8b8b" />
-                    </ScrollViewer>
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="1" Margin="0,30,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Image Source="Assets/Images/ticket-details-avatar.png" />
-                <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock x:Name="EndUserLabel" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
-                    <TextBlock Grid.Row="1" Text="SherpaDesk Support | Atlanta" Foreground="#898989" FontSize="20" />
-                    <Grid Grid.Row="2" Margin="0,20,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Initial Post" Foreground="#4a4a4a" FontSize="18" Margin="0,0,5,0" />
-                        <TextBlock x:Name="СreatedTime" Grid.Column="1" Foreground="#777777" FontSize="18" />
-                    </Grid>
-                </Grid>
-                <Grid x:Name="ChartGrid" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
-                    <Chart:RadPieChart x:Name="detailsChart" Palette="{StaticResource CustomPalette}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="200">
-                        <Chart:DoughnutSeries ShowLabels="False">
-                            <Chart:DoughnutSeries.ValueBinding>
-                                <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
-                            </Chart:DoughnutSeries.ValueBinding>
-                        </Chart:DoughnutSeries>
-                    </Chart:RadPieChart>
-                    <TextBlock x:Name="PercentageCompleteLabel" Foreground="#a6a6a6" FontSize="30" HorizontalAlignment="Center" Margin="0,-20,0,0" VerticalAlignment="Center" />
-                    <TextBlock x:Name="CompleteLabel" Text="Complete" Foreground="#c1c1c1" FontSize="18" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Center" />
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="2" Margin="0,30,0,0" Width="1000" HorizontalAlignment="Left">
-                <ScrollViewer Height="200" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="TicketDescription" FontSize="20" Margin="0,0,20,0" Foreground="#5b5b5b" TextWrapping="Wrap" />
-                </ScrollViewer>
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="1" Visibility="Visible" x:Name="GridAddResponse" Margin="0,0,50,0" Width="auto">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <Grid>
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid Style="{StaticResource LayoutRootStyle}" RequestedTheme="Light" Grid.Row="0" HorizontalAlignment="Center" Background="Transparent">
+                <telerikPrimitives:RadCustomHubTile x:Name="PlaceOnHoldButton" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
+                    <telerikPrimitives:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Place On Hold" FontSize="20" HorizontalAlignment="Right" Margin="0,70,10,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </telerikPrimitives:RadCustomHubTile.FrontContent>
+                </telerikPrimitives:RadCustomHubTile>
+                <telerikPrimitives:RadCustomHubTile x:Name="PickupButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
+                    <telerikPrimitives:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Pickup" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </telerikPrimitives:RadCustomHubTile.FrontContent>
+                </telerikPrimitives:RadCustomHubTile>
+                <telerikPrimitives:RadCustomHubTile x:Name="TransferButton" Tapped="TransferButton_Tapped" Grid.Row="3" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
+                    <telerikPrimitives:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Transfer" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </telerikPrimitives:RadCustomHubTile.FrontContent>
+                </telerikPrimitives:RadCustomHubTile>
+                <telerikPrimitives:RadCustomHubTile x:Name="CloseButton" Grid.Row="4" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="CloseButton_Tapped">
+                    <telerikPrimitives:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Close" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </telerikPrimitives:RadCustomHubTile.FrontContent>
+                </telerikPrimitives:RadCustomHubTile>
+                <telerikPrimitives:RadCustomHubTile x:Name="DeleteButton" Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="DeleteButton_Tapped">
+                    <telerikPrimitives:RadCustomHubTile.FrontContent>
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Delete" FontSize="22" HorizontalAlignment="Right" Margin="0,70,10,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </telerikPrimitives:RadCustomHubTile.FrontContent>
+                </telerikPrimitives:RadCustomHubTile>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetails" Margin="20,0,50,0" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TicketNumber"  FontSize="60" Foreground="#8b8b8b" Margin="0,0,30,0" />
+                    <Grid Grid.Column="1" MaxWidth="1200">
+                        <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
+                            <TextBlock x:Name="SubjectLabel" FontSize="60" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#8b8b8b" />
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="Assets/Images/ticket-details-avatar.png" />
+                    <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="EndUserLabel" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
+                        <TextBlock Grid.Row="1" Text="SherpaDesk Support | Atlanta" Foreground="#898989" FontSize="20" />
+                        <Grid Grid.Row="2" Margin="0,20,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Initial Post" Foreground="#4a4a4a" FontSize="18" Margin="0,0,5,0" />
+                            <TextBlock x:Name="СreatedTime" Grid.Column="1" Foreground="#777777" FontSize="18" />
+                        </Grid>
+                    </Grid>
+                    <Grid x:Name="ChartGrid" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
+                        <Chart:RadPieChart x:Name="detailsChart" Palette="{StaticResource CustomPalette}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="200">
+                            <Chart:DoughnutSeries ShowLabels="False">
+                                <Chart:DoughnutSeries.ValueBinding>
+                                    <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
+                                </Chart:DoughnutSeries.ValueBinding>
+                            </Chart:DoughnutSeries>
+                        </Chart:RadPieChart>
+                        <TextBlock x:Name="PercentageCompleteLabel" Foreground="#a6a6a6" FontSize="30" HorizontalAlignment="Center" Margin="0,-20,0,0" VerticalAlignment="Center" />
+                        <TextBlock x:Name="CompleteLabel" Text="Complete" Foreground="#c1c1c1" FontSize="18" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,30,0,0" Width="1000" HorizontalAlignment="Left">
+                    <ScrollViewer Height="200" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="TicketDescription" FontSize="20" Margin="0,0,20,0" Foreground="#5b5b5b" TextWrapping="Wrap" />
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="1" Visibility="Visible" x:Name="GridAddResponse" Margin="0,0,50,0" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Start Time" FontSize="16" VerticalAlignment="Bottom" />
-                    <TextBlock Grid.Column="2" Text="Stop Time" FontSize="16" VerticalAlignment="Bottom" />
-                    <TextBlock Grid.Column="4" Text="Hours" FontSize="16" VerticalAlignment="Bottom" />
-                    <TextBlock Grid.Column="6" Text="% Complete" FontSize="16" VerticalAlignment="Bottom" />
-                    <TextBlock Grid.Column="8" Text="Billable" FontSize="16" VerticalAlignment="Bottom" />
-                    <TextBlock Grid.Column="10" Text="Task Type " FontSize="16" VerticalAlignment="Bottom" />
-                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="32" VerticalAlignment="Top" Margin="0,4,0,0">
-                        <telerikInput:RadTimePicker x:Name="StartTimePicker" BorderThickness="0" Width="130" HorizontalAlignment="Left" Margin="0,0,0,2" VerticalAlignment="Top" ValueChanged="StartTimePicker_ValueChanged" />
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="32" VerticalAlignment="Top" Margin="0,4,0,0">
-                        <telerikInput:RadTimePicker BorderThickness="0" x:Name="EndTimePicker" Grid.Row="1" Grid.Column="2" Width="130" HorizontalAlignment="Left" Margin="0,0,0,2" VerticalAlignment="Top" ValueChanged="EndTimePicker_ValueChanged" />
-                    </Border>
-                    <TextBox x:Name="HoursTextBox" Margin="0,4,0,0" Height="20" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Grid.Column="4" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Width="130" />
-                    <TextBlock x:Name="ErrorHours" Grid.Column="4" HorizontalAlignment="Left" Margin="0 0 0 0" Grid.Row="1" Height="50" VerticalAlignment="Top"/>
-                    <ComboBox Name="CompleteList" Grid.Column="6" Grid.Row="1" FontSize="16" HorizontalAlignment="Stretch" Margin="0,4,0,0" VerticalAlignment="Top">
-                        <ComboBoxItem Tag="0" />
-                        <ComboBoxItem Content="5%" Tag="5" />
-                        <ComboBoxItem Content="25%" Tag="25" />
-                        <ComboBoxItem Content="50%" Tag="50" />
-                        <ComboBoxItem Content="75%" Tag="75" />
-                        <ComboBoxItem Content="95%" Tag="95" />
-                        <ComboBoxItem Content="100%" Tag="100" />
-                    </ComboBox>
-                    <ComboBox Name="Billable" Grid.Column="8" Grid.Row="1" FontSize="16" HorizontalAlignment="Left" Width="100" Margin="0,4,0,0" VerticalAlignment="Top">
-                        <ComboBoxItem Content="Yes" Tag="1" IsSelected="True" />
-                        <ComboBoxItem Content="No" Tag="0" />
-                    </ComboBox>
-                    <ComboBox Name="TaskTypeList" Grid.Column="10" Grid.Row="1" FontSize="16" HorizontalAlignment="Left" Width="200" Margin="0,4,0,0" VerticalAlignment="Top">
-                    </ComboBox>
-                </Grid>
-                <TextBox Name="CommentsTextbox" FontSize="25" Margin="0,10,0,15" TextWrapping="Wrap" Grid.Row="1" Height="100" ScrollViewer.VerticalScrollMode="Auto" HorizontalAlignment="Stretch" AcceptsReturn="True" />
-                <Grid Grid.Row="2" Width="auto" HorizontalAlignment="Right">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,20,0" ScrollViewer.VerticalScrollMode="Auto" Height="70">
-                        <TextBlock x:Name="SelectedFilesList" FontSize="16" Margin="0,0,10,0" TextWrapping="Wrap" Width="500" />
-                    </ScrollViewer>
-                    <Image Grid.Column="1" x:Name="attachButton" Source="Assets/Images/attach-button.png" Tapped="attachButton_Tapped"  />
-                    <Grid x:Name="ReplyGrid" Grid.Column="2" Width="150" Height="60" Background="#FF92C74F" VerticalAlignment="Top" Margin="20,0,0,0" PointerEntered="ReplyGrid_PointerEntered" PointerExited="ReplyGrid_PointerExited" Tapped="ReplyGrid_Tapped">
-                        <TextBlock Text="Reply" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20" />
+                    <Grid Style="{StaticResource LayoutRootStyle}" RequestedTheme="Light" Grid.Row="0" HorizontalAlignment="Center" Background="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Start Time" FontSize="16" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="2" Text="Stop Time" FontSize="16" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="4" Text="Hours" FontSize="16" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="6" Text="% Complete" FontSize="16" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="8" Text="Billable" FontSize="16" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="10" Text="Task Type " FontSize="16" VerticalAlignment="Bottom" />
+                        <Border Grid.Row="1" BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="32" VerticalAlignment="Top" Margin="0,4,0,0">
+                            <telerikInput:RadTimePicker x:Name="StartTimePicker" BorderThickness="0" Width="130" HorizontalAlignment="Left" Margin="0,0,0,2" VerticalAlignment="Top" ValueChanged="StartTimePicker_ValueChanged" />
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="2" BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="32" VerticalAlignment="Top" Margin="0,4,0,0">
+                            <telerikInput:RadTimePicker BorderThickness="0" x:Name="EndTimePicker" Grid.Row="1" Grid.Column="2" Width="130" HorizontalAlignment="Left" Margin="0,0,0,2" VerticalAlignment="Top" ValueChanged="EndTimePicker_ValueChanged" />
+                        </Border>
+                        <TextBox x:Name="HoursTextBox" Margin="0,4,0,0" Height="20" InputScope="NumberFullWidth" Text="0.00" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Grid.Column="4" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Width="130" />
+                        <TextBlock x:Name="ErrorHours" Grid.Column="4" HorizontalAlignment="Left" Margin="0 0 0 0" Grid.Row="1" Height="50" VerticalAlignment="Top"/>
+                        <ComboBox Name="CompleteList" Grid.Column="6" Grid.Row="1" FontSize="16" HorizontalAlignment="Stretch" Margin="0,4,0,0" VerticalAlignment="Top">
+                            <ComboBoxItem Tag="0" />
+                            <ComboBoxItem Content="5%" Tag="5" />
+                            <ComboBoxItem Content="25%" Tag="25" />
+                            <ComboBoxItem Content="50%" Tag="50" />
+                            <ComboBoxItem Content="75%" Tag="75" />
+                            <ComboBoxItem Content="95%" Tag="95" />
+                            <ComboBoxItem Content="100%" Tag="100" />
+                        </ComboBox>
+                        <ComboBox Name="Billable" Grid.Column="8" Grid.Row="1" FontSize="16" HorizontalAlignment="Left" Width="100" Margin="0,4,0,0" VerticalAlignment="Top">
+                            <ComboBoxItem Content="Yes" Tag="1" IsSelected="True" />
+                            <ComboBoxItem Content="No" Tag="0" />
+                        </ComboBox>
+                        <ComboBox Name="TaskTypeList" Grid.Column="10" Grid.Row="1" FontSize="16" HorizontalAlignment="Left" Width="200" Margin="0,4,0,0" VerticalAlignment="Top">
+                        </ComboBox>
+                    </Grid>
+                    <TextBox Name="CommentsTextbox" FontSize="25" Margin="0,10,0,15" TextWrapping="Wrap" Grid.Row="1" Height="100" ScrollViewer.VerticalScrollMode="Auto" HorizontalAlignment="Stretch" AcceptsReturn="True" />
+                    <Grid Grid.Row="2" Width="auto" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,20,0" ScrollViewer.VerticalScrollMode="Auto" Height="70">
+                            <TextBlock x:Name="SelectedFilesList" FontSize="16" Margin="0,0,10,0" TextWrapping="Wrap" Width="500" />
+                        </ScrollViewer>
+                        <Image Grid.Column="1" x:Name="attachButton" Source="Assets/Images/attach-button.png" Tapped="attachButton_Tapped"  />
+                        <Grid x:Name="ReplyGrid" Grid.Column="2" Width="150" Height="60" Background="#FF92C74F" VerticalAlignment="Top" Margin="20,0,0,0" PointerEntered="ReplyGrid_PointerEntered" PointerExited="ReplyGrid_PointerExited" Tapped="ReplyGrid_Tapped">
+                            <TextBlock Text="Reply" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20" />
+                        </Grid>
                     </Grid>
                 </Grid>
+                <Grid Grid.Row="1">
+                    <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" Height="400" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <GridView x:Name="TicketDetailsList" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsTapEnabled="False" SelectionMode="None">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,20,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="800" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="Assets/Images/ticket-details-comments-avatar.png" VerticalAlignment="Top" />
+                                        <Grid Grid.Column="1" Margin="20,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding FullName}" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
+                                            <TextBlock Text="{Binding ResponseDateText}" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
+                                            <TextBlock HorizontalAlignment="Stretch" FontSize="16" Foreground="#5b5b5b" Text="{Binding NoteText}" TextWrapping="Wrap" Grid.Row="2" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </ScrollViewer>
+                </Grid>
             </Grid>
-            <Grid Grid.Row="1">
-                <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" Height="400" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <GridView x:Name="TicketDetailsList" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsTapEnabled="False" SelectionMode="None">
+            <Grid Grid.Column="3" Grid.Row="1" x:Name="GridAttachments" Margin="50,0,50,0" Width="auto">
+                <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" VerticalAlignment="Top" Height="600" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <GridView x:Name="AttachmentsList" Margin="0,0,30,0" HorizontalAlignment="Stretch" IsTapEnabled="False" SelectionMode="None">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
@@ -325,181 +379,149 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="0,20,20,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="800" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="Assets/Images/ticket-details-comments-avatar.png" VerticalAlignment="Top" />
-                                    <Grid Grid.Column="1" Margin="20,0,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding FullName}" Foreground="#86abb6" FontSize="30" Margin="0,0,0,10" />
-                                        <TextBlock Text="{Binding ResponseDateText}" Foreground="#a6a6a6" Grid.Row="1" Margin="0,0,0,2" />
-                                        <TextBlock HorizontalAlignment="Stretch" FontSize="16" Foreground="#5b5b5b" Text="{Binding NoteText}" TextWrapping="Wrap" Grid.Row="2" />
-                                    </Grid>
-                                </Grid>
+                                <Image Source="{Binding ImageUrl}" Margin="0,0,0,20" x:Name="AttachedImage" Tapped="AttachedView_Tapped" Width="400" Stretch="UniformToFill" />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
                 </ScrollViewer>
             </Grid>
-        </Grid>
-        <Grid Grid.Column="3" Grid.Row="1" x:Name="GridAttachments" Margin="50,0,50,0" Width="auto">
-            <ScrollViewer ScrollViewer.VerticalScrollMode="Auto" VerticalAlignment="Top" Height="600" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <GridView x:Name="AttachmentsList" Margin="0,0,30,0" HorizontalAlignment="Stretch" IsTapEnabled="False" SelectionMode="None">
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding ImageUrl}" Margin="0,0,0,20" x:Name="AttachedImage" Tapped="AttachedView_Tapped" Width="400" Stretch="UniformToFill" />
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-            </ScrollViewer>
-        </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetailsTransfer" Visibility="Collapsed" Margin="20,0,50,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="TicketNumberTransfer" FontSize="50" Foreground="#8b8b8b" Margin="0,0,30,0" />
-                <Grid Grid.Column="1" MaxWidth="1200">
-                    <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
-                        <TextBlock x:Name="SubjectLabelTransfer" FontSize="50" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#8b8b8b" />
-                    </ScrollViewer>
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="1" Margin="0,30,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Image Source="Assets/Images/ticket-details-avatar.png" Width="100" Height="100" />
-                <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock x:Name="EndUserLabelTransfer" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
-                    <TextBlock Grid.Row="1" Text="SherpaDesk Support | Atlanta" Foreground="#898989" FontSize="20" />
-                    <Grid Grid.Row="2" Margin="0,5,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Initial Post" Foreground="#4a4a4a" FontSize="18" Margin="0,0,5,0" />
-                        <TextBlock x:Name="СreatedTimeTransfer" Grid.Column="1" Foreground="#777777" FontSize="18" />
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="GridTicketDetailsTransfer" Visibility="Collapsed" Margin="20,0,50,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TicketNumberTransfer" FontSize="50" Foreground="#8b8b8b" Margin="0,0,30,0" />
+                    <Grid Grid.Column="1" MaxWidth="1200">
+                        <ScrollViewer Height="75" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
+                            <TextBlock x:Name="SubjectLabelTransfer" FontSize="50" TextWrapping="Wrap" Margin="0,0,0,0" Foreground="#8b8b8b" />
+                        </ScrollViewer>
                     </Grid>
                 </Grid>
-                <Grid x:Name="ChartGridTransfer" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
-                    <Chart:RadPieChart x:Name="detailsChartTransfer" Palette="{StaticResource CustomPalette}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="100">
-                        <Chart:DoughnutSeries ShowLabels="False">
-                            <Chart:DoughnutSeries.ValueBinding>
-                                <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
-                            </Chart:DoughnutSeries.ValueBinding>
-                        </Chart:DoughnutSeries>
-                    </Chart:RadPieChart>
-                    <TextBlock x:Name="PercentageCompleteTransferLabel" Foreground="#a6a6a6" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" />
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="2" Margin="0,30,0,0">
-                <Grid VerticalAlignment="Top" Width="auto">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+                <Grid Grid.Row="1" Margin="0,30,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <CheckBox />
-                    <TextBlock Text="Remove me after transfer" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-
-                    <CheckBox Grid.Row="1" Margin="0,20,0,0" />
-                    <TextBlock Grid.Row="1" Text="Keep the current priority for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-
-                    <CheckBox Grid.Column="2" />
-                    <TextBlock Grid.Column="2" Text="Keep me attached to this tickets" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-
-                    <CheckBox Grid.Column="2" Grid.Row="1" Margin="0,20,0,0" />
-                    <TextBlock Grid.Column="2" Grid.Row="1" Text="Keep the current level for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="4" Margin="0,30,0,0">
-                <Grid VerticalAlignment="Top" Width="1000">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Rectangle HorizontalAlignment="Center" Height="2" Width="950" Margin="0,0,0,30" VerticalAlignment="Stretch" Fill="#FFDADADA" />
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
+                    <Image Source="Assets/Images/ticket-details-avatar.png" Width="100" Height="100" />
+                    <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <CheckBox Grid.Row="0" x:Name="TechnicianCheckbox" Unchecked="TechnicianCheckbox_Checked" Checked="TechnicianCheckbox_Checked" />
-                        <TextBlock Text="Transfer to Technician" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-                        <ComboBox Grid.Column="1" IsEnabled="False" MinWidth="243" x:Name="TechnicianList" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" Padding="10,-3,0,0" />
-                        <TextBlock Grid.Column="2" Text="(Make Me an Alternate)" FontSize="20" Foreground="#b9b9b9" Margin="0,5,10,0" />
-                        <CheckBox Grid.Column="3" />
-                        <CheckBox x:Name="ClassCheckBox" Grid.Row="2" Unchecked="ClassCheckBox_Checked" Checked="ClassCheckBox_Checked"  />
-                        <TextBlock Grid.Row="2" Text="Transfer to Class" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
-                        <ComboBox Grid.Column="1" x:Name="ClassList" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" IsEnabled="False" Padding="10,-3,0,0">
-                        </ComboBox>
+                        <TextBlock x:Name="EndUserLabelTransfer" Foreground="#a6a6a6" FontSize="40" Margin="0,0,0,10" />
+                        <TextBlock Grid.Row="1" Text="SherpaDesk Support | Atlanta" Foreground="#898989" FontSize="20" />
+                        <Grid Grid.Row="2" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Initial Post" Foreground="#4a4a4a" FontSize="18" Margin="0,0,5,0" />
+                            <TextBlock x:Name="СreatedTimeTransfer" Grid.Column="1" Foreground="#777777" FontSize="18" />
+                        </Grid>
                     </Grid>
-                    <Grid Grid.Row="2" Margin="0,30,0,0">
+                    <Grid x:Name="ChartGridTransfer" Margin="50,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Visibility="Collapsed">
+                        <Chart:RadPieChart x:Name="detailsChartTransfer" Palette="{StaticResource CustomPalette}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="100">
+                            <Chart:DoughnutSeries ShowLabels="False">
+                                <Chart:DoughnutSeries.ValueBinding>
+                                    <Chart:PropertyNameDataPointBinding PropertyName="Value"/>
+                                </Chart:DoughnutSeries.ValueBinding>
+                            </Chart:DoughnutSeries>
+                        </Chart:RadPieChart>
+                        <TextBlock x:Name="PercentageCompleteTransferLabel" Foreground="#a6a6a6" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,30,0,0">
+                    <Grid VerticalAlignment="Top" Width="auto">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <Border BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="100" Margin="0,0,0,30">
-                            <Grid>
-                                <Controls:WatermarkTextBox x:Name="NotesTextbox" AcceptsReturn="True" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" WatermarkText="Notes" TextWrapping="Wrap" Height="auto" FontSize="18" />
-                            </Grid>
-                        </Border>
-                        <Grid Grid.Row="1" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox />
+                        <TextBlock Text="Remove me after transfer" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                        <CheckBox Grid.Row="1" Margin="0,20,0,0" />
+                        <TextBlock Grid.Row="1" Text="Keep the current priority for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                        <CheckBox Grid.Column="2" />
+                        <TextBlock Grid.Column="2" Text="Keep me attached to this tickets" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                        <CheckBox Grid.Column="2" Grid.Row="1" Margin="0,20,0,0" />
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="Keep the current level for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="4" Margin="0,30,0,0">
+                    <Grid VerticalAlignment="Top" Width="1000">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle HorizontalAlignment="Center" Height="2" Width="950" Margin="0,0,0,30" VerticalAlignment="Stretch" Fill="#FFDADADA" />
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="SaveTransferButton" Width="250" Height="60" Tapped="SaveTransferButton_Tapped" Style="{StaticResource SubmitButtonStyle}" Content="Transfer" Foreground="White" PointerEntered="SaveTransferButton_PointerEntered" PointerExited="SaveTransferButton_PointerExited" FontWeight="Normal" />
-                            <TextBlock Text="or" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="10,0,100,0" VerticalAlignment="Center" Foreground="#85778f" />
-                            <TextBlock x:Name="CancelButton" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="20,3,0,0" VerticalAlignment="Center" Foreground="#85778f" Tapped="CancelTransferButton_Tapped" PointerEntered="CancelTransferButton_PointerEntered" PointerExited="CancelTransferButton_PointerExited">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Row="0" x:Name="TechnicianCheckbox" Unchecked="TechnicianCheckbox_Checked" Checked="TechnicianCheckbox_Checked" />
+                            <TextBlock Text="Transfer to Technician" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+                            <ComboBox Grid.Column="1" IsEnabled="False" MinWidth="243" x:Name="TechnicianList" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" Padding="10,-3,0,0" />
+                            <TextBlock Grid.Column="2" Text="(Make Me an Alternate)" FontSize="20" Foreground="#b9b9b9" Margin="0,5,10,0" />
+                            <CheckBox Grid.Column="3" />
+                            <CheckBox x:Name="ClassCheckBox" Grid.Row="2" Unchecked="ClassCheckBox_Checked" Checked="ClassCheckBox_Checked"  />
+                            <TextBlock Grid.Row="2" Text="Transfer to Class" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
+                            <ComboBox Grid.Column="1" x:Name="ClassList" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" IsEnabled="False" Padding="10,-3,0,0">
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="0,30,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Border BorderThickness="2" BorderBrush="#e1e1e1" CornerRadius="5" Height="100" Margin="0,0,0,30">
+                                <Grid>
+                                    <Controls:WatermarkTextBox x:Name="NotesTextbox" AcceptsReturn="True" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,0,0" WatermarkText="Notes" TextWrapping="Wrap" Height="auto" FontSize="18" />
+                                </Grid>
+                            </Border>
+                            <Grid Grid.Row="1" HorizontalAlignment="Right">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="SaveTransferButton" Width="250" Height="60" Tapped="SaveTransferButton_Tapped" Style="{StaticResource SubmitButtonStyle}" Content="Transfer" Foreground="White" PointerEntered="SaveTransferButton_PointerEntered" PointerExited="SaveTransferButton_PointerExited" FontWeight="Normal" />
+                                <TextBlock Text="or" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="10,0,100,0" VerticalAlignment="Center" Foreground="#85778f" />
+                                <TextBlock x:Name="CancelButton" Grid.Column="1" HorizontalAlignment="Center" FontSize="24" Margin="20,3,0,0" VerticalAlignment="Center" Foreground="#85778f" Tapped="CancelTransferButton_Tapped" PointerEntered="CancelTransferButton_PointerEntered" PointerExited="CancelTransferButton_PointerExited">
                 <Underline>
                    Cancel
                 </Underline>
-                            </TextBlock>
+                                </TextBlock>
 
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
