@@ -145,6 +145,7 @@ namespace SherpaDesk
 
         public void FullUpdate()
         {
+            LoadStatInfo();
             FillData(_workType);
         }
 

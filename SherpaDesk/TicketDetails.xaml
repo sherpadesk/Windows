@@ -172,7 +172,7 @@
                         </StackPanel>
                     </telerikPrimitives:RadCustomHubTile.FrontContent>
                 </telerikPrimitives:RadCustomHubTile>
-                <telerikPrimitives:RadCustomHubTile x:Name="PickupButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd">
+                <telerikPrimitives:RadCustomHubTile x:Name="PickupButton" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,20" Height="100" VerticalAlignment="Top" Width="200" Background="#96c8dd" Tapped="PickupButton_Tapped">
                     <telerikPrimitives:RadCustomHubTile.FrontContent>
                         <StackPanel Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                             <Grid>
@@ -472,13 +472,13 @@
                             <ColumnDefinition Width="80" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <CheckBox />
+                        <CheckBox Name="RemoveMeCheckBox" />
                         <TextBlock Text="Remove me after transfer" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
 
                         <CheckBox Grid.Row="1" Margin="0,20,0,0" />
                         <TextBlock Grid.Row="1" Text="Keep the current priority for this ticket" Margin="30,22,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
 
-                        <CheckBox Grid.Column="2" />
+                        <CheckBox Name="KeepMeCheckBox" Grid.Column="2" />
                         <TextBlock Grid.Column="2" Text="Keep me attached to this tickets" Margin="30,2,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
 
                         <CheckBox Grid.Column="2" Grid.Row="1" Margin="0,20,0,0" />
@@ -513,7 +513,7 @@
                             <TextBlock Text="Transfer to Technician" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
                             <ComboBox Grid.Column="1" IsEnabled="False" MinWidth="243" x:Name="TechnicianList" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" Padding="10,-3,0,0" />
                             <TextBlock Grid.Column="2" Text="(Make Me an Alternate)" FontSize="20" Foreground="#b9b9b9" Margin="0,5,10,0" />
-                            <CheckBox Grid.Column="3" />
+                            <CheckBox Grid.Column="3" x:Name="MakeMeAlternateCheckBox" />
                             <CheckBox x:Name="ClassCheckBox" Grid.Row="2" Unchecked="ClassCheckBox_Checked" Checked="ClassCheckBox_Checked"  />
                             <TextBlock Grid.Row="2" Text="Transfer to Class" Margin="30,3,0,0" FontSize="20" Foreground="#8b8b8b" VerticalAlignment="Center" />
                             <ComboBox Grid.Column="1" x:Name="ClassList" Grid.Row="2" MinWidth="243" Margin="50,0,50,0" FontSize="20" Foreground="#8b8b8b" IsEnabled="False" Padding="10,-3,0,0">

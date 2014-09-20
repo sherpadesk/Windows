@@ -21,10 +21,12 @@ namespace SherpaDesk
 {
     public sealed partial class TicketDetails : SherpaDesk.Common.LayoutAwarePage, IChildPage
     {
+        #region Members & Ctor
+
         private string _ticketKey;
         private int _techId;
         private IList<StorageFile> _attachment = null;
-        private byte confirmType = 0;
+        private eTicketAction _actionType = eTicketAction.None;
 
         public event EventHandler UpdatePage;
 
@@ -33,13 +35,9 @@ namespace SherpaDesk
             this.InitializeComponent();
             _attachment = new List<StorageFile>();
         }
+        #endregion
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _ticketKey = (string)e.Parameter;
-            base.OnNavigatedTo(e);
-        }
-
+        #region Data Methods
         private async Task LoadPage()
         {
             using (var connector = new Connector())
@@ -133,6 +131,7 @@ namespace SherpaDesk
             }
 
         }
+
         private async Task FillResponses()
         {
             using (var connector = new Connector())
@@ -154,24 +153,6 @@ namespace SherpaDesk
                     NoteText = Helper.HtmlToString(x.NoteText)
                 }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
                 TicketDetailsList.ItemsSource = resultView;
-            }
-        }
-
-        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {
-            await LoadPage();
-            using (var connector = new Connector())
-            {
-                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    x => x.TaskTypes,
-                    new TaskTypeRequest());
-
-                if (resultTaskType.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultTaskType);
-                    return;
-                }
-                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
             }
         }
 
@@ -243,17 +224,268 @@ namespace SherpaDesk
             }
         }
 
+        private async void DoActionOnTicket()
+        {
+            Response result = null;
+            using (var connector = new Connector())
+            {
+                switch (_actionType)
+                {
+                    case eTicketAction.Close:
+                        result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
+                                new CloseTicketRequest(_ticketKey));
+
+                        break;
+                    case eTicketAction.Delete:
+                        result = await connector.Action<DeleteRequest>(x => x.Tickets,
+                                new DeleteRequest(_ticketKey));
+                        break;
+                    case eTicketAction.PlaceOnHold:
+                        result = await connector.Action<PlaceOnHoldRequest>(x => x.Tickets,
+                            new PlaceOnHoldRequest(_ticketKey) { Note = OnHoldTextbox.Text });
+                        break;
+                    case eTicketAction.PickUp:
+                        result = await connector.Action<PickUpRequest>(x => x.Tickets,
+                            new PickUpRequest(_ticketKey));
+                        break;
+                }
+            }
+            if (result != null)
+            {
+                if (result.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(result);
+                }
+                else
+                {
+                    this.pageRoot.MainPage(page =>
+                    {
+                        page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        ((WorkList)page.WorkListFrame.Content).FullUpdate();
+
+                    });
+                }
+            }
+        }
+
+        private void CalculateHours()
+        {
+            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
+            {
+                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+            }
+        }
+
+        private void ShowConfirm()
+        {
+            if (_actionType == eTicketAction.Close)
+            {
+                ConfirmMessage.Text = "Are you sure you want to close this ticket?";
+                ConfirmYesLabel.Text = "Yes, Close It";
+            }
+            else if (_actionType == eTicketAction.Delete)
+            {
+                ConfirmMessage.Text = "Are you sure you want to delete this ticket?";
+                ConfirmYesLabel.Text = "Yes, Delete It";
+            }
+            else if (_actionType == eTicketAction.PickUp)
+            {
+                ConfirmMessage.Text = "Are you sure you want to pick up this ticket?";
+                ConfirmYesLabel.Text = "Yes, Pick Up It";
+            }
+            grid.IsHitTestVisible = false;
+            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void HideConfirm()
+        {
+            grid.IsHitTestVisible = true;
+            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void ShowOnHold()
+        {
+            OnHoldTextbox.Text = string.Empty;
+            grid.IsHitTestVisible = false;
+            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void HideOnHold()
+        {
+            grid.IsHitTestVisible = true;
+            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+        #endregion
+
+        #region Main Handlers
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadPage();
+            using (var connector = new Connector())
+            {
+                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                    x => x.TaskTypes,
+                    new TaskTypeRequest());
+
+                if (resultTaskType.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(resultTaskType);
+                    return;
+                }
+                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _ticketKey = (string)e.Parameter;
+            base.OnNavigatedTo(e);
+        }
+
         protected async override void UpdatedPage(object sender, EventArgs e)
         {
             await LoadPage();
         }
+        #endregion
 
+        #region Action Handlers
         private void AttachedView_Tapped(object sender, TappedRoutedEventArgs e)
         {
             App.ExternalAction(x =>
                 x.ShowFullScreenImage(((Image)sender).Source));
         }
 
+        private async void SaveTransferButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            using (var connector = new Connector())
+            {
+                var transferResult = await connector.Action<TransferRequest>(x => x.Tickets, new TransferRequest(_ticketKey)
+                {
+                    Note = NotesTextbox.Text,
+                    KeepAttached = KeepMeCheckBox.IsChecked ?? false,
+                    ClassId = ClassCheckBox.IsChecked ?? false ? ClassList.GetSelectedValue<int>() : 0,
+                    TechnicianId = TechnicianList.GetSelectedValue<int>(AppSettings.Current.UserId)
+                });
+
+                if (transferResult.Status != eResponseStatus.Success)
+                {
+                    this.HandleError(transferResult);
+                    return;
+                }
+
+                if (MakeMeAlternateCheckBox.IsChecked ?? false)
+                {
+                    var attachAltTechResult = await connector.Action<AttachAltTechRequest>(x => x.Tickets,
+                        new AttachAltTechRequest(_ticketKey, AppSettings.Current.UserId));
+
+                    if (attachAltTechResult.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(attachAltTechResult);
+                        return;
+                    }
+                }
+            }
+
+            GridTicketDetails.Visibility =
+            GridAddResponse.Visibility =
+            Windows.UI.Xaml.Visibility.Visible;
+
+            GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+            this.pageRoot.MainPage(page =>
+            {
+                page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                ((WorkList)page.WorkListFrame.Content).FullUpdate();
+
+            });
+        }
+
+        private async void attachButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+            var files = await openPicker.PickMultipleFilesAsync();
+            _attachment.Clear();
+            if (files != null && files.Count > 0)
+            {
+                SelectedFilesList.Text = "Picked photos: ";
+                List<string> fileNames = new List<string>();
+                foreach (var file in files)
+                {
+                    fileNames.Add(file.Name);
+                    _attachment.Add(file);
+                }
+                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+            }
+            else
+            {
+                SelectedFilesList.Text = string.Empty;
+            }
+        }
+
+        private void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            _actionType = eTicketAction.Close;
+            ShowConfirm();
+        }
+
+        private void PickupButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            _actionType = eTicketAction.PickUp;
+            ShowConfirm();
+        }
+
+        private void DeleteButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            _actionType = eTicketAction.Delete;
+            ShowConfirm();
+        }
+
+        private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await PostResponse();
+        }
+
+        private async void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideConfirm();
+            DoActionOnTicket();
+        }
+
+        private void ConfirmNo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideConfirm();
+        }
+
+        private void ConfirmYesOnHold_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideOnHold();
+            DoActionOnTicket();
+        }
+
+        private void ConfirmNoOnHold_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HideOnHold();
+        }
+
+        private void PlaceOnHoldButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            _actionType = eTicketAction.PlaceOnHold;
+            ShowOnHold();
+        }
+
+        #endregion
+
+        #region Visual Handlers
         private void ReplyGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             ReplyGrid.Background.Opacity = 0.9;
@@ -273,6 +505,7 @@ namespace SherpaDesk
         {
             ((Button)sender).Opacity = 1;
         }
+
         private void TransferButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             GridTicketDetails.Visibility =
@@ -311,107 +544,6 @@ namespace SherpaDesk
             CalculateHours();
         }
 
-        private void CalculateHours()
-        {
-            if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
-            {
-                var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
-                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
-            }
-        }
-
-        private void SaveTransferButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            GridTicketDetails.Visibility =
-            GridAddResponse.Visibility =
-            Windows.UI.Xaml.Visibility.Visible;
-
-            GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
-
-        private async void attachButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.Thumbnail;
-            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            openPicker.FileTypeFilter.Add(".jpg");
-            openPicker.FileTypeFilter.Add(".jpeg");
-            openPicker.FileTypeFilter.Add(".png");
-            var files = await openPicker.PickMultipleFilesAsync();
-            _attachment.Clear();
-            if (files != null && files.Count > 0)
-            {
-                SelectedFilesList.Text = "Picked photos: ";
-                List<string> fileNames = new List<string>();
-                foreach (var file in files)
-                {
-                    fileNames.Add(file.Name);
-                    _attachment.Add(file);
-                }
-                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
-            }
-            else
-            {
-                SelectedFilesList.Text = string.Empty;
-            }
-        }
-
-        private void ShowConfirm()
-        {
-            if (confirmType == 1)
-            {
-                ConfirmMessage.Text = "Are you sure you want to close this ticket?";
-                ConfirmYesLabel.Text = "Yes, Close It";
-            }
-            else
-            {
-                ConfirmMessage.Text = "Are you sure you want to delete this ticket?";
-                ConfirmYesLabel.Text = "Yes, Delete It";
-            }
-            grid.IsHitTestVisible = false;
-            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
-        }
-
-        private void HideConfirm()
-        {
-            grid.IsHitTestVisible = true;
-            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
-
-        private void ShowOnHold()
-        {
-            OnHoldTextbox.Text = string.Empty;
-            grid.IsHitTestVisible = false;
-            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
-        }
-
-        private void HideOnHold()
-        {
-            grid.IsHitTestVisible = true;
-            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
-
-        private void CloseButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            confirmType = 1;
-            ShowConfirm();
-        }
-
-        private void DeleteButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            confirmType = 2;
-            ShowConfirm();
-        }
-
-        private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            await PostResponse();
-        }
-
         private void ClassCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             ClassList.IsEnabled = ClassCheckBox.IsChecked.Value;
@@ -420,46 +552,6 @@ namespace SherpaDesk
         private void TechnicianCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             TechnicianList.IsEnabled = TechnicianCheckbox.IsChecked.Value;
-        }
-
-        private async void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            HideConfirm();
-            using (var connector = new Connector())
-            {
-                if (confirmType == 1)
-                {
-                    var result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                            new CloseTicketRequest(_ticketKey));
-
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                }
-                else
-                {
-                    var result = await connector.Action<DeleteRequest>(x => x.Tickets,
-                            new DeleteRequest(_ticketKey));
-
-                    if (result.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(result);
-                        return;
-                    }
-                }
-            }
-            this.pageRoot.MainPage(page =>
-            {
-                page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ((WorkList)page.WorkListFrame.Content).FullUpdate();
-            });
-        }
-
-        private void ConfirmNo_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            HideConfirm();
         }
 
         private void ConfirmYes_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -501,21 +593,18 @@ namespace SherpaDesk
         {
             ConfirmYesOnHold.Background.Opacity = 1;
         }
+        #endregion
 
-        private void ConfirmYesOnHold_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //OnHoldTextbox.Text
-            HideOnHold();
-        }
-
-        private void ConfirmNoOnHold_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            HideOnHold();
-        }
-
-        private void PlaceOnHoldButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ShowOnHold();
-        }
     }
+    public enum eTicketAction
+    {
+        None = 0,
+        Close,
+        ReOpen,
+        PickUp,
+        PlaceOnHold,
+        Delete
+    }
+
+
 }
