@@ -455,7 +455,7 @@ namespace SherpaDesk
             await PostResponse();
         }
 
-        private async void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
         {
             HideConfirm();
             DoActionOnTicket();
@@ -595,6 +595,15 @@ namespace SherpaDesk
         }
         #endregion
 
+        private void RemoveMeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            KeepMeCheckBox.IsChecked = false;          
+        }
+
+        private void KeepMeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            RemoveMeCheckBox.IsChecked = false;
+        }
     }
     public enum eTicketAction
     {
@@ -605,6 +614,4 @@ namespace SherpaDesk
         PlaceOnHold,
         Delete
     }
-
-
 }
