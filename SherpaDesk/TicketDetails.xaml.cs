@@ -325,6 +325,10 @@ namespace SherpaDesk
         #region Main Handlers
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            this.pageRoot.MainPage(page =>
+            {
+                page.ScrollViewer.ChangeView((page.ScrollViewer.ScrollableWidth - 1000), null, null);
+            });
             await LoadPage();
             using (var connector = new Connector())
             {
@@ -597,7 +601,7 @@ namespace SherpaDesk
 
         private void RemoveMeCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            KeepMeCheckBox.IsChecked = false;          
+            KeepMeCheckBox.IsChecked = false;
         }
 
         private void KeepMeCheckBox_Checked(object sender, RoutedEventArgs e)

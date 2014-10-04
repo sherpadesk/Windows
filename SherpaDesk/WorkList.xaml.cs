@@ -189,7 +189,6 @@ namespace SherpaDesk
             this.pageRoot.MainPage(page =>
             {
                 page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null);
                 page.WorkDetailsFrame.Navigate(typeof(TicketDetails), ((TicketSearchResponse)e.AddedItems.First()).TicketKey);
             });
         }

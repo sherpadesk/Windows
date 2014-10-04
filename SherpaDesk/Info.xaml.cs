@@ -15,7 +15,7 @@ namespace SherpaDesk
         public Info()
         {
             this.InitializeComponent();
-        }
+       }
 
 
         public async Task RefreshData()

@@ -15,7 +15,7 @@ namespace SherpaDesk
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
-        {    
+        {
             using (var connector = new Connector())
             {
                 var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);
@@ -30,7 +30,7 @@ namespace SherpaDesk
                     Date = x.DaysOld,
                     Title = x.Title,
                     Note = Helper.HtmlToString(x.Note)
-                }).ToList();
+                }).OrderBy(x => x.Date).ToList();
 
                 if (dataSource.Count > 0)
                 {

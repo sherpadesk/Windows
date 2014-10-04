@@ -29,10 +29,11 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
         <Style x:Key="WorkListCellTextStyle" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="#9F9F9F" />
+            <Setter Property="Margin" Value="10,0,0,0" />
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="WorkListCellDecorationStyle" TargetType="Rectangle">
@@ -233,10 +234,10 @@
                 <telerik:DataGridTextColumn PropertyName="Subject" 
                                             SizeMode="Fixed" 
                                             Width="300" 
-                                            Header="Subject" 
+                                            Header="Subject"                                             
                                             HeaderStyle="{StaticResource WorkListHeaderTextStyle}"
                                             CellDecorationStyle="{StaticResource WorkListCellDecorationStyle}"
-                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">
+                                            CellContentStyle="{StaticResource WorkListCellTextStyle}">                  
                 </telerik:DataGridTextColumn>
                 <telerik:DataGridTextColumn PropertyName="UserFullName" 
                                             SizeMode="Auto" 
