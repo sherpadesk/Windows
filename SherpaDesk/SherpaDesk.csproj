@@ -326,7 +326,6 @@
     <Content Include="Assets\Images\square310x310Logo.png" />
     <Content Include="Assets\Images\Square70x70Logo.png" />
     <Content Include="Assets\Images\StoreLogo.png" />
-    <Content Include="Assets\Images\ticket-details-avatar.png" />
     <Content Include="Assets\Images\ticket-details-comments-avatar.png" />
     <Content Include="Assets\Images\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Logo.png" />

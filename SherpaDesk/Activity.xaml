@@ -83,7 +83,7 @@
 
                         <Image VerticalAlignment="Stretch"  
                                HorizontalAlignment="Left"
-                               Source="Assets/Images/face55x55.png"
+                               Source="{Binding Avatar}"
                                Grid.Column="0"
                                Margin="0,0,10,0"
                                Grid.Row="0" />

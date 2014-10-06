@@ -73,9 +73,12 @@ namespace SherpaDesk
                 TicketNumber.Text = ticket.TicketNumber.ToString();
                 SubjectLabel.Text = ticket.Subject;
                 EndUserLabel.Text = ticket.UserFullName;
+                TicketDetailsAvatar.Source = new BitmapImage(new Uri(string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=200", Helper.GetMD5(ticket.UserEmail))));
+
                 TicketDescription.Text = Helper.HtmlToString(ticket.InitialPost);
                 СreatedTime.Text = ticket.СreatedTimeText;
 
+                TicketTransferAvatar.Source = new BitmapImage(new Uri(string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=100", Helper.GetMD5(ticket.UserEmail))));
                 TicketNumberTransfer.Text = ticket.TicketNumber.ToString();
                 SubjectLabelTransfer.Text = ticket.Subject;
                 EndUserLabelTransfer.Text = ticket.UserFullName;
@@ -150,7 +153,8 @@ namespace SherpaDesk
                     x.FullName,
                     x.ResponseDateText,
                     x.NoteType,
-                    NoteText = Helper.HtmlToString(x.NoteText)
+                    NoteText = Helper.HtmlToString(x.NoteText),
+                    Avatar = string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=125", Helper.GetMD5(x.Email))
                 }).Where(x => x.NoteType != eNoteType.InitialPost.Details()).ToList();
                 TicketDetailsList.ItemsSource = resultView;
             }

@@ -29,7 +29,8 @@ namespace SherpaDesk
                     UserName = x.UserName,
                     Date = x.DaysOld,
                     Title = x.Title,
-                    Note = Helper.HtmlToString(x.Note)
+                    Note = Helper.HtmlToString(x.Note),
+                    Avatar = string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=40", Helper.GetMD5(x.UserEmail))
                 }).OrderBy(x => x.Date).ToList();
 
                 if (dataSource.Count > 0)

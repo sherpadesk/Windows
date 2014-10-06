@@ -246,7 +246,7 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Image Source="Assets/Images/ticket-details-avatar.png" />
+                    <Image x:Name="TicketDetailsAvatar" />
                     <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -372,7 +372,7 @@
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="800" />
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="Assets/Images/ticket-details-comments-avatar.png" VerticalAlignment="Top" />
+                                        <Image Source="{Binding Avatar}" VerticalAlignment="Top" />
                                         <Grid Grid.Column="1" Margin="20,0,0,0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto" />
@@ -432,7 +432,7 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Image Source="Assets/Images/ticket-details-avatar.png" Width="100" Height="100" />
+                    <Image x:Name="TicketTransferAvatar" Width="100" Height="100" />
                     <Grid Grid.Column="1" VerticalAlignment="Center" Margin="20,0,20,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
