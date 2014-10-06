@@ -27,7 +27,21 @@
         </Grid.ColumnDefinitions>
         <Image VerticalAlignment="Stretch" Grid.Column="1" Canvas.ZIndex="-1" Source="Assets/Images/main-background.png" Stretch="UniformToFill"/>
         <Frame x:Name="ActivityFrame" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" />
-        <Grid x:Name="InfoGrid" Grid.Column="1" Canvas.ZIndex="1" VerticalAlignment="Top">
+        <Button HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Top" Canvas.ZIndex="3" Width="330" Height="100" Margin="0,0,90,0" Style="{StaticResource TextButtonStyle}" Background="Transparent" BorderBrush="Transparent">
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyout.MenuFlyoutPresenterStyle>
+                        <Style TargetType="MenuFlyoutPresenter">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Margin" Value="0,-15,0,0"/>
+                        </Style>
+                    </MenuFlyout.MenuFlyoutPresenterStyle>
+                    <MenuFlyoutItem x:Name="SherpaDeskLink" Text="Visit SherpaDesk.com" Tapped="SherpaDeskLink_Tapped" />
+                    <MenuFlyoutItem x:Name="LogOutMenu" Text="Logout" Tapped="LogOutMenu_Tapped" />
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+        <Grid x:Name="InfoGrid" Grid.Column="1" Canvas.ZIndex="1" Margin="0,50,0,0" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190" />
                 <ColumnDefinition />
@@ -38,29 +52,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Button HorizontalAlignment="Right" Style="{StaticResource TextButtonStyle}" Width="330" Margin="0,0,120,0" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent">
-                        <Button.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyout.MenuFlyoutPresenterStyle>
-                                    <Style TargetType="MenuFlyoutPresenter">
-                                        <Setter Property="BorderThickness" Value="0"/>
-                                        <Setter Property="Margin" Value="0,-15,0,0"/>
-                                    </Style>
-                                </MenuFlyout.MenuFlyoutPresenterStyle>
-                                <MenuFlyoutItem x:Name="SherpaDeskLink" Text="Visit SherpaDesk.com" Tapped="SherpaDeskLink_Tapped" />
-                                <MenuFlyoutItem x:Name="LogOutMenu" Text="Logout" Tapped="LogOutMenu_Tapped" />
-                            </MenuFlyout>
-                        </Button.Flyout>
-                    </Button>
-                    <Grid Width="800" Height="500" Grid.Row="1" HorizontalAlignment="Left" Margin="30,0,30,30" VerticalAlignment="Top">
+                    <Grid Width="800" Height="500" Grid.Row="0" HorizontalAlignment="Left" Margin="30,0,30,30" VerticalAlignment="Center">
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#72585858"/>
@@ -139,9 +131,8 @@
                             </ListView>
                         </Grid>
                     </Grid>
-                </Grid>
             </Grid>
-            <telerik:RadCustomHubTile x:Name="TimeButton" Grid.Column="0" HorizontalAlignment="Right" Margin="0,100,5,5" Height="150" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF" Tapped="TimeButton_Tapped">
+            <telerik:RadCustomHubTile x:Name="TimeButton" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,5" Height="150" VerticalAlignment="Top" Width="150" Background="#D8E9EDEF" Tapped="TimeButton_Tapped">
                 <telerik:RadCustomHubTile.FrontContent>
                     <StackPanel Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <TextBlock Text="+Time" FontSize="28" Margin="0,0,10,0" Foreground="#FF7395A4" FontWeight="Bold"/>
