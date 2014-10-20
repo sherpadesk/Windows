@@ -30,5 +30,10 @@ namespace SherpaDesk
             TicketTimeGrid.ItemsSource = list;
             TicketTimeGrid.UpdateLayout();
         }
+
+        private void EditButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }

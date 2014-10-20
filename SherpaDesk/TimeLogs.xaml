@@ -5,10 +5,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SherpaDesk"
+    xmlns:localData ="using:CustomizingEditing.Data"    
     xmlns:common="using:SherpaDesk.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:gridCommands="using:Telerik.UI.Xaml.Controls.Grid.Commands"
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives">
     <Page.Resources>
         <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
@@ -48,8 +50,9 @@
             <telerik:RadDataGrid 
                 RequestedTheme="Light" 
                 x:Name="TicketTimeGrid" 
-                UserGroupMode="Disabled" 
+                UserGroupMode="Disabled"                
                 Grid.Row="4"
+                UserEditMode="Inline"
                 AutoGenerateColumns="False" 
                 UserColumnReorderMode="None" 
                 UserFilterMode="Disabled" 
@@ -94,9 +97,19 @@
                         </telerik:DataGridTemplateColumn.CellContentTemplate>
                     </telerik:DataGridTemplateColumn>
                     <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TaskTypeName" Header="Task" SizeMode="Auto" />
-
                     <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Note" Header="Note" SizeMode="Auto" />
-
+                    <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Edit / Remove" SizeMode="Auto">
+                        <telerik:DataGridTemplateColumn.CellContentTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Button Width="200" 
+                               Height="30"
+                               Content="Edit" CommandParameter="2" Tapped="EditButton_Tapped">
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:DataGridTemplateColumn.CellContentTemplate>
+                    </telerik:DataGridTemplateColumn>
                 </telerik:RadDataGrid.Columns>
             </telerik:RadDataGrid>
         </Grid>

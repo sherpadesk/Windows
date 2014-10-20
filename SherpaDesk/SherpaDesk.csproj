@@ -108,6 +108,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\CustomBeginEditCommand.cs" />
     <Compile Include="Models\ViewModels\ChartDataModel.cs" />
     <Compile Include="TimeLogs.xaml.cs">
       <DependentUpon>TimeLogs.xaml</DependentUpon>
