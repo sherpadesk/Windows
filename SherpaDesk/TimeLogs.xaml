@@ -104,7 +104,7 @@
                                 <StackPanel>
                                     <Button Width="200" 
                                Height="30"
-                               Content="Edit" CommandParameter="2" Tapped="EditButton_Tapped">
+                               Content="Edit" CommandParameter="2">
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>

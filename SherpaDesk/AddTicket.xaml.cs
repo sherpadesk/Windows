@@ -5,12 +5,14 @@ using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Telerik.UI.Xaml.Controls.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -18,13 +20,13 @@ namespace SherpaDesk
 {
     public sealed partial class AddTicket : SherpaDesk.Common.LayoutAwarePage
     {
-        private IList<StorageFile> _attachment = null;
+        private ObservableCollection<StorageFile> _attachment = null;
+
         public AddTicket()
         {
             this.InitializeComponent();
-            _attachment = new List<StorageFile>();
+            _attachment = new ObservableCollection<StorageFile>();
         }
-
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
@@ -124,19 +126,16 @@ namespace SherpaDesk
             var files = await openPicker.PickMultipleFilesAsync();
             _attachment.Clear();
             if (files != null && files.Count > 0)
-            {
-                SelectedFilesList.Text = "Picked photos: ";
-                List<string> fileNames = new List<string>();
+            {                
                 foreach (var file in files)
                 {
-                    fileNames.Add(file.Name);
                     _attachment.Add(file);
                 }
-                SelectedFilesList.Text += string.Join(", ", fileNames.ToArray());
+                selectedFilesList.ItemsSource = _attachment;
             }
             else
             {
-                SelectedFilesList.Text = string.Empty;
+                selectedFilesList.Items.Clear();
             }
         }
 
@@ -332,6 +331,7 @@ namespace SherpaDesk
 
         private void AddUserLink_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            FirstNameTextbox.Text = LastNameTextbox.Text = EmailTextbox.Text = string.Empty;
             NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
@@ -358,6 +358,16 @@ namespace SherpaDesk
         private void CancelButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             ((TextBlock)sender).Opacity = 1;
+        }
+
+        private void RemoveAttachmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            var attachment = _attachment.FirstOrDefault(x => x.Name == ((Windows.UI.Xaml.Controls.Primitives.ButtonBase)(sender)).Tag.ToString());
+            if (attachment != null)
+            {
+                _attachment.Remove(attachment);
+                selectedFilesList.Focus(FocusState.Pointer);
+            }
         }
     }
 }

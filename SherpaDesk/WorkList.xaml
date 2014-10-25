@@ -192,7 +192,7 @@
                 </telerikPrimitives:RadCustomHubTile.FrontContent>
             </telerikPrimitives:RadCustomHubTile>
         </Grid>
-        <telerik:RadDataGrid x:Name="ItemsGrid" 
+        <telerik:RadDataGrid x:Name="ItemsGrid" Width="auto"
                              RequestedTheme="Light" 
                              UserGroupMode="Disabled" 
                              AutoGenerateColumns="False" 

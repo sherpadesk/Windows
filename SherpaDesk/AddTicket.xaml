@@ -22,6 +22,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="LvItemStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border x:Name="border" Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="Selected" />
+                                    <VisualState x:Name="SelectedUnfocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>        
     </common:LayoutAwarePage.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -122,17 +144,24 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <TextBlock Grid.Column="3" x:Name="SelectedFilesList" Grid.Row="6" Grid.RowSpan="2" VerticalAlignment="Top" MaxHeight="80" Margin="0,65,0,10" Width="450" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto" FontSize="14" TextWrapping="Wrap" />
+                    <ListView x:Name="selectedFilesList" ItemContainerStyle="{StaticResource LvItemStyle}" Grid.Column="3" Grid.Row="6" Grid.RowSpan="2" VerticalAlignment="Top" MaxHeight="80" Margin="0,65,0,10" Width="450" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,5,5,5" />
+                                    <Button Content="Remove" Grid.Column="1" Tag="{Binding Name}" x:Name="RemoveAttachmentButton" Click="RemoveAttachmentButton_Click" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </Grid>
         </Grid >
         <Grid x:Name="NewUserGrid" Width="600" Grid.Column="1" Visibility="Collapsed">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
