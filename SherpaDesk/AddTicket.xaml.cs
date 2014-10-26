@@ -333,6 +333,10 @@ namespace SherpaDesk
         {
             FirstNameTextbox.Text = LastNameTextbox.Text = EmailTextbox.Text = string.Empty;
             NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            this.MainPage(page =>
+            {
+                page.ScrollViewer.ChangeView(AddTicketGrid.ActualWidth + 700 - Window.Current.Bounds.Width, null, null);
+            });
         }
 
         private void AddUserArrow_PointerEntered(object sender, PointerRoutedEventArgs e)

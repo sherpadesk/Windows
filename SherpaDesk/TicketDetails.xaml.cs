@@ -331,7 +331,7 @@ namespace SherpaDesk
         {
             this.pageRoot.MainPage(page =>
             {
-                page.ScrollViewer.ChangeView((page.ScrollViewer.ScrollableWidth - 1000), null, null);
+                page.ScrollViewer.ChangeView((page.ScrollViewer.ScrollableWidth - this.Frame.ActualWidth + 300), null, null);
             });
             await LoadPage();
             using (var connector = new Connector())

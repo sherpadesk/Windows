@@ -124,7 +124,7 @@ namespace SherpaDesk
         {
             this.MainPage(page =>
             {
-                page.ScrollViewer.ChangeView(Constants.WIDTH_MAX_RIGHT, null, null);
+                page.ScrollViewer.ChangeView(this.Frame.ActualWidth + page.WorkListFrame.ActualWidth + 500, null, null);
             });
         }
     }
