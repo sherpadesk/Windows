@@ -275,11 +275,21 @@ namespace SherpaDesk
             this.Model.CurrentDate = date;
             if (TimeLogsFrame.Content == null)
             {
-                this.TimeLogsFrame.Navigate(typeof(TimeLogs), this.Model.FullList);
+                if (Model.FullList.Count > 0)
+                {
+                    this.TimeLogsFrame.Navigate(typeof(TimeLogs), this.Model.FullList);
+                }
             }
-            else
+            else if (TimeLogsFrame.Content != null)
             {
                 ((TimeLogs)TimeLogsFrame.Content).UpdateGrid(this.Model.FullList);
+                if (Model.FullList.Count > 0)
+                {
+                    this.pageRoot.MainPage(page =>
+                    {
+                        page.ScrollViewer.ChangeView(0, null, null);
+                    });
+                }
             }
         }
 

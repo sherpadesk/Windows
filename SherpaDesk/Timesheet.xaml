@@ -45,7 +45,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="pageTitle" Foreground="#86abb6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,30,0,50" FontSize="60" Text="Timesheet" FontWeight="Normal"/>
+                <TextBlock x:Name="pageTitle" Foreground="#86abb6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,30,0,70" FontSize="60" Text="Timesheet" FontWeight="Normal"/>
             </Grid>
             <Grid Style="{StaticResource LayoutRootStyle}" Grid.Row="1" Background="Transparent">
                 <Grid.RowDefinitions>
