@@ -6,7 +6,7 @@ namespace SherpaDesk.Models.Response
     [DataContract]
     public class TimeResponse : ObjectBase
     {
-        [DataMember(Name = "project_time_id"), Details]
+        [DataMember(Name = "time_id"), Details]
         public int TimeId { get; set; }
 
         [DataMember(Name = "user_id"), Details]

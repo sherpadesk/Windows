@@ -52,7 +52,7 @@
                 x:Name="TicketTimeGrid" 
                 UserGroupMode="Disabled"                
                 Grid.Row="4"
-                UserEditMode="Inline"
+                UserEditMode="None"
                 AutoGenerateColumns="False" 
                 UserColumnReorderMode="None" 
                 UserFilterMode="Disabled" 
@@ -101,12 +101,14 @@
                     <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Edit / Remove" SizeMode="Auto">
                         <telerik:DataGridTemplateColumn.CellContentTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <Button Width="200" 
-                               Height="30"
-                               Content="Edit" CommandParameter="2">
-                                    </Button>
-                                </StackPanel>
+                                <Grid Margin="0,0,20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Width="100" Height="50" Content="Edit" Tag="{Binding TimeId}" x:Name="EditButton" Tapped="EditButton_Tapped"  />
+                                    <Button Grid.Column="1" Width="100" Height="50" Content="Delete" Tag="{Binding TimeId}" x:Name="DeleteButton" Tapped="DeleteButton_Tapped"  />
+                                </Grid>
                             </DataTemplate>
                         </telerik:DataGridTemplateColumn.CellContentTemplate>
                     </telerik:DataGridTemplateColumn>

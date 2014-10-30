@@ -115,6 +115,7 @@ namespace SherpaDesk.Common
                 }
                 if (response.IsSuccessStatusCode)
                 {
+//                    var resp_message = await response.Content.ReadAsStringAsync();
                     result.Fill(response.Content);
                 }
                 else

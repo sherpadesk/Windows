@@ -33,7 +33,16 @@ namespace SherpaDesk
 
         private void EditButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            var timeId = ((Windows.UI.Xaml.FrameworkElement)(sender)).Tag;
+        }
 
+        private async void DeleteButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            if (await App.ConfirmMessage())
+            {                
+                var timeId = ((Windows.UI.Xaml.FrameworkElement)(sender)).Tag;
+                // need to implement delete
+            }
         }
     }
 }
