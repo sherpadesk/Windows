@@ -56,4 +56,40 @@ namespace SherpaDesk.Models.Request
                 this._date = this.Date.ToString("yyyy-MM-dd");
         }
     }
+
+    [DataContract]
+    public class UpdateTimeRequest : AddTimeRequest
+    {
+        public UpdateTimeRequest(string ticketKey, int timeId)
+        {
+            this.TicketKey = ticketKey;
+            this.TicketTimeId = timeId;
+        }
+
+        public UpdateTimeRequest(int projectId, int timeId)
+        {
+            this.ProjectId = projectId;
+            this.ProjectTimeId = timeId;
+        }
+
+        [DataMember(Name = "project_time_id"), Details]
+        public int ProjectTimeId { get; set; }
+
+        [DataMember(Name = "ticket_time_id"), Details]
+        public int TicketTimeId { get; set; }
+
+    }
+
+    [DataContract]
+    public class DeleteTimeRequest : DeleteRequest
+    {
+        public DeleteTimeRequest(int timeId, bool isProject)
+            : base(timeId.ToString())
+        {
+            IsProjectLog = isProject;
+        }
+
+        [DataMember(Name = "is_project_log"), Details]
+        public bool IsProjectLog { get; set; }
+    }
 }
