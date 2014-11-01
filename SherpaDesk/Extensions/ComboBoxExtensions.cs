@@ -107,7 +107,7 @@ namespace SherpaDesk.Extensions
                 foreach (var kv in args)
                 {
                     comboBox.Items.Add(new ComboBoxItem
-                    {
+                    {                      
                         Tag = kv.Key,
                         Content = kv.Name
                     });

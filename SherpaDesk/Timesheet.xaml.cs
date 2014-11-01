@@ -24,7 +24,7 @@ namespace SherpaDesk
 
         #region Handlers
 
-        private async Task TimesheetLoad(object sender, TimesheetEventArgs e)
+        public async void TimesheetRefresh(DateTime startDate, DateTime endDate)
         {
             using (var connector = new Connector())
             {
@@ -34,8 +34,8 @@ namespace SherpaDesk
                     {
                         TechnicianId = AppSettings.Current.UserId,
                         TimeType = eTimeType.Recent,
-                        StartDate = e.StartDate.AddDays(-7),
-                        EndDate = e.EndDate.AddDays(7)
+                        StartDate = startDate.AddDays(-7),
+                        EndDate = endDate.AddDays(7)
                     });
                 if (result.Status != eResponseStatus.Success)
                 {
@@ -45,9 +45,14 @@ namespace SherpaDesk
 
                 this.Model.TimeLogList = new ObservableCollection<TimeResponse>(result.Result.ToList());
 
-                this.TimesheetCalendar.DisplayDateStart = e.StartDate.AddYears(-3);
-                this.TimesheetCalendar.DisplayDateEnd = e.EndDate.AddYears(3);
+                this.TimesheetCalendar.DisplayDateStart = startDate.AddYears(-3);
+                this.TimesheetCalendar.DisplayDateEnd = endDate.AddYears(3);
             }
+        }
+
+        private async Task TimesheetLoad(object sender, TimesheetEventArgs e)
+        {
+            TimesheetRefresh(e.StartDate, e.EndDate);
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
@@ -75,7 +80,6 @@ namespace SherpaDesk
                     new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
             }
         }
-
 
         private async void TechnicianList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {

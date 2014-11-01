@@ -3,6 +3,7 @@ using SherpaDesk.Extensions;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using System;
 using System.Linq;
 using System.Reflection;
 using Windows.UI.Core;
@@ -69,6 +70,15 @@ namespace SherpaDesk
             if (info != null)
             {
                 await info.RefreshData();
+            }
+        }
+
+        public async void UpdateTimesheet(DateTime start, DateTime end)
+        {
+            Timesheet timesheet = this.timesheetFrame.Content as Timesheet;
+            if (timesheet != null)
+            {
+                timesheet.TimesheetRefresh(start, end);
             }
         }
 

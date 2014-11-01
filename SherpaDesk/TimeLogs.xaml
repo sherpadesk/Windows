@@ -10,9 +10,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
+    xmlns:telerikInput ="using:Telerik.UI.Xaml.Controls.Input"
     xmlns:gridCommands="using:Telerik.UI.Xaml.Controls.Grid.Commands"
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives">
     <Page.Resources>
+        <Style x:Key="SubmitButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Image Source="../../Assets/Images/button.png" Stretch="Fill" />
+                            <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 FontFamily="Segoe UI" FontSize="24"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="WorkListHeaderTextStyle" TargetType="gridPrimitives:DataGridColumnHeader">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="20" />
@@ -29,25 +43,103 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
     </Page.Resources>
-    <Grid Style="{StaticResource LayoutRootStyle}" Margin="50,0,50,0" Background="#ebebeb">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="pageTitle" Foreground="#86abb6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,30,30,20" FontSize="40" Text="Time Logs" FontWeight="Normal"/>
-        <Grid x:Name="TimesheetGrids" Grid.Row="1" Background="#ebebeb" Grid.Column="4" Margin="0,-15,0,15">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="EditTimeGrid" Visibility="Collapsed" Margin="50,140,0,0" HorizontalAlignment="Stretch" Width="570">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Right" Grid.Row="1" Margin="10,10,0,5" Foreground="#8eb1bb" TextWrapping="Wrap" Text="Technician" VerticalAlignment="Center" FontSize="18"/>
+            <ComboBox Name="TechnicianList" Grid.Column="2" Grid.Row="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,5" SelectionChanged="TechnicianList_SelectionChanged" RequestedTheme="Dark" />
 
-            <telerik:RadDataGrid 
+            <TextBlock HorizontalAlignment="Right" Grid.Row="2" Margin="10,5,0,5" Foreground="#8eb1bb" TextWrapping="Wrap" Text="Account" VerticalAlignment="Center" FontSize="18"/>
+            <ComboBox Name="AccountList" Grid.Column="2" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,5,0,5" SelectionChanged="AccountList_SelectionChanged" RequestedTheme="Dark" />
+
+            <TextBlock Name="ProjectLabel" HorizontalAlignment="Right" Grid.Row="3" Foreground="#8eb1bb" Margin="10,5,0,5" TextWrapping="Wrap" Text="Project" VerticalAlignment="Center" FontSize="18"/>
+            <ComboBox Name="ProjectList" Grid.Column="2" Grid.Row="3" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,5,0,5" SelectionChanged="ProjectList_SelectionChanged" RequestedTheme="Dark" />
+
+            <TextBlock Name="TaskTypeLabel" HorizontalAlignment="Right" Grid.Row="4" Foreground="#8eb1bb" Margin="0,0,0,5" TextWrapping="Wrap" Text="Task Type" VerticalAlignment="Center" FontSize="18"/>
+            <ComboBox Name="TaskTypeList" Grid.Column="2" Grid.Row="4" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,5,0,10" RequestedTheme="Dark" />
+
+            <TextBlock HorizontalAlignment="Right" Grid.Row="5" Margin="10,5,0,5" Foreground="#8eb1bb" TextWrapping="Wrap" Text="Billable" VerticalAlignment="Center" FontSize="18"/>
+            <CheckBox Name="BillableBox" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Column="2" Grid.Row="5" VerticalAlignment="Top" FontSize="20" IsChecked="True"/>
+
+            <TextBlock HorizontalAlignment="Right" Grid.Row="6" Margin="10,5,0,5" Foreground="#8eb1bb" TextWrapping="Wrap" Text="Start Time" VerticalAlignment="Center" FontSize="18" />
+            <Grid Grid.Column="2" Grid.Row="6" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="StartTimeLabel" Grid.Column="0" FontSize="20" VerticalAlignment="Center" Margin="0,0,0,0" />
+                <telerikInput:RadTimePicker x:Name="StartTimePicker" Grid.Column="2" Height="30" Width="30" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" ValueChanged="StartTimePicker_ValueChanged" RequestedTheme="Dark" />
+            </Grid>
+
+            <TextBlock HorizontalAlignment="Right" Grid.Row="7" Foreground="#8eb1bb" Margin="10,5,0,5" TextWrapping="Wrap" Text="End Time" VerticalAlignment="Center" FontSize="18" />
+            <Grid Grid.Column="2" Grid.Row="7" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="EndTimeLabel" Grid.Column="0" FontSize="20" VerticalAlignment="Center" Margin="0,0,0,0" />
+                <telerikInput:RadTimePicker x:Name="EndTimePicker" Grid.Column="2" Height="30" Width="30" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" ValueChanged="EndTimePicker_ValueChanged" RequestedTheme="Dark" />
+            </Grid>
+
+            <TextBlock HorizontalAlignment="Right" Foreground="#8eb1bb" Grid.Row="8" Margin="10,5,0,5" TextWrapping="Wrap" Text="Hours" VerticalAlignment="Center" FontSize="18" />
+            <TextBox x:Name="HoursTextBox" Margin="0,5,0,0" HorizontalAlignment="Left" Height="40" InputScope="NumberFullWidth" Text="0.00" Grid.Row="8" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" Width="130" BorderBrush="#FFDEDEDE" />
+
+            <TextBlock x:Name="ErrorHours" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" Height="50" VerticalAlignment="Top" />
+
+            <TextBlock HorizontalAlignment="Right" Foreground="#8eb1bb" Grid.Row="9" Margin="10,5,0,5" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Center" FontSize="18" />
+            <TextBox x:Name="NoteTextBox" Margin="0,0,0,0" HorizontalAlignment="Stretch" Height="100" BorderBrush="#FFDEDEDE" InputScope="NumberFullWidth" Grid.Row="9" TextWrapping="Wrap" Grid.Column="2" VerticalAlignment="Top" FontSize="20" />
+
+            <Button x:Name="SubmitButton" Style="{StaticResource SubmitButtonStyle}" Content="Save Time" Grid.Column="2" Foreground="White" HorizontalAlignment="Left" Margin="0,14,0,0" Padding="0,0,0,0" Grid.Row="10" VerticalAlignment="Top" Height="50" Grid.RowSpan="2" Width="200" FontSize="24" Click="Button_Click" PointerEntered="SubmitButton_PointerEntered" PointerExited="SubmitButton_PointerExited" />
+            <TextBlock Text="or" Grid.Column="2" Grid.Row="10" Grid.RowSpan="2" FontSize="24" VerticalAlignment="Center" Foreground="#85778f" Margin="215,15,0,0" />
+            <TextBlock x:Name="CancelButton" Grid.Column="2" Grid.Row="10" Grid.RowSpan="2" FontSize="24" VerticalAlignment="Center" Foreground="#85778f" Margin="250,15,147,0" Tapped="CancelButton_Tapped" PointerEntered="CancelButton_PointerEntered" PointerExited="CancelButton_PointerExited">
+                        <Underline>
+                            Cancel
+                        </Underline>
+            </TextBlock>
+        </Grid>
+        <Grid Grid.Column="1" Style="{StaticResource LayoutRootStyle}" Margin="50,0,50,0" Background="#ebebeb">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="pageTitle" Foreground="#86abb6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,30,30,20" FontSize="40" Text="Time Logs" FontWeight="Normal"/>
+            <Grid x:Name="TimesheetGrids" Grid.Row="1" Background="#ebebeb" Grid.Column="4" Margin="0,-15,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <telerik:RadDataGrid 
                 RequestedTheme="Light" 
                 x:Name="TicketTimeGrid" 
                 UserGroupMode="Disabled"                
@@ -65,55 +157,56 @@
                 Height="auto"
                 Margin="0,15,0,0"                    
                 SelectionMode="None">
-                <telerik:RadDataGrid.Resources>
-                    <Style TargetType="gridPrimitives:DataGridHoverControl">
-                        <Setter Property="Background" Value="Transparent"/>
-                    </Style>
-                    <Style TargetType="gridPrimitives:DataGridEditRow">
-                        <Setter Property="Background" Value="Transparent" />
-                    </Style>
-                    <Style TargetType="gridPrimitives:DataGridCurrencyControl">
-                        <Setter Property="Background" Value="Transparent"/>
-                    </Style>
-                </telerik:RadDataGrid.Resources>
-                <telerik:RadDataGrid.Columns>
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TicketNumber" Header="Tkt#" SizeMode="Auto" />
+                    <telerik:RadDataGrid.Resources>
+                        <Style TargetType="gridPrimitives:DataGridHoverControl">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                        <Style TargetType="gridPrimitives:DataGridEditRow">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                        <Style TargetType="gridPrimitives:DataGridCurrencyControl">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                    </telerik:RadDataGrid.Resources>
+                    <telerik:RadDataGrid.Columns>
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TicketNumber" Header="Tkt#" SizeMode="Auto" />
 
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Date" Header="Date" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Date" Header="Date" SizeMode="Auto" />
 
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="ProjectName" Header="Project" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="ProjectName" Header="Project" SizeMode="Auto" />
 
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="StartStopTime" Header="Start/Stop" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="StartStopTime" Header="Start/Stop" SizeMode="Auto" />
 
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Hours" Header="Time Log" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Hours" Header="Time Log" SizeMode="Auto" />
 
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="UserName" Header="Name" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="UserName" Header="Name" SizeMode="Auto" />
 
-                    <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Billable" SizeMode="Auto">
-                        <telerik:DataGridTemplateColumn.CellContentTemplate>
-                            <DataTemplate>
-                                <CheckBox x:Name="BillableCheckbox" IsEnabled="False" IsChecked="{Binding Billable}" Margin="20,20,20,20" HorizontalAlignment="Left" />
-                            </DataTemplate>
-                        </telerik:DataGridTemplateColumn.CellContentTemplate>
-                    </telerik:DataGridTemplateColumn>
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TaskTypeName" Header="Task" SizeMode="Auto" />
-                    <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Note" Header="Note" SizeMode="Auto" />
-                    <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Edit / Remove" SizeMode="Auto">
-                        <telerik:DataGridTemplateColumn.CellContentTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,0,20,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Button Width="100" Height="50" Content="Edit" Tag="{Binding TimeId}" x:Name="EditButton" Tapped="EditButton_Tapped"  />
-                                    <Button Grid.Column="1" Width="100" Height="50" Content="Delete" Tag="{Binding TimeId}" x:Name="DeleteButton" Tapped="DeleteButton_Tapped"  />
-                                </Grid>
-                            </DataTemplate>
-                        </telerik:DataGridTemplateColumn.CellContentTemplate>
-                    </telerik:DataGridTemplateColumn>
-                </telerik:RadDataGrid.Columns>
-            </telerik:RadDataGrid>
+                        <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Billable" SizeMode="Auto">
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="BillableCheckbox" IsEnabled="False" IsChecked="{Binding Billable}" Margin="20,20,20,20" HorizontalAlignment="Left" />
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TaskTypeName" Header="Task" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Note" Header="Note" SizeMode="Auto" />
+                        <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Edit / Remove" SizeMode="Auto">
+                            <telerik:DataGridTemplateColumn.CellContentTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Width="100" Height="50" Content="Edit" Tag="{Binding TimeId}" x:Name="EditButton" Tapped="EditButton_Tapped"  />
+                                        <Button Grid.Column="1" Width="100" Height="50" Content="Delete" Tag="{Binding TimeId}" x:Name="DeleteButton" Tapped="DeleteButton_Tapped"  />
+                                    </Grid>
+                                </DataTemplate>
+                            </telerik:DataGridTemplateColumn.CellContentTemplate>
+                        </telerik:DataGridTemplateColumn>
+                    </telerik:RadDataGrid.Columns>
+                </telerik:RadDataGrid>
+            </Grid>
         </Grid>
     </Grid>
 </common:LayoutAwarePage>
