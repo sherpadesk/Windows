@@ -352,7 +352,7 @@
     <MainPackageIdentityName>bigWebApps.SherpaDesk</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>SherpaDesk</ReservedName>
-      <ReservedName>SherpaDesk - HelpDesk and Customer Support App</ReservedName>
+      <ReservedName>SherpaDesk Support &amp; HelpDesk</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames />
@@ -360,7 +360,7 @@
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.0.5.17</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>1.0.6.28</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>
