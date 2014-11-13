@@ -24,14 +24,14 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            LoginTextBox.Text = AppSettings.Current.Email;
-            FirstNameTextBox.Text = AppSettings.Current.FirstName;
-            LastNameTextBox.Text = AppSettings.Current.LastName;
+            LoginTextBox.Text = AppSettings.Current.Configuration.User.Email;
+            FirstNameTextBox.Text = AppSettings.Current.Configuration.User.FirstName;
+            LastNameTextBox.Text = AppSettings.Current.Configuration.User.LastName;
         }
 
         private void SaveCloseButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Info));  
+            this.Frame.Navigate(typeof(Info));
         }
     }
 }

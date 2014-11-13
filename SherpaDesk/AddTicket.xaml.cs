@@ -57,7 +57,7 @@ namespace SherpaDesk
                 {
                     EndUserList.FillData(
                         resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }),
-                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.USER_ME });
+                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.USER_ME });
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace SherpaDesk
 
                     // accounts
                     var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
-                        new AccountSearchRequest { UserId = AppSettings.Current.UserId, PageCount = SearchRequest.MAX_PAGE_COUNT });
+                        new AccountSearchRequest { UserId = AppSettings.Current.Configuration.User.Id, PageCount = SearchRequest.MAX_PAGE_COUNT });
 
                     if (resultAccounts.Status != eResponseStatus.Success)
                     {
@@ -85,12 +85,12 @@ namespace SherpaDesk
                     TechnicianList.FillData(
                         resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
                         new NameResponse { Id = -1, Name = "Let the system choose." },
-                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
 
                     AlternateTechnicianList.FillData(
                         resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
                         NameResponse.Empty,
-                        new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
 
                 }
                 else
@@ -103,7 +103,7 @@ namespace SherpaDesk
                             new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem { Tag = k.Key, Content = k.Name } }).ToList())));
                 }
 
-                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
+                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
 
                 if (resultClasses.Status != eResponseStatus.Success)
                 {

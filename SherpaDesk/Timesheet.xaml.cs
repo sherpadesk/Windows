@@ -32,7 +32,7 @@ namespace SherpaDesk
                     x => x.Time,
                     new TimeSearchRequest
                     {
-                        TechnicianId = AppSettings.Current.UserId,
+                        TechnicianId = AppSettings.Current.Configuration.User.Id,
                         TimeType = eTimeType.Recent,
                         StartDate = startDate.AddDays(-7),
                         EndDate = endDate.AddDays(7)
@@ -77,7 +77,7 @@ namespace SherpaDesk
 
                 TechnicianList.FillData(
                     resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
-                    new NameResponse { Id = AppSettings.Current.UserId, Name = Constants.TECHNICIAN_ME });
+                    new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
             }
         }
 

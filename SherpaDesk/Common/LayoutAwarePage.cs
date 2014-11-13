@@ -401,14 +401,14 @@ namespace SherpaDesk.Common
         protected void SetMe(ComboBox combobox)
         {
             if (combobox.Visibility == Visibility.Visible)
-                combobox.SetSelectedValue(AppSettings.Current.UserId);
+                combobox.SetSelectedValue(AppSettings.Current.Configuration.User.Id);
             else
             {
                 var textBox = this.FindName(combobox.Name + "_Text") as Telerik.UI.Xaml.Controls.Input.RadAutoCompleteBox;
                 if (textBox != null)
                 {
-                    textBox.Text = Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName, AppSettings.Current.Email);
-                    textBox.Tag = AppSettings.Current.UserId;
+                    textBox.Text = Helper.FullName(AppSettings.Current.Configuration.User.FirstName, AppSettings.Current.Configuration.User.LastName, AppSettings.Current.Configuration.User.Email);
+                    textBox.Tag = AppSettings.Current.Configuration.User.Id;
                 }
             }
         }

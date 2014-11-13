@@ -6,7 +6,6 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Linq;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -67,8 +66,7 @@ namespace SherpaDesk
                 }
 
                 AppSettings.Current.AddToken(
-                    resultLogin.Result.ApiToken.IsNull("Invalid API Token"), 
-                    UserNameTextbox.Text);
+                    resultLogin.Result.ApiToken.IsNull("Invalid API Token"));
 
                 // load organization and instance info
                 var resultOrg = await connector.Func<OrganizationResponse[]>(

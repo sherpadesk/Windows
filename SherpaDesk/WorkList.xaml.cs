@@ -160,6 +160,10 @@ namespace SherpaDesk
 
         private void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
+            RightMenuGrid.Visibility = AppSettings.Current.Configuration.User.TechOrAdmin
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+            
             LoadStatInfo();
         }
 

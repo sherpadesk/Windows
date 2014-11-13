@@ -68,7 +68,7 @@ namespace SherpaDesk
                     PercentageCompleteTransferLabel.Text = PercentageCompleteLabel.Text = string.Empty;
                 }
 
-                _techId = ticket.TechnicianId ?? AppSettings.Current.UserId;
+                _techId = ticket.TechnicianId ?? AppSettings.Current.Configuration.User.Id;
 
                 TicketNumber.Text = ticket.TicketNumber.ToString();
                 SubjectLabel.Text = ticket.Subject;
@@ -84,7 +84,7 @@ namespace SherpaDesk
                 EndUserLabelTransfer.Text = ticket.UserFullName;
                 СreatedTimeTransfer.Text = ticket.СreatedTimeText;
 
-                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.UserId });
+                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
                 if (resultClasses.Status != eResponseStatus.Success)
                 {
                     this.HandleError(resultClasses);
@@ -177,7 +177,7 @@ namespace SherpaDesk
                             AccountId = -1,
                             ProjectId = -1,
                             TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
-                            TechnicianId = AppSettings.Current.UserId,
+                            TechnicianId = AppSettings.Current.Configuration.User.Id,
                             Billable = Billable.SelectedIndex == 0 ? true : false,
                             Hours = hours,
                             Note = CommentsTextbox.Text,
@@ -377,7 +377,7 @@ namespace SherpaDesk
                     Note = NotesTextbox.Text,
                     KeepAttached = KeepMeCheckBox.IsChecked ?? false,
                     ClassId = ClassCheckBox.IsChecked ?? false ? ClassList.GetSelectedValue<int>() : 0,
-                    TechnicianId = TechnicianList.GetSelectedValue<int>(AppSettings.Current.UserId)
+                    TechnicianId = TechnicianList.GetSelectedValue<int>(AppSettings.Current.Configuration.User.Id)
                 });
 
                 if (transferResult.Status != eResponseStatus.Success)
@@ -389,7 +389,7 @@ namespace SherpaDesk
                 if (MakeMeAlternateCheckBox.IsChecked ?? false)
                 {
                     var attachAltTechResult = await connector.Action<AttachAltTechRequest>(x => x.Tickets,
-                        new AttachAltTechRequest(_ticketKey, AppSettings.Current.UserId));
+                        new AttachAltTechRequest(_ticketKey, AppSettings.Current.Configuration.User.Id));
 
                     if (attachAltTechResult.Status != eResponseStatus.Success)
                     {

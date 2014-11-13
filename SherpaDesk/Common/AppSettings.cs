@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Models;
+using SherpaDesk.Models.Response;
 using System;
 using System.Diagnostics;
 using Windows.Storage;
@@ -20,14 +21,15 @@ namespace SherpaDesk.Common
                 return _appSettings;
             }
         }
-        
+
         private const string KEY = "appSettings";
         private const string API_TOKEN_SETTING = "ApiTokenSettings";
-        private const string USER_ID_SETTING = "UserIdSettings";
-        private const string EMAIL_SETTING = "EmailSettings";
-        private const string FIRST_NAME_SETTING = "FirstNameSettings";
-        private const string LAST_NAME_SETTING = "LastNameSettings";
-        private const string ROLE_SETTING = "RoleSettings";
+        //private const string USER_ID_SETTING = "UserIdSettings";
+        //private const string EMAIL_SETTING = "EmailSettings";
+        //private const string FIRST_NAME_SETTING = "FirstNameSettings";
+        //private const string LAST_NAME_SETTING = "LastNameSettings";
+        //private const string ROLE_SETTING = "RoleSettings";
+        private const string CONFIG_SETTING = "ConfigSettings";
         private const string ORGANIZATION_KEY_SETTING = "OrganizationKeySettings";
         private const string ORGANIZATION_NAME_SETTING = "OrganizationNameSettings";
         private const string INSTANCE_KEY_SETTING = "InstanceKeySettings";
@@ -58,67 +60,30 @@ namespace SherpaDesk.Common
             }
         }
 
-        public int UserId
-        {
-            get
-            {
-                return GetValueOrDefault<int>(USER_ID_SETTING, 0);
-            }
-            set
-            {
-                AddOrUpdateValue(USER_ID_SETTING, value);
-                Save();
-            }
-        }
+        private ConfigResponse _configuration = null;
 
-        public string FirstName
+        public ConfigResponse Configuration
         {
             get
             {
-                return GetValueOrDefault<string>(FIRST_NAME_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(FIRST_NAME_SETTING, value);
-                Save();
-            }
-        }
+                if (_configuration == null)
+                {
 
-        public string LastName
-        {
-            get
-            {
-                return GetValueOrDefault<string>(LAST_NAME_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(LAST_NAME_SETTING, value);
-                Save();
-            }
-        }
+                    var stringSettings = GetValueOrDefault<string>(CONFIG_SETTING, null);
 
-        public string Email
-        {
-            get
-            {
-                return GetValueOrDefault<string>(EMAIL_SETTING, string.Empty);
-            }
-            set
-            {
-                AddOrUpdateValue(EMAIL_SETTING, value);
-                Save();
-            }
-        }
+                    if (string.IsNullOrEmpty(stringSettings))
+                        throw new InternalException("Configuration not found", eErrorType.InternalError);
 
-        public string Role
-        {
-            get
-            {
-                return GetValueOrDefault<string>(ROLE_SETTING, string.Empty);
+                    _configuration = Helper.FromXml<ConfigResponse>(stringSettings);
+                }
+                return _configuration;
             }
             set
             {
-                AddOrUpdateValue(ROLE_SETTING, value);
+                _configuration = value;
+
+                AddOrUpdateValue(CONFIG_SETTING, Helper.ToXML(value));
+
                 Save();
             }
         }
@@ -305,10 +270,9 @@ namespace SherpaDesk.Common
             localSettings.Values.Clear();
         }
 
-        public void AddToken(string token, string email)
+        public void AddToken(string token)
         {
             this.AddOrUpdateValue(API_TOKEN_SETTING, token);
-            this.AddOrUpdateValue(EMAIL_SETTING, email);
             this.Save();
         }
 
@@ -322,12 +286,9 @@ namespace SherpaDesk.Common
             this.Save();
         }
 
-        public void AddUser(int userId, string firstName, string lastName, string role)
+        public void AddConfiguration(ConfigResponse config)
         {
-            this.AddOrUpdateValue(USER_ID_SETTING, userId);
-            this.AddOrUpdateValue(FIRST_NAME_SETTING, firstName);
-            this.AddOrUpdateValue(LAST_NAME_SETTING, lastName);
-            this.AddOrUpdateValue(ROLE_SETTING, role);
+            this.AddOrUpdateValue(CONFIG_SETTING, config);
             this.Save();
         }
     }

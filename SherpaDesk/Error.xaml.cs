@@ -80,8 +80,8 @@ namespace SherpaDesk
 
                 sb.Append(Environment.NewLine);
 
-                sb.AppendFormat("User: {0}{1}", 
-                    Helper.FullName(AppSettings.Current.FirstName, AppSettings.Current.LastName, AppSettings.Current.Email, true),
+                sb.AppendFormat("User: {0}{1}",
+                    Helper.FullName(AppSettings.Current.Configuration.User.FirstName, AppSettings.Current.Configuration.User.LastName, AppSettings.Current.Configuration.User.Email, true),
                     Environment.NewLine);
                 
                 sb.AppendFormat("Organization: {0}{1}", 

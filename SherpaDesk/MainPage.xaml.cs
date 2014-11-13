@@ -102,24 +102,16 @@ namespace SherpaDesk
         {
             using (var connector = new Connector())
             {
+                //load config
 
-                //load user info
-                var resultUser = await connector.Func<UserSearchRequest, UserResponse[]>(
-                    x => x.Users,
-                    new UserSearchRequest { Email = AppSettings.Current.Email });
+                var resultConfig = await connector.Func<ConfigResponse>(x => x.Config);
 
-                if (resultUser.Status == eResponseStatus.Success)
+                if (resultConfig.Status == eResponseStatus.Success)
                 {
-                    if (resultUser.Result.Length == 0)
+                    if (resultConfig.Result == null || resultConfig.Result.User == null)
                         throw new InternalException("User not found", eErrorType.InvalidOutputData);
 
-                    var user = resultUser.Result.First();
-
-                    AppSettings.Current.AddUser(
-                        user.Id.IsNull("Invalid user identifier"),
-                        user.FirstName,
-                        user.LastName,
-                        user.Role.IsNull("Invalid role"));
+                    AppSettings.Current.Configuration = resultConfig.Result;
 
                     //                    this.LoginNameButton.Content = string.Format("{0} {1}", user.FirstName, user.LastName);
                     ////                    this.LoginNameButton.Content = string.Format(AppSettings.Current.Single ? USER_INFO_FORMAT_SINGLE : USER_INFO_FORMAT_WITH_INSTANCE, Helper.FullName(user.FirstName, user.LastName, user.Email), AppSettings.Current.OrganizationName, AppSettings.Current.InstanceName);
@@ -135,7 +127,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.HandleError(resultUser);
+                    this.HandleError(resultConfig);
 
                     AppSettings.Current.Clear();
                     this.Frame.Navigate(typeof(Login));

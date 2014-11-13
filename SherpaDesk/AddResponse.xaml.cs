@@ -136,7 +136,7 @@ namespace SherpaDesk
                             AccountId = -1,
                             ProjectId = -1,
                             TaskTypeId = TaskTypeList.GetSelectedValue<int>(),
-                            TechnicianId = AppSettings.Current.UserId,
+                            TechnicianId = AppSettings.Current.Configuration.User.Id,
                             Billable = Billable.SelectedIndex == 0 ? true : false,
                             Hours = hours,
                             Note = CommentsTextbox.Text,

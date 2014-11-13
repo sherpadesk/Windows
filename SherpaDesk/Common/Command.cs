@@ -124,5 +124,13 @@
                 return new Command("organizations");
             }
         }
+
+        public Command Config
+        {
+            get
+            {
+                return new Command("config");
+            }
+        }
     }
 }

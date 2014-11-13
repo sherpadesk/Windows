@@ -15,7 +15,7 @@ namespace SherpaDesk
         public Info()
         {
             this.InitializeComponent();
-       }
+        }
 
 
         public async Task RefreshData()
@@ -30,28 +30,45 @@ namespace SherpaDesk
                     return;
                 }
 
-                OpenCount.Text = resultCounts.Result.AllOpen.ToString();
-                OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
-                OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
-                OpenAsAltTechCount.Text = resultCounts.Result.OpenAsAltTech.ToString();
+                TimeButton.Visibility = AppSettings.Current.Configuration.TimeTracking
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
 
-                var resultStat = await connector.Func<SearchRequest, AccountStatResponse[]>(
-                    x => x.Accounts, new SearchRequest("account_statistics.ticket_counts.open>0"));
-                if (resultCounts.Status != eResponseStatus.Success)
+                if (!AppSettings.Current.Configuration.User.TechOrAdmin)
                 {
-                    this.pageRoot.HandleError(resultCounts);
-                    return;
+                    OpenCount.Text = resultCounts.Result.OpenAsUser.ToString();
+                    UserStatisticsGrid.Visibility = Visibility.Collapsed;
+                    AccountStatisticsGrid.Visibility = Visibility.Collapsed;
+                    StatInfoList.Visibility = Visibility.Collapsed;
                 }
-                StatInfoList.ItemsSource = resultStat
-                    .Result
-                    .Where(x => x.StatInfo.TicketCounts.Open > 0)
-                    .Select(x => new
+                else
+                {
+                    UserStatisticsGrid.Visibility = Visibility.Visible;
+                    OpenCount.Text = resultCounts.Result.AllOpen.ToString();
+                    OpenAsTechCount.Text = resultCounts.Result.OpenAsTech.ToString();
+                    OpenAsEndUserCount.Text = resultCounts.Result.OpenAsUser.ToString();
+                    OpenAsAltTechCount.Text = resultCounts.Result.OpenAsAltTech.ToString();
+
+                    AccountStatisticsGrid.Visibility = Visibility.Visible;
+                    StatInfoList.Visibility = Visibility.Visible;
+                    var resultStat = await connector.Func<SearchRequest, AccountStatResponse[]>(
+                        x => x.Accounts, new SearchRequest("account_statistics.ticket_counts.open>0"));
+                    if (resultCounts.Status != eResponseStatus.Success)
                     {
-                        AccountName = x.Name,
-                        OpenTickets = x.StatInfo.TicketCounts.Open,
-                        UninvoicedTimes = x.StatInfo.TimeLogs,
-                        UnInvoicedExpenses = x.StatInfo.Invoices
-                    });
+                        this.pageRoot.HandleError(resultCounts);
+                        return;
+                    }
+                    StatInfoList.ItemsSource = resultStat
+                        .Result
+                        .Where(x => x.StatInfo.TicketCounts.Open > 0)
+                        .Select(x => new
+                        {
+                            AccountName = x.Name,
+                            OpenTickets = x.StatInfo.TicketCounts.Open,
+                            UninvoicedTimes = x.StatInfo.TimeLogs,
+                            UnInvoicedExpenses = x.StatInfo.Invoices
+                        });
+                }
             }
         }
 

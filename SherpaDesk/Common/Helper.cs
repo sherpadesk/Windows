@@ -8,6 +8,10 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.UI;
 using SherpaDesk.Interfaces;
+using System.Xml.Serialization;
+using System.Text;
+using System.Xml;
+using System.IO;
 
 namespace SherpaDesk.Common
 {
@@ -145,5 +149,35 @@ namespace SherpaDesk.Common
             html = html.Replace("<br>", "<br/>");
             return Windows.Data.Html.HtmlUtilities.ConvertToText(html);
         }
+
+        public static string ToXML<T>(T value)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            StringBuilder stringBuilder = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                OmitXmlDeclaration = true,
+            };
+
+            using (XmlWriter xmlWriter = XmlWriter.Create(stringBuilder, settings))
+            {
+                serializer.Serialize(xmlWriter, value);
+            }
+            return stringBuilder.ToString(); 
+        }
+
+        public static T FromXml<T>(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            T value;
+            using (StringReader stringReader = new StringReader(xml))
+            {
+                object deserialized = serializer.Deserialize(stringReader);
+                value = (T)deserialized;
+            }
+
+            return value;
+        } 
     }
 }
