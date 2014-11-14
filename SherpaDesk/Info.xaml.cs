@@ -36,7 +36,7 @@ namespace SherpaDesk
 
                 if (!AppSettings.Current.Configuration.User.TechOrAdmin)
                 {
-                    OpenCount.Text = resultCounts.Result.OpenAsUser.ToString();
+                    OpenCount.Text = (resultCounts.Result.OpenAsUser + resultCounts.Result.OnHold).ToString();
                     UserStatisticsGrid.Visibility = Visibility.Collapsed;
                     AccountStatisticsGrid.Visibility = Visibility.Collapsed;
                     StatInfoList.Visibility = Visibility.Collapsed;
@@ -119,7 +119,7 @@ namespace SherpaDesk
 
         private void OpenCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            OpenWorkList(eWorkListType.Open);
+            OpenWorkList(AppSettings.Current.Configuration.User.TechOrAdmin ? eWorkListType.Open : eWorkListType.OpenAsEndUser);
         }
 
         private void OpenAsEndUserCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

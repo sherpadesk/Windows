@@ -25,8 +25,6 @@
         </Grid>
         <Grid Style="{StaticResource LayoutRootStyle}" RequestedTheme="Dark" Grid.Row="1" Background="Transparent">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="20"/>
@@ -36,27 +34,30 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid Name="TimeLogGrid" Grid.Column="0" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Start Time" FontSize="30" VerticalAlignment="Bottom" />
             <TextBlock Grid.Row="0" Grid.Column="2" Text="Stop Time" FontSize="30" VerticalAlignment="Bottom" />
@@ -99,6 +100,7 @@
             </ComboBox>
             <ComboBox Name="TaskTypeList" Grid.Column="10" Grid.Row="1" FontSize="24" HorizontalAlignment="Left" Width="200" Height="50" Margin="0,0,0,0" VerticalAlignment="Top">
             </ComboBox>
+            </Grid>
             <Controls:WatermarkTextBox Name="CommentsTextbox" WatermarkText="Comments" FontSize="25" TextWrapping="Wrap" Grid.Row="3" Grid.ColumnSpan="11"
                                        Grid.Column="0" Height="200" ScrollViewer.VerticalScrollMode="Auto" HorizontalAlignment="Stretch" AcceptsReturn="True" />
 

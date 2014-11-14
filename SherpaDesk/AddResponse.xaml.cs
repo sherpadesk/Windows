@@ -68,17 +68,6 @@ namespace SherpaDesk
             EndTimeLabel.Text = date.ToString("t");
             using (var connector = new Connector())
             {
-                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    x => x.TaskTypes,
-                    new TaskTypeRequest());
-
-                if (resultTaskType.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultTaskType);
-                    return;
-                }
-                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
-
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
@@ -90,6 +79,26 @@ namespace SherpaDesk
                 {
                     SaveAndReopenButton.Visibility = SaveDoNotReopenLink.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     SaveButton.Visibility = HoldBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
+
+                if (AppSettings.Current.Configuration.User.TechOrAdmin &&
+                    AppSettings.Current.Configuration.TimeTracking)
+                {
+                    TimeLogGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                        x => x.TaskTypes,
+                        new TaskTypeRequest());
+
+                    if (resultTaskType.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultTaskType);
+                        return;
+                    }
+                    TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+                }
+                else
+                {
+                    TimeLogGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
             }
         }
@@ -190,7 +199,7 @@ namespace SherpaDesk
                     }
                     else if (hours == decimal.Zero && !statusUpdated)
                     {
-                        var resultNote = await connector.Func<AddNoteRequest, NoteResponse[]>(x => x.Posts, 
+                        var resultNote = await connector.Func<AddNoteRequest, NoteResponse[]>(x => x.Posts,
                             new AddNoteRequest
                             {
                                 TicketKey = _ticketKey,

@@ -333,19 +333,37 @@ namespace SherpaDesk
             {
                 page.ScrollViewer.ChangeView((page.ScrollViewer.ScrollableWidth - this.Frame.ActualWidth + 300), null, null);
             });
-            await LoadPage();
-            using (var connector = new Connector())
-            {
-                var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
-                    x => x.TaskTypes,
-                    new TaskTypeRequest());
 
-                if (resultTaskType.Status != eResponseStatus.Success)
+            TransferButton.Visibility =
+            PickupButton.Visibility =
+            DeleteButton.Visibility =
+                AppSettings.Current.Configuration.User.TechOrAdmin
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
+            await LoadPage();
+
+            if (AppSettings.Current.Configuration.User.TechOrAdmin &&
+                    AppSettings.Current.Configuration.TimeTracking)
+            {
+                TimeLogResponseGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                using (var connector = new Connector())
                 {
-                    this.HandleError(resultTaskType);
-                    return;
+                    var resultTaskType = await connector.Func<TaskTypeRequest, NameResponse[]>(
+                        x => x.TaskTypes,
+                        new TaskTypeRequest());
+
+                    if (resultTaskType.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultTaskType);
+                        return;
+                    }
+                    TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
                 }
-                TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
+            }
+            else
+            {
+                TimeLogResponseGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
         }
 
