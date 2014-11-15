@@ -120,7 +120,11 @@ namespace SherpaDesk
             selectedTime = ((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext as TimeResponse;
             BillableBox.IsChecked = selectedTime.Billable;
             HoursTextBox.Text = String.Format("{0:0.00}", selectedTime.Hours);
-            NoteTextBox.Text = selectedTime.Note; 
+            NoteTextBox.Text = selectedTime.Note;
+            StartTimePicker.Value = selectedTime.StartTime;
+            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
+            EndTimePicker.Value = selectedTime.StopTime;
+            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
             EditTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             using (var connector = new Connector())
             {

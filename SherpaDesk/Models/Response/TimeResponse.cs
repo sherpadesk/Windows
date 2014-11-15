@@ -40,6 +40,9 @@ namespace SherpaDesk.Models.Response
         private string _date;
 
         [Details]
+        public string DateLabel { get; set; }
+
+        [Details]
         public DateTime Date { get; set; }
 
         [DataMember(Name = "start_time")]
@@ -109,6 +112,7 @@ namespace SherpaDesk.Models.Response
                 this.StartTime = date;
             if (DateTime.TryParse(this._stopTime, out date))
                 this.StopTime = date;
+            DateLabel = this.Date.ToString("d");
         }
         //{\"time_id\":8332,\"project_name\":\"\",\"user_name\":\"Alexey Gavrilov\",\"user_email\":\"alexey.gavrilov@gmail.com\",\"note\":\"test\",\"date\":\"02 Apr 2014\",\"hours\":1.7500,\"fb_id\":0,\"is_project_log\":true,\"ticket_id\":0,\"task_type_id\":4261,\"task_type\":\"Desktop Support\",\"project_id\":0,\"account_id\":-1,\"ticket_number\":0,\"account_name\":\"Yoshkar\",\"ticket_subject\":\"\",\"invoice_id\":0,\"billable\":true,\"invoice_pseudo_id\":\"      \"},
         //{\"time_id\":8331,\"project_name\":\"\",\"user_name\":\"Alexey Gavrilov\",\"user_email\":\"alexey.gavrilov@gmail.com\",\"note\":\"timelog without ticket\",\"date\":\"02 Apr 2014\",\"hours\":2.2200,\"fb_id\":0,\"is_project_log\":true,\"ticket_id\":0,\"task_type_id\":4260,\"task_type\":\"Consulting\",\"project_id\":0,\"account_id\":-1,\"ticket_number\":0,\"account_name\":\"Yoshkar\",\"ticket_subject\":\"\",\"invoice_id\":0,\"billable\":true,\"invoice_pseudo_id\":\"      \"},

@@ -148,7 +148,7 @@
                 AutoGenerateColumns="False" 
                 UserColumnReorderMode="None" 
                 UserFilterMode="Disabled" 
-                UserSortMode="Single" 
+                UserSortMode="Single"                 
                 GridLinesVisibility="Horizontal" 
                 BorderThickness="0"
                 Background="Transparent"
@@ -157,6 +157,9 @@
                 Height="auto"
                 Margin="0,15,0,0"                    
                 SelectionMode="None">
+                    <telerik:RadDataGrid.SortDescriptors>
+                        <telerik:PropertySortDescriptor PropertyName="StartStopTime" SortOrder="Ascending" />
+                    </telerik:RadDataGrid.SortDescriptors>
                     <telerik:RadDataGrid.Resources>
                         <Style TargetType="gridPrimitives:DataGridHoverControl">
                             <Setter Property="Background" Value="Transparent"/>
@@ -171,7 +174,7 @@
                     <telerik:RadDataGrid.Columns>
                         <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TicketNumber" Header="Tkt#" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Date" Header="Date" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="DateLabel" Header="Date" SizeMode="Auto" />
 
                         <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="ProjectName" Header="Project" SizeMode="Auto" />
 

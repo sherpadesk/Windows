@@ -248,7 +248,7 @@ namespace SherpaDesk
                                 ProjectId = ProjectList.GetSelectedValue<int>(-1),
                                 TaskTypeId = taskType,
                                 TechnicianId = TechnicianList.GetSelectedValue<int>(),
-                                Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
+                                Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,                                
                                 Hours = hours,
                                 Note = NoteTextBox.Text,
                                 Date = Model.CurrentDate
