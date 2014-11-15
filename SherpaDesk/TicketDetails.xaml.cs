@@ -341,6 +341,11 @@ namespace SherpaDesk
                     ? Visibility.Visible
                     : Visibility.Collapsed;
 
+            if (!AppSettings.Current.Configuration.User.TechOrAdmin)
+            {
+                CloseButton.SetValue(Grid.RowProperty, 2);
+            }
+
             await LoadPage();
 
             if (AppSettings.Current.Configuration.User.TechOrAdmin &&

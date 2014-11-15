@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace SherpaDesk
 {
@@ -15,6 +16,17 @@ namespace SherpaDesk
         public Info()
         {
             this.InitializeComponent();
+            deviderImage.Visibility = AppSettings.Current.Configuration.User.TechOrAdmin ? Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+            if (!AppSettings.Current.Configuration.User.TechOrAdmin)
+            {
+                UserStatisticsGrid.Visibility = Visibility.Collapsed;
+                AccountStatisticsGrid.Visibility = Visibility.Collapsed;
+                StatInfoList.Visibility = Visibility.Collapsed;
+                TicketButton.Margin = TimeButton.Margin;
+                TicketButton.SetValue(Grid.RowProperty, 0);
+                MessagesButton.SetValue(Grid.RowProperty, 1);
+                InfoMainGrid.Height = 310;
+            }
         }
 
 
@@ -37,9 +49,6 @@ namespace SherpaDesk
                 if (!AppSettings.Current.Configuration.User.TechOrAdmin)
                 {
                     OpenCount.Text = (resultCounts.Result.OpenAsUser + resultCounts.Result.OnHold).ToString();
-                    UserStatisticsGrid.Visibility = Visibility.Collapsed;
-                    AccountStatisticsGrid.Visibility = Visibility.Collapsed;
-                    StatInfoList.Visibility = Visibility.Collapsed;
                 }
                 else
                 {

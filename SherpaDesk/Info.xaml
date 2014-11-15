@@ -52,7 +52,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid Width="800" Height="500" Grid.Row="0" HorizontalAlignment="Left" Margin="30,0,30,30" VerticalAlignment="Center">
+                <Grid Width="800" Height="500" x:Name="InfoMainGrid" Grid.Row="0" HorizontalAlignment="Left" Margin="30,0,30,30" VerticalAlignment="Center">
                     <Grid.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#72585858"/>
@@ -74,7 +74,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Name="OpenCount" Foreground="White" Text="0" FontSize="180" Height="auto" HorizontalAlignment="Center" Tapped="OpenCount_Tapped"  />
                         <TextBlock Text="Open Tickets" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
+                        <Image Grid.Column="1" x:Name="deviderImage" HorizontalAlignment="Left" Margin="60,20,60,0" VerticalAlignment="Center" Source="Assets/Images/home-line-devider.png"/>
                         <Grid Name="UserStatisticsGrid" Grid.Column="2" Height="auto" VerticalAlignment="Center" Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
