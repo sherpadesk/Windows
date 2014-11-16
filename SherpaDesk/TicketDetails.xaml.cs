@@ -364,7 +364,7 @@ namespace SherpaDesk
 
             if (!AppSettings.Current.Configuration.User.TechOrAdmin)
             {
-                CloseButton.SetValue(Grid.RowProperty, 3);
+                CloseButton.SetValue(Grid.RowProperty, 1);
             }
 
             await LoadPage();
@@ -549,20 +549,32 @@ namespace SherpaDesk
         #region Visual Handlers
         private void ReplyGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            SaveButton.Background.Opacity =
-                SaveAndReopenButton.Background.Opacity =
-                SaveDoNotReopenButton.Background.Opacity = 0.9;
-            //ReplyGrid.Background.Opacity = 0.9;
+            SaveButton.Background.Opacity = 0.9;
         }
 
         private void ReplyGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            SaveButton.Background.Opacity =
-                SaveAndReopenButton.Background.Opacity =
-                SaveDoNotReopenButton.Background.Opacity = 1;
-            //ReplyGrid.Background.Opacity = 1;
+            SaveButton.Background.Opacity = 1;
         }
 
+        private void SaveAndReopenButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            SaveAndReopenButton.Background.Opacity = 0.9;
+        }
+
+        private void SaveAndReopenButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            SaveAndReopenButton.Background.Opacity = 1;
+        }
+        private void SaveDoNotReopenButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            SaveDoNotReopenButton.Background.Opacity = 0.9;
+        }
+
+        private void SaveDoNotReopenButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            SaveDoNotReopenButton.Background.Opacity = 1;
+        }
 
 
         private void SaveTransferButton_PointerEntered(object sender, PointerRoutedEventArgs e)
