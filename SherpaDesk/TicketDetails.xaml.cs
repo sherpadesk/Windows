@@ -84,30 +84,50 @@ namespace SherpaDesk
                 EndUserLabelTransfer.Text = ticket.UserFullName;
                 СreatedTimeTransfer.Text = ticket.СreatedTimeText;
 
-                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
-                if (resultClasses.Status != eResponseStatus.Success)
+                if (ticket.Status.ToLowerInvariant() == "onhold")
                 {
-                    this.HandleError(resultClasses);
-                    return;
-                }
-                ClassList.FillData(resultClasses.Result.AsEnumerable());
-
-                var resultTechnicians = await connector.Func<UserResponse[]>(x => x.Technicians);
-
-                if (resultTechnicians.Status != eResponseStatus.Success)
-                {
-                    this.HandleError(resultTechnicians);
-                    return;
-                }
-                if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
-                {
-                    TechnicianList.FillData(
-                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
-                        new NameResponse { Id = -1, Name = "Let the system choose." });
+                    HoldBox.Visibility = Visibility.Collapsed;
+                    SaveAndReopenButton.Visibility = Visibility.Visible;
+                    SaveDoNotReopenButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    TechnicianList.AutoComplete(x => x.Search(false));
+                    HoldBox.Visibility = Visibility.Visible;
+                    SaveAndReopenButton.Visibility = Visibility.Collapsed;
+                    SaveDoNotReopenButton.Visibility = Visibility.Collapsed;
+                }
+
+                WaitingBox.Visibility = AppSettings.Current.Configuration.WaitingOnResponse
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
+                if (AppSettings.Current.Configuration.User.TechOrAdmin)
+                {
+                    var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
+                    if (resultClasses.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultClasses);
+                        return;
+                    }
+                    ClassList.FillData(resultClasses.Result.AsEnumerable());
+
+                    var resultTechnicians = await connector.Func<UserResponse[]>(x => x.Technicians);
+
+                    if (resultTechnicians.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultTechnicians);
+                        return;
+                    }
+                    if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
+                    {
+                        TechnicianList.FillData(
+                            resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                            new NameResponse { Id = -1, Name = "Let the system choose." });
+                    }
+                    else
+                    {
+                        TechnicianList.AutoComplete(x => x.Search(false));
+                    }
                 }
 
                 var resultFiles = await connector.Func<KeyRequest, FileResponse[]>(x => x.Files, new KeyRequest("?ticket=", _ticketKey));
@@ -334,6 +354,7 @@ namespace SherpaDesk
                 page.ScrollViewer.ChangeView((page.ScrollViewer.ScrollableWidth - this.Frame.ActualWidth + 300), null, null);
             });
 
+            PlaceOnHoldButton.Visibility =
             TransferButton.Visibility =
             PickupButton.Visibility =
             DeleteButton.Visibility =
@@ -343,7 +364,7 @@ namespace SherpaDesk
 
             if (!AppSettings.Current.Configuration.User.TechOrAdmin)
             {
-                CloseButton.SetValue(Grid.RowProperty, 2);
+                CloseButton.SetValue(Grid.RowProperty, 3);
             }
 
             await LoadPage();
@@ -481,7 +502,16 @@ namespace SherpaDesk
             ShowConfirm();
         }
 
-        private async void ReplyGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await PostResponse();
+        }
+        private async void SaveAndReopenButton_Click(object sender, TappedRoutedEventArgs e)
+        {
+            await PostResponse();
+        }
+
+        private async void SaveDoNotReopenLink_Click(object sender, TappedRoutedEventArgs e)
         {
             await PostResponse();
         }
@@ -519,13 +549,21 @@ namespace SherpaDesk
         #region Visual Handlers
         private void ReplyGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            ReplyGrid.Background.Opacity = 0.9;
+            SaveButton.Background.Opacity =
+                SaveAndReopenButton.Background.Opacity =
+                SaveDoNotReopenButton.Background.Opacity = 0.9;
+            //ReplyGrid.Background.Opacity = 0.9;
         }
 
         private void ReplyGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            ReplyGrid.Background.Opacity = 1;
+            SaveButton.Background.Opacity =
+                SaveAndReopenButton.Background.Opacity =
+                SaveDoNotReopenButton.Background.Opacity = 1;
+            //ReplyGrid.Background.Opacity = 1;
         }
+
+
 
         private void SaveTransferButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
