@@ -86,12 +86,14 @@ namespace SherpaDesk
 
                 if (ticket.Status.ToLowerInvariant() == "onhold")
                 {
+                    SaveButton.Visibility = Visibility.Collapsed;
                     HoldBox.Visibility = Visibility.Collapsed;
                     SaveAndReopenButton.Visibility = Visibility.Visible;
                     SaveDoNotReopenButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
+                    SaveButton.Visibility = Visibility.Visible;
                     HoldBox.Visibility = Visibility.Visible;
                     SaveAndReopenButton.Visibility = Visibility.Collapsed;
                     SaveDoNotReopenButton.Visibility = Visibility.Collapsed;
@@ -180,14 +182,21 @@ namespace SherpaDesk
             }
         }
 
-        public async Task PostResponse()
+        public async Task PostResponse(bool hold, bool reopen)
         {
             using (var connector = new Connector())
             {
                 int? postId = null;
-                decimal hours;
-                decimal.TryParse(HoursTextBox.Text, out hours);
-                if (hours > decimal.Zero)
+                bool statusUpdated = false;
+                bool timePost = false;
+                decimal hours = decimal.Zero;
+                if (AppSettings.Current.Configuration.TimeTracking)
+                {
+                    decimal.TryParse(HoursTextBox.Text, out hours);
+                    if (hours > decimal.Zero)
+                        timePost = true;
+                }
+                if (timePost)
                 {
                     var resultAddTime = await connector.Action<AddTimeRequest>(
                         x => x.Time,
@@ -201,7 +210,9 @@ namespace SherpaDesk
                             Billable = Billable.SelectedIndex == 0 ? true : false,
                             Hours = hours,
                             Note = CommentsTextbox.Text,
-                            Date = DateTime.Now
+                            Date = DateTime.Now,
+                            StartDate = StartTimePicker.Value,
+                            StopDate = EndTimePicker.Value
                         });
                     if (resultAddTime.Status != eResponseStatus.Success)
                     {
@@ -209,7 +220,47 @@ namespace SherpaDesk
                         return;
                     }
                 }
-                else
+
+                if (hold)
+                {
+                    var resultOnHold = await connector.Action<PlaceOnHoldRequest>(x => x.Tickets,
+                        new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
+
+                    if (resultOnHold.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultOnHold);
+                        return;
+                    }
+                    statusUpdated = true;
+                }
+                if (reopen)
+                {
+                    var resultReOpen = await connector.Action<ReOpenRequest>(x => x.Tickets,
+                        new ReOpenRequest(_ticketKey) { Note = CommentsTextbox.Text });
+
+                    if (resultReOpen.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultReOpen);
+                        return;
+                    }
+                    statusUpdated = true;
+                }
+
+
+                if (WaitingBox.IsChecked ?? false)
+                {
+                    var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
+                        new WaitingOnPostRequest(_ticketKey)
+                        {
+                            Note = CommentsTextbox.Text
+                        });
+
+                    if (resultWait.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultWait);
+                    }
+                }
+                else if (!timePost && !statusUpdated)
                 {
                     var resultNote = await connector.Func<AddNoteRequest, NoteResponse[]>(x => x.Posts,
                         new AddNoteRequest
@@ -244,6 +295,7 @@ namespace SherpaDesk
                 StartTimePicker.Value = EndTimePicker.Value = new DateTime?();
                 HoursTextBox.Text = "0.00";
                 CommentsTextbox.Text = string.Empty;
+
                 await LoadPage();
             }
         }
@@ -504,16 +556,16 @@ namespace SherpaDesk
 
         private async void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await PostResponse();
+            await PostResponse(HoldBox.IsChecked ?? false, false);
         }
         private async void SaveAndReopenButton_Click(object sender, TappedRoutedEventArgs e)
         {
-            await PostResponse();
+            await PostResponse(false, true);
         }
 
         private async void SaveDoNotReopenLink_Click(object sender, TappedRoutedEventArgs e)
         {
-            await PostResponse();
+            await PostResponse(false, false);
         }
 
         private void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)

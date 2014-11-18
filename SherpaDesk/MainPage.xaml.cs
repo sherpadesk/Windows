@@ -122,7 +122,11 @@ namespace SherpaDesk
                     //                            UriKind.Absolute));
 
                     //                    this.timesheetFrame.Navigate(typeof(Timesheet));
-                    this.workListFrame.Navigate(typeof(WorkList), eWorkListType.Open);
+                    this.workListFrame.Navigate(typeof(WorkList),
+                        AppSettings.Current.Configuration.User.TechOrAdmin
+                            ? eWorkListType.Open
+                            : eWorkListType.OpenAsEndUser);
+
                     this.infoFrame.Navigate(typeof(Info));
                 }
                 else

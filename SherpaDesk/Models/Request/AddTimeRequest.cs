@@ -49,11 +49,28 @@ namespace SherpaDesk.Models.Request
         [Details]
         public DateTime Date { get; set; }
 
+        [DataMember(Name = "start_date", EmitDefaultValue = false)]
+        protected string _startDate;
+
+        [Details]
+        public DateTime? StartDate { get; set; }
+
+        [DataMember(Name = "stop_date", EmitDefaultValue = false)]
+        protected string _stopDate;
+
+        [Details]
+        public DateTime? StopDate { get; set; }
+
+
         [OnSerializing]
         protected void OnSerializing(StreamingContext context)
         {
             if (this.Date != DateTime.MinValue)
                 this._date = this.Date.ToString("yyyy-MM-dd");
+            if (this.StartDate.HasValue)
+                this._startDate = this.StartDate.Value.ToString("yyyy-MM-ddThh:mm:0000000");
+            if (this.StopDate.HasValue)
+                this._stopDate = this.StopDate.Value.ToString("yyyy-MM-ddThh:mm:0000000");
         }
     }
 

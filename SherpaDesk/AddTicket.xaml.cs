@@ -34,13 +34,69 @@ namespace SherpaDesk
 
             using (var connector = new Connector())
             {
-                // users
-                var resultUsers = await connector.Func<UserResponse[]>(x => x.Users);
-
-                if (resultUsers.Status != eResponseStatus.Success)
+                if (AppSettings.Current.Configuration.User.TechOrAdmin)
                 {
-                    this.HandleError(resultUsers);
-                    return;
+                    // users
+                    EndUserList.Visibility = Visibility.Visible;
+                    EndUserText.Visibility = Visibility.Collapsed;
+                    EndUserMeLink.Visibility = Visibility.Visible;
+                    AccountText.Visibility = Visibility.Visible;
+                    AccountList.Visibility = Visibility.Visible;
+                    TechnicianMeLink.Visibility = Visibility.Visible;
+                    AlternateTechnicianText.Visibility = Visibility.Visible;
+                    AlternateTechnicianList.Visibility = Visibility.Visible;
+                    AlternateTechMeLink.Visibility = Visibility.Visible;
+
+                    var resultUsers = await connector.Func<UserResponse[]>(x => x.Users);
+
+                    if (resultUsers.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultUsers);
+                        return;
+                    }
+
+                    if (resultUsers.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
+                    {
+                        EndUserList.FillData(
+                            resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }),
+                            new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.USER_ME });
+                    }
+                    else
+                    {
+                        EndUserList.AutoComplete(
+                            x => x.Search(false),
+                            k => this.EndUserList_SelectionChanged(
+                                this.EndUserList,
+                                new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem() { Tag = k.Key, Content = k.Name } }).ToList())));
+
+                        // accounts
+                        var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
+                            new AccountSearchRequest { UserId = AppSettings.Current.Configuration.User.Id, PageCount = SearchRequest.MAX_PAGE_COUNT });
+
+                        if (resultAccounts.Status != eResponseStatus.Success)
+                        {
+                            this.HandleError(resultAccounts);
+                            return;
+                        }
+
+                        AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                    }
+                }
+                else
+                {
+                    EndUserList.Visibility = Visibility.Collapsed;
+                    EndUserText.Visibility = Visibility.Visible;
+                    EndUserMeLink.Visibility = Visibility.Collapsed;
+                    TechnicianMeLink.Visibility = Visibility.Collapsed;
+                    AccountText.Visibility = Visibility.Collapsed;
+                    AccountList.Visibility = Visibility.Collapsed;
+                    AlternateTechnicianText.Visibility = Visibility.Collapsed;
+                    AlternateTechnicianList.Visibility = Visibility.Collapsed;
+                    AlternateTechMeLink.Visibility = Visibility.Collapsed;
+                    AddUserArrow.Visibility = Visibility.Collapsed;
+                    AddUserLink.Visibility = Visibility.Collapsed;
+
+                    EndUserText.Text = Helper.FullName(AppSettings.Current.Configuration.User.FirstName, AppSettings.Current.Configuration.User.LastName, AppSettings.Current.Configuration.User.Email);
                 }
 
                 // technicians
@@ -52,55 +108,32 @@ namespace SherpaDesk
                     return;
                 }
 
-
-                if (resultUsers.Result.Length < SearchRequest.DEFAULT_PAGE_COUNT)
-                {
-                    EndUserList.FillData(
-                        resultUsers.Result.Select(user => new NameResponse { Id = user.Id, Name = user.FullName }),
-                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.USER_ME });
-                }
-                else
-                {
-                    EndUserList.AutoComplete(
-                        x => x.Search(false),
-                        k => this.EndUserList_SelectionChanged(
-                            this.EndUserList,
-                            new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem() { Tag = k.Key, Content = k.Name } }).ToList())));
-
-                    // accounts
-                    var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
-                        new AccountSearchRequest { UserId = AppSettings.Current.Configuration.User.Id, PageCount = SearchRequest.MAX_PAGE_COUNT });
-
-                    if (resultAccounts.Status != eResponseStatus.Success)
-                    {
-                        this.HandleError(resultAccounts);
-                        return;
-                    }
-
-                    AccountList.FillData(resultAccounts.Result.AsEnumerable());
-                }
-
                 if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
                 {
                     TechnicianList.FillData(
                         resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
-                        new NameResponse { Id = -1, Name = "Let the system choose." },
-                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
+                        new NameResponse { Id = 0, Name = "Route via Class (default)" });
 
-                    AlternateTechnicianList.FillData(
-                        resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
-                        NameResponse.Empty,
-                        new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
-
+                    if (AppSettings.Current.Configuration.User.TechOrAdmin)
+                    {
+                        AlternateTechnicianList.FillData(
+                            resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
+                            NameResponse.Empty,
+                            new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
+                    }
                 }
                 else
                 {
                     TechnicianList.AutoComplete(x => x.Search(false));
-                    AlternateTechnicianList.AutoComplete(
-                        x => x.Search(false),
-                        k => this.AlternateTechnicianList_SelectionChanged(
-                            this.AlternateTechnicianList,
-                            new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem { Tag = k.Key, Content = k.Name } }).ToList())));
+
+                    if (AppSettings.Current.Configuration.User.TechOrAdmin)
+                    {
+                        AlternateTechnicianList.AutoComplete(
+                            x => x.Search(false),
+                            k => this.AlternateTechnicianList_SelectionChanged(
+                                this.AlternateTechnicianList,
+                                new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem { Tag = k.Key, Content = k.Name } }).ToList())));
+                    }
                 }
 
                 var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
@@ -126,7 +159,7 @@ namespace SherpaDesk
             var files = await openPicker.PickMultipleFilesAsync();
             _attachment.Clear();
             if (files != null && files.Count > 0)
-            {                
+            {
                 foreach (var file in files)
                 {
                     _attachment.Add(file);
@@ -214,9 +247,11 @@ namespace SherpaDesk
                     x => x.Tickets,
                     new AddTicketRequest
                     {
-                        AccountId = AccountList.GetSelectedValue<int>(),
+                        AccountId = AppSettings.Current.Configuration.User.TechOrAdmin ? AccountList.GetSelectedValue<int>() : 0,
                         ClassId = ClassList.GetSelectedValue<int>(),
-                        UserId = EndUserList.GetSelectedValue<int>(),
+                        UserId = AppSettings.Current.Configuration.User.TechOrAdmin 
+                            ? EndUserList.GetSelectedValue<int>()
+                            : AppSettings.Current.Configuration.User.Id,
                         TechnicianId = TechnicianList.GetSelectedValue<int>(),
                         Name = SubjectTextbox.Text,
                         Status = eTicketStatus.Open.Details(),
@@ -227,17 +262,21 @@ namespace SherpaDesk
                     this.HandleError(resultAddTicket);
                     return;
                 }
-                foreach (var item in SelectedAlternateTechnicianList.Items)
-                {
-                    if (((CheckBox)item).IsChecked ?? false)
-                    {
-                        var attachAltTechResult = await connector.Action<AttachAltTechRequest>(x => x.Tickets,
-                            new AttachAltTechRequest(resultAddTicket.Result.TicketKey, (int)((CheckBox)item).Tag));
 
-                        if (attachAltTechResult.Status != eResponseStatus.Success)
+                if (AppSettings.Current.Configuration.User.TechOrAdmin)
+                {
+                    foreach (var item in SelectedAlternateTechnicianList.Items)
+                    {
+                        if (((CheckBox)item).IsChecked ?? false)
                         {
-                            this.HandleError(attachAltTechResult);
-                            return;
+                            var attachAltTechResult = await connector.Action<AttachAltTechRequest>(x => x.Tickets,
+                                new AttachAltTechRequest(resultAddTicket.Result.TicketKey, (int)((CheckBox)item).Tag));
+
+                            if (attachAltTechResult.Status != eResponseStatus.Success)
+                            {
+                                this.HandleError(attachAltTechResult);
+                                return;
+                            }
                         }
                     }
                 }

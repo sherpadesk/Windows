@@ -35,7 +35,7 @@ namespace SherpaDesk
                 switch (_workType)
                 {
                     case eWorkListType.Open:
-                        request.Status = eTicketStatus.Open;
+                        request.Status = eTicketStatus.Open | eTicketStatus.OnHold | eTicketStatus.Waiting | eTicketStatus.NewMessages;
                         //request.Role = eRoles.Technician;
                         break;
                     case eWorkListType.OnHold:
@@ -119,7 +119,7 @@ namespace SherpaDesk
             {
                 try
                 {
-                    return await Load();
+                    return await LoadTickets();
                 }
                 catch
                 {
@@ -129,9 +129,7 @@ namespace SherpaDesk
 
             try
             {
-                var result = await Load();
-
-                foreach (var item in result)
+                foreach (var item in await LoadTickets())
                 {
                     _data.Add(item);
                 }
@@ -141,6 +139,20 @@ namespace SherpaDesk
             }
 
             ItemsGrid.ItemsSource = _data;
+        }
+
+        private async Task<IList<TicketSearchResponse>> LoadTickets()
+        {
+            var result = await Load();
+            var list = new List<TicketSearchResponse>();
+
+            foreach (var item in result)
+            {
+                if (!_data.Any(x => x.TicketKey == item.TicketKey))
+                    list.Add(item);
+            }
+
+            return list;
         }
 
         public void FullUpdate()
@@ -163,7 +175,7 @@ namespace SherpaDesk
             RightMenuGrid.Visibility = AppSettings.Current.Configuration.User.TechOrAdmin
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-            
+
             LoadStatInfo();
         }
 

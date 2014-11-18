@@ -28,7 +28,7 @@ namespace SherpaDesk.Models.Request
         public int ClassId { get; set; }
 
         [DataMember(Name = "account_id"), Details]
-        [IntRequired(ErrorMessage = ERROR_EMPTY_ACCOUNT_ID)]
+        //[IntRequired(ErrorMessage = ERROR_EMPTY_ACCOUNT_ID)]
         public int AccountId { get; set; }
 
         [DataMember(Name = "user_id"), Details]
@@ -36,7 +36,7 @@ namespace SherpaDesk.Models.Request
         public int UserId { get; set; }
 
         [DataMember(Name = "tech_id"), Details]
-        [IntRequired(ErrorMessage = ERROR_EMPTY_TECHNICIAN_ID)]
+        //[IntRequired(ErrorMessage = ERROR_EMPTY_TECHNICIAN_ID)]
         public int TechnicianId { get; set; }
 
         //[DataMember(Name = "technicians"), Details]
