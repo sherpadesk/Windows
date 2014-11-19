@@ -40,8 +40,8 @@ namespace SherpaDesk
                     EndUserList.Visibility = Visibility.Visible;
                     EndUserText.Visibility = Visibility.Collapsed;
                     EndUserMeLink.Visibility = Visibility.Visible;
-                    AccountText.Visibility = Visibility.Visible;
-                    AccountList.Visibility = Visibility.Visible;
+                    AccountText.Visibility = AppSettings.Current.Configuration.AccountManager ? Visibility.Visible : Visibility.Collapsed;
+                    AccountList.Visibility = AppSettings.Current.Configuration.AccountManager ? Visibility.Visible : Visibility.Collapsed;
                     TechnicianMeLink.Visibility = Visibility.Visible;
                     AlternateTechnicianText.Visibility = Visibility.Visible;
                     AlternateTechnicianList.Visibility = Visibility.Visible;
@@ -69,17 +69,20 @@ namespace SherpaDesk
                                 this.EndUserList,
                                 new SelectionChangedEventArgs(new object[0].ToList(), (new object[1] { new ComboBoxItem() { Tag = k.Key, Content = k.Name } }).ToList())));
 
-                        // accounts
-                        var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
-                            new AccountSearchRequest { UserId = AppSettings.Current.Configuration.User.Id, PageCount = SearchRequest.MAX_PAGE_COUNT });
-
-                        if (resultAccounts.Status != eResponseStatus.Success)
+                        if (AppSettings.Current.Configuration.AccountManager)
                         {
-                            this.HandleError(resultAccounts);
-                            return;
-                        }
+                            // accounts
+                            var resultAccounts = await connector.Func<AccountSearchRequest, AccountResponse[]>(x => x.Accounts,
+                                new AccountSearchRequest { UserId = AppSettings.Current.Configuration.User.Id, PageCount = SearchRequest.MAX_PAGE_COUNT });
 
-                        AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                            if (resultAccounts.Status != eResponseStatus.Success)
+                            {
+                                this.HandleError(resultAccounts);
+                                return;
+                            }
+
+                            AccountList.FillData(resultAccounts.Result.AsEnumerable());
+                        }
                     }
                 }
                 else
@@ -136,15 +139,18 @@ namespace SherpaDesk
                     }
                 }
 
-                var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
-
-                if (resultClasses.Status != eResponseStatus.Success)
+                if (AppSettings.Current.Configuration.ClassTracking)
                 {
-                    this.HandleError(resultClasses);
-                    return;
-                }
+                    var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
 
-                ClassList.FillData(resultClasses.Result.AsEnumerable());
+                    if (resultClasses.Status != eResponseStatus.Success)
+                    {
+                        this.HandleError(resultClasses);
+                        return;
+                    }
+
+                    ClassList.FillData(resultClasses.Result.AsEnumerable());
+                }
             }
         }
 
@@ -241,15 +247,20 @@ namespace SherpaDesk
 
         private async void SaveButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (AppSettings.Current.Configuration.RequireTicketInitialPost && string.IsNullOrWhiteSpace(DescritionTextbox.Text))
+            {
+                this.HandleValidators("Initial Post is required for current configuration.#DescritionTextbox");
+                return;
+            }
             using (var connector = new Connector())
             {
                 var resultAddTicket = await connector.Func<AddTicketRequest, AddTicketResponse>(
                     x => x.Tickets,
                     new AddTicketRequest
                     {
-                        AccountId = AppSettings.Current.Configuration.User.TechOrAdmin ? AccountList.GetSelectedValue<int>() : 0,
-                        ClassId = ClassList.GetSelectedValue<int>(),
-                        UserId = AppSettings.Current.Configuration.User.TechOrAdmin 
+                        AccountId = AppSettings.Current.Configuration.User.TechOrAdmin && AppSettings.Current.Configuration.AccountManager ? AccountList.GetSelectedValue<int>() : 0,
+                        ClassId = AppSettings.Current.Configuration.ClassTracking ? ClassList.GetSelectedValue<int>() : 0,
+                        UserId = AppSettings.Current.Configuration.User.TechOrAdmin
                             ? EndUserList.GetSelectedValue<int>()
                             : AppSettings.Current.Configuration.User.Id,
                         TechnicianId = TechnicianList.GetSelectedValue<int>(),

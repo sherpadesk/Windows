@@ -94,7 +94,11 @@ namespace SherpaDesk
                 else
                 {
                     SaveButton.Visibility = Visibility.Visible;
-                    HoldBox.Visibility = Visibility.Visible;
+
+                    HoldBox.Visibility = AppSettings.Current.Configuration.OnHoldStatus
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+
                     SaveAndReopenButton.Visibility = Visibility.Collapsed;
                     SaveDoNotReopenButton.Visibility = Visibility.Collapsed;
                 }
@@ -309,7 +313,7 @@ namespace SherpaDesk
                 {
                     case eTicketAction.Close:
                         result = await connector.Action<CloseTicketRequest>(x => x.Tickets,
-                                new CloseTicketRequest(_ticketKey));
+                                new CloseTicketRequest(_ticketKey) { Note = OnHoldTextbox.Text });
 
                         break;
                     case eTicketAction.Delete:
@@ -357,21 +361,25 @@ namespace SherpaDesk
         {
             if (_actionType == eTicketAction.Close)
             {
-                ConfirmMessage.Text = "Are you sure you want to close this ticket?";
-                ConfirmYesLabel.Text = "Yes, Close It";
+                OnHoldTextbox.Text = string.Empty;
+                PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                OnHoldTitle.Text = "Are you sure you want to close this ticket?";
+                ConfirmYesOnHoldText.Text = "Yes, Close It";
+
             }
             else if (_actionType == eTicketAction.Delete)
             {
                 ConfirmMessage.Text = "Are you sure you want to delete this ticket?";
                 ConfirmYesLabel.Text = "Yes, Delete It";
+                ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
             else if (_actionType == eTicketAction.PickUp)
             {
                 ConfirmMessage.Text = "Are you sure you want to pick up this ticket?";
                 ConfirmYesLabel.Text = "Yes, Pick Up It";
+                ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
             grid.IsHitTestVisible = false;
-            ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
             BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
@@ -379,23 +387,20 @@ namespace SherpaDesk
         {
             grid.IsHitTestVisible = true;
             ConfirmPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void ShowOnHold()
         {
             OnHoldTextbox.Text = string.Empty;
+            OnHoldTitle.Text = "Place This Ticket On Hold";
+            ConfirmYesOnHoldText.Text = "Yes, Place on Hold It";
             grid.IsHitTestVisible = false;
             PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
             BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
-        private void HideOnHold()
-        {
-            grid.IsHitTestVisible = true;
-            PlaceOnHoldPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            BlackScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
         #endregion
 
         #region Main Handlers
@@ -407,6 +412,10 @@ namespace SherpaDesk
             });
 
             PlaceOnHoldButton.Visibility =
+                AppSettings.Current.Configuration.OnHoldStatus
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
             TransferButton.Visibility =
             PickupButton.Visibility =
             DeleteButton.Visibility =
@@ -558,6 +567,7 @@ namespace SherpaDesk
         {
             await PostResponse(HoldBox.IsChecked ?? false, false);
         }
+
         private async void SaveAndReopenButton_Click(object sender, TappedRoutedEventArgs e)
         {
             await PostResponse(false, true);
@@ -570,24 +580,22 @@ namespace SherpaDesk
 
         private void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            HideConfirm();
-            DoActionOnTicket();
+            if (_actionType == eTicketAction.Close
+                && AppSettings.Current.Configuration.RequireTicketClosureNote
+                && string.IsNullOrWhiteSpace(OnHoldTextbox.Text))
+            {
+                this.HandleValidators("Closure Note is required value for current configuration.#OnHoldTextbox");
+            }
+            else
+            {
+                HideConfirm();
+                DoActionOnTicket();
+            }
         }
 
         private void ConfirmNo_Tapped(object sender, TappedRoutedEventArgs e)
         {
             HideConfirm();
-        }
-
-        private void ConfirmYesOnHold_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            HideOnHold();
-            DoActionOnTicket();
-        }
-
-        private void ConfirmNoOnHold_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            HideOnHold();
         }
 
         private void PlaceOnHoldButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -618,6 +626,7 @@ namespace SherpaDesk
         {
             SaveAndReopenButton.Background.Opacity = 1;
         }
+
         private void SaveDoNotReopenButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             SaveDoNotReopenButton.Background.Opacity = 0.9;
@@ -627,7 +636,6 @@ namespace SherpaDesk
         {
             SaveDoNotReopenButton.Background.Opacity = 1;
         }
-
 
         private void SaveTransferButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
@@ -726,7 +734,6 @@ namespace SherpaDesk
         {
             ConfirmYesOnHold.Background.Opacity = 1;
         }
-        #endregion
 
         private void RemoveMeCheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -737,6 +744,7 @@ namespace SherpaDesk
         {
             RemoveMeCheckBox.IsChecked = false;
         }
+        #endregion
     }
     public enum eTicketAction
     {

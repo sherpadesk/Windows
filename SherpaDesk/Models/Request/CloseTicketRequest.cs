@@ -21,5 +21,7 @@ namespace SherpaDesk.Models.Request
 
         [DataMember(Name = "confirm_note"), Details]
         public string ConfirmNote { get; set; }
+
+
     }
 }

@@ -108,20 +108,20 @@
                     <HyperlinkButton x:Name="EndUserMeLink" Foreground="#625e55" Content="Me" Grid.Row="0" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="EndUserMeLink_Click"/>
 
                     <TextBlock Name="AccountText" HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Account" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
-                    <ComboBox x:Name="AccountList" Grid.Column="1" Grid.Row="1" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
+                    <ComboBox x:Name="AccountList" Grid.Column="1" Grid.Row="1" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Center" BorderBrush="#FFCDCDCD">
                     </ComboBox>
 
                     <TextBlock Grid.Column="0" Foreground="#625e55" HorizontalAlignment="right" Grid.Row="2" TextWrapping="Wrap" Text="Class*" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
-                    <ComboBox Name="ClassList" Grid.Column="1" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
+                    <ComboBox Name="ClassList" Grid.Column="1" Grid.Row="2" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Center" BorderBrush="#FFCDCDCD">
                     </ComboBox>
 
                     <TextBlock HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="3" TextWrapping="Wrap" Text="Technician" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
-                    <ComboBox x:Name="TechnicianList" Grid.Column="1" Grid.Row="3" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Top" BorderBrush="#FFCDCDCD">
+                    <ComboBox x:Name="TechnicianList" Grid.Column="1" Grid.Row="3" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,15,0,15" VerticalAlignment="Center" BorderBrush="#FFCDCDCD">
                     </ComboBox>
                     <HyperlinkButton x:Name="TechnicianMeLink" Foreground="#625e55" Content="Me" Grid.Row="3" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="TechnicianMeLink_Click"/>
 
                     <TextBlock x:Name="AlternateTechnicianText" HorizontalAlignment="right" Foreground="#625e55" Grid.Column="0" Grid.Row="4" TextWrapping="Wrap" Text="Alternate Tech" Margin="10,4,10,0" VerticalAlignment="Center" FontSize="20"/>
-                    <ComboBox x:Name="AlternateTechnicianList" Grid.Column="1" Grid.Row="4" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" SelectionChanged="AlternateTechnicianList_SelectionChanged" BorderBrush="#FFCDCDCD">
+                    <ComboBox x:Name="AlternateTechnicianList" Grid.Column="1" Grid.Row="4" FontSize="18" HorizontalAlignment="Left" Width="450" Height="40" Margin="0,0,0,0" VerticalAlignment="Center" SelectionChanged="AlternateTechnicianList_SelectionChanged" BorderBrush="#FFCDCDCD">
                     </ComboBox>
                     <HyperlinkButton x:Name="AlternateTechMeLink" Foreground="#625e55" Content="Me" Grid.Row="4" Grid.Column="2" Padding="0" HorizontalAlignment="Left" Margin="5,0,80,0" VerticalAlignment="Center" FontSize="20" FontWeight="Normal" Click="AlternateTechMeLink_Click"/>
 
