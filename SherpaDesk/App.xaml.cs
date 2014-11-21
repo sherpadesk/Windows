@@ -12,6 +12,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Diagnostics;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -31,11 +33,13 @@ namespace SherpaDesk
     /// </summary>
     sealed partial class App : Application
     {
-        private const string APPLICATION_FRAME = "appFrame";
+        private const string APPLICATION_FRAME = "SherpaDeskFrame";
+        private const string SESSION_NAME = "SherpaDeskSession";
+        private const string CHANNEL_NAME = "SherpaDeskChannel";
 
         public static async void ShowStandartMessage(string message, eErrorType title)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
                 try
                 {
@@ -43,7 +47,10 @@ namespace SherpaDesk
                     await md.ShowAsync();
                 }
                 catch (UnauthorizedAccessException) { }
-            });
+            }).AsTask();
+
+            await WriteLog(message, title);
+
         }
         public static async void LogOut()
         {
@@ -58,14 +65,45 @@ namespace SherpaDesk
             }
         }
 
-        public static async void ShowErrorMessage(string message, eErrorType title)
+        public static async Task WriteLog(string message, eErrorType type, Exception e = null)
         {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+            {
+                if (type == eErrorType.Error || type == eErrorType.FailedOperation || type == eErrorType.InternalError)
+                {
+                    try
+                    {
+
+                        var channel = new LoggingChannel(CHANNEL_NAME);
+                        var session = new LoggingSession(SESSION_NAME);
+
+                        session.AddLoggingChannel(channel, LoggingLevel.Error);
+
+                        channel.LogMessage(message, LoggingLevel.Error);
+                        if (e != null)
+                            channel.LogMessage(e.ToString(), LoggingLevel.Critical);
+
+                        await session.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.log");
+                    }
+                    catch (UnauthorizedAccessException) { }
+                }
+            }).AsTask();
+        }
+
+        public static async void ShowErrorMessage(string message, eErrorType title, Exception e = null)
+        {
+            await WriteLog(message, title, e);
+
             var flyout = new Error.Flyout(message, title);
+
             await flyout.ShowAsync();
+
         }
 
         public static async void ShowErrorMessage(Response response, eErrorType title)
         {
+            await WriteLog(response.ToString(), title);
+
             var flyout = new Error.Flyout(response, title);
             await flyout.ShowAsync();
         }
@@ -105,8 +143,8 @@ namespace SherpaDesk
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            ShowErrorMessage(e.Message, eErrorType.Error, e.Exception);
             e.Handled = true;
-            ShowErrorMessage(e.Message, eErrorType.Error);
         }
 
         /// <summary>

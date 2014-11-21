@@ -6,6 +6,7 @@ using SocialEbola.Lib.PopupHelpers;
 using System;
 using System.Globalization;
 using System.Text;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -111,6 +112,19 @@ namespace SherpaDesk
                     sb.Append(this.Message);
                     sb.Append(Environment.NewLine);
                 }
+
+                sb.Append(" ------------------------------------------------------------------------- ");
+
+                sb.Append(Environment.NewLine);
+
+                sb.AppendFormat("Please attach Errors.log file to email from: {0}", ApplicationData.Current.LocalFolder.Path)
+                
+                sb.Append(Environment.NewLine);
+                
+                sb.Append("Thanks.");
+                
+                sb.Append(Environment.NewLine);
+                
                 return sb.ToString();
             }
 
