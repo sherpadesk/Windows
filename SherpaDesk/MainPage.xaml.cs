@@ -128,8 +128,6 @@ namespace SherpaDesk
                             : eWorkListType.OpenAsEndUser);
 
                     this.infoFrame.Navigate(typeof(Info));
-
-                    throw new Exception("Unkonwn error");
                 }
                 else
                 {

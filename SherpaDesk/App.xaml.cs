@@ -83,7 +83,7 @@ namespace SherpaDesk
                         if (e != null)
                             channel.LogMessage(e.ToString(), LoggingLevel.Critical);
 
-                        await session.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.log");
+                        await session.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.etl");
                     }
                     catch (UnauthorizedAccessException) { }
                 }
