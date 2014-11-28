@@ -22,6 +22,9 @@ namespace SherpaDesk.Models
         Warning,
 
         [Details("")]
-        NoTitle
+        NoTitle,
+
+        [Details("Message")]
+        Message
     }
 }

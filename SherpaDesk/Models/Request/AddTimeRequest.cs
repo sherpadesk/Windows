@@ -61,6 +61,8 @@ namespace SherpaDesk.Models.Request
         [Details]
         public DateTime? StopDate { get; set; }
 
+        [DataMember(Name = "is_project_time"), Details]
+        public bool IsProjectTime { get; set; }
 
         [OnSerializing]
         protected void OnSerializing(StreamingContext context)
@@ -68,9 +70,9 @@ namespace SherpaDesk.Models.Request
             if (this.Date != DateTime.MinValue)
                 this._date = this.Date.ToString("yyyy-MM-dd");
             if (this.StartDate.HasValue)
-                this._startDate = this.StartDate.Value.ToString("yyyy-MM-ddThh:mm:0000000");
+                this._startDate = this.StartDate.Value.ToString("yyyy-MM-dd hh:mm:00");
             if (this.StopDate.HasValue)
-                this._stopDate = this.StopDate.Value.ToString("yyyy-MM-ddThh:mm:0000000");
+                this._stopDate = this.StopDate.Value.ToString("yyyy-MM-dd hh:mm:00");
         }
     }
 

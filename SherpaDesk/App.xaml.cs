@@ -69,17 +69,19 @@ namespace SherpaDesk
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
-                if (type == eErrorType.Error || type == eErrorType.FailedOperation || type == eErrorType.InternalError)
+                if (type == eErrorType.Error || type == eErrorType.FailedOperation || type == eErrorType.InternalError || type == eErrorType.Message)
                 {
                     try
                     {
 
+                        LoggingLevel level = type == eErrorType.Message ? LoggingLevel.Information : LoggingLevel.Error;
+
                         var channel = new LoggingChannel(CHANNEL_NAME);
                         var session = new LoggingSession(SESSION_NAME);
 
-                        session.AddLoggingChannel(channel, LoggingLevel.Error);
+                        session.AddLoggingChannel(channel, level);
 
-                        channel.LogMessage(message, LoggingLevel.Error);
+                        channel.LogMessage(message, level);
                         if (e != null)
                             channel.LogMessage(e.ToString(), LoggingLevel.Critical);
 

@@ -184,7 +184,7 @@ namespace SherpaDesk
                         Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,
                         Hours = hours,
                         Note = NoteTextBox.Text,
-                        Date = DateField.Value ?? DateTime.Now
+                        Date = DateField.Value ?? DateTime.Now 
                     });
 
                 if (result.Status != eResponseStatus.Success)

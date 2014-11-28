@@ -27,7 +27,7 @@
 
             <Button Name="SendReport" Content="Send Report" ToolTipService.ToolTip="Send Report to support team" FontSize="16" BorderThickness="1" BorderBrush="Gray" Padding="10 0 10 0" Margin="10 0 10 0" Foreground="#633c16" Background="#f9d08b" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Tapped="SendReport_Click"/>
             <Button Name="SaveLog" Content="Save Log" ToolTipService.ToolTip="Save log file and attach to report" FontSize="16" BorderThickness="1" BorderBrush="Gray" Padding="10 0 10 0" Margin="10 0 10 0" Foreground="#633c16" Background="#f9d08b" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Tapped="SaveLog_Click"/>
-            <Button Name="CloseError" ToolTipService.ToolTip="Close this notification" Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseError_Click">
+            <Button Name="CloseError" ToolTipService.ToolTip="Close this notification" Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center" Click="CloseError_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="Assets/Close.png"/>
                 </Button.Background>

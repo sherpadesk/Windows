@@ -35,7 +35,7 @@ namespace SherpaDesk.Common
         {
             App.ExternalAction(x => x.StartProgress());
 
-            _httpClient = new HttpClient {BaseAddress = new Uri(AppSettings.Current.Beta ? API_URL_BETA : API_URL)};
+            _httpClient = new HttpClient { BaseAddress = new Uri(AppSettings.Current.Beta ? API_URL_BETA : API_URL) };
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(PostRequest.JSON_MEDIA_TYPE));
         }
@@ -90,6 +90,8 @@ namespace SherpaDesk.Common
                     command += path.Path;
                 }
 
+                //await App.WriteLog(command.ToString() + ": " + request.ToString(), eErrorType.Message);
+
                 switch (request.Data.Type)
                 {
                     case eRequestType.POST:
@@ -133,6 +135,7 @@ namespace SherpaDesk.Common
                         result.Fail(response.ReasonPhrase, resp_message, response.RequestMessage.ToString(), request.ToString()) : 
                         result.Fail(response.ReasonPhrase, resp_message, request.ToString());
                 }
+                //await App.WriteLog(result.ToString(), eErrorType.Message);
             }
             catch (Exception ex)
             {
@@ -170,7 +173,7 @@ namespace SherpaDesk.Common
                 var token = AppSettings.Current.ApiToken;
 
                 if (string.IsNullOrEmpty(token)) return;
-                
+
                 var orgKey = AppSettings.Current.OrganizationKey;
                 var instKey = AppSettings.Current.InstanceKey;
                 if (!string.IsNullOrEmpty(orgKey) && !string.IsNullOrEmpty(instKey))

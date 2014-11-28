@@ -216,7 +216,8 @@ namespace SherpaDesk
                             Note = CommentsTextbox.Text,
                             Date = DateTime.Now,
                             StartDate = StartTimePicker.Value,
-                            StopDate = EndTimePicker.Value
+                            StopDate = EndTimePicker.Value, 
+                            IsProjectTime = false
                         });
                     if (resultAddTime.Status != eResponseStatus.Success)
                     {
