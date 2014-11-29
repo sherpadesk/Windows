@@ -34,8 +34,49 @@ namespace SherpaDesk
     sealed partial class App : Application
     {
         private const string APPLICATION_FRAME = "SherpaDeskFrame";
-        private const string SESSION_NAME = "SherpaDeskSession";
-        private const string CHANNEL_NAME = "SherpaDeskChannel";
+
+
+        private static LoggingChannel _infoChannel;
+        public static LoggingChannel InfoChannel
+        {
+            get
+            {
+                if (_infoChannel == null)
+                {
+                    _infoChannel = new LoggingChannel("SherpaDesk.Info");
+                }
+                return _infoChannel;
+            }
+        }
+        private static LoggingChannel _errorChannel;
+        public static LoggingChannel ErrorChannel
+        {
+            get
+            {
+                if (_errorChannel == null)
+                {
+                    _errorChannel = new LoggingChannel("SherpaDesk.Error");
+                }
+                return _errorChannel;
+            }
+        }
+
+        private static LoggingSession _loggingSession;
+        private static LoggingSession LoggingSession
+        {
+            get
+            {
+                if (_loggingSession == null)
+                {
+                    _loggingSession = new LoggingSession("SherpaDesk");
+
+                    _loggingSession.AddLoggingChannel(InfoChannel);
+                    _loggingSession.AddLoggingChannel(ErrorChannel);
+                }
+                return _loggingSession;
+            }
+        }
+
 
         public static async void ShowStandartMessage(string message, eErrorType title)
         {
@@ -67,29 +108,27 @@ namespace SherpaDesk
 
         public static async Task WriteLog(string message, eErrorType type, Exception e = null)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+            if (type != eErrorType.InvalidInputData)
             {
-                if (type == eErrorType.Error || type == eErrorType.FailedOperation || type == eErrorType.InternalError || type == eErrorType.Message)
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     try
                     {
-
-                        LoggingLevel level = type == eErrorType.Message ? LoggingLevel.Information : LoggingLevel.Error;
-
-                        var channel = new LoggingChannel(CHANNEL_NAME);
-                        var session = new LoggingSession(SESSION_NAME);
-
-                        session.AddLoggingChannel(channel, level);
-
-                        channel.LogMessage(message, level);
-                        if (e != null)
-                            channel.LogMessage(e.ToString(), LoggingLevel.Critical);
-
-                        await session.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.etl");
+                        if (type == eErrorType.Message)
+                        {
+                            InfoChannel.LogMessage(message, LoggingLevel.Information);
+                        }
+                        else
+                        {
+                            ErrorChannel.LogMessage(message, LoggingLevel.Error);
+                            if (e != null)
+                                ErrorChannel.LogMessage(e.ToString(), LoggingLevel.Critical);
+                        }
+                        await LoggingSession.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.etl");
                     }
-                    catch (UnauthorizedAccessException) { }
-                }
-            }).AsTask();
+                    catch (Exception) { }
+                }).AsTask();
+            }
         }
 
         public static async void ShowErrorMessage(string message, eErrorType title, Exception e = null)
@@ -216,6 +255,23 @@ namespace SherpaDesk
             await SherpaDesk.Common.SuspensionManager.SaveAsync();
 
             deferral.Complete();
+
+            if (_infoChannel != null)
+            {
+                _infoChannel.Dispose();
+                _infoChannel = null;
+            }
+            if (_errorChannel != null)
+            {
+                _errorChannel.Dispose();
+                _errorChannel = null;
+            }
+            if (_loggingSession != null)
+            {
+                _loggingSession.Dispose();
+                _loggingSession = null;
+            }
+
         }
     }
 }

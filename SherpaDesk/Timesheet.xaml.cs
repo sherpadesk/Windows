@@ -251,7 +251,10 @@ namespace SherpaDesk
                                 Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false,                                
                                 Hours = hours,
                                 Note = NoteTextBox.Text,
-                                Date = Model.CurrentDate
+                                StartDate = StartTimePicker.Value,
+                                StopDate = EndTimePicker.Value,
+                                Date = Model.CurrentDate,
+                                IsProjectTime = true
                             });
 
                 if (result.Status != eResponseStatus.Success)

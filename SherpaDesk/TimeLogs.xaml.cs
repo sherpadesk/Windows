@@ -119,12 +119,12 @@ namespace SherpaDesk
         {
             selectedTime = ((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext as TimeResponse;
             BillableBox.IsChecked = selectedTime.Billable;
-            HoursTextBox.Text = String.Format("{0:0.00}", selectedTime.Hours);
             NoteTextBox.Text = selectedTime.Note;
             StartTimePicker.Value = selectedTime.StartTime;
             StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
             EndTimePicker.Value = selectedTime.StopTime;
             EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
+            HoursTextBox.Text = selectedTime.Hours.ToString("0.00");
             EditTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             using (var connector = new Connector())
             {
@@ -206,7 +206,7 @@ namespace SherpaDesk
                 UpdateTimeRequest request = selectedTime.TicketId > 0
                     ? new UpdateTimeRequest(selectedTime.TicketId.ToString(), selectedTime.TimeId)
                     : new UpdateTimeRequest(selectedTime.ProjectId, selectedTime.TimeId);
-                request.AccountId = AccountList.GetSelectedValue<int>(-1);
+                request.AccountId = AccountList.GetSelectedValue<int>();
                 request.Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false;
                 request.Date = selectedTime.Date;
                 request.Hours = hours;
@@ -214,6 +214,8 @@ namespace SherpaDesk
                 request.ProjectId = ProjectList.GetSelectedValue<int>();
                 request.TaskTypeId = TaskTypeList.GetSelectedValue<int>();
                 request.TechnicianId = TechnicianList.GetSelectedValue<int>();
+                request.StartDate = StartTimePicker.Value;
+                request.StopDate = EndTimePicker.Value;
 
                 var result = await connector.Action<UpdateTimeRequest>(x => x.Time, request);
 

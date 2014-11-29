@@ -55,7 +55,7 @@ namespace SherpaDesk
             public Flyout(string message, eErrorType title)
             {
                 this.Title = title;
-                this.CanSendReport = title != eErrorType.InvalidInputData && title != eErrorType.Warning;
+                this.CanSendReport = title != eErrorType.InvalidInputData && title != eErrorType.Message;
                 this.Message = message;
             }
 
@@ -154,7 +154,7 @@ namespace SherpaDesk
             var picker = new FileSavePicker();
             picker.FileTypeChoices.Add(".etl Log", new List<string> { ".etl" });
             picker.DefaultFileExtension = ".etl";
-            picker.SuggestedFileName = "Serpadesk";
+            picker.SuggestedFileName = "Sherpadesk";
             picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             var file = await picker.PickSaveFileAsync();
             var log = await ApplicationData.Current.LocalFolder.GetFileAsync("Errors.etl");

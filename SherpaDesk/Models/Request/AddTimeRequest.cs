@@ -64,6 +64,9 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "is_project_time"), Details]
         public bool IsProjectTime { get; set; }
 
+        [DataMember(Name = "complete"), Details]
+        public string Complete { get; set; }
+
         [OnSerializing]
         protected void OnSerializing(StreamingContext context)
         {
@@ -83,12 +86,22 @@ namespace SherpaDesk.Models.Request
         {
             this.TicketKey = ticketKey;
             this.TicketTimeId = timeId;
+            this.IsProjectTime = false;
         }
 
         public UpdateTimeRequest(int projectId, int timeId)
         {
             this.ProjectId = projectId;
             this.ProjectTimeId = timeId;
+            this.IsProjectTime = true;
+        }
+
+        public override eRequestType Type
+        {
+            get
+            {
+                return eRequestType.PUT;
+            }
         }
 
         [DataMember(Name = "project_time_id"), Details]
@@ -96,7 +109,6 @@ namespace SherpaDesk.Models.Request
 
         [DataMember(Name = "ticket_time_id"), Details]
         public int TicketTimeId { get; set; }
-
     }
 
     [DataContract]

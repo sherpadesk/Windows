@@ -90,8 +90,9 @@ namespace SherpaDesk.Common
                     command += path.Path;
                 }
 
-                //await App.WriteLog(command.ToString() + ": " + request.ToString(), eErrorType.Message);
+                await App.WriteLog(command.ToString() + ": " + request.ToString(), eErrorType.Message);
 
+                //var req_message = await request.Data.GetContent().ReadAsStringAsync();
                 switch (request.Data.Type)
                 {
                     case eRequestType.POST:
@@ -135,7 +136,7 @@ namespace SherpaDesk.Common
                         result.Fail(response.ReasonPhrase, resp_message, response.RequestMessage.ToString(), request.ToString()) : 
                         result.Fail(response.ReasonPhrase, resp_message, request.ToString());
                 }
-                //await App.WriteLog(result.ToString(), eErrorType.Message);
+                await App.WriteLog(result.ToString(), eErrorType.Message);
             }
             catch (Exception ex)
             {

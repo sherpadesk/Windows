@@ -106,11 +106,11 @@ namespace SherpaDesk.Extensions
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                App.ShowStandartMessage(response.Message, eErrorType.Warning);
+                App.ShowErrorMessage(response.Message, eErrorType.Warning);
             }
             else if (response.Status == eResponseStatus.Error)
             {
-                App.ShowStandartMessage(response.Message, eErrorType.Warning);
+                App.ShowErrorMessage(response.Message, eErrorType.Error);
             }
         }
 

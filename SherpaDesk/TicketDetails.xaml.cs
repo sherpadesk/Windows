@@ -217,7 +217,8 @@ namespace SherpaDesk
                             Date = DateTime.Now,
                             StartDate = StartTimePicker.Value,
                             StopDate = EndTimePicker.Value, 
-                            IsProjectTime = false
+                            IsProjectTime = false, 
+                            Complete = CompleteList.GetSelectedValue<string>(string.Empty)
                         });
                     if (resultAddTime.Status != eResponseStatus.Success)
                     {
@@ -300,6 +301,9 @@ namespace SherpaDesk
                 StartTimePicker.Value = EndTimePicker.Value = new DateTime?();
                 HoursTextBox.Text = "0.00";
                 CommentsTextbox.Text = string.Empty;
+                CompleteList.SelectedIndex = 0;
+                Billable.SelectedIndex = 0;
+                TaskTypeList.SelectedIndex = 0;
 
                 await LoadPage();
             }
