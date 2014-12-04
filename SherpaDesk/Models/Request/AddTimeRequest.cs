@@ -1,4 +1,5 @@
 ﻿using SherpaDesk.Common;
+using SherpaDesk.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -61,7 +62,7 @@ namespace SherpaDesk.Models.Request
         [Details]
         public DateTime? StopDate { get; set; }
 
-        [DataMember(Name = "is_project_time"), Details]
+        [DataMember(Name = "is_project_log"), Details]
         public bool IsProjectTime { get; set; }
 
         [DataMember(Name = "complete"), Details]
@@ -73,17 +74,18 @@ namespace SherpaDesk.Models.Request
             if (this.Date != DateTime.MinValue)
                 this._date = this.Date.ToString("yyyy-MM-dd");
             if (this.StartDate.HasValue)
-                this._startDate = this.StartDate.Value.ToString("yyyy-MM-dd hh:mm:00");
+                this._startDate = this._date + " " + this.StartDate.Value.ToString("hh:mm:00");
             if (this.StopDate.HasValue)
-                this._stopDate = this.StopDate.Value.ToString("yyyy-MM-dd hh:mm:00");
+                this._stopDate = this._date + " " + this.StopDate.Value.ToString("hh:mm:00");
         }
     }
 
     [DataContract]
-    public class UpdateTimeRequest : AddTimeRequest
+    public class UpdateTimeRequest : AddTimeRequest, IPath
     {
         public UpdateTimeRequest(string ticketKey, int timeId)
         {
+            this.Path = "/" + timeId.ToString();
             this.TicketKey = ticketKey;
             this.TicketTimeId = timeId;
             this.IsProjectTime = false;
@@ -91,6 +93,7 @@ namespace SherpaDesk.Models.Request
 
         public UpdateTimeRequest(int projectId, int timeId)
         {
+            this.Path = "/" + timeId.ToString();
             this.ProjectId = projectId;
             this.ProjectTimeId = timeId;
             this.IsProjectTime = true;
@@ -109,6 +112,8 @@ namespace SherpaDesk.Models.Request
 
         [DataMember(Name = "ticket_time_id"), Details]
         public int TicketTimeId { get; set; }
+
+        public string Path { get; set; }
     }
 
     [DataContract]

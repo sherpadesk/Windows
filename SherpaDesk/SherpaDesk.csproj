@@ -111,6 +111,7 @@
     <Compile Include="Models\CustomBeginEditCommand.cs" />
     <Compile Include="Models\Response\ConfigResponse.cs" />
     <Compile Include="Models\ViewModels\ChartDataModel.cs" />
+    <Compile Include="Models\ViewModels\TimeLogModel.cs" />
     <Compile Include="TimeLogs.xaml.cs">
       <DependentUpon>TimeLogs.xaml</DependentUpon>
     </Compile>

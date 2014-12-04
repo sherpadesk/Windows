@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="using:Telerik.UI.Xaml.Controls.Grid" 
     xmlns:telerikInput ="using:Telerik.UI.Xaml.Controls.Input"
+    xmlns:viewModels="using:SherpaDesk.Models.ViewModels"
     xmlns:gridCommands="using:Telerik.UI.Xaml.Controls.Grid.Commands"
     xmlns:gridPrimitives="using:Telerik.UI.Xaml.Controls.Grid.Primitives">
     <Page.Resources>
@@ -140,23 +141,25 @@
                 </Grid.RowDefinitions>
 
                 <telerik:RadDataGrid 
-                RequestedTheme="Light" 
-                x:Name="TicketTimeGrid" 
-                UserGroupMode="Disabled"                
-                Grid.Row="4"
-                UserEditMode="None"
-                AutoGenerateColumns="False" 
-                UserColumnReorderMode="None" 
-                UserFilterMode="Disabled" 
-                UserSortMode="Single"                 
-                GridLinesVisibility="Horizontal" 
-                BorderThickness="0"
-                Background="Transparent"
-                RowBackground="White"
-                GridLinesBrush="Transparent"
-                Height="auto"
-                Margin="0,15,0,0"                    
-                SelectionMode="None">
+                    RequestedTheme="Light" 
+                    x:Name="TicketTimeGrid" 
+                    UserGroupMode="Disabled"                
+                    CompositeMode="SourceOver"
+                    Grid.Row="4"
+                    UserEditMode="None"
+                    AutoGenerateColumns="False" 
+                    UserColumnReorderMode="None" 
+                    UserFilterMode="Disabled" 
+                    UserSortMode="Single"                 
+                    GridLinesVisibility="Horizontal" 
+                    BorderThickness="0"
+                    Background="Transparent"
+                    RowBackground="White"
+                    GridLinesBrush="Transparent"
+                    Height="auto"
+                    Margin="0,15,0,0"                    
+                    SelectionMode="None"
+                    ItemsSource="{Binding List, UpdateSourceTrigger=PropertyChanged}">
                     <telerik:RadDataGrid.SortDescriptors>
                         <telerik:PropertySortDescriptor PropertyName="StartStopTime" SortOrder="Ascending" />
                     </telerik:RadDataGrid.SortDescriptors>
@@ -172,28 +175,56 @@
                         </Style>
                     </telerik:RadDataGrid.Resources>
                     <telerik:RadDataGrid.Columns>
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TicketNumber" Header="Tkt#" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Name="TicketNumerColumn" 
+                            PropertyName="TicketNumber" Header="Tkt#" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="DateLabel" Header="Date" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="DateLabel" Header="Date" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="ProjectName" Header="Project" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="ProjectName" Header="Project" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="StartStopTime" Header="Start/Stop" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="StartStopTime" Header="Start/Stop" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Hours" Header="Time Log" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="Hours" Header="Time Log" SizeMode="Auto" />
 
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="UserName" Header="Name" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="UserName" Header="Name" SizeMode="Auto" />
 
-                        <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Billable" SizeMode="Auto">
+                        <telerik:DataGridTemplateColumn 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            Width="50" Header="Billable" SizeMode="Auto">
                             <telerik:DataGridTemplateColumn.CellContentTemplate>
                                 <DataTemplate>
                                     <CheckBox x:Name="BillableCheckbox" IsEnabled="False" IsChecked="{Binding Billable}" Margin="20,20,20,20" HorizontalAlignment="Left" />
                                 </DataTemplate>
                             </telerik:DataGridTemplateColumn.CellContentTemplate>
                         </telerik:DataGridTemplateColumn>
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="TaskTypeName" Header="Task" SizeMode="Auto" />
-                        <telerik:DataGridTextColumn CellContentStyle="{StaticResource WorkListCellTextStyle}" HeaderStyle="{StaticResource WorkListHeaderTextStyle}" PropertyName="Note" Header="Note" SizeMode="Auto" />
-                        <telerik:DataGridTemplateColumn HeaderStyle="{StaticResource WorkListHeaderTextStyle}" Width="50" Header="Edit / Remove" SizeMode="Auto">
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="TaskTypeName" Header="Task" SizeMode="Auto" />
+                        <telerik:DataGridTextColumn 
+                            CellContentStyle="{StaticResource WorkListCellTextStyle}" 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            PropertyName="Note" Header="Note" SizeMode="Auto" />
+                        <telerik:DataGridTemplateColumn 
+                            HeaderStyle="{StaticResource WorkListHeaderTextStyle}" 
+                            Width="50" Header="Edit / Remove" SizeMode="Auto">
                             <telerik:DataGridTemplateColumn.CellContentTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,0,20,0">
@@ -201,8 +232,10 @@
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
-                                        <Button Width="100" Height="50" Content="Edit" Tag="{Binding TimeId}" x:Name="EditButton" Tapped="EditButton_Tapped"  />
-                                        <Button Grid.Column="1" Width="100" Height="50" Content="Delete" Tag="{Binding TimeId}" x:Name="DeleteButton" Tapped="DeleteButton_Tapped"  />
+                                        <Button Width="100" Height="50" Content="Edit" Tag="{Binding TimeId}" 
+                                                x:Name="EditButton" Tapped="EditButton_Tapped"  />
+                                        <Button Grid.Column="1" Width="100" Height="50" Content="Delete" Tag="{Binding TimeId}" 
+                                                x:Name="DeleteButton" Tapped="DeleteButton_Tapped"  />
                                     </Grid>
                                 </DataTemplate>
                             </telerik:DataGridTemplateColumn.CellContentTemplate>

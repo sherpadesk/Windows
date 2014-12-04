@@ -24,7 +24,7 @@ namespace SherpaDesk
 
         #region Handlers
 
-        public async void TimesheetRefresh(DateTime startDate, DateTime endDate)
+        public async Task TimesheetRefresh(DateTime startDate, DateTime endDate)
         {
             using (var connector = new Connector())
             {

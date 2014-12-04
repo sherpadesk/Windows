@@ -158,6 +158,19 @@ namespace SherpaDesk
             return confirmResult.Id.ToString() == "ok";
         }
 
+        public static async Task ExternalAction(Func<MainPage, Task> action)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+                MainPage page = rootFrame.Content as MainPage;
+                if (page != null)
+                {
+                    await action(page);
+                }
+            }
+        }
+
         public static void ExternalAction(Action<MainPage> action)
         {
             Frame rootFrame = Window.Current.Content as Frame;

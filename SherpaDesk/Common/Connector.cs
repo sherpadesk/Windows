@@ -92,7 +92,6 @@ namespace SherpaDesk.Common
 
                 await App.WriteLog(command.ToString() + ": " + request.ToString(), eErrorType.Message);
 
-                //var req_message = await request.Data.GetContent().ReadAsStringAsync();
                 switch (request.Data.Type)
                 {
                     case eRequestType.POST:
@@ -105,6 +104,8 @@ namespace SherpaDesk.Common
                         response = await _httpClient.GetAsync((command + Helper.GetUrlParams(request.Data)).ToString());
                         break;
                     case eRequestType.PUT:
+                        //var req_message = await request.Data.GetContent().ReadAsStringAsync();
+
                         using (var content = request.Data.GetContent())
                         {
                             response = await _httpClient.PutAsync(command.ToString(), content);

@@ -49,13 +49,13 @@ namespace SherpaDesk.Models.Response
         private string _startTime;
 
         [Details]
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         [DataMember(Name = "stop_time")]
         private string _stopTime;
 
         [Details]
-        public DateTime StopTime { get; set; }
+        public DateTime? StopTime { get; set; }
 
         [Details]
         public string StartStopTime

@@ -10,15 +10,13 @@ using SherpaDesk.Models.Request;
 using SherpaDesk.Extensions;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
+using SherpaDesk.Models.ViewModels;
 
 namespace SherpaDesk
 {
     public sealed partial class TimeLogs : SherpaDesk.Common.LayoutAwarePage
     {
-        private ObservableCollection<TimeResponse> list;
-        private TimeResponse selectedTime;
-        private bool isEdit;
-
         public TimeLogs()
         {
             this.InitializeComponent();
@@ -26,15 +24,17 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            list = (ObservableCollection<TimeResponse>)e.Parameter;
-            UpdateGrid(list);
+            this.DataContext = new TimeLogModel((ObservableCollection<TimeResponse>)e.Parameter);
+
             base.OnNavigatedTo(e);
         }
 
         public void UpdateGrid(ObservableCollection<TimeResponse> list)
         {
-            TicketTimeGrid.ItemsSource = list;
+            ((TimeLogModel)DataContext).List = list;
+
             TicketTimeGrid.UpdateLayout();
+
             EditTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
@@ -101,15 +101,15 @@ namespace SherpaDesk
                             TaskTypeList.SetSelectedValue(AppSettings.Current.DefaultTaskType);
                         }
                     }
-                    if (isEdit)
+                    if (((TimeLogModel)DataContext).IsEdit)
                     {
-                        ProjectList.SetSelectedValue(selectedTime.ProjectId);
-                        TaskTypeList.SetSelectedValue(selectedTime.TaskTypeId);
+                        ProjectList.SetSelectedValue(((TimeLogModel)DataContext).Time.ProjectId);
+                        TaskTypeList.SetSelectedValue(((TimeLogModel)DataContext).Time.TaskTypeId);
                         AccountList.IsHitTestVisible = true;
                         ProjectList.IsHitTestVisible = true;
                         TechnicianList.IsHitTestVisible = true;
                         TaskTypeList.IsHitTestVisible = true;
-                        isEdit = false;
+                        ((TimeLogModel)DataContext).IsEdit = false;
                     }
                 }
             }
@@ -117,15 +117,39 @@ namespace SherpaDesk
 
         private async void EditButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            selectedTime = ((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext as TimeResponse;
-            BillableBox.IsChecked = selectedTime.Billable;
-            NoteTextBox.Text = selectedTime.Note;
-            StartTimePicker.Value = selectedTime.StartTime;
-            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
-            EndTimePicker.Value = selectedTime.StopTime;
-            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
-            HoursTextBox.Text = selectedTime.Hours.ToString("0.00");
+            var time = ((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext as TimeResponse;
+
+            ((TimeLogModel)DataContext).Time = time;
+
+            BillableBox.IsChecked = time.Billable;
+
+            NoteTextBox.Text = time.Note;
+
+            if (time.StartTime.HasValue)
+            {
+                StartTimePicker.Value = time.StartTime.Value;
+                StartTimeLabel.Text = time.StartTime.Value.ToString("t");
+            }
+            else
+            {
+                StartTimePicker.Value = null;
+                StartTimeLabel.Text = string.Empty;
+            }
+            if (time.StopTime.HasValue)
+            {
+                EndTimePicker.Value = time.StopTime.Value;
+                EndTimeLabel.Text = time.StopTime.Value.ToString("t");
+            }
+            else
+            {
+                EndTimePicker.Value = null;
+                EndTimeLabel.Text = string.Empty;
+            }
+
+            HoursTextBox.Text = time.Hours.ToString("0.00");
+
             EditTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
             using (var connector = new Connector())
             {
                 // technician
@@ -137,14 +161,17 @@ namespace SherpaDesk
                     return;
                 }
                 TechnicianList.FillData(
-                resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
-                new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
-                isEdit = true;
+                    resultTechnicians.Result.Select(user => new NameResponse
+                    {
+                        Id = user.Id,
+                        Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true)
+                    }));
+                ((TimeLogModel)DataContext).IsEdit = true;
                 AccountList.IsHitTestVisible = false;
                 ProjectList.IsHitTestVisible = false;
                 TechnicianList.IsHitTestVisible = false;
                 TaskTypeList.IsHitTestVisible = false;
-                TechnicianList.SetSelectedValue(selectedTime.UserId);
+                TechnicianList.SetSelectedValue(time.UserId);
             }
         }
 
@@ -168,9 +195,9 @@ namespace SherpaDesk
                     return;
                 }
 
-                App.ExternalAction(x => x.UpdateTimesheet(date.AddDays(date.Day*-1), DateTime.Now));
+                UpdateGrid(new ObservableCollection<TimeResponse>(result.Result.Where(x => x.Date.Date == date.Date).ToList()));
 
-                UpdateGrid(new ObservableCollection<TimeResponse>(result.Result.ToList()));
+                App.ExternalAction(async x => await x.UpdateTimesheet(date.AddDays(date.Day * -1), DateTime.Now));
             }
         }
 
@@ -203,12 +230,14 @@ namespace SherpaDesk
                 var hours = decimal.Zero;
                 decimal.TryParse(HoursTextBox.Text, out hours);
 
-                UpdateTimeRequest request = selectedTime.TicketId > 0
-                    ? new UpdateTimeRequest(selectedTime.TicketId.ToString(), selectedTime.TimeId)
-                    : new UpdateTimeRequest(selectedTime.ProjectId, selectedTime.TimeId);
+                var time = ((TimeLogModel)this.DataContext).Time;
+
+                UpdateTimeRequest request = time.TicketId > 0
+                    ? new UpdateTimeRequest(time.TicketId.ToString(), time.TimeId)
+                    : new UpdateTimeRequest(time.ProjectId, time.TimeId);
                 request.AccountId = AccountList.GetSelectedValue<int>();
                 request.Billable = BillableBox.IsChecked.HasValue ? BillableBox.IsChecked.Value : false;
-                request.Date = selectedTime.Date;
+                request.Date = time.Date;
                 request.Hours = hours;
                 request.Note = NoteTextBox.Text;
                 request.ProjectId = ProjectList.GetSelectedValue<int>();
@@ -266,9 +295,9 @@ namespace SherpaDesk
                     }
 
                     AccountList.FillData(resultAccounts.Result.AsEnumerable());
-                    if (isEdit)
+                    if (((TimeLogModel)DataContext).IsEdit)
                     {
-                        AccountList.SetSelectedValue(selectedTime.AccountId);
+                        AccountList.SetSelectedValue(((TimeLogModel)DataContext).Time.AccountId);
                     }
                 }
             }

@@ -6,6 +6,7 @@ using SherpaDesk.Models.Response;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -73,12 +74,12 @@ namespace SherpaDesk
             }
         }
 
-        public async void UpdateTimesheet(DateTime start, DateTime end)
+        public async Task UpdateTimesheet(DateTime start, DateTime end)
         {
             Timesheet timesheet = this.timesheetFrame.Content as Timesheet;
             if (timesheet != null)
             {
-                timesheet.TimesheetRefresh(start, end);
+                await timesheet.TimesheetRefresh(start, end);
             }
         }
 
