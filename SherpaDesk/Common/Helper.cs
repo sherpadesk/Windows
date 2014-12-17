@@ -91,9 +91,9 @@ namespace SherpaDesk.Common
             if (request.IsEmpty) return result;
             var type = typeof(TRequest);
 
-            foreach (var method in from method in type.GetRuntimeMethods() 
-                                   let onSerializing = method.GetCustomAttribute<OnSerializingAttribute>() 
-                                   where onSerializing != null 
+            foreach (var method in from method in type.GetRuntimeMethods()
+                                   let onSerializing = method.GetCustomAttribute<OnSerializingAttribute>()
+                                   where onSerializing != null
                                    select method)
             {
                 method.Invoke(request, new object[] { null });
@@ -150,6 +150,11 @@ namespace SherpaDesk.Common
             return Windows.Data.Html.HtmlUtilities.ConvertToText(html);
         }
 
+        public static string StringToHtml(string text)
+        {
+            return text.Replace(Environment.NewLine, "<br>");
+        }
+
         public static string ToXML<T>(T value)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -164,7 +169,7 @@ namespace SherpaDesk.Common
             {
                 serializer.Serialize(xmlWriter, value);
             }
-            return stringBuilder.ToString(); 
+            return stringBuilder.ToString();
         }
 
         public static T FromXml<T>(string xml)
@@ -178,6 +183,6 @@ namespace SherpaDesk.Common
             }
 
             return value;
-        } 
+        }
     }
 }

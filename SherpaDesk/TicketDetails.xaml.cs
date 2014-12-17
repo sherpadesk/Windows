@@ -213,7 +213,7 @@ namespace SherpaDesk
                             TechnicianId = AppSettings.Current.Configuration.User.Id,
                             Billable = Billable.SelectedIndex == 0 ? true : false,
                             Hours = hours,
-                            Note = CommentsTextbox.Text,
+                            Note = Helper.StringToHtml(CommentsTextbox.Text),
                             Date = DateTime.Now,
                             StartDate = StartTimePicker.Value,
                             StopDate = EndTimePicker.Value, 
@@ -230,7 +230,7 @@ namespace SherpaDesk
                 if (hold)
                 {
                     var resultOnHold = await connector.Action<PlaceOnHoldRequest>(x => x.Tickets,
-                        new PlaceOnHoldRequest(_ticketKey) { Note = CommentsTextbox.Text });
+                        new PlaceOnHoldRequest(_ticketKey) { Note = Helper.StringToHtml(CommentsTextbox.Text) });
 
                     if (resultOnHold.Status != eResponseStatus.Success)
                     {
@@ -242,7 +242,7 @@ namespace SherpaDesk
                 if (reopen)
                 {
                     var resultReOpen = await connector.Action<ReOpenRequest>(x => x.Tickets,
-                        new ReOpenRequest(_ticketKey) { Note = CommentsTextbox.Text });
+                        new ReOpenRequest(_ticketKey) { Note = Helper.StringToHtml(CommentsTextbox.Text) });
 
                     if (resultReOpen.Status != eResponseStatus.Success)
                     {
@@ -258,7 +258,7 @@ namespace SherpaDesk
                     var resultWait = await connector.Action<WaitingOnPostRequest>(x => x.Tickets,
                         new WaitingOnPostRequest(_ticketKey)
                         {
-                            Note = CommentsTextbox.Text
+                            Note = Helper.StringToHtml(CommentsTextbox.Text)
                         });
 
                     if (resultWait.Status != eResponseStatus.Success)
@@ -272,7 +272,7 @@ namespace SherpaDesk
                         new AddNoteRequest
                         {
                             TicketKey = _ticketKey,
-                            Note = CommentsTextbox.Text
+                            Note = Helper.StringToHtml(CommentsTextbox.Text)
                         });
                     if (resultNote.Status != eResponseStatus.Success)
                     {
