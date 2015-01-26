@@ -1,17 +1,16 @@
-﻿using System.Linq;
-using SherpaDesk.Common;
+﻿using SherpaDesk.Common;
+using SherpaDesk.Extensions;
 using SherpaDesk.Models;
+using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
+using SherpaDesk.Models.ViewModels;
 using System;
 using System.Collections.ObjectModel;
-using SherpaDesk.Models.Request;
-using SherpaDesk.Extensions;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System.Collections.Generic;
-using SherpaDesk.Models.ViewModels;
+using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
@@ -72,7 +71,7 @@ namespace SherpaDesk
 
                     if (resultProjects.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultProjects);
+                        await this.HandleError(resultProjects);
                         return;
                     }
 
@@ -90,7 +89,7 @@ namespace SherpaDesk
 
                         if (resultTaskType.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultTaskType);
+                            await this.HandleError(resultTaskType);
                             return;
                         }
 
@@ -157,7 +156,7 @@ namespace SherpaDesk
 
                 if (resultTechnicians.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTechnicians);
+                    await this.HandleError(resultTechnicians);
                     return;
                 }
                 TechnicianList.FillData(
@@ -191,13 +190,13 @@ namespace SherpaDesk
 
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                     return;
                 }
 
                 UpdateGrid(new ObservableCollection<TimeResponse>(result.Result.Where(x => x.Date.Date == date.Date).ToList()));
 
-                App.ExternalAction(async x => await x.UpdateTimesheet(date.AddDays(date.Day * -1), DateTime.Now));
+                await App.ExternalAction(async x => await x.UpdateTimesheet(date.AddDays(date.Day * -1), DateTime.Now));
             }
         }
 
@@ -213,7 +212,7 @@ namespace SherpaDesk
 
                     if (result.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(result);
+                        await this.HandleError(result);
                     }
                     else
                     {
@@ -250,7 +249,7 @@ namespace SherpaDesk
 
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                 }
                 else
                 {
@@ -290,7 +289,7 @@ namespace SherpaDesk
 
                     if (resultAccounts.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultAccounts);
+                        await this.HandleError(resultAccounts);
                         return;
                     }
 
@@ -327,7 +326,7 @@ namespace SherpaDesk
 
                     if (resultTaskType.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultTaskType);
+                        await this.HandleError(resultTaskType);
                         return;
                     }
 

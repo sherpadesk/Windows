@@ -71,7 +71,7 @@ namespace SherpaDesk
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTicket);
+                    await this.HandleError(resultTicket);
                     return;
                 }
                 var ticket = resultTicket.Result;
@@ -91,7 +91,7 @@ namespace SherpaDesk
 
                     if (resultTaskType.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultTaskType);
+                        await this.HandleError(resultTaskType);
                         return;
                     }
                     TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
@@ -154,7 +154,7 @@ namespace SherpaDesk
 
                     if (resultAddTime.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultAddTime);
+                        await this.HandleError(resultAddTime);
                         return;
                     }
                 }
@@ -165,7 +165,7 @@ namespace SherpaDesk
 
                     if (resultOnHold.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultOnHold);
+                        await this.HandleError(resultOnHold);
                     }
                     statusUpdated = true;
                 }
@@ -176,7 +176,7 @@ namespace SherpaDesk
 
                     if (resultReOpen.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultReOpen);
+                        await this.HandleError(resultReOpen);
                     }
                     statusUpdated = true;
                 }
@@ -194,7 +194,7 @@ namespace SherpaDesk
 
                         if (resultWait.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultWait);
+                            await this.HandleError(resultWait);
                         }
                     }
                     else if (hours == decimal.Zero && !statusUpdated)
@@ -207,7 +207,7 @@ namespace SherpaDesk
                             });
                         if (resultNote.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultNote);
+                            await this.HandleError(resultNote);
                             return;
                         }
                         postId = resultNote.Result.First().PostId;
@@ -224,7 +224,7 @@ namespace SherpaDesk
                         var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultUploadFile);
+                            await this.HandleError(resultUploadFile);
                             return;
                         }
                     }
@@ -239,7 +239,7 @@ namespace SherpaDesk
                 }
                 if (statusUpdated)
                 {
-                    App.ExternalAction(x =>
+                    await App.ExternalAction(x =>
                         x.UpdateInfo());
                 }
             }

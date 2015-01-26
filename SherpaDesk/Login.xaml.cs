@@ -59,9 +59,10 @@ namespace SherpaDesk
 
                 if (resultLogin.Status != eResponseStatus.Success)
                 {
-                    //                    App.ShowStandartMessage(resultLogin.Message, eErrorType.Warning);
-                    this.HandleError(resultLogin);
                     this.StopProgress();
+                    
+                    await this.HandleError(resultLogin);
+                    
                     return;
                 }
 
@@ -76,7 +77,7 @@ namespace SherpaDesk
 
                 if (resultOrg.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultOrg);
+                    await this.HandleError(resultOrg);
                 }
                 else
                 {
@@ -146,9 +147,9 @@ namespace SherpaDesk
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
-        private void RegisterButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void RegisterButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com/start-your-climb/"));            
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com/start-your-climb/"));
         }
 
         private void SignInButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)

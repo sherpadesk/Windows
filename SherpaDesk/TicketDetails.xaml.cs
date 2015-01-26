@@ -4,6 +4,7 @@ using SherpaDesk.Interfaces;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
+using SherpaDesk.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using SherpaDesk.Models.ViewModels;
 
 namespace SherpaDesk
 {
@@ -46,7 +46,7 @@ namespace SherpaDesk
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTicket);
+                    await this.HandleError(resultTicket);
                     return;
                 }
                 var ticket = resultTicket.Result;
@@ -112,7 +112,7 @@ namespace SherpaDesk
                     var resultClasses = await connector.Func<UserRequest, ClassResponse[]>(x => x.Classes, new UserRequest { UserId = AppSettings.Current.Configuration.User.Id });
                     if (resultClasses.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultClasses);
+                        await this.HandleError(resultClasses);
                         return;
                     }
                     ClassList.FillData(resultClasses.Result.AsEnumerable());
@@ -121,7 +121,7 @@ namespace SherpaDesk
 
                     if (resultTechnicians.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultTechnicians);
+                        await this.HandleError(resultTechnicians);
                         return;
                     }
                     if (resultTechnicians.Result.Length < SearchRequest.MAX_PAGE_COUNT)
@@ -140,7 +140,7 @@ namespace SherpaDesk
 
                 if (resultTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTicket);
+                    await this.HandleError(resultTicket);
                     return;
                 }
                 if (resultFiles.Result != null && resultFiles.Result.Length > 0)
@@ -170,7 +170,7 @@ namespace SherpaDesk
                 var resultNotes = await connector.Func<NoteSearchRequest, NoteResponse[]>(x => x.Tickets, new NoteSearchRequest(_ticketKey));
                 if (resultNotes.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultNotes);
+                    await this.HandleError(resultNotes);
                     return;
                 }
 
@@ -216,13 +216,13 @@ namespace SherpaDesk
                             Note = Helper.StringToHtml(CommentsTextbox.Text),
                             Date = DateTime.Now,
                             StartDate = StartTimePicker.Value,
-                            StopDate = EndTimePicker.Value, 
-                            IsProjectTime = false, 
+                            StopDate = EndTimePicker.Value,
+                            IsProjectTime = false,
                             Complete = CompleteList.GetSelectedValue<string>(string.Empty)
                         });
                     if (resultAddTime.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultAddTime);
+                        await this.HandleError(resultAddTime);
                         return;
                     }
                 }
@@ -234,7 +234,7 @@ namespace SherpaDesk
 
                     if (resultOnHold.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultOnHold);
+                        await this.HandleError(resultOnHold);
                         return;
                     }
                     statusUpdated = true;
@@ -246,7 +246,7 @@ namespace SherpaDesk
 
                     if (resultReOpen.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultReOpen);
+                        await this.HandleError(resultReOpen);
                         return;
                     }
                     statusUpdated = true;
@@ -263,7 +263,7 @@ namespace SherpaDesk
 
                     if (resultWait.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultWait);
+                        await this.HandleError(resultWait);
                     }
                 }
                 else if (!timePost && !statusUpdated)
@@ -276,7 +276,7 @@ namespace SherpaDesk
                         });
                     if (resultNote.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultNote);
+                        await this.HandleError(resultNote);
                         return;
                     }
                     postId = resultNote.Result.First().PostId;
@@ -293,7 +293,7 @@ namespace SherpaDesk
                         var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultUploadFile);
+                            await this.HandleError(resultUploadFile);
                             return;
                         }
                     }
@@ -306,10 +306,15 @@ namespace SherpaDesk
                 TaskTypeList.SelectedIndex = 0;
 
                 await LoadPage();
+
+                if (UpdatePage != null)
+                {
+                    UpdatePage(this, EventArgs.Empty);
+                }
             }
         }
 
-        private async void DoActionOnTicket()
+        private async Task DoActionOnTicket()
         {
             Response result = null;
             using (var connector = new Connector())
@@ -339,14 +344,14 @@ namespace SherpaDesk
             {
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                 }
                 else
                 {
-                    this.pageRoot.MainPage(page =>
+                    this.pageRoot.MainPage(async page =>
                     {
                         page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                        ((WorkList)page.WorkListFrame.Content).FullUpdate();
+                        await ((WorkList)page.WorkListFrame.Content).FullUpdate();
 
                     });
                 }
@@ -447,7 +452,7 @@ namespace SherpaDesk
 
                     if (resultTaskType.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultTaskType);
+                        await this.HandleError(resultTaskType);
                         return;
                     }
                     TaskTypeList.FillData(resultTaskType.Result.AsEnumerable());
@@ -492,7 +497,7 @@ namespace SherpaDesk
 
                 if (transferResult.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(transferResult);
+                    await this.HandleError(transferResult);
                     return;
                 }
 
@@ -503,7 +508,7 @@ namespace SherpaDesk
 
                     if (attachAltTechResult.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(attachAltTechResult);
+                        await this.HandleError(attachAltTechResult);
                         return;
                     }
                 }
@@ -515,11 +520,10 @@ namespace SherpaDesk
 
             GridTicketDetailsTransfer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
-            this.pageRoot.MainPage(page =>
+            this.pageRoot.MainPage(async page =>
             {
                 page.WorkDetailsFrame.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ((WorkList)page.WorkListFrame.Content).FullUpdate();
-
+                await ((WorkList)page.WorkListFrame.Content).FullUpdate();
             });
         }
 
@@ -583,18 +587,18 @@ namespace SherpaDesk
             await PostResponse(false, false);
         }
 
-        private void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void ConfirmYes_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (_actionType == eTicketAction.Close
                 && AppSettings.Current.Configuration.RequireTicketClosureNote
                 && string.IsNullOrWhiteSpace(OnHoldTextbox.Text))
             {
-                this.HandleValidators("Closure Note is required value for current configuration.#OnHoldTextbox");
+                await this.HandleValidators("Closure Note is required value for current configuration.#OnHoldTextbox");
             }
             else
             {
                 HideConfirm();
-                DoActionOnTicket();
+                await DoActionOnTicket();
             }
         }
 

@@ -56,7 +56,7 @@ namespace SherpaDesk
 
                     if (resultOrg.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultOrg);
+                        await this.HandleError(resultOrg);
                         return;
                     }
                     _organizationList = resultOrg.Result.ToList();
@@ -64,7 +64,7 @@ namespace SherpaDesk
             }
             if (_organizationList.Count == 0)
             {
-                App.ShowErrorMessage("Cannot found organization", eErrorType.Error);
+                await App.ShowErrorMessage("Cannot found organization", eErrorType.Error);
                 return;
             }
             OrganizationList.FillData(_organizationList);
@@ -92,7 +92,7 @@ namespace SherpaDesk
             this.Frame.Navigate(typeof(Login));
         }
 
-        private void SelectOrgButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void SelectOrgButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             var orgKey = OrganizationList.GetSelectedValue<string>();
             if (!string.IsNullOrEmpty(orgKey))
@@ -125,12 +125,12 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    App.ShowErrorMessage("No selected instance", eErrorType.Error);
+                    await App.ShowErrorMessage("No selected instance", eErrorType.Error);
                 }
             }
             else
             {
-                App.ShowErrorMessage("No selected organization", eErrorType.Error);
+                await App.ShowErrorMessage("No selected organization", eErrorType.Error);
             }
         }
 

@@ -12,7 +12,7 @@
             <ProgressRing Name="progressRing" HorizontalAlignment="Left" Foreground="#FFACFF9F" Margin="0,0,0,0" Height="200" Width="200" />
         </StackPanel>
         <Image VerticalAlignment="Stretch" Grid.Column="1" Canvas.ZIndex="-1" Source="Assets/Images/login-background.png" Stretch="UniformToFill"/>
-        <Grid Style="{StaticResource LayoutRootStyle}" Margin="0,280,0,0" Background="Transparent" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+        <Grid Style="{StaticResource LayoutRootStyle}" Margin="0,300,0,0" Background="Transparent" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="RegisterButton" Grid.Row="4" BorderThickness="0" Content="or sign up" Margin="0,20,0,0" FontWeight="Normal" Foreground="White" Padding="0,8,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="SignIn" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" Tapped="RegisterButton_Tapped" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited" />
-            <CheckBox x:Name="ModeBox" Canvas.ZIndex="10" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top"/>
+            <CheckBox x:Name="ModeBox" Canvas.ZIndex="10" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
         </Grid>
         <Popup/>
     </Grid>

@@ -57,7 +57,7 @@ namespace SherpaDesk
                 var result = await connector.Func<TicketSearchRequest, TicketSearchResponse[]>(x => x.Tickets, request);
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                     return new TicketSearchResponse[0].ToList();
                 }
                 else
@@ -80,7 +80,7 @@ namespace SherpaDesk
                     x => x.Tickets, new KeyRequest("counts"));
                 if (resultCounts.Status != eResponseStatus.Success)
                 {
-                    this.pageRoot.HandleError(resultCounts);
+                    await this.pageRoot.HandleError(resultCounts);
                     return;
                 }
 
@@ -91,7 +91,7 @@ namespace SherpaDesk
             }
         }
 
-        private async void FillData(eWorkListType workType)
+        private async Task FillData(eWorkListType workType)
         {
             _pageIndex = SearchRequest.DEFAULT_PAGE_INDEX;
 
@@ -155,49 +155,49 @@ namespace SherpaDesk
             return list;
         }
 
-        public void FullUpdate()
+        public async Task FullUpdate()
         {
-            LoadStatInfo();
-            FillData(_workType);
+            await LoadStatInfo();
+            await FillData(_workType);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter != null)
             {
-                FillData((eWorkListType)e.Parameter);
+                await FillData((eWorkListType)e.Parameter);
             }
             base.OnNavigatedTo(e);
         }
 
-        private void pageRoot_Loaded(object sender, RoutedEventArgs e)
+        private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
         {
             RightMenuGrid.Visibility = AppSettings.Current.Configuration.User.TechOrAdmin
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            LoadStatInfo();
+            await LoadStatInfo();
         }
 
 
-        private void OpenTicketsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void OpenTicketsButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            FillData(eWorkListType.Open);
+            await FillData(eWorkListType.Open);
         }
 
-        private void AsEndUserButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void AsEndUserButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            FillData(eWorkListType.OpenAsEndUser);
+            await FillData(eWorkListType.OpenAsEndUser);
         }
 
-        private void OnHoldButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void OnHoldButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            FillData(eWorkListType.OnHold);
+            await FillData(eWorkListType.OnHold);
         }
 
-        private void FollowUpDatesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void FollowUpDatesButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            FillData(eWorkListType.NewMessages);
+            await FillData(eWorkListType.NewMessages);
         }
 
         private void ItemsGrid_SelectionChanged(object sender, Telerik.UI.Xaml.Controls.Grid.DataGridSelectionChangedEventArgs e)

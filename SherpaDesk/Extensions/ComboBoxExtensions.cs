@@ -89,7 +89,7 @@ namespace SherpaDesk.Extensions
 
                     if (result.Status != eResponseStatus.Success)
                     {
-                        App.ShowErrorMessage(result.Message, eErrorType.FailedOperation);
+                        await App.ShowErrorMessage(result.Message, eErrorType.FailedOperation);
                     }
                     else
                     {

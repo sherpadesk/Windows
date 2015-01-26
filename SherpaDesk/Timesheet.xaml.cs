@@ -39,7 +39,7 @@ namespace SherpaDesk
                     });
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                     return;
                 }
 
@@ -52,7 +52,7 @@ namespace SherpaDesk
 
         private async Task TimesheetLoad(object sender, TimesheetEventArgs e)
         {
-            TimesheetRefresh(e.StartDate, e.EndDate);
+            await TimesheetRefresh(e.StartDate, e.EndDate);
         }
 
         private async void pageRoot_Loaded(object sender, RoutedEventArgs e)
@@ -71,7 +71,7 @@ namespace SherpaDesk
 
                 if (resultTechnicians.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTechnicians);
+                    await this.HandleError(resultTechnicians);
                     return;
                 }
 
@@ -97,7 +97,7 @@ namespace SherpaDesk
 
                     if (resultAccounts.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultAccounts);
+                        await this.HandleError(resultAccounts);
                         return;
                     }
 
@@ -119,7 +119,7 @@ namespace SherpaDesk
 
                     if (resultProjects.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultProjects);
+                        await this.HandleError(resultProjects);
                         return;
                     }
 
@@ -137,7 +137,7 @@ namespace SherpaDesk
 
                         if (resultTaskType.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultTaskType);
+                            await this.HandleError(resultTaskType);
                             return;
                         }
 
@@ -176,7 +176,7 @@ namespace SherpaDesk
 
                     if (resultTaskType.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultTaskType);
+                        await this.HandleError(resultTaskType);
                         return;
                     }
 
@@ -259,7 +259,7 @@ namespace SherpaDesk
 
                 if (result.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(result);
+                    await this.HandleError(result);
                     return;
                 }
             }

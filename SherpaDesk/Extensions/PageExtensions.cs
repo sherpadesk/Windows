@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using SherpaDesk.Models;
+using SherpaDesk.Models.Response;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using SherpaDesk.Common;
-using SherpaDesk.Models;
-using SherpaDesk.Models.Response;
 
 namespace SherpaDesk.Extensions
 {
@@ -15,7 +15,7 @@ namespace SherpaDesk.Extensions
     {
         private const string TOOL_TIP_NAME = "ToolTip";
 
-        public static void HandleValidators(this UserControl page, params string[] messages)
+        public static async Task HandleValidators(this UserControl page, params string[] messages)
         {
             string messageWithoutControl = string.Empty;
             IDictionary<string, string> controls = new Dictionary<string, string>();
@@ -94,23 +94,23 @@ namespace SherpaDesk.Extensions
             }
             if (!string.IsNullOrEmpty(messageWithoutControl))
             {
-                App.ShowStandartMessage(messageWithoutControl, eErrorType.InvalidInputData);
+                await App.ShowStandartMessage(messageWithoutControl, eErrorType.InvalidInputData);
             }
         }
 
-        public static void HandleError(this UserControl page, Response response)
+        public static async Task HandleError(this UserControl page, Response response)
         {
             if (response.Status == eResponseStatus.Invalid)
             {
-                page.HandleValidators(response.Messages.ToArray());
+                await page.HandleValidators(response.Messages.ToArray());
             }
             else if (response.Status == eResponseStatus.Fail)
             {
-                App.ShowErrorMessage(response.Message, eErrorType.Warning);
+                await App.ShowErrorMessage(response.Message, eErrorType.Warning);
             }
             else if (response.Status == eResponseStatus.Error)
             {
-                App.ShowErrorMessage(response.Message, eErrorType.Error);
+                await App.ShowErrorMessage(response.Message, eErrorType.Error);
             }
         }
 

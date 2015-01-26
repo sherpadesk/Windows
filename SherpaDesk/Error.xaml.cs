@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
@@ -30,7 +29,7 @@ namespace SherpaDesk
 
         }
 
-        public async void Opened()
+        public void Opened()
         {
             TitleText.Text = _flyout.Title.Details();
             MessageText.Text = _flyout.Message;
@@ -55,7 +54,7 @@ namespace SherpaDesk
             public Flyout(string message, eErrorType title)
             {
                 this.Title = title;
-                this.CanSendReport = title != eErrorType.InvalidInputData && title != eErrorType.Message;
+                this.CanSendReport = title != eErrorType.InvalidInputData && title != eErrorType.Message && title != eErrorType.Warning;
                 this.Message = message;
             }
 

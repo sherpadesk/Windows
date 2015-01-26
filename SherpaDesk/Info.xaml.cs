@@ -38,7 +38,7 @@ namespace SherpaDesk
                     x => x.Tickets, new KeyRequest("counts"));
                 if (resultCounts.Status != eResponseStatus.Success)
                 {
-                    this.pageRoot.HandleError(resultCounts);
+                    await this.pageRoot.HandleError(resultCounts);
                     return;
                 }
 
@@ -64,7 +64,7 @@ namespace SherpaDesk
                         x => x.Accounts, new SearchRequest("account_statistics.ticket_counts.open>0"));
                     if (resultCounts.Status != eResponseStatus.Success)
                     {
-                        this.pageRoot.HandleError(resultCounts);
+                        await this.pageRoot.HandleError(resultCounts);
                         return;
                     }
                     StatInfoList.ItemsSource = resultStat
@@ -116,14 +116,14 @@ namespace SherpaDesk
             });
         }
 
-        private void LogOutMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void LogOutMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            App.LogOut();
+            await App.LogOut();
         }
 
-        private void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com"));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.sherpadesk.com"));
         }
 
         private void OpenCount_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

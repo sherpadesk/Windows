@@ -78,7 +78,7 @@ namespace SherpaDesk
         }
 
 
-        public static async void ShowStandartMessage(string message, eErrorType title)
+        public static async Task ShowStandartMessage(string message, eErrorType title)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
@@ -93,7 +93,7 @@ namespace SherpaDesk
             await WriteLog(message, title);
 
         }
-        public static async void LogOut()
+        public static async Task LogOut()
         {
             if (await App.ConfirmMessage())
             {
@@ -131,17 +131,16 @@ namespace SherpaDesk
             }
         }
 
-        public static async void ShowErrorMessage(string message, eErrorType title, Exception e = null)
+        public static async Task ShowErrorMessage(string message, eErrorType title, Exception e = null)
         {
             await WriteLog(message, title, e);
 
             var flyout = new Error.Flyout(message, title);
 
             await flyout.ShowAsync();
-
         }
 
-        public static async void ShowErrorMessage(Response response, eErrorType title)
+        public static async Task ShowErrorMessage(Response response, eErrorType title)
         {
             await WriteLog(response.ToString(), title);
 
@@ -195,9 +194,9 @@ namespace SherpaDesk
             this.UnhandledException += App_UnhandledException;
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            ShowErrorMessage(e.Message, eErrorType.Error, e.Exception);
+            await ShowErrorMessage(e.Message, eErrorType.Error, e.Exception);
             e.Handled = true;
         }
 

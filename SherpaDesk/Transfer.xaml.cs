@@ -41,7 +41,7 @@ namespace SherpaDesk
 
                 if (resultTechnicians.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTechnicians);
+                    await this.HandleError(resultTechnicians);
                     return;
                 }
 
@@ -62,7 +62,7 @@ namespace SherpaDesk
 
                 if (resultClasses.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultClasses);
+                    await this.HandleError(resultClasses);
                     return;
                 }
 
@@ -85,7 +85,7 @@ namespace SherpaDesk
 
                 if (transferResult.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(transferResult);
+                    await this.HandleError(transferResult);
                     return;
                 }
 
@@ -96,7 +96,7 @@ namespace SherpaDesk
 
                     if (attachAltTechResult.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(attachAltTechResult);
+                        await this.HandleError(attachAltTechResult);
                         return;
                     }
                 }
@@ -107,7 +107,7 @@ namespace SherpaDesk
                 }
                 ((Frame)this.Parent).Navigate(typeof(Empty));
                 
-                App.ExternalAction(x =>
+                await App.ExternalAction(x =>
                         x.UpdateInfo());
             }
         }

@@ -32,8 +32,10 @@ namespace SherpaDesk.Models.Request
         public eTicketStatus Status { get; set; }
 
         [OnSerializing]
-        internal void OnSerializing(StreamingContext context)
+        protected override void OnSerializing(StreamingContext context)
         {
+            base.OnSerializing(context);
+
             string status = string.Empty, role = string.Empty;
             if (this.Status.HasFlag(eTicketStatus.Open))
                 status += eTicketStatus.Open.Details() + ",";

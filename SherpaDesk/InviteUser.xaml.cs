@@ -41,7 +41,7 @@ namespace SherpaDesk
                     });
                 if (resultAddUser.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultAddUser);
+                    await this.HandleError(resultAddUser);
                 }
                 else
                 {

@@ -65,7 +65,7 @@ namespace SherpaDesk
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 
-        public async void UpdateInfo()
+        public async Task UpdateInfo()
         {
             Info info = this.infoFrame.Content as Info;
             if (info != null)
@@ -132,7 +132,7 @@ namespace SherpaDesk
                 }
                 else
                 {
-                    this.HandleError(resultConfig);
+                    await this.HandleError(resultConfig);
 
                     AppSettings.Current.Clear();
                     this.Frame.Navigate(typeof(Login));

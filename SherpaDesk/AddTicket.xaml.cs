@@ -4,17 +4,13 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Telerik.UI.Xaml.Controls.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace SherpaDesk
 {
@@ -51,7 +47,7 @@ namespace SherpaDesk
 
                     if (resultUsers.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultUsers);
+                        await this.HandleError(resultUsers);
                         return;
                     }
 
@@ -77,7 +73,7 @@ namespace SherpaDesk
 
                             if (resultAccounts.Status != eResponseStatus.Success)
                             {
-                                this.HandleError(resultAccounts);
+                                await this.HandleError(resultAccounts);
                                 return;
                             }
 
@@ -107,7 +103,7 @@ namespace SherpaDesk
 
                 if (resultTechnicians.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultTechnicians);
+                    await this.HandleError(resultTechnicians);
                     return;
                 }
 
@@ -145,7 +141,7 @@ namespace SherpaDesk
 
                     if (resultClasses.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultClasses);
+                        await this.HandleError(resultClasses);
                         return;
                     }
 
@@ -206,7 +202,7 @@ namespace SherpaDesk
 
                     if (resultAccounts.Status != eResponseStatus.Success)
                     {
-                        this.HandleError(resultAccounts);
+                        await this.HandleError(resultAccounts);
                         return;
                     }
 
@@ -249,7 +245,7 @@ namespace SherpaDesk
         {
             if (AppSettings.Current.Configuration.RequireTicketInitialPost && string.IsNullOrWhiteSpace(DescritionTextbox.Text))
             {
-                this.HandleValidators("Initial Post is required for current configuration.#DescritionTextbox");
+                await this.HandleValidators("Initial Post is required for current configuration.#DescritionTextbox");
                 return;
             }
             using (var connector = new Connector())
@@ -270,7 +266,7 @@ namespace SherpaDesk
                     });
                 if (resultAddTicket.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultAddTicket);
+                    await this.HandleError(resultAddTicket);
                     return;
                 }
 
@@ -285,7 +281,7 @@ namespace SherpaDesk
 
                             if (attachAltTechResult.Status != eResponseStatus.Success)
                             {
-                                this.HandleError(attachAltTechResult);
+                                await this.HandleError(attachAltTechResult);
                                 return;
                             }
                         }
@@ -305,7 +301,7 @@ namespace SherpaDesk
                         var resultUploadFile = await connector.Action<FileRequest>(x => x.Files, fileRequest);
                         if (resultUploadFile.Status != eResponseStatus.Success)
                         {
-                            this.HandleError(resultUploadFile);
+                            await this.HandleError(resultUploadFile);
                             return;
                         }
                     }
@@ -330,7 +326,7 @@ namespace SherpaDesk
                     page.ScrollViewer.ChangeView(Constants.WIDTH_TIMESHEET + Constants.WIDTH_INFO, null, null);
                 });
 
-                App.ExternalAction(x => x.UpdateInfo());
+                await App.ExternalAction(x => x.UpdateInfo());
             }
         }
 
@@ -369,12 +365,12 @@ namespace SherpaDesk
                     });
                 if (resultAddUser.Status != eResponseStatus.Success)
                 {
-                    this.HandleError(resultAddUser);
+                    await this.HandleError(resultAddUser);
                 }
                 else
                 {
                     NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    App.ShowStandartMessage("A user account was created", eErrorType.NoTitle);
+                    await App.ShowStandartMessage("A user account was created", eErrorType.NoTitle);
                 }
             }
         }

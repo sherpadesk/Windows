@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using SherpaDesk.Common;
+﻿using SherpaDesk.Common;
 using SherpaDesk.Extensions;
 using SherpaDesk.Models;
 using SherpaDesk.Models.Response;
+using System.Linq;
 using Windows.UI.Xaml;
 
 namespace SherpaDesk
@@ -21,28 +21,29 @@ namespace SherpaDesk
                 var resultActivities = await connector.Func<ActivityResponse[]>(x => x.Activity);
                 if (resultActivities.Status != eResponseStatus.Success)
                 {
-                    this.pageRoot.HandleError(resultActivities);
-                    return;
-                }
-                var dataSource = resultActivities.Result.Select(x => new
-                {
-                    UserName = x.UserName,
-                    Date = x.DaysOld,
-                    Title = x.Title,
-                    Note = Helper.HtmlToString(x.Note),
-                    Avatar = string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=40", Helper.GetMD5(x.UserEmail))
-                }).OrderBy(x => x.Date).ToList();
-
-                if (dataSource.Count > 0)
-                {
-                    ActivityList.ItemsSource = dataSource;
-                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    await this.pageRoot.HandleError(resultActivities);
                 }
                 else
                 {
-                    ActivityList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                }
+                    var dataSource = resultActivities.Result.Select(x => new
+                    {
+                        UserName = x.UserName,
+                        Date = x.DaysOld,
+                        Title = x.Title,
+                        Note = Helper.HtmlToString(x.Note),
+                        Avatar = string.Format("http://www.gravatar.com/avatar/{0}?d=mm&s=40", Helper.GetMD5(x.UserEmail))
+                    }).OrderBy(x => x.Date).ToList();
 
+                    if (dataSource.Count > 0)
+                    {
+                        ActivityList.ItemsSource = dataSource;
+                        ActivityList.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    }
+                    else
+                    {
+                        ActivityList.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    }
+                }
             }
         }
     }
