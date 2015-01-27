@@ -1,13 +1,11 @@
-﻿using SherpaDesk.Common;
+﻿using SherpaDesk.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using SherpaDesk.Interfaces;
 
 namespace SherpaDesk.Models.Request
 {
@@ -74,11 +72,31 @@ namespace SherpaDesk.Models.Request
             return _fileContent;
         }
 
+        ~FileRequest()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            if (_streamContent != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                _streamContent.Dispose();
+                if (_streamContent != null)
+                {
+                    _streamContent.Dispose();
+                    _streamContent = null;
+                }
+                if (_fileContent != null)
+                {
+                    _fileContent.Dispose();
+                    _fileContent = null;
+                }
             }
         }
     }

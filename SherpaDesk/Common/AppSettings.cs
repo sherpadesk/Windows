@@ -68,13 +68,11 @@ namespace SherpaDesk.Common
             {
                 if (_configuration == null)
                 {
-
                     var stringSettings = GetValueOrDefault<string>(CONFIG_SETTING, null);
 
-                    if (string.IsNullOrEmpty(stringSettings))
-                        throw new InternalException("Configuration not found", eErrorType.InternalError);
-
-                    _configuration = Helper.FromXml<ConfigResponse>(stringSettings);
+                    return !string.IsNullOrEmpty(stringSettings)
+                         ? Helper.FromXml<ConfigResponse>(stringSettings)
+                         : new ConfigResponse();
                 }
                 return _configuration;
             }

@@ -100,6 +100,8 @@ namespace SherpaDesk.Extensions
 
         public static async Task HandleError(this UserControl page, Response response)
         {
+            App.ExternalAction(x => x.StopProgress());
+
             if (response.Status == eResponseStatus.Invalid)
             {
                 await page.HandleValidators(response.Messages.ToArray());

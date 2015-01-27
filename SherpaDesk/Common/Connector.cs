@@ -90,7 +90,7 @@ namespace SherpaDesk.Common
                     command += path.Path;
                 }
 
-                await App.WriteLog(command.ToString() + ": " + request.ToString(), eErrorType.Message);
+                await App.WriteLog(string.Format("{0}: {1}", command, request), eErrorType.Message);
 
                 switch (request.Data.Type)
                 {
@@ -151,10 +151,24 @@ namespace SherpaDesk.Common
             return result;
         }
 
+        ~Connector()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            if (_httpClient != null)
-                _httpClient.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_httpClient != null)
+                    _httpClient.Dispose();
+            }
 
             App.ExternalAction(x => x.StopProgress());
         }

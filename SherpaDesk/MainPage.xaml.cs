@@ -51,17 +51,17 @@ namespace SherpaDesk
         public void StartProgress()
         {
             progressRing.IsActive = true;
-            _cursor = Window.Current.CoreWindow.PointerCursor.Type != Windows.UI.Core.CoreCursorType.Wait ?
+            _cursor = Window.Current.CoreWindow.PointerCursor.Type != CoreCursorType.Wait ?
                 Window.Current.CoreWindow.PointerCursor :
-                new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
-            Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Wait, 2);
+                new CoreCursor(CoreCursorType.Hand, 1);
+            Window.Current.CoreWindow.PointerCursor = new CoreCursor(CoreCursorType.Wait, 2);
             Window.Current.CoreWindow.IsInputEnabled = false;
         }
 
         public void StopProgress()
         {
             progressRing.IsActive = false;
-            Window.Current.CoreWindow.PointerCursor = _cursor ?? new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Hand, 1);
+            Window.Current.CoreWindow.PointerCursor = _cursor ?? new CoreCursor(CoreCursorType.Hand, 1);
             Window.Current.CoreWindow.IsInputEnabled = true;
         }
 

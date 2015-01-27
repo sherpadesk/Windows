@@ -30,11 +30,13 @@ namespace SherpaDesk
 
         public void UpdateGrid(ObservableCollection<TimeResponse> list)
         {
+            TicketTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             ((TimeLogModel)DataContext).List = list;
 
-            TicketTimeGrid.UpdateLayout();
-
             EditTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            TicketTimeGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            
+            TicketTimeGrid.UpdateLayout();
         }
 
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)

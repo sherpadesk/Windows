@@ -30,19 +30,33 @@ namespace SherpaDesk.Models.Request
             var jsonRequestSerializer = new DataContractJsonSerializer(this.GetType());
 
             string requestContent;
-            using (var stream = new MemoryStream())
+
+            MemoryStream stream = null;
+            StreamReader reader = null;
+            try
             {
+                stream = new MemoryStream();
+
                 jsonRequestSerializer.WriteObject(stream, this);
 
                 stream.Position = 0;
 
-                using (var reader = new StreamReader(stream))
-                {
-                    requestContent = reader.ReadToEnd();
-                }
+                reader = new StreamReader(stream);
+
+                requestContent = reader.ReadToEnd();
             }
+            finally
+            {
+                if (reader != null)
+                    reader.Dispose();
+                if (stream != null)
+                    stream.Dispose();
+            }
+            
             var content = new StringContent(requestContent, Encoding.UTF8, JSON_MEDIA_TYPE);
+
             content.Headers.ContentType = new MediaTypeWithQualityHeaderValue(JSON_MEDIA_TYPE);
+
             return content;
         }
     }

@@ -69,6 +69,7 @@ namespace SherpaDesk
 
         public class Flyout : PopupHelper<InviteUser>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
             public event EventHandler<UserResponse> Created;
 
             public Flyout(int accountId, int locationId = 0)
@@ -77,11 +78,11 @@ namespace SherpaDesk
                 this.LocationId = locationId;
             }
 
-            public void OnCreated(UserResponse u)
+            public void OnCreated(UserResponse e)
             {
                 if (this.Created != null)
                 {
-                    Created(this, u);
+                    Created(this, e);
                 }
             }
 

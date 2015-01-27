@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -180,7 +181,6 @@
     <Compile Include="AddTicket.xaml.cs">
       <DependentUpon>AddTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\UserSearchProvider.cs" />
     <Compile Include="Empty.xaml.cs">
       <DependentUpon>Empty.xaml</DependentUpon>
     </Compile>
@@ -264,8 +264,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
-    <None Include="SherpaDesk_StoreKey.pfx" />
-    <None Include="SherpaDesk_TemporaryKey.pfx" />
+    <None Include="SherpaDesk_Key.snk" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart.pri" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\Generic.xbf" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesDark.xbf" />
@@ -599,6 +598,12 @@
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SherpaDesk_Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

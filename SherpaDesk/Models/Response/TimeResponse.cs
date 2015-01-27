@@ -103,7 +103,7 @@ namespace SherpaDesk.Models.Response
 
 
         [OnDeserialized]
-        protected virtual void OnDeserialized(StreamingContext context)
+        protected void OnDeserialized(StreamingContext context)
         {
             DateTime date;
             if (DateTime.TryParse(this._date, out date))

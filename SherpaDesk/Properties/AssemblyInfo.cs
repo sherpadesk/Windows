@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -27,3 +27,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.6.23")]
 [assembly: AssemblyFileVersion("1.0.6.23")]
 [assembly: ComVisible(false)]
+[assembly: CLSCompliant(true)]

@@ -79,6 +79,7 @@ namespace SherpaDesk
                     resultTechnicians.Result.Select(user => new NameResponse { Id = user.Id, Name = Helper.FullName(user.FirstName, user.LastName, user.Email, true) }),
                     new NameResponse { Id = AppSettings.Current.Configuration.User.Id, Name = Constants.TECHNICIAN_ME });
             }
+
         }
 
         private async void TechnicianList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
