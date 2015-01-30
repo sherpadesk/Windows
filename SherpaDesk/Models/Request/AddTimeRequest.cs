@@ -1,7 +1,7 @@
 ﻿using SherpaDesk.Common;
-using SherpaDesk.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace SherpaDesk.Models.Request
@@ -45,19 +45,19 @@ namespace SherpaDesk.Models.Request
         public int TechnicianId { get; set; }
 
         [DataMember(Name = "date", EmitDefaultValue = false)]
-        protected string _date;
+        private string _date;
 
         [Details]
         public DateTime Date { get; set; }
 
         [DataMember(Name = "start_date", EmitDefaultValue = false)]
-        protected string _startDate;
+        private string _startDate;
 
         [Details]
         public DateTime? StartDate { get; set; }
 
         [DataMember(Name = "stop_date", EmitDefaultValue = false)]
-        protected string _stopDate;
+        private string _stopDate;
 
         [Details]
         public DateTime? StopDate { get; set; }
@@ -68,64 +68,15 @@ namespace SherpaDesk.Models.Request
         [DataMember(Name = "complete"), Details]
         public string Complete { get; set; }
 
-        [OnSerializing]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context"), OnSerializing]
         protected void OnSerializing(StreamingContext context)
         {
             if (this.Date != DateTime.MinValue)
-                this._date = this.Date.ToString("yyyy-MM-dd");
+                this._date = this.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             if (this.StartDate.HasValue)
-                this._startDate = this._date + " " + this.StartDate.Value.ToString("hh:mm:00");
+                this._startDate = string.Concat(this._date, " ", this.StartDate.Value.ToString("hh:mm:00", CultureInfo.InvariantCulture));
             if (this.StopDate.HasValue)
-                this._stopDate = this._date + " " + this.StopDate.Value.ToString("hh:mm:00");
+                this._stopDate = string.Concat(this._date, " " , this.StopDate.Value.ToString("hh:mm:00", CultureInfo.InvariantCulture));
         }
-    }
-
-    [DataContract]
-    public class UpdateTimeRequest : AddTimeRequest, IPath
-    {
-        public UpdateTimeRequest(string ticketKey, int timeId)
-        {
-            this.Path = "/" + timeId.ToString();
-            this.TicketKey = ticketKey;
-            this.TicketTimeId = timeId;
-            this.IsProjectTime = false;
-        }
-
-        public UpdateTimeRequest(int projectId, int timeId)
-        {
-            this.Path = "/" + timeId.ToString();
-            this.ProjectId = projectId;
-            this.ProjectTimeId = timeId;
-            this.IsProjectTime = true;
-        }
-
-        public override eRequestType Type
-        {
-            get
-            {
-                return eRequestType.PUT;
-            }
-        }
-
-        [DataMember(Name = "project_time_id"), Details]
-        public int ProjectTimeId { get; set; }
-
-        [DataMember(Name = "ticket_time_id"), Details]
-        public int TicketTimeId { get; set; }
-
-        public string Path { get; set; }
-    }
-
-    [DataContract]
-    public class DeleteTimeRequest : DeleteRequest
-    {
-        public DeleteTimeRequest(int timeId, bool isProject)
-            : base(timeId.ToString())
-        {
-            IsProjectLog = isProject;
-        }
-
-        [DataMember(Name = "is_project_log"), Details]
-        public bool IsProjectLog { get; set; }
     }
 }

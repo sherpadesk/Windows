@@ -180,6 +180,7 @@ namespace SherpaDesk.Common
         //IsolatedStorageSettings isolatedStore;
         ApplicationDataContainer localSettings;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public AppSettings()
         {
             try
@@ -236,14 +237,14 @@ namespace SherpaDesk.Common
         /// <param name="Key"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public valueType GetValueOrDefault<valueType>(string Key, valueType defaultValue)
+        public T GetValueOrDefault<T>(string Key, T defaultValue)
         {
-            valueType value;
+            T value;
 
             // If the key exists, retrieve the value.
             if (localSettings.Values.ContainsKey(Key))
             {
-                value = (valueType)localSettings.Values[Key];
+                value = (T)localSettings.Values[Key];
             }
             // Otherwise, use the default value.
             else
@@ -257,10 +258,10 @@ namespace SherpaDesk.Common
         /// <summary>
         /// Save the settings.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public void Save()
         {
             //isolatedStore.Save();
-
         }
 
         public void Clear()
@@ -274,12 +275,12 @@ namespace SherpaDesk.Common
             this.Save();
         }
 
-        public void AddOrganization(string orgKey, string orgName, string instKey, string instName, bool single)
+        public void AddOrganization(string orgKey, string orgName, string instanceKey, string instanceName, bool single)
         {
             this.AddOrUpdateValue(ORGANIZATION_KEY_SETTING, orgKey);
             this.AddOrUpdateValue(ORGANIZATION_NAME_SETTING, orgName);
-            this.AddOrUpdateValue(INSTANCE_KEY_SETTING, instKey);
-            this.AddOrUpdateValue(INSTANCE_NAME_SETTING, instName);
+            this.AddOrUpdateValue(INSTANCE_KEY_SETTING, instanceKey);
+            this.AddOrUpdateValue(INSTANCE_NAME_SETTING, instanceName);
             this.AddOrUpdateValue(SINGLE_SETTING, single);
             this.Save();
         }

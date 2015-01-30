@@ -370,7 +370,7 @@ namespace SherpaDesk
                 else
                 {
                     NewUserGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    await App.ShowStandartMessage("A user account was created", eErrorType.NoTitle);
+                    await App.ShowStandardMessage("A user account was created", eErrorType.NoTitle);
                 }
             }
         }

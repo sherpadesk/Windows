@@ -37,7 +37,7 @@ namespace SherpaDesk
 
 
         private static LoggingChannel _infoChannel;
-        public static LoggingChannel InfoChannel
+        public static LoggingChannel Info
         {
             get
             {
@@ -49,7 +49,8 @@ namespace SherpaDesk
             }
         }
         private static LoggingChannel _errorChannel;
-        public static LoggingChannel ErrorChannel
+        
+        public static LoggingChannel Error
         {
             get
             {
@@ -70,15 +71,15 @@ namespace SherpaDesk
                 {
                     _loggingSession = new LoggingSession("SherpaDesk");
 
-                    _loggingSession.AddLoggingChannel(InfoChannel);
-                    _loggingSession.AddLoggingChannel(ErrorChannel);
+                    _loggingSession.AddLoggingChannel(Info);
+                    _loggingSession.AddLoggingChannel(Error);
                 }
                 return _loggingSession;
             }
         }
 
 
-        public static async Task ShowStandartMessage(string message, eErrorType title)
+        public static async Task ShowStandardMessage(string message, eErrorType title)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
@@ -93,7 +94,7 @@ namespace SherpaDesk
             await WriteLog(message, title);
 
         }
-        public static async Task LogOut()
+        public static async Task LogOff()
         {
             if (await App.ConfirmMessage())
             {
@@ -106,7 +107,7 @@ namespace SherpaDesk
             }
         }
 
-        public static async Task WriteLog(string message, eErrorType type, Exception e = null)
+        public static async Task WriteLog(string message, eErrorType type, Exception exception = null)
         {
             if (type != eErrorType.InvalidInputData)
             {
@@ -116,13 +117,13 @@ namespace SherpaDesk
                     {
                         if (type == eErrorType.Message)
                         {
-                            InfoChannel.LogMessage(message, LoggingLevel.Information);
+                            Info.LogMessage(message, LoggingLevel.Information);
                         }
                         else
                         {
-                            ErrorChannel.LogMessage(message, LoggingLevel.Error);
-                            if (e != null)
-                                ErrorChannel.LogMessage(e.ToString(), LoggingLevel.Critical);
+                            Error.LogMessage(message, LoggingLevel.Error);
+                            if (exception != null)
+                                Error.LogMessage(exception.ToString(), LoggingLevel.Critical);
                         }
                         await LoggingSession.SaveToFileAsync(ApplicationData.Current.LocalFolder, "Errors.etl");
                     }
@@ -131,9 +132,9 @@ namespace SherpaDesk
             }
         }
 
-        public static async Task ShowErrorMessage(string message, eErrorType title, Exception e = null)
+        public static async Task ShowErrorMessage(string message, eErrorType title, Exception ex = null)
         {
-            await WriteLog(message, title, e);
+            await WriteLog(message, title, ex);
 
             var flyout = new Error.Flyout(message, title);
 

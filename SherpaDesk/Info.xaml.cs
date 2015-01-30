@@ -118,7 +118,7 @@ namespace SherpaDesk
 
         private async void LogOutMenu_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            await App.LogOut();
+            await App.LogOff();
         }
 
         private async void SherpaDeskLink_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

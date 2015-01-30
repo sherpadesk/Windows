@@ -31,7 +31,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>SherpaDesk.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -109,7 +109,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\Commands.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CustomBeginEditCommand.cs" />
+    <Compile Include="Models\Request\DeleteTimeRequest.cs" />
+    <Compile Include="Models\Request\UpdateTimeRequest.cs" />
     <Compile Include="Models\Response\ConfigResponse.cs" />
     <Compile Include="Models\ViewModels\ChartDataModel.cs" />
     <Compile Include="Models\ViewModels\TimeLogModel.cs" />
@@ -264,6 +268,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
+    <None Include="SherpaDesk.ruleset" />
     <None Include="SherpaDesk_Key.snk" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart.pri" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\Generic.xbf" />

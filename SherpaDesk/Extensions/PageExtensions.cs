@@ -94,7 +94,7 @@ namespace SherpaDesk.Extensions
             }
             if (!string.IsNullOrEmpty(messageWithoutControl))
             {
-                await App.ShowStandartMessage(messageWithoutControl, eErrorType.InvalidInputData);
+                await App.ShowStandardMessage(messageWithoutControl, eErrorType.InvalidInputData);
             }
         }
 

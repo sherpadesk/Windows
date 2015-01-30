@@ -19,6 +19,8 @@ namespace SherpaDesk.Extensions
 
         public static void AutoComplete(this ComboBox comboBox, Func<RadAutoCompleteBox, Task> searchFunc, Action<IKeyName> selectedFunc = null)
         {
+            if (comboBox == null) return;
+
             var grid = comboBox.ParentGrid();
             if (grid == null) return;
 
@@ -79,6 +81,8 @@ namespace SherpaDesk.Extensions
 
         public async static Task Search(this RadAutoCompleteBox searchBox, bool tech)
         {
+            if (searchBox == null) return;
+            
             using (var connector = new Connector())
             {
                 searchBox.FilterMemberPath = "Name";
@@ -101,13 +105,15 @@ namespace SherpaDesk.Extensions
 
         public static void FillData(this ComboBox comboBox, IEnumerable<IKeyName> list, params IKeyName[] args)
         {
+            if (comboBox == null || args == null) return;
+
             if (comboBox.Items != null)
             {
                 comboBox.Items.Clear();
                 foreach (var kv in args)
                 {
                     comboBox.Items.Add(new ComboBoxItem
-                    {                      
+                    {
                         Tag = kv.Key,
                         Content = kv.Name
                     });

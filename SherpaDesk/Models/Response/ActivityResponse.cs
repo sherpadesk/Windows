@@ -37,12 +37,12 @@ namespace SherpaDesk.Models.Response
         public DateTime Date { get; set; }
 
         [DataMember(Name = "date")]
-        protected string _date;
+        private string _date;
 
         [Details, IgnoreDataMember]
         public string DaysOld { get; set; }
 
-        [OnDeserialized]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context"), OnDeserialized]
         protected void OnDeserialized(StreamingContext context)
         {
             DateTime date;

@@ -32,9 +32,15 @@ namespace SherpaDesk.Models
             if (Equals(storage, value)) return false;
 
             storage = value;
-// ReSharper disable once ExplicitCallerInfoArgument
+
             OnPropertyChanged(propertyName);
+            
             return true;
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value)
+        {
+            return SetProperty(ref storage, value, null);
         }
 
         /// <summary>
@@ -50,6 +56,11 @@ namespace SherpaDesk.Models
             {
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        protected void OnPropertyChanged()
+        {
+            OnPropertyChanged(null);
         }
     }
 }

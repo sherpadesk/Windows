@@ -5,7 +5,7 @@ namespace SherpaDesk.Models.Request
     [DataContract]
     public abstract class ActionTicketRequest : PutRequest
     {
-        public ActionTicketRequest(string key, string action) : 
+        protected ActionTicketRequest(string key, string action) : 
             base(key)
         {
             this.Action = action;

@@ -6,6 +6,7 @@ using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -17,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SherpaDesk
 {
-    public sealed partial class AddResponse : SherpaDesk.Common.LayoutAwarePage, IChildPage
+    public sealed partial class AddResponse : LayoutAwarePage, IChildPage
     {
         public event EventHandler UpdatePage;
 
@@ -33,21 +34,24 @@ namespace SherpaDesk
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _ticketKey = (string)e.Parameter;
+            if (e != null && e.Parameter != null)
+            {
+                _ticketKey = (string)e.Parameter;
+            }
             base.OnNavigatedTo(e);
         }
 
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (StartTimePicker.Value.HasValue)
-                StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
+                StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t", CultureInfo.InvariantCulture);
             CalculateHours();
         }
 
         private void EndTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (EndTimePicker.Value.HasValue)
-                EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
+                EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t", CultureInfo.InvariantCulture);
             CalculateHours();
         }
 
@@ -56,7 +60,7 @@ namespace SherpaDesk
             if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
             {
                 var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
-                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format(CultureInfo.InvariantCulture, "{0:0.00}", time.TotalHours) : String.Format(CultureInfo.InvariantCulture, "{0:0.00}", 24 + time.TotalHours);
             }
         }
 
@@ -64,8 +68,8 @@ namespace SherpaDesk
         {
             var date = DateTime.Now;
             StartTimePicker.Value = EndTimePicker.Value = date;
-            StartTimeLabel.Text = date.ToString("t");
-            EndTimeLabel.Text = date.ToString("t");
+            StartTimeLabel.Text = date.ToString("t", CultureInfo.InvariantCulture);
+            EndTimeLabel.Text = date.ToString("t", CultureInfo.InvariantCulture);
             using (var connector = new Connector())
             {
                 var resultTicket = await connector.Func<KeyRequest, TicketDetailsResponse>(x => x.Tickets, new KeyRequest(_ticketKey));

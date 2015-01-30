@@ -4,11 +4,10 @@ using SherpaDesk.Models;
 using SherpaDesk.Models.Request;
 using SherpaDesk.Models.Response;
 using System;
+using System.Globalization;
 using System.Linq;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace SherpaDesk
 {
@@ -23,10 +22,10 @@ namespace SherpaDesk
         {
             var date = DateTime.Now;
             DateField.Value = date;
-            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd");
+            DateLabel.Text = date.ToString("MMMM dd, yyyy - dddd", CultureInfo.InvariantCulture);
             StartTimePicker.Value = EndTimePicker.Value = date;
-            StartTimeLabel.Text = date.ToString("t");
-            EndTimeLabel.Text = date.ToString("t");
+            StartTimeLabel.Text = date.ToString("t", CultureInfo.InvariantCulture);
+            EndTimeLabel.Text = date.ToString("t", CultureInfo.InvariantCulture);
             using (var connector = new Connector())
             {
                 // technician
@@ -207,24 +206,24 @@ namespace SherpaDesk
             if (StartTimePicker.Value.HasValue && EndTimePicker.Value.HasValue)
             {
                 var time = EndTimePicker.Value.Value.TimeOfDay - StartTimePicker.Value.Value.TimeOfDay;
-                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format("{0:0.00}", time.TotalHours) : String.Format("{0:0.00}", 24 + time.TotalHours);
+                HoursTextBox.Text = time.TotalHours >= 0 ? String.Format(CultureInfo.InvariantCulture, "{0:0.00}", time.TotalHours) : String.Format(CultureInfo.InvariantCulture, "{0:0.00}", 24 + time.TotalHours);
             }
         }
 
         private void DateField_ValueChanged(object sender, EventArgs e)
         {
-            DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd");
+            DateLabel.Text = DateField.Value.Value.ToString("MMMM dd, yyyy - dddd", CultureInfo.InvariantCulture);
         }
 
         private void StartTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t");
+            StartTimeLabel.Text = StartTimePicker.Value.Value.ToString("t", CultureInfo.InvariantCulture);
             CalculateHours();
         }
 
         private void EndTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t");
+            EndTimeLabel.Text = EndTimePicker.Value.Value.ToString("t", CultureInfo.InvariantCulture);
             CalculateHours();
         }
 
