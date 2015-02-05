@@ -270,6 +270,8 @@
     <None Include="packages.config" />
     <None Include="SherpaDesk.ruleset" />
     <None Include="SherpaDesk_Key.snk" />
+    <None Include="SherpaDesk_StoreKey.pfx" />
+    <None Include="SherpaDesk_TemporaryKey.pfx" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart.pri" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\Generic.xbf" />
     <None Include="Telerik\Chart\Telerik.UI.Xaml.Chart\Themes\ThemeResourcesDark.xbf" />
