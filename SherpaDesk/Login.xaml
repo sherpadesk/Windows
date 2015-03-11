@@ -22,31 +22,24 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <Grid Height="auto">
+                <TextBlock Text="Email" FontWeight="Bold" FontFamily="Arial" FontSize="18" Padding="10,0,0,0" />
+            </Grid>
             <Grid Height="100" Grid.Row="1">
                 <Rectangle Opacity="0.6" RadiusX="10" RadiusY="10" HorizontalAlignment="Stretch" Margin="0,0,0,10" VerticalAlignment="Stretch" Fill="Black" />
-                <xtk:WatermarkTextBox x:Name="UserNameTextbox" Background="Transparent" Foreground="White" Margin="0,0,0,10" BorderThickness="0" HorizontalContentAlignment="Center" TabIndex="0" WatermarkText="Email Address" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" FontSize="36" Width="672" KeyDown="UserNameTextbox_KeyDown">
-                    <xtk:WatermarkTextBox.WatermarkTextStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Padding" Value="10,0,0,0" />
-                        </Style>
-                    </xtk:WatermarkTextBox.WatermarkTextStyle>
-                </xtk:WatermarkTextBox>
+                <TextBox x:Name="UserNameTextbox" Background="Transparent" Foreground="White" Margin="0,0,0,10" BorderThickness="0" HorizontalContentAlignment="Center" TabIndex="0" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" FontSize="36" Width="672" KeyDown="UserNameTextbox_KeyDown" />
             </Grid>
-            <Grid Height="100" Grid.Row="2" Margin="0,40,0,0">
-                <Rectangle Opacity="0.6" RadiusX="10" RadiusY="10" HorizontalAlignment="Stretch" Margin="0,0,0,10" VerticalAlignment="Stretch" Fill="Black" />
-                <xtk:WatermarkPasswordBox x:Name="PasswordTextBox" Background="Transparent" Foreground="White" Margin="0,0,0,10" BorderThickness="0" HorizontalContentAlignment="Center" TabIndex="1" WatermarkText="Password" VerticalAlignment="Center" FontSize="36" Width="672" KeyDown="PasswordTextBox_KeyDown">
-                    <xtk:WatermarkPasswordBox.WatermarkTextStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Padding" Value="10,0,0,0" />
-                        </Style>
-                    </xtk:WatermarkPasswordBox.WatermarkTextStyle>
-                </xtk:WatermarkPasswordBox>
+            <Grid Height="auto" Grid.Row="2">
+                <TextBlock Text="Password" FontWeight="Bold" FontFamily="Arial" FontSize="18" Padding="10,40,0,0" />
             </Grid>            
-            <Button x:Name="SignInButton" Content="Sign in" Grid.Row="3" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" Click="SignIn" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited">
+            <Grid Height="100" Grid.Row="3">
+                <Rectangle Opacity="0.6" RadiusX="10" RadiusY="10" HorizontalAlignment="Stretch" Margin="0,0,0,10" VerticalAlignment="Stretch" Fill="Black" />
+                <PasswordBox x:Name="PasswordTextBox" Background="Transparent" Foreground="White" Margin="0,0,0,10" BorderThickness="0" HorizontalContentAlignment="Center" TabIndex="1" VerticalAlignment="Center" FontSize="36" Width="672" KeyDown="PasswordTextBox_KeyDown" />
+            </Grid>            
+            <Button x:Name="SignInButton" Content="Sign in" Grid.Row="4" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" Click="SignIn" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -61,7 +54,24 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="RegisterButton" Grid.Row="4" BorderThickness="0" Content="or sign up" Margin="0,20,0,0" FontWeight="Normal" Foreground="White" Padding="0,8,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="SignIn" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" Tapped="RegisterButton_Tapped" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited" />
+            <Grid Margin="0,10,0,0" Grid.Row="5" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock FontWeight="Normal" Text="or" Foreground="White" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" Height="auto" FontSize="20" />
+                <Button Grid.Column="1" x:Name="RegisterButton" Margin="10,0,0,0" Grid.Row="5" BorderThickness="0"  FontWeight="Normal" Foreground="White" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" Height="auto" Click="SignIn" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" Tapped="RegisterButton_Tapped" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <TextBlock>
+                            <Underline>
+                            <Run Text="Sign Up"/>
+                            </Underline>
+                            </TextBlock>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
             <CheckBox x:Name="ModeBox" Canvas.ZIndex="10" Content="beta" HorizontalAlignment="Left" Margin="40,188,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
         </Grid>
         <Popup/>

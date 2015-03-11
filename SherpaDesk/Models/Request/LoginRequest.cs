@@ -11,7 +11,7 @@ namespace SherpaDesk.Models.Request
         private const string ERROR_EMPTY_PASSWORD = "Password is required field.#PasswordTextBox";
 
         [Required(ErrorMessage = ERROR_EMPTY_USERNAME)]
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = ERROR_INVALID_EMAIL)]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = ERROR_INVALID_EMAIL)]
         [DataMember(Name = "username"), Details]
         public string Email { get; set; }
 
