@@ -109,9 +109,6 @@ namespace SherpaDesk
         {
             switch (e.Key)
             {
-                case Windows.System.VirtualKey.Tab:
-                    PasswordTextBox.Focus(FocusState.Keyboard);
-                    break;
                 case Windows.System.VirtualKey.Enter:
                     SignIn(this, new RoutedEventArgs());
                     break;

@@ -82,6 +82,7 @@ namespace SherpaDesk
                     _instanceList = org.Instances.ToList();
                     InstanceList.FillData(_instanceList);
                     InstanceList.SelectedIndex = 0;
+                    InstanceList.Visibility = InstanceList.Items.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
         }

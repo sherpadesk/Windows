@@ -39,7 +39,7 @@
                 <Rectangle Opacity="0.6" RadiusX="10" RadiusY="10" HorizontalAlignment="Stretch" Margin="0,0,0,10" VerticalAlignment="Stretch" Fill="Black" />
                 <PasswordBox x:Name="PasswordTextBox" Background="Transparent" Foreground="White" Margin="0,0,0,10" BorderThickness="0" HorizontalContentAlignment="Center" TabIndex="1" VerticalAlignment="Center" FontSize="36" Width="672" KeyDown="PasswordTextBox_KeyDown" />
             </Grid>            
-            <Button x:Name="SignInButton" Content="Sign in" Grid.Row="4" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" Click="SignIn" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited">
+            <Button x:Name="SignInButton" Content="Sign In" Grid.Row="4" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" Click="SignIn" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -60,7 +60,7 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock FontWeight="Normal" Text="or" Foreground="White" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" Height="auto" FontSize="20" />
-                <Button Grid.Column="1" x:Name="RegisterButton" Margin="10,0,0,0" Grid.Row="5" BorderThickness="0"  FontWeight="Normal" Foreground="White" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" Height="auto" Click="SignIn" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" Tapped="RegisterButton_Tapped" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited">
+                <Button Grid.Column="1" x:Name="RegisterButton" Margin="10,0,0,0" Grid.Row="5" BorderThickness="0"  FontWeight="Normal" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" Height="auto" Click="SignIn" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" Tapped="RegisterButton_Tapped" PointerEntered="RegisterButton_PointerEntered" PointerExited="RegisterButton_PointerExited">
                     <Button.Template>
                         <ControlTemplate>
                             <TextBlock>

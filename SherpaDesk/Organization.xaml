@@ -24,11 +24,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Height="100" Grid.Row="1" Margin="0,200,0,0">
+            <Grid Height="auto" Grid.Row="1" Margin="0,200,0,0">
                 <ComboBox Name="OrganizationList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="2" VerticalAlignment="Top" FontSize="36" Width="619" SelectionChanged="OrganizationList_SelectionChanged"/>
             </Grid>
-            <Grid Height="100" Grid.Row="2" Margin="0,20,0,0">
-                <ComboBox Name="InstanceList" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="4" VerticalAlignment="Top" FontSize="36" Width="619"/>
+            <Grid Height="auto" Grid.Row="2" Margin="0,20,0,0">
+                <ComboBox Name="InstanceList" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,0,0,10" Height="66" Grid.Row="4" VerticalAlignment="Top" FontSize="36" Width="619"/>
             </Grid>
             <Button x:Name="SelectOrgButton" Content="Continue" Grid.Row="3" Margin="0,50,0,0" FontWeight="Normal" Foreground="Black" Padding="0,15,0,0" TabIndex="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="100" FontSize="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Myriad Pro" PointerEntered="SignInButton_PointerEntered" PointerExited="SignInButton_PointerExited" Tapped="SelectOrgButton_Tapped">
                 <Button.Style>
